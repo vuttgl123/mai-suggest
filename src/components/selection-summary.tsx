@@ -10,7 +10,7 @@ import {
   X,
 } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createSelectionEmailUrl } from "@/lib/selection-email";
 import { createSelectionText } from "@/lib/selection-text";
 import type { PreferenceData, PreferenceSelectionState } from "@/types/preference";
@@ -69,6 +69,7 @@ export function SelectionSummary({
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const confirmOpenRef = useRef(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const closeConfirm = useCallback(() => setConfirmOpen(false), []);
   const validItemIds = new Set(
     data.categories.flatMap((category) => category.items.map((item) => item.id)),
   );
@@ -350,7 +351,7 @@ export function SelectionSummary({
         title="Mình bắt đầu lại nhé?"
         description="Toàn bộ món đã thích, lựa chọn thích nhất và lời nhắn trên thiết bị này sẽ được xóa."
         confirmLabel="Làm lại từ đầu"
-        onCancel={() => setConfirmOpen(false)}
+        onCancel={closeConfirm}
         onConfirm={confirmReset}
       />
     </>

@@ -6,4 +6,4 @@ export const PRODUCT_PAGE_SIZES = {
 } as const;
 
 export const PRODUCT_GRID_CLASSNAME =
-  "grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 xl:grid-cols-5";
+  "grid grid-cols-1 gap-4 min-[380px]:grid-cols-2 sm:grid-cols-3 sm:gap-5 xl:grid-cols-4";

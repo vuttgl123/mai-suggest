@@ -3,8 +3,27 @@
   "name": "Chuyến đi trong mơ",
   "description": "Những nơi mình có thể đi chậm lại, ngắm nhìn thế giới và lưu thêm một kỷ niệm chung.",
   "notePlaceholder": "Em muốn đi đâu, vào mùa nào và thích nghỉ dưỡng hay khám phá?",
+  "coverImage": "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=1200&q=90",
+  "coverAlt": "Ảnh đại diện chuyến đi trong mơ",
   "items": [
     {
+      "occasions": [
+        "ky-niem",
+        "yeu-xa-doan-tu",
+        "cau-hon-cam-ket",
+        "tet-nam-moi"
+      ],
+      "styles": [
+        "lang-man",
+        "sang-trong",
+        "trai-nghiem"
+      ],
+      "budgetTier": "tren-10m",
+      "giftType": "trai-nghiem",
+      "whyItFits": "Những ngày thật chậm bên mặt nước trong xanh, villa riêng và các bữa tối chỉ có tiếng sóng.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 1,
+      "featured": true,
       "id": "trip-maldives-private-island",
       "name": "Đảo riêng ở Maldives",
       "description": "Những ngày thật chậm bên mặt nước trong xanh, villa riêng và các bữa tối chỉ có tiếng sóng.",
@@ -20,6 +39,23 @@
       "message": "Biển xanh không thấy cuối\nCát trắng chẳng dấu chân\nMình đi xa một chuyến\nĐể lại gần nhau hơn."
     },
     {
+      "occasions": [
+        "ky-niem",
+        "yeu-xa-doan-tu",
+        "cau-hon-cam-ket",
+        "tet-nam-moi"
+      ],
+      "styles": [
+        "lang-man",
+        "sang-trong",
+        "trai-nghiem"
+      ],
+      "budgetTier": "tren-10m",
+      "giftType": "trai-nghiem",
+      "whyItFits": "Một lịch trình ngắn vừa đủ cho biển, hoàng hôn và những trải nghiệm dành riêng cho hai người.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 2,
+      "featured": true,
       "id": "trip-lombok-honeymoon",
       "name": "Ba ngày riêng tư ở Lombok",
       "description": "Một lịch trình ngắn vừa đủ cho biển, hoàng hôn và những trải nghiệm dành riêng cho hai người.",
@@ -37,6 +73,23 @@
       "message": "Ba ngày bên sóng nhỏ\nHai người dưới hoàng hôn\nMang về bao kỷ niệm\nĐầy hơn cả va li."
     },
     {
+      "occasions": [
+        "ky-niem",
+        "yeu-xa-doan-tu",
+        "cau-hon-cam-ket",
+        "tet-nam-moi"
+      ],
+      "styles": [
+        "lang-man",
+        "sang-trong",
+        "trai-nghiem"
+      ],
+      "budgetTier": "tren-10m",
+      "giftType": "trai-nghiem",
+      "whyItFits": "Cà phê buổi sớm, bảo tàng vào chiều muộn và những con phố đẹp nhất khi mình không cần vội.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 3,
+      "featured": false,
       "id": "trip-paris-slow-days",
       "name": "Những ngày chậm ở Paris",
       "description": "Cà phê buổi sớm, bảo tàng vào chiều muộn và những con phố đẹp nhất khi mình không cần vội.",
@@ -52,6 +105,23 @@
       "message": "Paris chiều rất chậm\nMình bước cạnh sông Seine\nTháp xa rồi phố nhỏ\nĐẹp vì có em bên."
     },
     {
+      "occasions": [
+        "ky-niem",
+        "yeu-xa-doan-tu",
+        "cau-hon-cam-ket",
+        "tet-nam-moi"
+      ],
+      "styles": [
+        "lang-man",
+        "sang-trong",
+        "trai-nghiem"
+      ],
+      "budgetTier": "tren-10m",
+      "giftType": "trai-nghiem",
+      "whyItFits": "Biển yên, rừng xanh và một nhịp nghỉ thật tĩnh cho chuyến đi gần mà vẫn có cảm giác tách biệt.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 4,
+      "featured": false,
       "id": "trip-con-dao-hideaway",
       "name": "Khoảng trời riêng ở Côn Đảo",
       "description": "Biển yên, rừng xanh và một nhịp nghỉ thật tĩnh cho chuyến đi gần mà vẫn có cảm giác tách biệt.",
@@ -67,6 +137,23 @@
       "message": "Rừng xanh ôm bờ cát\nBiển ru một khoảng trời\nMình về nơi thật vắng\nNghe lòng mình thảnh thơi."
     },
     {
+      "occasions": [
+        "ky-niem",
+        "yeu-xa-doan-tu",
+        "cau-hon-cam-ket",
+        "tet-nam-moi"
+      ],
+      "styles": [
+        "lang-man",
+        "sang-trong",
+        "trai-nghiem"
+      ],
+      "budgetTier": "tren-10m",
+      "giftType": "trai-nghiem",
+      "whyItFits": "Một căn phòng ấm nhìn ra núi tuyết, bữa tối dài và những buổi sáng chỉ để ngắm trời đổi màu.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 5,
+      "featured": false,
       "id": "trip-alps-winter-retreat",
       "name": "Mùa đông trong dãy Alps",
       "description": "Một căn phòng ấm nhìn ra núi tuyết, bữa tối dài và những buổi sáng chỉ để ngắm trời đổi màu.",

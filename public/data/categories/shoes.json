@@ -3,8 +3,26 @@
   "name": "Giày dép",
   "description": "Những đôi giày đẹp nhưng vẫn đủ dễ chịu để em tự tin trong từng bước chân.",
   "notePlaceholder": "Em ưu tiên độ cao, màu sắc hay sự thoải mái như thế nào?",
+  "coverImage": "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=1200&q=90",
+  "coverAlt": "Ảnh đại diện giày dép",
   "items": [
     {
+      "occasions": [
+        "sinh-nhat",
+        "ky-niem",
+        "phu-nu-viet-nam"
+      ],
+      "styles": [
+        "nu-tinh",
+        "co-dien",
+        "thanh-lich"
+      ],
+      "budgetTier": "3m-10m",
+      "giftType": "vat-pham",
+      "whyItFits": "Giày bệt satin mũi nhọn với khóa pha lê đặc trưng, trang trọng mà vẫn dễ di chuyển.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 1,
+      "featured": true,
       "id": "shoes-manolo-hangisi-flat",
       "brand": "Manolo Blahnik",
       "name": "Hangisi satin point-toe flats",
@@ -23,6 +41,22 @@
       "message": "Đá sáng trên mũi giày\nKhông bằng mắt em đâu\nAnh mong từng bước nhỏ\nĐều êm đến thật lâu."
     },
     {
+      "occasions": [
+        "sinh-nhat",
+        "ky-niem",
+        "phu-nu-viet-nam"
+      ],
+      "styles": [
+        "nu-tinh",
+        "co-dien",
+        "thanh-lich"
+      ],
+      "budgetTier": "3m-10m",
+      "giftType": "vat-pham",
+      "whyItFits": "Phom mũi nhọn bằng da lộn với khóa vuông kín đáo, hợp cả trang phục công sở và dạo phố.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 2,
+      "featured": true,
       "id": "shoes-manolo-maysale",
       "brand": "Manolo Blahnik",
       "name": "Maysale suede point-toe flats",
@@ -41,6 +75,22 @@
       "message": "Một đôi giày thật nhẹ\nĐưa em qua phố đông\nDẫu đường xa đến mấy\nVề vẫn có anh mong."
     },
     {
+      "occasions": [
+        "sinh-nhat",
+        "ky-niem",
+        "phu-nu-viet-nam"
+      ],
+      "styles": [
+        "nu-tinh",
+        "co-dien",
+        "thanh-lich"
+      ],
+      "budgetTier": "3m-10m",
+      "giftType": "vat-pham",
+      "whyItFits": "Sandal da ánh kim với gót vừa phải, tạo điểm sáng tinh tế cho những buổi tiệc tối.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 3,
+      "featured": false,
       "id": "shoes-manolo-susa",
       "brand": "Manolo Blahnik",
       "name": "Susa metallic leather sandals",
@@ -59,6 +109,22 @@
       "message": "Ánh kim ôm bàn chân\nNhư nắng ôm bờ cát\nMình hẹn nhau một tối\nĐi nghe thành phố hát."
     },
     {
+      "occasions": [
+        "sinh-nhat",
+        "ky-niem",
+        "phu-nu-viet-nam"
+      ],
+      "styles": [
+        "nu-tinh",
+        "co-dien",
+        "thanh-lich"
+      ],
+      "budgetTier": "3m-10m",
+      "giftType": "vat-pham",
+      "whyItFits": "Gót 70 mm cân đối, quai hậu chắc chắn và chất da lộn mềm dành cho những dịp trang trọng.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 4,
+      "featured": false,
       "id": "shoes-manolo-maysli-slingback",
       "brand": "Manolo Blahnik",
       "name": "Maysli 70 suede slingback pumps",
@@ -77,6 +143,22 @@
       "message": "Gót vừa cao một chút\nĐể dáng em kiêu kỳ\nNhưng khi em thấy mỏi\nAnh đón em trở về."
     },
     {
+      "occasions": [
+        "sinh-nhat",
+        "ky-niem",
+        "phu-nu-viet-nam"
+      ],
+      "styles": [
+        "nu-tinh",
+        "co-dien",
+        "thanh-lich"
+      ],
+      "budgetTier": "3m-10m",
+      "giftType": "vat-pham",
+      "whyItFits": "Sandal đế thấp với những nếp gấp mềm, nhẹ chân và phù hợp cho ngày hè thong thả.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 5,
+      "featured": false,
       "id": "shoes-manolo-pirua",
       "brand": "Manolo Blahnik",
       "name": "Pirua 10 pleated suede sandals",

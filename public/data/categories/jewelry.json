@@ -3,8 +3,27 @@
   "name": "Trang sức",
   "description": "Những điểm sáng nhỏ, đủ tinh tế để đi cùng em trong thật nhiều dịp.",
   "notePlaceholder": "Em thích vàng hay bạc, thiết kế mảnh hay có điểm nhấn?",
+  "coverImage": "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=1200&q=90",
+  "coverAlt": "Ảnh đại diện trang sức",
   "items": [
     {
+      "occasions": [
+        "sinh-nhat",
+        "ky-niem",
+        "valentine",
+        "cau-hon-cam-ket"
+      ],
+      "styles": [
+        "co-dien",
+        "lang-man",
+        "sang-trong"
+      ],
+      "budgetTier": "tren-10m",
+      "giftType": "vat-pham",
+      "whyItFits": "Mắt xích đặc trưng tạo nét hiện đại, mạnh mẽ nhưng vẫn thanh lịch khi đeo hằng ngày.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 1,
+      "featured": true,
       "id": "jewelry-tiffany-hardwear",
       "name": "Vòng tay Tiffany HardWear",
       "description": "Mắt xích đặc trưng tạo nét hiện đại, mạnh mẽ nhưng vẫn thanh lịch khi đeo hằng ngày.",
@@ -21,6 +40,23 @@
       "message": "Từng mắt xích nối lại\nNhư chuyện mình hôm nay\nMạnh mẽ mà dịu dàng\nVẫn nắm chặt bàn tay."
     },
     {
+      "occasions": [
+        "sinh-nhat",
+        "ky-niem",
+        "valentine",
+        "cau-hon-cam-ket"
+      ],
+      "styles": [
+        "co-dien",
+        "lang-man",
+        "sang-trong"
+      ],
+      "budgetTier": "tren-10m",
+      "giftType": "vat-pham",
+      "whyItFits": "Đường nút thắt mềm mại gợi nhắc một mối gắn kết bền lâu, kín đáo và giàu ý nghĩa.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 2,
+      "featured": true,
       "id": "jewelry-tiffany-knot",
       "name": "Nhẫn Tiffany Knot",
       "description": "Đường nút thắt mềm mại gợi nhắc một mối gắn kết bền lâu, kín đáo và giàu ý nghĩa.",
@@ -37,6 +73,23 @@
       "message": "Nút thắt không để buộc\nChỉ để nhớ về nhau\nDẫu ngày dài đến mấy\nThương vẫn ở thật sâu."
     },
     {
+      "occasions": [
+        "sinh-nhat",
+        "ky-niem",
+        "valentine",
+        "cau-hon-cam-ket"
+      ],
+      "styles": [
+        "co-dien",
+        "lang-man",
+        "sang-trong"
+      ],
+      "budgetTier": "tren-10m",
+      "giftType": "vat-pham",
+      "whyItFits": "Thiết kế hình học gọn gàng, dễ phối với sơ mi, váy lụa hoặc trang phục tối giản.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 3,
+      "featured": false,
       "id": "jewelry-tiffany-t",
       "name": "Dây chuyền Tiffany T",
       "description": "Thiết kế hình học gọn gàng, dễ phối với sơ mi, váy lụa hoặc trang phục tối giản.",
@@ -53,6 +106,23 @@
       "message": "Một đường nét rất nhỏ\nNằm yên cạnh trái tim\nThay anh khi xa vắng\nNhắc em rằng anh tìm."
     },
     {
+      "occasions": [
+        "sinh-nhat",
+        "ky-niem",
+        "valentine",
+        "cau-hon-cam-ket"
+      ],
+      "styles": [
+        "co-dien",
+        "lang-man",
+        "sang-trong"
+      ],
+      "budgetTier": "tren-10m",
+      "giftType": "vat-pham",
+      "whyItFits": "Phom khóa nhỏ có độ nhận diện vừa đủ, tạo điểm nhấn sang trọng mà không phô trương.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 4,
+      "featured": false,
       "id": "jewelry-tiffany-lock",
       "name": "Khuyên tai Tiffany Lock",
       "description": "Phom khóa nhỏ có độ nhận diện vừa đủ, tạo điểm nhấn sang trọng mà không phô trương.",
@@ -69,6 +139,23 @@
       "message": "Chiếc khóa không cần cửa\nChỉ giữ một điều thôi\nNụ cười em hôm ấy\nTrong tim anh suốt đời."
     },
     {
+      "occasions": [
+        "sinh-nhat",
+        "ky-niem",
+        "valentine",
+        "cau-hon-cam-ket"
+      ],
+      "styles": [
+        "co-dien",
+        "lang-man",
+        "sang-trong"
+      ],
+      "budgetTier": "tren-10m",
+      "giftType": "vat-pham",
+      "whyItFits": "Một món trang sức nghệ thuật dành cho những dịp đặc biệt, giàu màu sắc và chất thơ.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 5,
+      "featured": false,
       "id": "jewelry-bird-on-a-rock",
       "name": "Trâm cài Bird on a Rock",
       "description": "Một món trang sức nghệ thuật dành cho những dịp đặc biệt, giàu màu sắc và chất thơ.",

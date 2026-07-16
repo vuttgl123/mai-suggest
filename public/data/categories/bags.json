@@ -3,8 +3,27 @@
   "name": "Túi xách",
   "description": "Những thiết kế đồng hành cùng em từ ngày thường đến dịp thật đặc biệt.",
   "notePlaceholder": "Em thường mang gì và thích túi có kích thước ra sao?",
+  "coverImage": "https://www.mytheresa.com/image/1094/1238/100/9c/P01182344.jpg",
+  "coverAlt": "Ảnh đại diện túi xách",
   "items": [
     {
+      "occasions": [
+        "sinh-nhat",
+        "ky-niem",
+        "quoc-te-phu-nu",
+        "phu-nu-viet-nam"
+      ],
+      "styles": [
+        "thanh-lich",
+        "thiet-thuc",
+        "sang-trong"
+      ],
+      "budgetTier": "3m-10m",
+      "giftType": "vat-pham",
+      "whyItFits": "Dáng hộp nhỏ gọn bằng da nâu, điểm khóa VLogo cổ điển và quai xách thanh mảnh.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 1,
+      "featured": true,
       "id": "bag-valentino-vlogo-top-handle",
       "brand": "Valentino Garavani",
       "name": "VLogo mini top-handle bag",
@@ -23,6 +42,23 @@
       "message": "Một chiếc túi nho nhỏ\nĐựng son, nắng và cười\nNếu còn dư một chỗ\nCho anh theo cùng thôi."
     },
     {
+      "occasions": [
+        "sinh-nhat",
+        "ky-niem",
+        "quoc-te-phu-nu",
+        "phu-nu-viet-nam"
+      ],
+      "styles": [
+        "thanh-lich",
+        "thiet-thuc",
+        "sang-trong"
+      ],
+      "budgetTier": "3m-10m",
+      "giftType": "vat-pham",
+      "whyItFits": "Chiếc túi nhỏ với chi tiết thêu hoa như một món trang sức dành cho buổi tối.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 2,
+      "featured": true,
       "id": "bag-erdem-bloom-mini",
       "brand": "Erdem",
       "name": "Bloom mini embroidered bag",
@@ -41,6 +77,23 @@
       "message": "Hoa thêu trên nền vải\nGiữ một góc vườn xinh\nEm mang theo trước ngực\nNhư mang cả bình minh."
     },
     {
+      "occasions": [
+        "sinh-nhat",
+        "ky-niem",
+        "quoc-te-phu-nu",
+        "phu-nu-viet-nam"
+      ],
+      "styles": [
+        "thanh-lich",
+        "thiet-thuc",
+        "sang-trong"
+      ],
+      "budgetTier": "3m-10m",
+      "giftType": "vat-pham",
+      "whyItFits": "Phom top-handle điêu khắc bằng da, cân bằng giữa vẻ cổ điển và tinh thần hiện đại.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 3,
+      "featured": false,
       "id": "bag-loewe-amazona-180",
       "brand": "Loewe",
       "name": "Amazona 180 small bag",
@@ -59,6 +112,23 @@
       "message": "Gọn gàng và bền bỉ\nNhư những ngày cạnh nhau\nMón quà không cần nói\nVẫn theo em thật lâu."
     },
     {
+      "occasions": [
+        "sinh-nhat",
+        "ky-niem",
+        "quoc-te-phu-nu",
+        "phu-nu-viet-nam"
+      ],
+      "styles": [
+        "thanh-lich",
+        "thiet-thuc",
+        "sang-trong"
+      ],
+      "budgetTier": "3m-10m",
+      "giftType": "vat-pham",
+      "whyItFits": "Dáng bucket mềm, kích thước vừa đủ cho một buổi hẹn và điểm nhấn logo nhỏ gọn.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 4,
+      "featured": false,
       "id": "bag-valentino-vlogo-bucket",
       "brand": "Valentino Garavani",
       "name": "VLogo mini bucket bag",
@@ -77,6 +147,23 @@
       "message": "Dáng tròn ôm điều nhỏ\nMà em quý mỗi ngày\nAnh mong từng khoảnh khắc\nĐều vừa vặn trong tay."
     },
     {
+      "occasions": [
+        "sinh-nhat",
+        "ky-niem",
+        "quoc-te-phu-nu",
+        "phu-nu-viet-nam"
+      ],
+      "styles": [
+        "thanh-lich",
+        "thiet-thuc",
+        "sang-trong"
+      ],
+      "budgetTier": "3m-10m",
+      "giftType": "vat-pham",
+      "whyItFits": "Chất liệu raffia tự nhiên và quai xách nhỏ tạo cảm giác nhẹ nhàng cho những chuyến đi biển.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 5,
+      "featured": false,
       "id": "bag-aquazzura-tropical",
       "brand": "Aquazzura",
       "name": "Tropical mini raffia bag",

@@ -3,8 +3,28 @@
   "name": "Hoa và phong cách trang trí",
   "description": "Bảng màu, chất liệu và những chi tiết tạo nên một không gian thật riêng của em.",
   "notePlaceholder": "Em yêu loài hoa, bảng màu hay bầu không khí nào nhất?",
+  "coverImage": "https://images.unsplash.com/photo-1507501336603-6e31db2be093?auto=format&fit=crop&w=1200&q=90",
+  "coverAlt": "Ảnh đại diện hoa và phong cách trang trí",
   "items": [
     {
+      "occasions": [
+        "ngay-thuong",
+        "xin-loi-lam-hoa",
+        "cam-on",
+        "tan-gia-goc-song-moi"
+      ],
+      "styles": [
+        "toi-gian",
+        "lang-man",
+        "am-ap",
+        "nghe-thuat"
+      ],
+      "budgetTier": "1m-3m",
+      "giftType": "vat-pham",
+      "whyItFits": "Hoa hồng kem, mao lương và lá xanh được cắm tự nhiên như một khu vườn vừa thức giấc.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 1,
+      "featured": true,
       "id": "decor-garden-ivory",
       "name": "Khu vườn trắng ngà",
       "description": "Hoa hồng kem, mao lương và lá xanh được cắm tự nhiên như một khu vườn vừa thức giấc.",
@@ -20,6 +40,24 @@
       "message": "Hoa trắng bên màu lá\nNhẹ như buổi đầu quen\nNếu mình cùng trang trí\nNhà sẽ hóa khu vườn."
     },
     {
+      "occasions": [
+        "ngay-thuong",
+        "xin-loi-lam-hoa",
+        "cam-on",
+        "tan-gia-goc-song-moi"
+      ],
+      "styles": [
+        "toi-gian",
+        "lang-man",
+        "am-ap",
+        "nghe-thuat"
+      ],
+      "budgetTier": "1m-3m",
+      "giftType": "vat-pham",
+      "whyItFits": "Nến thấp, hoa đỏ sẫm và khăn bàn màu kem tạo chiều sâu ấm áp cho một buổi tối trang trọng.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 2,
+      "featured": true,
       "id": "decor-wine-candlelight",
       "name": "Tiệc tối đỏ rượu vang",
       "description": "Nến thấp, hoa đỏ sẫm và khăn bàn màu kem tạo chiều sâu ấm áp cho một buổi tối trang trọng.",
@@ -35,6 +73,24 @@
       "message": "Rượu vang và ánh nến\nGiữ buổi tối thật lâu\nChẳng cần lời hoa mỹ\nChỉ cần mình cạnh nhau."
     },
     {
+      "occasions": [
+        "ngay-thuong",
+        "xin-loi-lam-hoa",
+        "cam-on",
+        "tan-gia-goc-song-moi"
+      ],
+      "styles": [
+        "toi-gian",
+        "lang-man",
+        "am-ap",
+        "nghe-thuat"
+      ],
+      "budgetTier": "1m-3m",
+      "giftType": "vat-pham",
+      "whyItFits": "Thủy tinh trong, kim loại ánh vàng và những nhành hoa mảnh cho tổng thể nhẹ, sạch và hiện đại.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 3,
+      "featured": false,
       "id": "decor-champagne-minimal",
       "name": "Champagne tối giản",
       "description": "Thủy tinh trong, kim loại ánh vàng và những nhành hoa mảnh cho tổng thể nhẹ, sạch và hiện đại.",
@@ -50,6 +106,24 @@
       "message": "Một sắc vàng rất nhẹ\nTrên nền trắng bình yên\nNhư tình yêu vừa đủ\nKhông ồn ào vẫn bền."
     },
     {
+      "occasions": [
+        "ngay-thuong",
+        "xin-loi-lam-hoa",
+        "cam-on",
+        "tan-gia-goc-song-moi"
+      ],
+      "styles": [
+        "toi-gian",
+        "lang-man",
+        "am-ap",
+        "nghe-thuat"
+      ],
+      "budgetTier": "1m-3m",
+      "giftType": "vat-pham",
+      "whyItFits": "Hoa pastel, vải rủ mềm và chi tiết cổ điển mang đến cảm giác thơ mộng như một buổi chiều châu Âu.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 4,
+      "featured": false,
       "id": "decor-french-garden",
       "name": "Khu vườn kiểu Pháp",
       "description": "Hoa pastel, vải rủ mềm và chi tiết cổ điển mang đến cảm giác thơ mộng như một buổi chiều châu Âu.",
@@ -65,6 +139,24 @@
       "message": "Hoa pastel trước gió\nVải mềm chạm chiều êm\nAnh mong căn phòng nhỏ\nLuôn có mùa xuân bên."
     },
     {
+      "occasions": [
+        "ngay-thuong",
+        "xin-loi-lam-hoa",
+        "cam-on",
+        "tan-gia-goc-song-moi"
+      ],
+      "styles": [
+        "toi-gian",
+        "lang-man",
+        "am-ap",
+        "nghe-thuat"
+      ],
+      "budgetTier": "1m-3m",
+      "giftType": "vat-pham",
+      "whyItFits": "Hoa lan, lá bản lớn và sắc cam đất dành cho một buổi tiệc ngoài trời phóng khoáng nhưng vẫn tinh tế.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 5,
+      "featured": false,
       "id": "decor-tropical-sunset",
       "name": "Hoàng hôn nhiệt đới",
       "description": "Hoa lan, lá bản lớn và sắc cam đất dành cho một buổi tiệc ngoài trời phóng khoáng nhưng vẫn tinh tế.",

@@ -30,7 +30,14 @@ export function SelectionProgress({
         <p className="mt-1 text-xs leading-5 text-[#765e62]">
           {selectedItemCount} gợi ý đã được lưu · Không cần chọn đủ tất cả
         </p>
-        <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-[#e8d5d7]/65" aria-hidden="true">
+        <div
+          className="mt-4 h-1.5 overflow-hidden rounded-full bg-[#e8d5d7]/65"
+          role="progressbar"
+          aria-label="Tiến độ khám phá danh mục"
+          aria-valuemin={0}
+          aria-valuemax={totalCategoryCount}
+          aria-valuenow={selectedCategoryCount}
+        >
           <div
             className="h-full rounded-full bg-[#7a1425] transition-[width] duration-500"
             style={{ width: `${percentage}%` }}

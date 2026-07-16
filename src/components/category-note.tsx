@@ -24,7 +24,7 @@ export function CategoryNote({
           <PenLine size={16} strokeWidth={1.6} aria-hidden="true" />
           Điều em muốn nhắn thêm về {categoryName.toLocaleLowerCase("vi-VN")}
         </label>
-        <span className="shrink-0 text-[0.65rem] text-[#765e62]" aria-live="polite">
+        <span className="shrink-0 text-xs text-[#654f53]">
           {value.length}/500
         </span>
       </div>
@@ -35,7 +35,7 @@ export function CategoryNote({
         rows={4}
         onChange={(event) => onChange(event.target.value)}
         placeholder={placeholder}
-        className="block w-full resize-none rounded-2xl border border-[#5a0d18]/15 bg-white/75 px-4 py-3 text-base leading-7 text-[#2a171a] placeholder:text-[#765e62]/65 focus:border-[#7a1425] focus:outline-none focus:ring-2 focus:ring-[#c8a96b]/40"
+        className="block w-full resize-none rounded-2xl border border-[#5a0d18]/15 bg-white/75 px-4 py-3 text-base leading-7 text-[#2a171a] placeholder:text-[#654f53] focus:border-[#7a1425] focus:outline-none focus:ring-2 focus:ring-[#7a1425]/15"
       />
     </div>
   );

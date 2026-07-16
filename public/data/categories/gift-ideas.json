@@ -3,8 +3,26 @@
   "name": "Quà và những bất ngờ",
   "description": "Mười hai gợi ý quà cho sinh nhật, ngày kỷ niệm, dịp lễ hoặc đơn giản là một ngày muốn làm em vui.",
   "notePlaceholder": "Em thích được tặng món đồ, trải nghiệm hay bất ngờ như thế nào?",
+  "coverImage": "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1200&q=90",
+  "coverAlt": "Ảnh đại diện quà và những bất ngờ",
   "items": [
     {
+      "occasions": [
+        "sinh-nhat",
+        "ky-niem",
+        "valentine"
+      ],
+      "styles": [
+        "nu-tinh",
+        "thanh-lich",
+        "sang-trong"
+      ],
+      "budgetTier": "3m-10m",
+      "giftType": "vat-pham",
+      "whyItFits": "Peony & Blush Suede mang sắc hoa mẫu đơn, táo đỏ và da lộn mềm, phù hợp cho một dấu hương nữ tính nhưng không quá ngọt.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 1,
+      "featured": true,
       "id": "gift-jo-malone-peony",
       "name": "Hương nước hoa của riêng em",
       "description": "Peony & Blush Suede mang sắc hoa mẫu đơn, táo đỏ và da lộn mềm, phù hợp cho một dấu hương nữ tính nhưng không quá ngọt.",
@@ -23,6 +41,22 @@
       ]
     },
     {
+      "occasions": [
+        "ky-niem",
+        "valentine",
+        "cau-hon-cam-ket"
+      ],
+      "styles": [
+        "lang-man",
+        "ca-nhan-hoa",
+        "thu-cong"
+      ],
+      "budgetTier": "1m-3m",
+      "giftType": "ca-nhan-hoa",
+      "whyItFits": "Một thiết kế mảnh có thể khắc chữ cái, ngày đặc biệt hoặc lời nhắn nhỏ để trở thành món đồ chỉ riêng em có.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 2,
+      "featured": true,
       "id": "gift-personalized-necklace",
       "name": "Dây chuyền khắc ngày kỷ niệm",
       "description": "Một thiết kế mảnh có thể khắc chữ cái, ngày đặc biệt hoặc lời nhắn nhỏ để trở thành món đồ chỉ riêng em có.",
@@ -39,6 +73,23 @@
       ]
     },
     {
+      "occasions": [
+        "ngay-thuong",
+        "quoc-te-phu-nu",
+        "phu-nu-viet-nam",
+        "xin-loi-lam-hoa"
+      ],
+      "styles": [
+        "nu-tinh",
+        "lang-man",
+        "am-ap"
+      ],
+      "budgetTier": "500k-1m",
+      "giftType": "vat-pham",
+      "whyItFits": "Một bó hoa phối riêng theo màu em yêu, kèm tấm thiệp viết tay thay vì mẫu cắm sẵn đại trà.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 3,
+      "featured": false,
       "id": "gift-seasonal-bouquet",
       "name": "Bó hoa theo mùa",
       "description": "Một bó hoa phối riêng theo màu em yêu, kèm tấm thiệp viết tay thay vì mẫu cắm sẵn đại trà.",
@@ -52,6 +103,22 @@
       ]
     },
     {
+      "occasions": [
+        "sinh-nhat",
+        "tot-nghiep-cong-viec-moi",
+        "yeu-xa-doan-tu"
+      ],
+      "styles": [
+        "ca-tinh",
+        "cong-nghe",
+        "thiet-thuc"
+      ],
+      "budgetTier": "3m-10m",
+      "giftType": "vat-pham",
+      "whyItFits": "Máy ảnh lấy liền nhỏ gọn với chế độ cận cảnh và phơi sáng tự động, dành cho những khoảnh khắc không muốn chỉ nằm trong điện thoại.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 4,
+      "featured": false,
       "id": "gift-instax-mini-12",
       "name": "Máy ảnh Instax Mini 12",
       "description": "Máy ảnh lấy liền nhỏ gọn với chế độ cận cảnh và phơi sáng tự động, dành cho những khoảnh khắc không muốn chỉ nằm trong điện thoại.",
@@ -68,6 +135,22 @@
       ]
     },
     {
+      "occasions": [
+        "ngay-thuong",
+        "giang-sinh",
+        "tan-gia-goc-song-moi"
+      ],
+      "styles": [
+        "toi-gian",
+        "am-ap",
+        "sang-trong"
+      ],
+      "budgetTier": "1m-3m",
+      "giftType": "vat-pham",
+      "whyItFits": "Hương quả mọng và hoa hồng tạo bầu không khí ấm, sạch và trang nhã cho những buổi tối em muốn nghỉ ngơi.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 5,
+      "featured": false,
       "id": "gift-diptyque-baies",
       "name": "Nến thơm Diptyque Baies",
       "description": "Hương quả mọng và hoa hồng tạo bầu không khí ấm, sạch và trang nhã cho những buổi tối em muốn nghỉ ngơi.",
@@ -84,6 +167,22 @@
       ]
     },
     {
+      "occasions": [
+        "sinh-nhat",
+        "ky-niem",
+        "cam-on"
+      ],
+      "styles": [
+        "ca-nhan-hoa",
+        "nghe-thuat",
+        "thu-cong"
+      ],
+      "budgetTier": "500k-1m",
+      "giftType": "tu-lam",
+      "whyItFits": "Một chiếc bánh nhỏ vừa đủ cho hai người, trang trí theo màu em thích và có một câu chúc không trùng với bất kỳ ai.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 6,
+      "featured": false,
       "id": "gift-custom-cake",
       "name": "Bánh ngọt cho ngày đặc biệt",
       "description": "Một chiếc bánh nhỏ vừa đủ cho hai người, trang trí theo màu em thích và có một câu chúc không trùng với bất kỳ ai.",
@@ -97,6 +196,22 @@
       ]
     },
     {
+      "occasions": [
+        "ky-niem",
+        "yeu-xa-doan-tu",
+        "cam-on"
+      ],
+      "styles": [
+        "ca-nhan-hoa",
+        "am-ap",
+        "thu-cong"
+      ],
+      "budgetTier": "500k-1m",
+      "giftType": "ca-nhan-hoa",
+      "whyItFits": "Một photobook sắp theo dòng thời gian, có chú thích viết riêng cho từng chuyến đi và những ngày bình thường đáng nhớ.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 7,
+      "featured": false,
       "id": "gift-photo-book",
       "name": "Album “Chuyện của chúng mình”",
       "description": "Một photobook sắp theo dòng thời gian, có chú thích viết riêng cho từng chuyến đi và những ngày bình thường đáng nhớ.",
@@ -112,6 +227,22 @@
       ]
     },
     {
+      "occasions": [
+        "ngay-thuong",
+        "valentine",
+        "co-vu-chua-lanh"
+      ],
+      "styles": [
+        "ca-tinh",
+        "nghe-thuat",
+        "thu-cong"
+      ],
+      "budgetTier": "500k-1m",
+      "giftType": "tu-lam",
+      "whyItFits": "Một bó tulip có thể cùng nhau lắp trong một buổi tối rảnh rồi giữ lại lâu dài như món trang trí nhỏ.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 8,
+      "featured": false,
       "id": "gift-lego-tulip",
       "name": "LEGO Botanicals Tulip Bouquet",
       "description": "Một bó tulip có thể cùng nhau lắp trong một buổi tối rảnh rồi giữ lại lâu dài như món trang trí nhỏ.",
@@ -128,6 +259,23 @@
       ]
     },
     {
+      "occasions": [
+        "sinh-nhat",
+        "quoc-te-phu-nu",
+        "phu-nu-viet-nam",
+        "co-vu-chua-lanh"
+      ],
+      "styles": [
+        "thiet-thuc",
+        "sang-trong",
+        "trai-nghiem"
+      ],
+      "budgetTier": "1m-3m",
+      "giftType": "trai-nghiem",
+      "whyItFits": "Khoảng thời gian để em nghỉ ngơi trọn vẹn với massage, chăm sóc cơ thể và một lịch trình không cần vội.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 9,
+      "featured": false,
       "id": "gift-spa-day",
       "name": "Một ngày spa thư giãn",
       "description": "Khoảng thời gian để em nghỉ ngơi trọn vẹn với massage, chăm sóc cơ thể và một lịch trình không cần vội.",
@@ -144,6 +292,22 @@
       ]
     },
     {
+      "occasions": [
+        "ky-niem",
+        "valentine",
+        "xin-loi-lam-hoa"
+      ],
+      "styles": [
+        "lang-man",
+        "am-ap",
+        "trai-nghiem"
+      ],
+      "budgetTier": "1m-3m",
+      "giftType": "trai-nghiem",
+      "whyItFits": "Một bàn nhỏ yên tĩnh, món em thích và đủ thời gian để mình kể nhau nghe những điều đã bỏ quên trong ngày bận rộn.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 10,
+      "featured": false,
       "id": "gift-candlelight-dinner",
       "name": "Bữa tối dưới ánh nến",
       "description": "Một bàn nhỏ yên tĩnh, món em thích và đủ thời gian để mình kể nhau nghe những điều đã bỏ quên trong ngày bận rộn.",
@@ -157,6 +321,22 @@
       ]
     },
     {
+      "occasions": [
+        "sinh-nhat",
+        "ngay-thuong",
+        "yeu-xa-doan-tu"
+      ],
+      "styles": [
+        "cong-nghe",
+        "ca-nhan-hoa",
+        "thiet-thuc"
+      ],
+      "budgetTier": "3m-10m",
+      "giftType": "ca-nhan-hoa",
+      "whyItFits": "Một món quà dùng mỗi ngày, đi kèm playlist được sắp riêng từ những bài hát gắn với kỷ niệm của hai người.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 11,
+      "featured": false,
       "id": "gift-airpods-playlist",
       "name": "AirPods cho playlist của em",
       "description": "Một món quà dùng mỗi ngày, đi kèm playlist được sắp riêng từ những bài hát gắn với kỷ niệm của hai người.",
@@ -175,6 +355,22 @@
       ]
     },
     {
+      "occasions": [
+        "sinh-nhat",
+        "ky-niem",
+        "yeu-xa-doan-tu"
+      ],
+      "styles": [
+        "lang-man",
+        "sang-trong",
+        "trai-nghiem"
+      ],
+      "budgetTier": "tren-10m",
+      "giftType": "trai-nghiem",
+      "whyItFits": "Một chuyến đi hai ngày chỉ tiết lộ giờ khởi hành, còn nơi ở và lịch trình được chuẩn bị theo đúng nhịp nghỉ em yêu.",
+      "messageTitle": "Một lời nhắn cho em",
+      "editorialOrder": 12,
+      "featured": false,
       "id": "gift-surprise-weekend",
       "name": "Cuối tuần bí mật",
       "description": "Một chuyến đi hai ngày chỉ tiết lộ giờ khởi hành, còn nơi ở và lịch trình được chuẩn bị theo đúng nhịp nghỉ em yêu.",

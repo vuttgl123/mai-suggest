@@ -6,10 +6,11 @@ import type { PreferenceSelectionState } from "@/types/preference";
 export const PREFERENCE_STORAGE_KEY = "dieu-em-yeu:preferences:v1";
 
 const DEFAULT_STATE: PreferenceSelectionState = {
-  schemaVersion: 1,
+  schemaVersion: 2,
   likedItemIds: [],
   favoriteByCategory: {},
   notesByCategory: {},
+  lastViewedCategoryId: null,
   updatedAt: null,
 };
 
@@ -18,44 +19,32 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 }
 
 function stringRecord(value: unknown): Record<string, string> | null {
-  if (!isRecord(value)) return null;
-  if (!Object.values(value).every((entry) => typeof entry === "string")) {
-    return null;
-  }
+  if (!isRecord(value) || !Object.values(value).every((entry) => typeof entry === "string")) return null;
   return value as Record<string, string>;
 }
 
 function parseStoredState(value: unknown): PreferenceSelectionState | null {
-  if (!isRecord(value) || value.schemaVersion !== 1) return null;
-
+  if (!isRecord(value) || (value.schemaVersion !== 1 && value.schemaVersion !== 2)) return null;
   const { likedItemIds, favoriteByCategory, notesByCategory, updatedAt } = value;
   const parsedFavorites = stringRecord(favoriteByCategory);
   const parsedNotes = stringRecord(notesByCategory);
-
-  if (
-    !Array.isArray(likedItemIds) ||
-    !likedItemIds.every((id) => typeof id === "string") ||
-    !parsedFavorites ||
-    !parsedNotes ||
-    (updatedAt !== null && typeof updatedAt !== "string")
-  ) {
-    return null;
-  }
-
+  if (!Array.isArray(likedItemIds) || !likedItemIds.every((id) => typeof id === "string") ||
+    !parsedFavorites || !parsedNotes || (updatedAt !== null && typeof updatedAt !== "string")) return null;
+  const lastViewed = value.schemaVersion === 2 ? value.lastViewedCategoryId : null;
+  if (lastViewed !== null && typeof lastViewed !== "string") return null;
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     likedItemIds: [...new Set(likedItemIds)],
     favoriteByCategory: parsedFavorites,
     notesByCategory: Object.fromEntries(
       Object.entries(parsedNotes).map(([key, note]) => [key, note.slice(0, 500)]),
     ),
+    lastViewedCategoryId: lastViewed,
     updatedAt,
   };
 }
 
-function withTimestamp(
-  state: Omit<PreferenceSelectionState, "updatedAt">,
-): PreferenceSelectionState {
+function withTimestamp(state: Omit<PreferenceSelectionState, "updatedAt">): PreferenceSelectionState {
   return { ...state, updatedAt: new Date().toISOString() };
 }
 
@@ -64,103 +53,69 @@ export function usePreferenceStorage() {
   const [hasHydrated, setHasHydrated] = useState(false);
 
   useEffect(() => {
-    const hydrateTimer = window.setTimeout(() => {
+    const timer = window.setTimeout(() => {
       let hydratedState = DEFAULT_STATE;
-
       try {
         const storedValue = window.localStorage.getItem(PREFERENCE_STORAGE_KEY);
-        if (storedValue) {
-          hydratedState = parseStoredState(JSON.parse(storedValue)) ?? DEFAULT_STATE;
-        }
+        if (storedValue) hydratedState = parseStoredState(JSON.parse(storedValue)) ?? DEFAULT_STATE;
       } catch {
         hydratedState = DEFAULT_STATE;
       }
-
       setSelection(hydratedState);
       setHasHydrated(true);
     }, 0);
-
-    return () => window.clearTimeout(hydrateTimer);
+    return () => window.clearTimeout(timer);
   }, []);
 
   useEffect(() => {
     if (!hasHydrated) return;
-
     try {
       window.localStorage.setItem(PREFERENCE_STORAGE_KEY, JSON.stringify(selection));
     } catch {
-      // The interface remains usable when storage is disabled or full.
+      // Keep the catalogue usable when storage is blocked or full.
     }
   }, [hasHydrated, selection]);
 
+  function update(updater: (current: PreferenceSelectionState) => Omit<PreferenceSelectionState, "updatedAt">) {
+    setSelection((current) => withTimestamp(updater(current)));
+  }
+
   function toggleLiked(itemId: string, categoryId: string) {
-    setSelection((current) => {
+    update((current) => {
       const isLiked = current.likedItemIds.includes(itemId);
-      const likedItemIds = isLiked
-        ? current.likedItemIds.filter((id) => id !== itemId)
-        : [...current.likedItemIds, itemId];
       const favoriteByCategory = { ...current.favoriteByCategory };
-
-      if (isLiked && favoriteByCategory[categoryId] === itemId) {
-        delete favoriteByCategory[categoryId];
-      }
-
-      return withTimestamp({
-        schemaVersion: 1,
-        likedItemIds,
-        favoriteByCategory,
-        notesByCategory: current.notesByCategory,
-      });
+      if (isLiked && favoriteByCategory[categoryId] === itemId) delete favoriteByCategory[categoryId];
+      return { ...current, schemaVersion: 2,
+        likedItemIds: isLiked ? current.likedItemIds.filter((id) => id !== itemId) : [...current.likedItemIds, itemId],
+        favoriteByCategory };
     });
   }
 
   function toggleFavorite(categoryId: string, itemId: string) {
-    setSelection((current) => {
+    update((current) => {
       const favoriteByCategory = { ...current.favoriteByCategory };
       const isFavorite = favoriteByCategory[categoryId] === itemId;
-
-      if (isFavorite) {
-        delete favoriteByCategory[categoryId];
-      } else {
-        favoriteByCategory[categoryId] = itemId;
-      }
-
-      return withTimestamp({
-        schemaVersion: 1,
-        likedItemIds:
-          isFavorite || current.likedItemIds.includes(itemId)
-            ? current.likedItemIds
-            : [...current.likedItemIds, itemId],
-        favoriteByCategory,
-        notesByCategory: current.notesByCategory,
-      });
+      if (isFavorite) delete favoriteByCategory[categoryId];
+      else favoriteByCategory[categoryId] = itemId;
+      return { ...current, schemaVersion: 2, favoriteByCategory,
+        likedItemIds: isFavorite || current.likedItemIds.includes(itemId)
+          ? current.likedItemIds : [...current.likedItemIds, itemId] };
     });
   }
 
   function setCategoryNote(categoryId: string, note: string) {
-    setSelection((current) =>
-      withTimestamp({
-        schemaVersion: 1,
-        likedItemIds: current.likedItemIds,
-        favoriteByCategory: current.favoriteByCategory,
-        notesByCategory: {
-          ...current.notesByCategory,
-          [categoryId]: note.slice(0, 500),
-        },
-      }),
-    );
+    update((current) => ({ ...current, schemaVersion: 2,
+      notesByCategory: { ...current.notesByCategory, [categoryId]: note.slice(0, 500) } }));
+  }
+
+  function setLastViewedCategory(categoryId: string) {
+    setSelection((current) => ({ ...current, lastViewedCategoryId: categoryId }));
   }
 
   function resetAll() {
     setSelection(DEFAULT_STATE);
   }
 
-  return {
-    selection,
-    hasHydrated,
-    toggleLiked,
-    toggleFavorite,
-    setCategoryNote,
-    resetAll,
-  };
+  return { selection, hasHydrated, toggleLiked, toggleFavorite, setCategoryNote,
+    setLastViewedCategory, resetAll };
 }

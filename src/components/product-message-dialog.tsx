@@ -95,7 +95,7 @@ export function ProductMessageDialog({
               type="button"
               onClick={onClose}
               aria-label="Đóng lời nhắn"
-              className="absolute right-3 top-3 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-[#5a0d18]/15 bg-[#fffaf4]/95 text-[#5a0d18] shadow-sm backdrop-blur"
+              className="fixed right-3 top-3 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-[#5a0d18]/15 bg-[#fffaf4]/95 text-[#5a0d18] shadow-sm backdrop-blur md:absolute"
             >
               <X size={20} aria-hidden="true" />
             </button>
@@ -120,6 +120,14 @@ export function ProductMessageDialog({
               <p className="mt-4 text-sm leading-7 text-[#765e62]">
                 {item.description}
               </p>
+              <div className="mt-5 rounded-[1.1rem] border border-[#5a0d18]/10 bg-white/70 p-4">
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#6e542c]">
+                  Vì sao gợi ý này phù hợp
+                </p>
+                <p className="mt-2 text-sm leading-7 text-[#4f3a3e]">
+                  {item.whyItFits}
+                </p>
+              </div>
 
               <div className="my-6 h-px bg-[#5a0d18]/10" />
               <div className="relative rounded-[1.2rem] border border-[#c8a96b]/35 bg-[#f8f1e8] px-5 py-6 text-center">
@@ -130,7 +138,7 @@ export function ProductMessageDialog({
                   aria-hidden="true"
                 />
                 <p className="mt-2 text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-[#9b763e]">
-                  Một lời nhắn cho em
+                  {item.messageTitle}
                 </p>
                 <blockquote className="font-display mt-3 whitespace-pre-line text-xl font-medium italic leading-8 text-[#5a0d18] sm:text-2xl sm:leading-9">
                   {item.message}

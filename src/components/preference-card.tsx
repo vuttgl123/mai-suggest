@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, Crown, Heart } from "lucide-react";
+import { ArrowUpRight, Crown, Heart, Sparkles } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import type { PreferenceItem } from "@/types/preference";
 import { SmartImage } from "./smart-image";
@@ -15,6 +15,15 @@ interface PreferenceCardProps {
   onToggleFavorite: () => void;
 }
 
+const budgetLabels: Record<PreferenceItem["budgetTier"], string> = {
+  "duoi-500k": "Dưới 500 nghìn",
+  "500k-1m": "500 nghìn – 1 triệu",
+  "1m-3m": "1 – 3 triệu",
+  "3m-10m": "3 – 10 triệu",
+  "tren-10m": "Trên 10 triệu",
+  "linh-hoat": "Ngân sách linh hoạt",
+};
+
 export function PreferenceCard({
   item,
   isLiked,
@@ -25,100 +34,112 @@ export function PreferenceCard({
   onToggleFavorite,
 }: PreferenceCardProps) {
   const reduceMotion = useReducedMotion();
+  const stateClass = isFavorite
+    ? "border-[#7a1425] ring-1 ring-[#c8a96b]/60"
+    : isLiked
+      ? "border-[#c8a96b]"
+      : "border-[#5a0d18]/10 hover:border-[#c8a96b]/70";
 
   return (
     <motion.article
       layout={!reduceMotion}
-      animate={reduceMotion ? undefined : { y: isFavorite ? -2 : 0 }}
-      className={`paper-card group flex h-full min-w-0 flex-col overflow-hidden rounded-[1rem] border bg-[#fffaf4] transition-colors sm:rounded-[1.25rem] ${
-        isFavorite
-          ? "border-[#7a1425] ring-1 ring-[#c8a96b]/55"
-          : isLiked
-            ? "border-[#c8a96b]"
-            : "border-[#5a0d18]/10"
-      }`}
+      animate={reduceMotion ? undefined : { y: isFavorite ? -3 : 0 }}
+      className={
+        "paper-card group flex h-full min-w-0 flex-col overflow-hidden rounded-[1.35rem] border bg-[#fffaf4] transition duration-300 " +
+        stateClass
+      }
     >
-      <button
-        type="button"
-        onClick={onOpen}
-        className="flex min-w-0 flex-1 flex-col text-left focus-visible:outline-offset-[-3px]"
-        aria-label={`Mở lời nhắn của ${item.name}`}
-      >
-        <div className="relative w-full overflow-hidden">
+      <div className="relative overflow-hidden">
+        <button
+          type="button"
+          onClick={onOpen}
+          className="block w-full overflow-hidden text-left focus-visible:outline-offset-[-4px]"
+          aria-label={"Mở chi tiết " + item.name}
+        >
           <SmartImage
             src={item.imageUrl}
             alt={item.imageAlt}
-            sizes="(max-width: 639px) 46vw, (max-width: 1023px) 30vw, (max-width: 1279px) 23vw, 19vw"
+            sizes="(max-width: 379px) 92vw, (max-width: 639px) 46vw, (max-width: 1023px) 30vw, 24vw"
             priority={priority}
-            imageClassName="transition-transform duration-700 group-hover:scale-[1.018]"
+            imageClassName="transition-transform duration-700 group-hover:scale-[1.035]"
           />
-          {(isFavorite || isLiked) && (
-            <span
-              className={`absolute left-2 top-2 inline-flex min-h-7 items-center gap-1 rounded-full px-2 py-1 text-[0.56rem] font-semibold shadow-sm sm:left-3 sm:top-3 sm:text-[0.62rem] ${
-                isFavorite
-                  ? "bg-[#5a0d18] text-white"
-                  : "bg-[#fffaf4]/95 text-[#7a1425]"
-              }`}
-            >
-              {isFavorite ? (
-                <Crown size={11} fill="currentColor" aria-hidden="true" />
-              ) : (
-                <Heart size={11} fill="currentColor" aria-hidden="true" />
-              )}
-              {isFavorite ? "Thích nhất" : "Đã thích"}
-            </span>
-          )}
-        </div>
+        </button>
 
-        <div className="flex w-full flex-1 flex-col p-3 sm:p-4">
-          <p className="truncate text-[0.56rem] font-semibold uppercase tracking-[0.12em] text-[#9b763e] sm:text-[0.62rem]">
-            {item.brand ?? "Dành cho em"}
-          </p>
-          <h3 className="font-display mt-1 line-clamp-2 min-h-[2.55rem] text-[1.02rem] font-semibold leading-5 tracking-[-0.02em] text-[#31080e] sm:min-h-[3rem] sm:text-[1.22rem] sm:leading-6">
-            {item.name}
-          </h3>
-          {item.referencePrice && (
-            <p className="mt-2 truncate text-[0.62rem] text-[#765e62] sm:text-[0.68rem]">
-              {item.referencePrice}
-            </p>
-          )}
-          <span className="mt-auto inline-flex items-center gap-1.5 pt-3 text-[0.6rem] font-semibold text-[#7a1425] sm:text-[0.68rem]">
-            <BookOpen size={13} aria-hidden="true" />
-            Đọc lời nhắn
+        {item.featured && (
+          <span className="absolute left-3 top-3 inline-flex min-h-8 items-center gap-1.5 rounded-full bg-[#fffaf4]/95 px-3 py-1.5 text-xs font-semibold text-[#6b1624] shadow-sm backdrop-blur">
+            <Sparkles size={13} aria-hidden="true" />
+            Tuyển chọn
           </span>
-        </div>
-      </button>
+        )}
 
-      <div className="grid grid-cols-2 border-t border-[#5a0d18]/10">
         <button
           type="button"
           aria-pressed={isLiked}
-          aria-label={isLiked ? `Bỏ thích ${item.name}` : `Thích ${item.name}`}
+          aria-label={(isLiked ? "Bỏ thích " : "Thích ") + item.name}
           onClick={onToggleLiked}
-          className={`flex min-h-11 items-center justify-center gap-1 border-r border-[#5a0d18]/10 px-1 text-[0.64rem] font-semibold transition sm:gap-1.5 sm:text-[0.7rem] ${
-            isLiked
-              ? "bg-[#7a1425] text-white"
-              : "text-[#5a0d18] hover:bg-[#e8d5d7]/35"
-          }`}
+          className={
+            "absolute right-3 top-3 flex h-11 w-11 items-center justify-center rounded-full border shadow-md backdrop-blur transition " +
+            (isLiked
+              ? "border-[#7a1425] bg-[#7a1425] text-white"
+              : "border-white/60 bg-[#fffaf4]/95 text-[#5a0d18] hover:bg-white")
+          }
         >
-          <Heart size={14} fill={isLiked ? "currentColor" : "none"} aria-hidden="true" />
-          Thích
-        </button>
-        <button
-          type="button"
-          aria-pressed={isFavorite}
-          aria-label={isFavorite ? `Bỏ thích nhất ${item.name}` : `Chọn ${item.name} là thích nhất`}
-          onClick={onToggleFavorite}
-          className={`flex min-h-11 items-center justify-center gap-1 px-1 text-[0.64rem] font-semibold transition sm:gap-1.5 sm:text-[0.7rem] ${
-            isFavorite
-              ? "bg-[#efe2bd] text-[#5a0d18]"
-              : "text-[#6c4a1e] hover:bg-[#f4e9ce]"
-          }`}
-        >
-          <Crown size={14} fill={isFavorite ? "currentColor" : "none"} aria-hidden="true" />
-          Thích nhất
+          <Heart
+            size={18}
+            fill={isLiked ? "currentColor" : "none"}
+            aria-hidden="true"
+          />
         </button>
       </div>
+
+      <button
+        type="button"
+        onClick={onOpen}
+        className="flex min-w-0 flex-1 flex-col p-4 text-left focus-visible:outline-offset-[-4px] sm:p-5"
+      >
+        <div className="flex min-w-0 items-center gap-2 text-xs font-semibold text-[#6e542c]">
+          <span className="truncate">{item.brand ?? "Dành riêng cho em"}</span>
+          <span aria-hidden="true">·</span>
+          <span className="shrink-0">{budgetLabels[item.budgetTier]}</span>
+        </div>
+        <h3 className="font-display mt-2 line-clamp-2 text-[1.32rem] font-semibold leading-[1.08] tracking-[-0.025em] text-[#31080e] sm:text-[1.5rem]">
+          {item.name}
+        </h3>
+        <p className="mt-3 line-clamp-2 text-sm leading-6 text-[#654f53]">
+          {item.whyItFits}
+        </p>
+        <span className="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-semibold text-[#6b1624]">
+          Xem câu chuyện
+          <ArrowUpRight
+            className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            size={16}
+            aria-hidden="true"
+          />
+        </span>
+      </button>
+
+      <button
+        type="button"
+        aria-pressed={isFavorite}
+        aria-label={
+          (isFavorite ? "Bỏ lựa chọn thích nhất " : "Chọn làm thích nhất ") +
+          item.name
+        }
+        onClick={onToggleFavorite}
+        className={
+          "flex min-h-12 items-center justify-center gap-2 border-t border-[#5a0d18]/10 px-4 py-3 text-sm font-semibold transition " +
+          (isFavorite
+            ? "bg-[#efe2bd] text-[#5a0d18]"
+            : "text-[#674b21] hover:bg-[#f4e9ce]")
+        }
+      >
+        <Crown
+          size={16}
+          fill={isFavorite ? "currentColor" : "none"}
+          aria-hidden="true"
+        />
+        {isFavorite ? "Đang là lựa chọn số một" : "Đặt làm lựa chọn số một"}
+      </button>
     </motion.article>
   );
 }
