@@ -1,0 +1,193 @@
+{
+  "id": "gift-ideas",
+  "name": "Quà và những bất ngờ",
+  "description": "Mười hai gợi ý quà cho sinh nhật, ngày kỷ niệm, dịp lễ hoặc đơn giản là một ngày muốn làm em vui.",
+  "notePlaceholder": "Em thích được tặng món đồ, trải nghiệm hay bất ngờ như thế nào?",
+  "items": [
+    {
+      "id": "gift-jo-malone-peony",
+      "name": "Hương nước hoa của riêng em",
+      "description": "Peony & Blush Suede mang sắc hoa mẫu đơn, táo đỏ và da lộn mềm, phù hợp cho một dấu hương nữ tính nhưng không quá ngọt.",
+      "imageUrl": "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1200&q=90",
+      "imageAlt": "Chai nước hoa thanh lịch bên những cánh hoa",
+      "referencePrice": "Từ 175 USD",
+      "priceUpdatedAt": "2026-07-16",
+      "brand": "Jo Malone London",
+      "sourceName": "Peony & Blush Suede Cologne",
+      "sourceUrl": "https://www.jomalone.com/product/25946/27028/colognes/peony-blush-suede-cologne",
+      "message": "Anh gửi vào hương thơm\nMột chiều hoa vừa nở\nĐể mỗi lần em bước\nCả ngày bỗng dịu hơn.",
+      "tags": [
+        "Nước hoa",
+        "Nữ tính",
+        "Cá nhân"
+      ]
+    },
+    {
+      "id": "gift-personalized-necklace",
+      "name": "Dây chuyền khắc ngày kỷ niệm",
+      "description": "Một thiết kế mảnh có thể khắc chữ cái, ngày đặc biệt hoặc lời nhắn nhỏ để trở thành món đồ chỉ riêng em có.",
+      "imageUrl": "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?auto=format&fit=crop&w=1200&q=90",
+      "imageAlt": "Dây chuyền vàng mảnh được đặt trong hộp quà",
+      "brand": "Tiffany & Co.",
+      "sourceName": "Personalized Necklaces & Pendants",
+      "sourceUrl": "https://www.tiffany.com/jewelry/necklaces-pendants/personalized/",
+      "message": "Một ngày mình từng nhớ\nKhắc thật khẽ lên đây\nĐể thời gian có vội\nVẫn ở cạnh em hoài.",
+      "tags": [
+        "Khắc tên",
+        "Kỷ niệm",
+        "Tinh tế"
+      ]
+    },
+    {
+      "id": "gift-seasonal-bouquet",
+      "name": "Bó hoa theo mùa",
+      "description": "Một bó hoa phối riêng theo màu em yêu, kèm tấm thiệp viết tay thay vì mẫu cắm sẵn đại trà.",
+      "imageUrl": "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=1200&q=90",
+      "imageAlt": "Bó hoa pastel được gói bằng giấy màu kem",
+      "message": "Hoa hôm nay rồi sẽ\nNgủ yên giữa tháng ngày\nNhưng điều anh muốn nói\nVẫn nở mãi trong tay.",
+      "tags": [
+        "Hoa tươi",
+        "Viết tay",
+        "Theo mùa"
+      ]
+    },
+    {
+      "id": "gift-instax-mini-12",
+      "name": "Máy ảnh Instax Mini 12",
+      "description": "Máy ảnh lấy liền nhỏ gọn với chế độ cận cảnh và phơi sáng tự động, dành cho những khoảnh khắc không muốn chỉ nằm trong điện thoại.",
+      "imageUrl": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1200&q=90",
+      "imageAlt": "Máy ảnh nhỏ đặt cạnh những tấm ảnh in",
+      "brand": "Fujifilm",
+      "sourceName": "INSTAX Mini 12 chính thức",
+      "sourceUrl": "https://www.fujifilm.com/us/en/consumer/instax/cameras/mini12",
+      "message": "Mình giữ ngày hôm ấy\nTrong một tấm hình xinh\nMai này khi nhìn lại\nVẫn thấy em cạnh mình.",
+      "tags": [
+        "Kỷ niệm",
+        "Máy ảnh",
+        "Dễ dùng"
+      ]
+    },
+    {
+      "id": "gift-diptyque-baies",
+      "name": "Nến thơm Diptyque Baies",
+      "description": "Hương quả mọng và hoa hồng tạo bầu không khí ấm, sạch và trang nhã cho những buổi tối em muốn nghỉ ngơi.",
+      "imageUrl": "https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=1200&q=90",
+      "imageAlt": "Nến thơm trong ly thủy tinh đang tỏa ánh sáng ấm",
+      "brand": "Diptyque Paris",
+      "sourceName": "Baies Classic Candle",
+      "sourceUrl": "https://emea.diptyqueparis.com/en-om/products/baies-classic-candle",
+      "message": "Thắp một ngọn nến nhỏ\nCho căn phòng bình yên\nNgoài kia ngày có mỏi\nVề đây anh cạnh em.",
+      "tags": [
+        "Nến thơm",
+        "Thư giãn",
+        "Không gian"
+      ]
+    },
+    {
+      "id": "gift-custom-cake",
+      "name": "Bánh ngọt cho ngày đặc biệt",
+      "description": "Một chiếc bánh nhỏ vừa đủ cho hai người, trang trí theo màu em thích và có một câu chúc không trùng với bất kỳ ai.",
+      "imageUrl": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1200&q=90",
+      "imageAlt": "Bánh sinh nhật trang trí hoa tinh tế",
+      "message": "Thêm một ngọn nến sáng\nThêm một tuổi dịu dàng\nĐiều anh mong giản dị\nEm vui suốt năm sang.",
+      "tags": [
+        "Đặt riêng",
+        "Ngọt ngào",
+        "Hai người"
+      ]
+    },
+    {
+      "id": "gift-photo-book",
+      "name": "Album “Chuyện của chúng mình”",
+      "description": "Một photobook sắp theo dòng thời gian, có chú thích viết riêng cho từng chuyến đi và những ngày bình thường đáng nhớ.",
+      "imageUrl": "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=1200&q=90",
+      "imageAlt": "Album ảnh mở trên bàn cùng những tấm hình kỷ niệm",
+      "sourceName": "Photobook Việt Nam",
+      "sourceUrl": "https://www.photobook.com.vn/",
+      "message": "Từng trang là một chuyện\nTừng ảnh một ngày thương\nMình đi qua năm tháng\nVẫn chung một con đường.",
+      "tags": [
+        "Photobook",
+        "Cá nhân hóa",
+        "Kỷ niệm"
+      ]
+    },
+    {
+      "id": "gift-lego-tulip",
+      "name": "LEGO Botanicals Tulip Bouquet",
+      "description": "Một bó tulip có thể cùng nhau lắp trong một buổi tối rảnh rồi giữ lại lâu dài như món trang trí nhỏ.",
+      "imageUrl": "https://images.unsplash.com/photo-1497250681960-ef046c08a56e?auto=format&fit=crop&w=1200&q=90",
+      "imageAlt": "Những bông tulip nhiều màu trong bình hoa",
+      "brand": "LEGO Botanicals",
+      "sourceName": "Tulip Bouquet 11501",
+      "sourceUrl": "https://www.lego.com/en-us/product/tulip-bouquet-11501?opt-out-modal=show",
+      "message": "Mình ghép từng cánh nhỏ\nThành một đóa hoa xinh\nNhư bao ngày bình dị\nGhép thành chuyện chúng mình.",
+      "tags": [
+        "Cùng làm",
+        "Hoa bền lâu",
+        "Trang trí"
+      ]
+    },
+    {
+      "id": "gift-spa-day",
+      "name": "Một ngày spa thư giãn",
+      "description": "Khoảng thời gian để em nghỉ ngơi trọn vẹn với massage, chăm sóc cơ thể và một lịch trình không cần vội.",
+      "imageUrl": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=90",
+      "imageAlt": "Không gian spa với khăn mềm và ánh nến",
+      "brand": "L'Occitane",
+      "sourceName": "Hệ thống cửa hàng L'Occitane Việt Nam",
+      "sourceUrl": "https://vn.loccitane.com/pages/he-thong-cua-hang",
+      "message": "Hôm nay em nghỉ nhé\nĐể dịu lại đôi vai\nMọi lo toan cứ để\nAnh giữ hộ một ngày.",
+      "tags": [
+        "Thư giãn",
+        "Chăm sóc",
+        "Trải nghiệm"
+      ]
+    },
+    {
+      "id": "gift-candlelight-dinner",
+      "name": "Bữa tối dưới ánh nến",
+      "description": "Một bàn nhỏ yên tĩnh, món em thích và đủ thời gian để mình kể nhau nghe những điều đã bỏ quên trong ngày bận rộn.",
+      "imageUrl": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=90",
+      "imageAlt": "Bàn ăn tối tinh tế trong ánh sáng ấm",
+      "message": "Không cần nơi thật lớn\nChỉ cần ghế cạnh nhau\nMột bữa cơm thật chậm\nVà câu chuyện thật lâu.",
+      "tags": [
+        "Bữa tối",
+        "Riêng tư",
+        "Lãng mạn"
+      ]
+    },
+    {
+      "id": "gift-airpods-playlist",
+      "name": "AirPods cho playlist của em",
+      "description": "Một món quà dùng mỗi ngày, đi kèm playlist được sắp riêng từ những bài hát gắn với kỷ niệm của hai người.",
+      "imageUrl": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1200&q=90",
+      "imageAlt": "Tai nghe đặt cạnh điện thoại đang phát nhạc",
+      "referencePrice": "Từ 3.799.000đ",
+      "priceUpdatedAt": "2026-07-16",
+      "brand": "Apple",
+      "sourceName": "AirPods chính thức tại Apple Việt Nam",
+      "sourceUrl": "https://www.apple.com/vn/airpods/",
+      "message": "Anh gom từng giai điệu\nThành một khoảng trời riêng\nKhi em nghe bản nhạc\nLà khi anh ở bên.",
+      "tags": [
+        "Âm nhạc",
+        "Hằng ngày",
+        "Playlist riêng"
+      ]
+    },
+    {
+      "id": "gift-surprise-weekend",
+      "name": "Cuối tuần bí mật",
+      "description": "Một chuyến đi hai ngày chỉ tiết lộ giờ khởi hành, còn nơi ở và lịch trình được chuẩn bị theo đúng nhịp nghỉ em yêu.",
+      "imageUrl": "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&w=1200&q=90",
+      "imageAlt": "Phòng nghỉ nhìn ra khung cảnh thiên nhiên yên bình",
+      "sourceName": "Mr & Mrs Smith - Romantic hotels",
+      "sourceUrl": "https://www.mrandmrssmith.com/destinations",
+      "message": "Mình rời xa phố vội\nĐi trốn một cuối tuần\nMang theo hai chiếc bóng\nVà để lại phân vân.",
+      "tags": [
+        "Bất ngờ",
+        "Hai ngày",
+        "Riêng tư"
+      ]
+    }
+  ]
+}

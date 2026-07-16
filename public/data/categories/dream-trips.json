@@ -1,0 +1,85 @@
+{
+  "id": "dream-trips",
+  "name": "Chuyến đi trong mơ",
+  "description": "Những nơi mình có thể đi chậm lại, ngắm nhìn thế giới và lưu thêm một kỷ niệm chung.",
+  "notePlaceholder": "Em muốn đi đâu, vào mùa nào và thích nghỉ dưỡng hay khám phá?",
+  "items": [
+    {
+      "id": "trip-maldives-private-island",
+      "name": "Đảo riêng ở Maldives",
+      "description": "Những ngày thật chậm bên mặt nước trong xanh, villa riêng và các bữa tối chỉ có tiếng sóng.",
+      "imageUrl": "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=1200&q=90",
+      "imageAlt": "Khu nghỉ dưỡng trên mặt biển xanh ở Maldives",
+      "sourceName": "Mr & Mrs Smith - Maldives",
+      "sourceUrl": "https://www.mrandmrssmith.com/destinations/maldives",
+      "tags": [
+        "Biển",
+        "Riêng tư",
+        "Nghỉ dưỡng"
+      ],
+      "message": "Biển xanh không thấy cuối\nCát trắng chẳng dấu chân\nMình đi xa một chuyến\nĐể lại gần nhau hơn."
+    },
+    {
+      "id": "trip-lombok-honeymoon",
+      "name": "Ba ngày riêng tư ở Lombok",
+      "description": "Một lịch trình ngắn vừa đủ cho biển, hoàng hôn và những trải nghiệm dành riêng cho hai người.",
+      "imageUrl": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1200&q=90",
+      "imageAlt": "Bờ biển và núi xanh tại Indonesia",
+      "referencePrice": "Từ 7.001.740đ / gói",
+      "priceUpdatedAt": "2026-07-16",
+      "sourceName": "Traveloka - Honeymoon Package in Lombok",
+      "sourceUrl": "https://www.traveloka.com/vi-vn/activities/indonesia/product/honeymoon-package-in-lombok-3-days-2-nights-9633098680539",
+      "tags": [
+        "Biển",
+        "Hoàng hôn",
+        "Gần gũi"
+      ],
+      "message": "Ba ngày bên sóng nhỏ\nHai người dưới hoàng hôn\nMang về bao kỷ niệm\nĐầy hơn cả va li."
+    },
+    {
+      "id": "trip-paris-slow-days",
+      "name": "Những ngày chậm ở Paris",
+      "description": "Cà phê buổi sớm, bảo tàng vào chiều muộn và những con phố đẹp nhất khi mình không cần vội.",
+      "imageUrl": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1200&q=90",
+      "imageAlt": "Tháp Eiffel nhìn từ con phố Paris",
+      "sourceName": "Traveloka - Thành phố lãng mạn",
+      "sourceUrl": "https://www.traveloka.com/vi-vn/explore/destination/nhung-thanh-pho-lang-man-cho-cac-cap-doi/58966",
+      "tags": [
+        "Thành phố",
+        "Nghệ thuật",
+        "Lãng mạn"
+      ],
+      "message": "Paris chiều rất chậm\nMình bước cạnh sông Seine\nTháp xa rồi phố nhỏ\nĐẹp vì có em bên."
+    },
+    {
+      "id": "trip-con-dao-hideaway",
+      "name": "Khoảng trời riêng ở Côn Đảo",
+      "description": "Biển yên, rừng xanh và một nhịp nghỉ thật tĩnh cho chuyến đi gần mà vẫn có cảm giác tách biệt.",
+      "imageUrl": "https://images.unsplash.com/photo-1539367628448-4bc5c9d171c8?auto=format&fit=crop&w=1200&q=90",
+      "imageAlt": "Bờ biển nhiệt đới yên tĩnh nhìn từ trên cao",
+      "sourceName": "Traveloka - Côn Đảo & Phú Quý",
+      "sourceUrl": "https://www.traveloka.com/en-ph/explore/destination/con-dao-phu-quy-island-guide/1008419",
+      "tags": [
+        "Trong nước",
+        "Yên tĩnh",
+        "Thiên nhiên"
+      ],
+      "message": "Rừng xanh ôm bờ cát\nBiển ru một khoảng trời\nMình về nơi thật vắng\nNghe lòng mình thảnh thơi."
+    },
+    {
+      "id": "trip-alps-winter-retreat",
+      "name": "Mùa đông trong dãy Alps",
+      "description": "Một căn phòng ấm nhìn ra núi tuyết, bữa tối dài và những buổi sáng chỉ để ngắm trời đổi màu.",
+      "imageUrl": "https://images.unsplash.com/photo-1486911278844-a81c5267e227?auto=format&fit=crop&w=1200&q=90",
+      "imageAlt": "Ngôi làng phủ tuyết giữa dãy Alps",
+      "sourceName": "Mr & Mrs Smith - Alps",
+      "sourceUrl": "https://www.mrandmrssmith.com/destinations/alps",
+      "tags": [
+        "Núi tuyết",
+        "Ấm cúng",
+        "Mùa đông"
+      ],
+      "message": "Ngoài hiên trời phủ tuyết\nTrong phòng lửa dịu êm\nMùa đông dù rất lạnh\nVẫn ấm vì có em."
+    }
+  ]
+}

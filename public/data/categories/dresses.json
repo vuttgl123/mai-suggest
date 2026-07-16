@@ -1,0 +1,98 @@
+{
+  "id": "dresses",
+  "name": "Váy và trang phục",
+  "description": "Những phom dáng và chất liệu khiến em thấy tự tin trong từng khoảnh khắc.",
+  "notePlaceholder": "Em thích màu sắc, chất liệu hoặc kiểu dáng nào?",
+  "items": [
+    {
+      "id": "dress-zimmermann-como",
+      "brand": "Zimmermann",
+      "name": "Como silk midi dress",
+      "description": "Váy lụa màu trà với đường rủ mềm, viền ren và phần eo được xử lý thanh thoát.",
+      "imageUrl": "https://www.mytheresa.com/image/1094/1238/100/90/P01171567.jpg",
+      "imageAlt": "Váy lụa Zimmermann Como màu trắng trà",
+      "referencePrice": "£2.250",
+      "priceUpdatedAt": "2026-07-16",
+      "sourceName": "Mytheresa",
+      "sourceUrl": "https://www.mytheresa.com/gb/en/women/zimmermann-como-lace-trimmed-draped-silk-midi-dress-white-p01171567",
+      "tags": [
+        "Lụa",
+        "Dáng midi",
+        "Lãng mạn"
+      ],
+      "message": "Một tà lụa thật khẽ\nTheo bước em qua chiều\nMón quà anh muốn gửi\nLà dáng em anh yêu."
+    },
+    {
+      "id": "dress-prada-linen-midi",
+      "brand": "Prada",
+      "name": "Cotton & linen midi dress",
+      "description": "Thiết kế trắng tối giản, kết hợp cotton và linen cho vẻ đẹp gọn gàng, hiện đại.",
+      "imageUrl": "https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=1200&q=90",
+      "imageAlt": "Váy midi sáng màu với thiết kế tối giản",
+      "referencePrice": "£2.400",
+      "priceUpdatedAt": "2026-07-16",
+      "sourceName": "Mytheresa",
+      "sourceUrl": "https://www.mytheresa.com/gb/en/women/prada-cotton-and-linen-midi-dress-white-p01176402",
+      "tags": [
+        "Tối giản",
+        "Linen",
+        "Màu trắng"
+      ],
+      "message": "Màu trong như nắng sớm\nĐường may nhẹ như mây\nEm mặc ngày bình dị\nCũng thành ngày thật hay."
+    },
+    {
+      "id": "dress-doen-ischia",
+      "brand": "Dôen",
+      "name": "Ischia floral cotton midi dress",
+      "description": "Phom midi nhẹ nhàng với họa tiết hoa tiết chế, phù hợp cho những buổi hẹn ban ngày.",
+      "imageUrl": "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?auto=format&fit=crop&w=1200&q=90",
+      "imageAlt": "Váy midi nữ với họa tiết hoa nhỏ",
+      "referencePrice": "£400",
+      "priceUpdatedAt": "2026-07-16",
+      "sourceName": "Mytheresa",
+      "sourceUrl": "https://www.mytheresa.com/gb/en/women/doen-ischia-gathered-floral-cotton-midi-dress-green-p01155003",
+      "tags": [
+        "Hoa nhí",
+        "Cotton",
+        "Dạo phố"
+      ],
+      "message": "Hoa nằm trên tà váy\nNhư vườn nhỏ theo em\nMỗi lần em mỉm cười\nMùa xuân về bên thềm."
+    },
+    {
+      "id": "dress-emilia-marione",
+      "brand": "Emilia Wickstead",
+      "name": "Marione belted shirt dress",
+      "description": "Váy sơ mi có thắt eo, phom chỉn chu và họa tiết hoa mang tinh thần khu vườn Anh.",
+      "imageUrl": "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1200&q=90",
+      "imageAlt": "Người mẫu mặc váy dài họa tiết trong ánh sáng tự nhiên",
+      "referencePrice": "£1.350",
+      "priceUpdatedAt": "2026-07-16",
+      "sourceName": "Mytheresa",
+      "sourceUrl": "https://www.mytheresa.com/gb/en/women/emilia-wickstead-marione-floral-belted-cotton-midi-dress-green-p01160126",
+      "tags": [
+        "Thắt eo",
+        "Cổ điển",
+        "Thanh lịch"
+      ],
+      "message": "Một chiếc nơ vừa đủ\nÔm dịu vòng eo xinh\nAnh không tặng chiếc váy\nAnh tặng em tự tin."
+    },
+    {
+      "id": "dress-khaite-judith",
+      "brand": "Khaite",
+      "name": "Judith draped midi dress",
+      "description": "Chất liệu pha lụa cùng những nếp rủ có chủ ý tạo nên vẻ sang trọng nhưng không phô trương.",
+      "imageUrl": "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=1200&q=90",
+      "imageAlt": "Người mẫu trong váy dài đỏ rượu vang",
+      "referencePrice": "$2.800",
+      "priceUpdatedAt": "2026-07-16",
+      "sourceName": "NET-A-PORTER",
+      "sourceUrl": "https://www.net-a-porter.com/en-us/shop/product/khaite/clothing/midi-dresses/judith-draped-silk-blend-midi-dress/46376663163076416",
+      "tags": [
+        "Draped",
+        "Pha lụa",
+        "Dự tiệc"
+      ],
+      "message": "Nếp vải rơi thật nhẹ\nNhư chiều xuống bên song\nEm đi qua căn phòng\nMang theo điều anh mong."
+    }
+  ]
+}

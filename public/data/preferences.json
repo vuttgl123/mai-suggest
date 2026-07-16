@@ -1,0 +1,12 @@
+{
+  "site": "/data/site.json",
+  "categories": [
+    "/data/categories/gift-ideas.json",
+    "/data/categories/dresses.json",
+    "/data/categories/bags.json",
+    "/data/categories/shoes.json",
+    "/data/categories/jewelry.json",
+    "/data/categories/flowers-decor.json",
+    "/data/categories/dream-trips.json"
+  ]
+}

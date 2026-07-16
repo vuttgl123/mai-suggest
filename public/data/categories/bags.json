@@ -1,0 +1,98 @@
+{
+  "id": "bags",
+  "name": "Túi xách",
+  "description": "Những thiết kế đồng hành cùng em từ ngày thường đến dịp thật đặc biệt.",
+  "notePlaceholder": "Em thường mang gì và thích túi có kích thước ra sao?",
+  "items": [
+    {
+      "id": "bag-valentino-vlogo-top-handle",
+      "brand": "Valentino Garavani",
+      "name": "VLogo mini top-handle bag",
+      "description": "Dáng hộp nhỏ gọn bằng da nâu, điểm khóa VLogo cổ điển và quai xách thanh mảnh.",
+      "imageUrl": "https://www.mytheresa.com/image/1094/1238/100/9c/P01182344.jpg",
+      "imageAlt": "Túi Valentino VLogo mini bằng da nâu",
+      "referencePrice": "£1.200",
+      "priceUpdatedAt": "2026-07-16",
+      "sourceName": "Mytheresa",
+      "sourceUrl": "https://www.mytheresa.com/gb/en/women/valentino-garavani-vlogo-mini-leather-top-handle-bag-brown-p01182344",
+      "tags": [
+        "Dáng hộp",
+        "Da nâu",
+        "Mini"
+      ],
+      "message": "Một chiếc túi nho nhỏ\nĐựng son, nắng và cười\nNếu còn dư một chỗ\nCho anh theo cùng thôi."
+    },
+    {
+      "id": "bag-erdem-bloom-mini",
+      "brand": "Erdem",
+      "name": "Bloom mini embroidered bag",
+      "description": "Chiếc túi nhỏ với chi tiết thêu hoa như một món trang sức dành cho buổi tối.",
+      "imageUrl": "https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=1200&q=90",
+      "imageAlt": "Túi xách mini sáng màu với chi tiết tinh tế",
+      "referencePrice": "£1.795",
+      "priceUpdatedAt": "2026-07-16",
+      "sourceName": "Mytheresa",
+      "sourceUrl": "https://www.mytheresa.com/gb/en/women/bags",
+      "tags": [
+        "Thêu hoa",
+        "Dự tiệc",
+        "Nữ tính"
+      ],
+      "message": "Hoa thêu trên nền vải\nGiữ một góc vườn xinh\nEm mang theo trước ngực\nNhư mang cả bình minh."
+    },
+    {
+      "id": "bag-loewe-amazona-180",
+      "brand": "Loewe",
+      "name": "Amazona 180 small bag",
+      "description": "Phom top-handle điêu khắc bằng da, cân bằng giữa vẻ cổ điển và tinh thần hiện đại.",
+      "imageUrl": "https://www.mytheresa.com/image/1094/1238/100/ab/P01208492.jpg",
+      "imageAlt": "Túi Loewe Amazona 180 cỡ nhỏ",
+      "referencePrice": "£3.250",
+      "priceUpdatedAt": "2026-07-16",
+      "sourceName": "Mytheresa",
+      "sourceUrl": "https://www.mytheresa.com/gb/en/women/loewe-amazona-180-small-leather-top-handle-bag-orange-p01208492",
+      "tags": [
+        "Da trơn",
+        "Top-handle",
+        "Điêu khắc"
+      ],
+      "message": "Gọn gàng và bền bỉ\nNhư những ngày cạnh nhau\nMón quà không cần nói\nVẫn theo em thật lâu."
+    },
+    {
+      "id": "bag-valentino-vlogo-bucket",
+      "brand": "Valentino Garavani",
+      "name": "VLogo mini bucket bag",
+      "description": "Dáng bucket mềm, kích thước vừa đủ cho một buổi hẹn và điểm nhấn logo nhỏ gọn.",
+      "imageUrl": "https://www.mytheresa.com/image/1094/1238/100/96/P01182356.jpg",
+      "imageAlt": "Túi Valentino VLogo dáng bucket mini",
+      "referencePrice": "£1.100",
+      "priceUpdatedAt": "2026-07-16",
+      "sourceName": "Mytheresa",
+      "sourceUrl": "https://www.mytheresa.com/gb/en/women/bags",
+      "tags": [
+        "Bucket",
+        "Nhỏ gọn",
+        "Hằng ngày"
+      ],
+      "message": "Dáng tròn ôm điều nhỏ\nMà em quý mỗi ngày\nAnh mong từng khoảnh khắc\nĐều vừa vặn trong tay."
+    },
+    {
+      "id": "bag-aquazzura-tropical",
+      "brand": "Aquazzura",
+      "name": "Tropical mini raffia bag",
+      "description": "Chất liệu raffia tự nhiên và quai xách nhỏ tạo cảm giác nhẹ nhàng cho những chuyến đi biển.",
+      "imageUrl": "https://www.mytheresa.com/image/1094/1238/100/3d/P01184901.jpg",
+      "imageAlt": "Túi Aquazzura Tropical mini bằng raffia",
+      "referencePrice": "£725",
+      "priceUpdatedAt": "2026-07-16",
+      "sourceName": "Mytheresa",
+      "sourceUrl": "https://www.mytheresa.com/gb/en/women/bags",
+      "tags": [
+        "Raffia",
+        "Mùa hè",
+        "Du lịch"
+      ],
+      "message": "Một chút nắng mùa hạ\nĐan vào từng sợi mây\nMang theo ra biển nhé\nMình đi trốn vài ngày."
+    }
+  ]
+}
