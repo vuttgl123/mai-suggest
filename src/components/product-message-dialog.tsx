@@ -1,104 +1,58 @@
 "use client";
 
-import { Crown, ExternalLink, Heart, Quote, X } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useEffect, useRef } from "react";
+import { Crown, ExternalLink, Heart, Quote, Scale, X } from "lucide-react";
+import { useRef } from "react";
 import type { PreferenceItem } from "@/types/preference";
 import { SmartImage } from "./smart-image";
+import { Button } from "./ui/button";
+import { Dialog } from "./ui/dialog";
+import { IconButton } from "./ui/icon-button";
 
 interface ProductMessageDialogProps {
   item: PreferenceItem | null;
   isLiked: boolean;
   isFavorite: boolean;
+  isCompared: boolean;
+  canCompare: boolean;
+  selectionReady?: boolean;
   onClose: () => void;
   onToggleLiked: () => void;
   onToggleFavorite: () => void;
+  onToggleCompare: () => void;
 }
 
 export function ProductMessageDialog({
   item,
   isLiked,
   isFavorite,
+  isCompared,
+  canCompare,
+  selectionReady = true,
   onClose,
   onToggleLiked,
   onToggleFavorite,
+  onToggleCompare,
 }: ProductMessageDialogProps) {
-  const reduceMotion = useReducedMotion();
-  const panelRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
-    if (!item) return;
-
-    const previousOverflow = document.body.style.overflow;
-    const previouslyFocused = document.activeElement as HTMLElement | null;
-    document.body.style.overflow = "hidden";
-    closeButtonRef.current?.focus();
-
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        onClose();
-        return;
-      }
-
-      if (event.key !== "Tab" || !panelRef.current) return;
-      const focusable = panelRef.current.querySelectorAll<HTMLElement>(
-        'button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])',
-      );
-      if (!focusable.length) return;
-
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    }
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      document.removeEventListener("keydown", handleKeyDown);
-      previouslyFocused?.focus();
-    };
-  }, [item, onClose]);
-
   return (
-    <AnimatePresence>
+    <Dialog
+      open={Boolean(item)}
+      titleId="product-message-title"
+      descriptionId="product-message-description"
+      onClose={onClose}
+      initialFocusRef={closeButtonRef}
+      panelClassName="summary-scroll grid max-h-[94svh] max-w-4xl overflow-y-auto md:max-h-[88svh] md:grid-cols-[minmax(18rem,0.9fr)_1.1fr] md:overflow-hidden"
+    >
       {item && (
-        <motion.div
-          className="fixed inset-0 z-[60] flex items-end justify-center bg-[#210408]/75 p-0 md:items-center md:p-6"
-          initial={reduceMotion ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={reduceMotion ? undefined : { opacity: 0 }}
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget) onClose();
-          }}
-        >
-          <motion.div
-            ref={panelRef}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="product-message-title"
-            initial={reduceMotion ? false : { opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={reduceMotion ? undefined : { opacity: 0, y: 20 }}
-            transition={{ duration: reduceMotion ? 0 : 0.26, ease: "easeOut" }}
-            className="summary-scroll relative grid max-h-[94svh] w-full max-w-4xl overflow-y-auto rounded-t-[1.5rem] bg-[#fffaf4] md:max-h-[88svh] md:grid-cols-[minmax(18rem,0.9fr)_1.1fr] md:overflow-hidden md:rounded-[1.5rem]"
-          >
-            <button
+        <>
+            <IconButton
               ref={closeButtonRef}
-              type="button"
               onClick={onClose}
-              aria-label="Đóng lời nhắn"
-              className="fixed right-3 top-3 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-[#5a0d18]/15 bg-[#fffaf4]/95 text-[#5a0d18] shadow-sm backdrop-blur md:absolute"
-            >
-              <X size={20} aria-hidden="true" />
-            </button>
+              label="Đóng lời nhắn"
+              icon={<X size={20} aria-hidden="true" />}
+              className="fixed right-3 top-3 z-10 bg-[var(--color-paper)] md:absolute"
+            />
 
             <SmartImage
               src={item.imageUrl}
@@ -108,39 +62,39 @@ export function ProductMessageDialog({
             />
 
             <div className="flex min-w-0 flex-col px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-6 sm:px-7 md:overflow-y-auto md:px-9 md:py-10">
-              <p className="text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-[#9b763e]">
+              <p className="text-[0.64rem] font-semibold text-[var(--color-accent)]">
                 {item.brand ?? "Một lựa chọn dành cho em"}
               </p>
               <h2
                 id="product-message-title"
-                className="font-display text-balance mt-2 pr-10 text-3xl font-semibold leading-[1.05] tracking-[-0.03em] text-[#31080e] sm:text-4xl"
+                className="font-display text-balance mt-2 pr-10 text-3xl font-semibold leading-[1.05] tracking-normal text-[var(--color-brand-strong)] sm:text-4xl"
               >
                 {item.name}
               </h2>
-              <p className="mt-4 text-sm leading-7 text-[#765e62]">
+              <p id="product-message-description" className="mt-4 text-sm leading-7 text-[var(--color-muted)]">
                 {item.description}
               </p>
-              <div className="mt-5 rounded-[1.1rem] border border-[#5a0d18]/10 bg-white/70 p-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#6e542c]">
+              <div className="mt-5 border-l-2 border-[var(--color-accent)] pl-4">
+                <p className="text-xs font-semibold text-[var(--color-accent)]">
                   Vì sao gợi ý này phù hợp
                 </p>
-                <p className="mt-2 text-sm leading-7 text-[#4f3a3e]">
+                <p className="mt-2 text-sm leading-7 text-[var(--color-ink)]">
                   {item.whyItFits}
                 </p>
               </div>
 
-              <div className="my-6 h-px bg-[#5a0d18]/10" />
-              <div className="relative rounded-[1.2rem] border border-[#c8a96b]/35 bg-[#f8f1e8] px-5 py-6 text-center">
+              <div className="my-6 h-px bg-[var(--color-border)]" />
+              <div className="relative border-y border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-6 text-center">
                 <Quote
-                  className="mx-auto text-[#c8a96b]"
+                  className="mx-auto text-[var(--color-accent)]"
                   size={22}
                   strokeWidth={1.3}
                   aria-hidden="true"
                 />
-                <p className="mt-2 text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-[#9b763e]">
+                <p className="mt-2 text-[0.62rem] font-semibold text-[var(--color-accent)]">
                   {item.messageTitle}
                 </p>
-                <blockquote className="font-display mt-3 whitespace-pre-line text-xl font-medium italic leading-8 text-[#5a0d18] sm:text-2xl sm:leading-9">
+                <blockquote className="font-display mt-3 whitespace-pre-line text-xl font-medium italic leading-8 text-[var(--color-brand)] sm:text-2xl sm:leading-9">
                   {item.message}
                 </blockquote>
               </div>
@@ -149,7 +103,7 @@ export function ProductMessageDialog({
                 {item.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-full border border-[#5a0d18]/10 px-2.5 py-1 text-[0.62rem] text-[#765e62]"
+                    className="rounded-sm border border-[var(--color-border)] px-2.5 py-1 text-[0.62rem] text-[var(--color-muted)]"
                   >
                     {tag}
                   </span>
@@ -157,8 +111,8 @@ export function ProductMessageDialog({
               </div>
 
               {item.referencePrice && (
-                <p className="mt-4 text-xs text-[#765e62]">
-                  <span className="mr-1.5 font-semibold text-[#9b763e]">Giá tham khảo:</span>
+                <p className="mt-4 text-xs text-[var(--color-muted)]">
+                  <span className="mr-1.5 font-semibold text-[var(--color-accent)]">Giá tham khảo:</span>
                   {item.referencePrice}
                 </p>
               )}
@@ -168,7 +122,7 @@ export function ProductMessageDialog({
                   href={item.sourceUrl}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="mt-3 inline-flex min-h-11 w-fit items-center gap-1.5 py-2 text-xs font-semibold text-[#7a1425] underline decoration-[#c8a96b]/70 underline-offset-4"
+                  className="mt-3 inline-flex min-h-11 w-fit items-center gap-1.5 py-2 text-xs font-semibold text-[var(--color-brand)] underline decoration-[var(--color-accent)] underline-offset-4"
                 >
                   Xem nơi tham khảo: {item.sourceName}
                   <ExternalLink size={13} aria-hidden="true" />
@@ -176,37 +130,40 @@ export function ProductMessageDialog({
               )}
 
               <div className="mt-6 grid grid-cols-2 gap-2">
-                <button
-                  type="button"
+                <Button
+                  variant={isLiked ? "primary" : "secondary"}
                   aria-pressed={isLiked}
+                  disabled={!selectionReady}
                   onClick={onToggleLiked}
-                  className={`flex min-h-12 items-center justify-center gap-2 rounded-full border px-3 text-xs font-semibold ${
-                    isLiked
-                      ? "border-[#7a1425] bg-[#7a1425] text-white"
-                      : "border-[#5a0d18]/20 text-[#5a0d18]"
-                  }`}
+                  className="min-h-12 px-3 text-xs"
                 >
                   <Heart size={16} fill={isLiked ? "currentColor" : "none"} aria-hidden="true" />
                   {isLiked ? "Đã thích" : "Em thích"}
-                </button>
-                <button
-                  type="button"
+                </Button>
+                <Button
+                  variant={isFavorite ? "primary" : "secondary"}
                   aria-pressed={isFavorite}
+                  disabled={!selectionReady}
                   onClick={onToggleFavorite}
-                  className={`flex min-h-12 items-center justify-center gap-2 rounded-full border px-3 text-xs font-semibold ${
-                    isFavorite
-                      ? "border-[#c8a96b] bg-[#efe2bd] text-[#5a0d18]"
-                      : "border-[#c8a96b]/65 text-[#6c4a1e]"
-                  }`}
+                  className="min-h-12 px-3 text-xs"
                 >
                   <Crown size={16} fill={isFavorite ? "currentColor" : "none"} aria-hidden="true" />
                   Thích nhất
-                </button>
+                </Button>
+                <Button
+                  variant={isCompared ? "primary" : "secondary"}
+                  aria-pressed={isCompared}
+                  onClick={onToggleCompare}
+                  disabled={!canCompare}
+                  className="col-span-2 min-h-12 px-3 text-xs"
+                >
+                  <Scale size={16} aria-hidden="true" />
+                  {isCompared ? "Bỏ khỏi so sánh" : "Thêm vào so sánh"}
+                </Button>
               </div>
             </div>
-          </motion.div>
-        </motion.div>
+        </>
       )}
-    </AnimatePresence>
+    </Dialog>
   );
 }

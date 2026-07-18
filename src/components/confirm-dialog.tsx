@@ -1,7 +1,9 @@
 "use client";
 
 import { AlertTriangle } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
+import { Button } from "./ui/button";
+import { Dialog } from "./ui/dialog";
 
 interface ConfirmDialogProps {
   open: boolean;
@@ -20,85 +22,46 @@ export function ConfirmDialog({
   onConfirm,
   onCancel,
 }: ConfirmDialogProps) {
-  const dialogRef = useRef<HTMLDivElement>(null);
   const cancelButtonRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
-    if (!open) return;
-
-    const previouslyFocused = document.activeElement as HTMLElement | null;
-    cancelButtonRef.current?.focus();
-
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        onCancel();
-        return;
-      }
-
-      if (event.key !== "Tab" || !dialogRef.current) return;
-      const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
-        'button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])',
-      );
-      if (!focusable.length) return;
-
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    }
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      previouslyFocused?.focus();
-    };
-  }, [onCancel, open]);
-
-  if (!open) return null;
-
   return (
-    <div className="fixed inset-0 z-[70] flex items-center justify-center bg-[#210408]/70 px-5 py-8 backdrop-blur-sm">
-      <div
-        ref={dialogRef}
-        role="alertdialog"
-        aria-modal="true"
-        aria-labelledby="confirm-title"
-        aria-describedby="confirm-description"
-        className="paper-card w-full max-w-md rounded-[1.75rem] border border-[#c8a96b]/35 bg-[#fffaf4] p-6 text-center sm:p-8"
-      >
-        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#e8d5d7]/65 text-[#7a1425]">
+    <Dialog
+      open={open}
+      role="alertdialog"
+      titleId="confirm-title"
+      descriptionId="confirm-description"
+      onClose={onCancel}
+      initialFocusRef={cancelButtonRef}
+      closeOnBackdrop={false}
+      overlayClassName="z-[70] items-center px-5 py-8"
+      panelClassName="paper-card max-w-md border border-[var(--color-border)] p-6 text-center sm:p-8"
+    >
+        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-md bg-[#f8e8e6] text-[var(--color-danger)]">
           <AlertTriangle size={22} aria-hidden="true" />
         </div>
-        <h2 id="confirm-title" className="font-display mt-5 text-3xl font-semibold text-[#31080e]">
+        <h2 id="confirm-title" className="font-display mt-5 text-3xl font-semibold tracking-normal text-[var(--color-brand-strong)]">
           {title}
         </h2>
-        <p id="confirm-description" className="mt-3 text-sm leading-6 text-[#765e62]">
+        <p id="confirm-description" className="mt-3 text-sm leading-6 text-[var(--color-muted)]">
           {description}
         </p>
         <div className="mt-7 grid grid-cols-1 gap-2 min-[380px]:grid-cols-2">
-          <button
+          <Button
             ref={cancelButtonRef}
-            type="button"
+            variant="secondary"
             onClick={onCancel}
-            className="min-h-12 rounded-full border border-[#5a0d18]/20 px-5 py-3 text-sm font-semibold text-[#5a0d18]"
+            className="min-h-12"
           >
             Giữ lại lựa chọn
-          </button>
-          <button
-            type="button"
+          </Button>
+          <Button
+            variant="danger"
             onClick={onConfirm}
-            className="min-h-12 rounded-full bg-[#5a0d18] px-5 py-3 text-sm font-semibold text-white hover:bg-[#7a1425]"
+            className="min-h-12"
           >
             {confirmLabel}
-          </button>
+          </Button>
         </div>
-      </div>
-    </div>
+    </Dialog>
   );
 }

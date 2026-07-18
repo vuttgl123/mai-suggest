@@ -6,17 +6,23 @@ import { useEffect } from "react";
 
 interface ToastProps {
   message: string | null;
+  action?: ToastAction;
   onDismiss: () => void;
 }
 
-export function Toast({ message, onDismiss }: ToastProps) {
+interface ToastAction {
+  label: string;
+  onClick(): void;
+}
+
+export function Toast({ message, action, onDismiss }: ToastProps) {
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     if (!message) return;
-    const timeout = window.setTimeout(onDismiss, 3200);
+    const timeout = window.setTimeout(onDismiss, action ? 5_000 : 3_200);
     return () => window.clearTimeout(timeout);
-  }, [message, onDismiss]);
+  }, [action, message, onDismiss]);
 
   return (
     <div
@@ -31,10 +37,22 @@ export function Toast({ message, onDismiss }: ToastProps) {
             initial={reduceMotion ? false : { opacity: 0, y: -16 }}
             animate={{ opacity: 1, y: 0 }}
             exit={reduceMotion ? undefined : { opacity: 0, y: -10 }}
-            className="flex max-w-md items-center gap-2 rounded-full border border-[#c8a96b]/45 bg-[#31080e] px-5 py-3 text-center text-xs font-medium text-[#fffaf4] shadow-2xl"
+            className="pointer-events-auto flex max-w-md items-center gap-3 rounded-[var(--radius-control)] border border-white/20 bg-[var(--color-brand-strong)] px-4 py-3 text-left text-xs font-medium text-white shadow-xl"
           >
-            <Check size={16} className="text-[#e5c989]" aria-hidden="true" />
-            {message}
+            <Check size={16} className="text-[#b7d5c3]" aria-hidden="true" />
+            <span>{message}</span>
+            {action && (
+              <button
+                type="button"
+                onClick={() => {
+                  action.onClick();
+                  onDismiss();
+                }}
+                className="min-h-8 border-l border-white/25 pl-3 font-semibold text-[#f6dfa9] underline decoration-transparent underline-offset-4 transition-colors hover:decoration-current"
+              >
+                {action.label}
+              </button>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

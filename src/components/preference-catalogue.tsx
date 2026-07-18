@@ -1,11 +1,21 @@
 "use client";
 
 import { Heart, MoveDown, SearchX } from "lucide-react";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { useCatalogueDiscovery } from "@/hooks/use-catalogue-discovery";
-import { usePreferenceStorage } from "@/hooks/use-preference-storage";
+import { useEffect, useState } from "react";
+import { useCatalogueController } from "@/features/catalogue/hooks/use-catalogue-controller";
+import { useCatalogueDiscovery } from "@/features/catalogue/hooks/use-catalogue-discovery";
+import { CataloguePageShell } from "@/features/catalogue/components/catalogue-page-shell";
+import { SiteHeader } from "@/features/catalogue/components/site-header";
+import { CatalogueToolbar } from "@/features/catalogue/components/catalogue-toolbar";
+import { CatalogueDiscovery } from "@/features/catalogue/components/catalogue-discovery";
+import { usePreferenceSelection } from "@/features/selection/hooks/use-preference-selection";
+import { SelectionSummary } from "@/features/selection/components/selection-summary";
+import { ResumeSelection } from "@/features/selection/components/resume-selection";
+import { DEFAULT_SELECTION_STATE } from "@/features/selection/lib/selection-state";
+import { createSelectionProgress } from "@/features/selection/lib/selection-progress";
+import { selectValidSelection } from "@/features/selection/lib/selection-selectors";
+import { SelectedItemsView } from "@/features/selection/components/selected-items-view";
 import type { PreferenceData } from "@/types/preference";
-import { CatalogueDiscovery } from "./catalogue-discovery";
 import { CategoryNote } from "./category-note";
 import { CategoryTabs } from "./category-tabs";
 import { DecorativeDivider } from "./decorative-elements";
@@ -13,8 +23,8 @@ import { HeroSection } from "./hero-section";
 import { MobileSelectionBar } from "./mobile-selection-bar";
 import { PreferenceGrid } from "./preference-grid";
 import { SelectionProgress } from "./selection-progress";
-import { SelectionSummary } from "./selection-summary";
 import { Toast } from "./toast";
+import { Button } from "./ui/button";
 
 interface PreferenceCatalogueProps {
   initialData: PreferenceData;
@@ -26,16 +36,33 @@ export function PreferenceCatalogue({ initialData }: PreferenceCatalogueProps) {
   const {
     selection,
     hasHydrated,
+    persistenceStatus,
+    canUndo,
+    undo,
     toggleLiked,
     toggleFavorite,
     setCategoryNote,
     setLastViewedCategory,
     resetAll,
-  } = usePreferenceStorage();
-  const [activeCategoryId, setActiveCategoryId] = useState("");
-  const [summaryOpen, setSummaryOpen] = useState(false);
+  } = usePreferenceSelection();
   const [hasPassedHero, setHasPassedHero] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [viewMode, setViewMode] = useState<"all" | "selected">("all");
+  const controller = useCatalogueController({
+    data,
+    filteredCategories: discovery.filteredCategories,
+    selection,
+    hasHydrated,
+    onLastViewedCategoryChange: setLastViewedCategory,
+    onReset: resetAll,
+  });
+  const {
+    activeCategory,
+    activeCategoryIndex,
+    selectedItemIds,
+    canViewSummary,
+    resumeSelection,
+  } = controller;
 
   useEffect(() => {
     function updateHeroPosition() {
@@ -51,62 +78,14 @@ export function PreferenceCatalogue({ initialData }: PreferenceCatalogueProps) {
     };
   }, [data]);
 
-  const validItemIds = useMemo(
-    () =>
-      new Set(
-        data.categories.flatMap((category) =>
-          category.items.map((item) => item.id),
-        ),
-      ),
-    [data.categories],
-  );
-  const validCategoryIds = useMemo(
-    () => new Set(data.categories.map((category) => category.id)),
-    [data.categories],
-  );
-  const validLikedItemIds = useMemo(
-    () =>
-      hasHydrated
-        ? selection.likedItemIds.filter((id) => validItemIds.has(id))
-        : [],
-    [hasHydrated, selection.likedItemIds, validItemIds],
-  );
-  const likedItemIdSet = useMemo(
-    () => new Set(validLikedItemIds),
-    [validLikedItemIds],
-  );
-  const hasNotes =
-    hasHydrated &&
-    Object.entries(selection.notesByCategory).some(
-      ([categoryId, note]) => validCategoryIds.has(categoryId) && note.trim(),
-    );
-  const selectedCategoryCount = data.categories.filter(
-    (category) =>
-      category.items.some((item) => likedItemIdSet.has(item.id)) ||
-      Boolean(selection.notesByCategory[category.id]?.trim()),
-  ).length;
-  const canViewSummary = validLikedItemIds.length > 0 || hasNotes;
   const filteredCategories = discovery.filteredCategories;
-  const restoredCategoryId =
-    hasHydrated &&
-    filteredCategories.some(
-      (category) => category.id === selection.lastViewedCategoryId,
-    )
-      ? selection.lastViewedCategoryId
-      : "";
-  const effectiveActiveCategoryId = filteredCategories.some(
-    (category) => category.id === activeCategoryId,
-  )
-    ? activeCategoryId
-    : restoredCategoryId || filteredCategories[0]?.id || "";
-  const activeCategory =
-    filteredCategories.find(
-      (category) => category.id === effectiveActiveCategoryId,
-    ) ??
-    null;
-  const activeCategoryIndex = activeCategory
-    ? data.categories.findIndex((category) => category.id === activeCategory.id)
-    : -1;
+  const progressModel = createSelectionProgress(
+    data.categories,
+    hasHydrated ? selection : DEFAULT_SELECTION_STATE,
+  );
+  const selectedCategories = hasHydrated
+    ? selectValidSelection(data, selection)
+    : [];
 
   function preferredScrollBehavior(): ScrollBehavior {
     return window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -135,9 +114,9 @@ export function PreferenceCatalogue({ initialData }: PreferenceCatalogueProps) {
     });
   }
 
-  function selectCategory(categoryId: string) {
-    setActiveCategoryId(categoryId);
-    setLastViewedCategory(categoryId);
+  function handleSelectCategory(categoryId: string) {
+    setViewMode("all");
+    controller.selectCategory(categoryId);
     window.requestAnimationFrame(() => {
       document.getElementById("catalogue-category")?.scrollIntoView({
         behavior: preferredScrollBehavior(),
@@ -154,27 +133,54 @@ export function PreferenceCatalogue({ initialData }: PreferenceCatalogueProps) {
     window.requestAnimationFrame(() => scrollToCatalogue());
   }
 
-  const closeSummary = useCallback(() => setSummaryOpen(false), []);
-
   function handleReset() {
-    resetAll();
-    setSummaryOpen(false);
+    controller.resetSelection();
     setToastMessage("Đã xóa lựa chọn để mình bắt đầu lại");
+  }
+
+  function handleToggleLiked(itemId: string, categoryId: string) {
+    const wasLiked = selection.likedItemIds.includes(itemId);
+    toggleLiked(itemId, categoryId);
+    setToastMessage(
+      wasLiked ? "Đã bỏ khỏi những điều em yêu" : "Đã thêm vào những điều em yêu",
+    );
+  }
+
+  function handleToggleFavorite(categoryId: string, itemId: string) {
+    const wasFavorite =
+      selection.favoriteByCategory[categoryId] === itemId;
+    toggleFavorite(categoryId, itemId);
+    setToastMessage(
+      wasFavorite ? "Đã bỏ lựa chọn số một" : "Đã chọn làm lựa chọn số một",
+    );
   }
 
   return (
     <>
-      <a
-        href="#catalogue-start"
-        className="fixed left-4 top-4 z-[100] -translate-y-24 rounded-full bg-white px-4 py-3 text-sm font-semibold text-[#5a0d18] shadow-xl transition focus:translate-y-0"
+      <CataloguePageShell
+        hero={<HeroSection site={data.site} onStart={scrollToDiscovery} />}
+        siteHeader={
+          <SiteHeader
+            title={data.site.title}
+            selectedItemCount={selectedItemIds.length}
+            onOpenSelection={controller.openSummary}
+          />
+        }
+        footer={
+          <footer className="border-t border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-8 text-center">
+            <p className="font-display text-2xl font-semibold tracking-normal text-[var(--color-brand)]">
+              Điều Em Yêu
+            </p>
+            <p className="mt-1 text-[0.65rem] tracking-normal text-[var(--color-muted)]">
+              Được lưu riêng trên thiết bị này, dành riêng cho em.
+            </p>
+          </footer>
+        }
       >
-        Bỏ qua để đến danh sách gợi ý
-      </a>
-      <HeroSection
-        site={data.site}
-        occasionCount={data.taxonomy.occasions.length}
-        itemCount={discovery.totalItemCount}
-        onStart={scrollToDiscovery}
+      <ResumeSelection
+        model={resumeSelection}
+        onContinue={() => scrollToCatalogue(true)}
+        onViewSummary={controller.openSummary}
       />
       <CatalogueDiscovery
         taxonomy={data.taxonomy}
@@ -189,43 +195,78 @@ export function PreferenceCatalogue({ initialData }: PreferenceCatalogueProps) {
         onBudgetChange={discovery.setBudgetTier}
         onGiftTypeChange={discovery.setGiftType}
         onSelectCollection={selectCollection}
+        onSortChange={discovery.setSort}
         onClear={discovery.clearFilters}
       />
       {filteredCategories.length > 0 && activeCategory && (
-        <CategoryTabs
-          categories={filteredCategories}
-          activeCategoryId={activeCategory.id}
-          onSelect={selectCategory}
-        />
+        <div className="sticky top-14 z-30">
+          {viewMode === "all" && (
+            <CategoryTabs
+              categories={filteredCategories}
+              activeCategoryId={activeCategory.id}
+              onSelect={handleSelectCategory}
+            />
+          )}
+          <CatalogueToolbar
+            activeCategoryName={
+              viewMode === "selected" ? "Các gợi ý đã chọn" : activeCategory.name
+            }
+            resultCount={discovery.resultCount}
+            activeFilterCount={discovery.activeFilterCount}
+            selectedItemCount={selectedItemIds.length}
+            viewMode={viewMode}
+            onViewModeChange={(mode) => {
+              setViewMode(mode);
+              window.requestAnimationFrame(() => scrollToCatalogue());
+            }}
+            onOpenFilters={scrollToDiscovery}
+            onOpenSelection={controller.openSummary}
+          />
+        </div>
       )}
 
-      <main
+      <div
         id="catalogue-start"
-        className="catalogue-surface relative scroll-mt-20 px-4 pb-40 pt-10 sm:px-8 sm:pt-14 md:pb-24"
+        tabIndex={-1}
+        className="catalogue-surface relative scroll-mt-28 px-4 pb-40 pt-10 sm:px-8 sm:pt-14 md:pb-24"
       >
         <div className="relative z-10 mx-auto max-w-[78rem]">
           <header className="mx-auto mb-9 max-w-2xl text-center sm:mb-12">
-            <p className="text-[0.66rem] font-semibold uppercase tracking-[0.24em] text-[#9b763e]">
-              {String(discovery.resultCount).padStart(2, "0")} gợi ý đang chờ em
+            <p className="text-[0.66rem] font-semibold text-[var(--color-accent)]">
+              {String(discovery.resultCount).padStart(2, "0")} gợi ý hiển thị
             </p>
-            <h2 className="font-display text-balance mt-3 text-[clamp(2.35rem,8vw,4.25rem)] font-semibold leading-[0.98] tracking-[-0.035em] text-[#31080e]">
-              {discovery.activeCollection?.name ?? "Chọn bằng cảm xúc"}
+            <h2 className="font-display display-lg text-balance mt-3 font-semibold text-[var(--color-brand-strong)]">
+              {discovery.activeCollection?.name ?? "Khám phá gợi ý"}
             </h2>
             <div className="my-4">
               <DecorativeDivider />
             </div>
-            <p className="text-sm leading-7 text-[#765e62]">
+            <p className="text-sm leading-7 text-[var(--color-muted)]">
               {discovery.activeCollection?.description ??
-                "Mở từng gợi ý để đọc câu chuyện phía sau, rồi lưu lại điều khiến em mỉm cười."}
+                "Mở chi tiết từng gợi ý, sau đó lưu những lựa chọn phù hợp."}
             </p>
           </header>
 
-          <SelectionProgress
-            selectedCategoryCount={selectedCategoryCount}
-            totalCategoryCount={data.categories.length}
-            selectedItemCount={validLikedItemIds.length}
-            onViewSummary={() => setSummaryOpen(true)}
-          />
+          {viewMode === "selected" ? (
+            <SelectedItemsView
+              selectedCategories={selectedCategories}
+              onShowAll={() => setViewMode("all")}
+              onRemove={(categoryId, itemId) =>
+                handleToggleLiked(itemId, categoryId)
+              }
+              onToggleFavorite={handleToggleFavorite}
+            />
+          ) : (
+          <>
+            <SelectionProgress
+              model={progressModel}
+              onViewSummary={controller.openSummary}
+              onExploreNext={() => {
+                if (progressModel.nextCategory) {
+                  handleSelectCategory(progressModel.nextCategory.id);
+                }
+              }}
+            />
 
           {activeCategory ? (
           <section
@@ -234,9 +275,9 @@ export function PreferenceCatalogue({ initialData }: PreferenceCatalogueProps) {
             className="scroll-mt-24"
             aria-labelledby={`category-${activeCategory.id}-heading`}
           >
-            <div className="mb-5 flex items-end gap-3 border-b border-[#5a0d18]/12 pb-4 sm:mb-7 sm:gap-4">
+            <div className="mb-5 flex items-end gap-3 border-b border-[var(--color-border)] pb-4 sm:mb-7 sm:gap-4">
               <span
-                className="font-display shrink-0 text-3xl font-medium italic leading-none text-[#c8a96b] sm:text-4xl"
+                className="font-display shrink-0 text-3xl font-medium leading-none text-[var(--color-accent)] sm:text-4xl"
                 aria-hidden="true"
               >
                 {String(activeCategoryIndex + 1).padStart(2, "0")}
@@ -245,11 +286,11 @@ export function PreferenceCatalogue({ initialData }: PreferenceCatalogueProps) {
                 <h2
                   id={`category-${activeCategory.id}-heading`}
                   tabIndex={-1}
-                  className="font-display text-balance text-[clamp(1.8rem,6vw,3rem)] font-semibold leading-[1.05] tracking-[-0.025em] text-[#31080e]"
+                  className="font-display text-balance text-3xl font-semibold leading-[1.08] tracking-normal text-[var(--color-brand-strong)] sm:text-5xl"
                 >
                   {activeCategory.name}
                 </h2>
-                <p className="mt-2 max-w-2xl text-xs leading-6 text-[#765e62] sm:text-sm">
+                <p className="mt-2 max-w-2xl text-xs leading-6 text-[var(--color-muted)] sm:text-sm">
                   {activeCategory.description}
                 </p>
               </div>
@@ -260,79 +301,95 @@ export function PreferenceCatalogue({ initialData }: PreferenceCatalogueProps) {
               category={activeCategory}
               items={activeCategory.items}
               categoryIndex={activeCategoryIndex}
-              likedItemIds={validLikedItemIds}
+              likedItemIds={selectedItemIds}
               favoriteItemId={selection.favoriteByCategory[activeCategory.id]}
-              onToggleLiked={toggleLiked}
-              onToggleFavorite={toggleFavorite}
+              selectionReady={hasHydrated}
+              onToggleLiked={handleToggleLiked}
+              onToggleFavorite={handleToggleFavorite}
             />
             <CategoryNote
               categoryId={activeCategory.id}
               categoryName={activeCategory.name}
               placeholder={activeCategory.notePlaceholder}
               value={hasHydrated ? selection.notesByCategory[activeCategory.id] ?? "" : ""}
+              persistenceStatus={persistenceStatus}
               onChange={(note) => setCategoryNote(activeCategory.id, note)}
             />
           </section>
           ) : (
-            <div className="rounded-[1.75rem] border border-dashed border-[#5a0d18]/20 bg-[#fffaf4]/75 px-6 py-16 text-center" role="status">
-              <SearchX className="mx-auto text-[#8a6a35]" size={34} strokeWidth={1.4} aria-hidden="true" />
-              <h2 className="font-display mt-4 text-3xl font-semibold text-[#31080e]">
+            <div className="border-y border-dashed border-[var(--color-border)] bg-[var(--color-paper)] px-6 py-16 text-center" role="status">
+              <SearchX className="mx-auto text-[var(--color-accent)]" size={34} strokeWidth={1.4} aria-hidden="true" />
+              <h2 className="font-display mt-4 text-3xl font-semibold tracking-normal text-[var(--color-brand-strong)]">
                 Chưa có gợi ý nào khớp
               </h2>
-              <p className="mx-auto mt-3 max-w-lg text-sm leading-7 text-[#654f53]">
+              <p className="mx-auto mt-3 max-w-lg text-sm leading-7 text-[var(--color-muted)]">
                 Thử bỏ bớt một điều kiện để mở rộng câu chuyện quà tặng nhé.
               </p>
-              <button type="button" onClick={discovery.clearFilters} className="mt-6 min-h-12 rounded-full bg-[#5a0d18] px-6 py-3 text-sm font-semibold text-white">
+              <Button onClick={discovery.clearFilters} className="mt-6 min-h-12 px-6">
                 Xem lại tất cả gợi ý
-              </button>
+              </Button>
             </div>
           )}
+          </>
+          )}
 
-          <section className="mt-16 overflow-hidden rounded-[1.5rem] bg-[#31080e] px-6 py-10 text-center text-[#f8f1e8] sm:mt-20 sm:px-10 sm:py-12">
-            <Heart className="mx-auto text-[#e5c989]" size={23} strokeWidth={1.3} aria-hidden="true" />
-            <h2 className="font-display text-balance mt-4 text-3xl font-semibold sm:text-5xl">
-              Mỗi điều em chọn đều đáng nhớ
+          <section className="mt-16 border-y border-white/15 bg-[var(--color-brand-strong)] px-6 py-10 text-center text-white sm:mt-20 sm:px-10 sm:py-12">
+            <Heart className="mx-auto text-[#f6dfa9]" size={23} strokeWidth={1.3} aria-hidden="true" />
+            <h2 className="font-display text-balance mt-4 text-3xl font-semibold tracking-normal sm:text-5xl">
+              Xem lại lựa chọn đã lưu
             </h2>
-            <p className="mx-auto mt-3 max-w-xl text-xs leading-6 text-[#eadfd6]/80 sm:text-sm">
-              Khi đã thấy vừa đủ, mình cùng nhìn lại cuốn sổ nhỏ này nhé.
+            <p className="mx-auto mt-3 max-w-xl text-xs leading-6 text-white/80 sm:text-sm">
+              Tiếp tục chỉnh sửa, chia sẻ hoặc tải danh sách trên thiết bị này.
             </p>
-            <button
-              type="button"
-              onClick={() => setSummaryOpen(true)}
+            <Button
+              variant="secondary"
+              onClick={controller.openSummary}
               disabled={!canViewSummary}
-              className="mx-auto mt-6 flex min-h-12 items-center justify-center gap-2 rounded-full border border-[#e5c989]/70 bg-[#f8f1e8] px-7 py-3 text-sm font-semibold text-[#5a0d18] disabled:cursor-not-allowed disabled:opacity-45"
+              className="mx-auto mt-6 min-h-12 border-white/70 bg-white px-7"
             >
               Xem những điều em yêu
               <MoveDown size={17} aria-hidden="true" />
-            </button>
+            </Button>
           </section>
         </div>
-      </main>
-
-      <footer className="border-t border-[#5a0d18]/10 bg-[#f3e9df] px-5 py-8 text-center">
-        <p className="font-display text-2xl font-semibold text-[#5a0d18]">Điều Em Yêu</p>
-        <p className="mt-1 text-[0.65rem] tracking-[0.08em] text-[#765e62]">
-          Được lưu riêng trên thiết bị này, dành riêng cho em.
-        </p>
-      </footer>
+      </div>
+      </CataloguePageShell>
 
       <MobileSelectionBar
         visible={hasPassedHero || canViewSummary}
-        selectedItemCount={validLikedItemIds.length}
-        selectedCategoryCount={selectedCategoryCount}
-        totalCategoryCount={data.categories.length}
-        onViewSummary={() => setSummaryOpen(true)}
-        onContinue={() => scrollToCatalogue()}
+        activeFilterCount={discovery.activeFilterCount}
+        selectedItemCount={selectedItemIds.length}
+        onOpenFilters={scrollToDiscovery}
+        onOpenSelection={() => {
+          setViewMode("selected");
+          scrollToCatalogue();
+        }}
       />
       <SelectionSummary
-        open={summaryOpen}
+        open={controller.summaryOpen}
         data={data}
         selection={selection}
-        onClose={closeSummary}
+        onClose={controller.closeSummary}
         onReset={handleReset}
         onNotify={setToastMessage}
+        onRemove={(categoryId, itemId) =>
+          handleToggleLiked(itemId, categoryId)
+        }
+        onToggleFavorite={handleToggleFavorite}
+        onSetCategoryNote={setCategoryNote}
       />
-      <Toast message={toastMessage} onDismiss={() => setToastMessage(null)} />
+      <Toast
+        message={toastMessage}
+        action={
+          canUndo
+            ? {
+                label: "Hoàn tác",
+                onClick: undo,
+              }
+            : undefined
+        }
+        onDismiss={() => setToastMessage(null)}
+      />
     </>
   );
 }

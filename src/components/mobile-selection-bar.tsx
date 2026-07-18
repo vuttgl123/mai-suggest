@@ -1,27 +1,25 @@
 "use client";
 
-import { ChevronUp, Heart } from "lucide-react";
+import { Heart, SlidersHorizontal } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { Button } from "./ui/button";
 
 interface MobileSelectionBarProps {
   visible: boolean;
+  activeFilterCount: number;
   selectedItemCount: number;
-  selectedCategoryCount: number;
-  totalCategoryCount: number;
-  onViewSummary: () => void;
-  onContinue: () => void;
+  onOpenFilters: () => void;
+  onOpenSelection: () => void;
 }
 
 export function MobileSelectionBar({
   visible,
+  activeFilterCount,
   selectedItemCount,
-  selectedCategoryCount,
-  totalCategoryCount,
-  onViewSummary,
-  onContinue,
+  onOpenFilters,
+  onOpenSelection,
 }: MobileSelectionBarProps) {
   const reduceMotion = useReducedMotion();
-  const hasSelections = selectedItemCount > 0 || selectedCategoryCount > 0;
 
   return (
     <AnimatePresence>
@@ -30,33 +28,42 @@ export function MobileSelectionBar({
           initial={reduceMotion ? false : { opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           exit={reduceMotion ? undefined : { opacity: 0, y: 40 }}
-          className="fixed inset-x-0 bottom-0 z-40 border-t border-[#c8a96b]/40 bg-[#fffaf4]/96 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 shadow-[0_-14px_38px_rgba(49,8,14,0.12)] backdrop-blur-xl md:hidden"
+          className="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--color-border)] bg-[var(--color-paper)] px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 shadow-[0_-10px_24px_rgb(36_28_30/10%)] md:hidden"
           aria-label="Lựa chọn hiện tại"
         >
-          <div className="mx-auto flex max-w-lg items-center gap-3">
-            <div className="min-w-0 flex-1">
-              {hasSelections ? (
-                <>
-                  <p className="flex items-center gap-1.5 text-xs font-semibold text-[#5a0d18]">
-                    <Heart size={14} fill="currentColor" aria-hidden="true" />
-                    {selectedItemCount} món đã chọn
-                  </p>
-                  <p className="mt-1 truncate text-[0.65rem] text-[#765e62]">
-                    Tiến độ {selectedCategoryCount}/{totalCategoryCount} danh mục
-                  </p>
-                </>
-              ) : (
-                <p className="text-xs font-medium leading-5 text-[#5a0d18]">Mình bắt đầu từ điều làm em mỉm cười nhé</p>
-              )}
-            </div>
-            <button
-              type="button"
-              onClick={hasSelections ? onViewSummary : onContinue}
-              className="flex min-h-11 shrink-0 items-center justify-center gap-1.5 rounded-full bg-[#5a0d18] px-4 py-2 text-xs font-semibold text-white"
+          <div className="mx-auto grid max-w-lg grid-cols-2 gap-2">
+            <Button
+              variant="secondary"
+              onClick={onOpenFilters}
+              className="text-xs"
+              aria-label={
+                activeFilterCount
+                  ? `Mở ${activeFilterCount} bộ lọc đang dùng`
+                  : "Mở bộ lọc"
+              }
             >
-              {hasSelections ? "Xem lựa chọn" : "Tiếp tục chọn"}
-              <ChevronUp size={15} aria-hidden="true" />
-            </button>
+              <SlidersHorizontal size={16} aria-hidden="true" />
+              Bộ lọc
+              {activeFilterCount > 0 && (
+                <span className="tabular-nums">{activeFilterCount}</span>
+              )}
+            </Button>
+            <Button
+              onClick={onOpenSelection}
+              disabled={selectedItemCount === 0}
+              className="text-xs"
+              aria-label={
+                selectedItemCount
+                  ? `Xem ${selectedItemCount} lựa chọn`
+                  : "Chưa có lựa chọn"
+              }
+            >
+              <Heart size={16} aria-hidden="true" />
+              Lựa chọn
+              {selectedItemCount > 0 && (
+                <span className="tabular-nums">{selectedItemCount}</span>
+              )}
+            </Button>
           </div>
         </motion.aside>
       )}

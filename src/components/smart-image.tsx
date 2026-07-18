@@ -34,7 +34,7 @@ export function SmartImage({
 
   return (
     <div
-      className={`relative overflow-hidden bg-[#eadfda] ${ratioClass} ${className}`}
+      className={`relative overflow-hidden bg-[var(--color-skeleton)] ${ratioClass} ${className}`}
     >
       {!hasError ? (
         <Image
@@ -54,19 +54,19 @@ export function SmartImage({
         />
       ) : (
         <div
-          className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-[#eee2da] px-4 text-center text-[#765e62]"
+          className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-[var(--color-skeleton)] px-4 text-center text-[var(--color-muted)]"
           role="img"
           aria-label={alt}
         >
           <Heart size={24} strokeWidth={1.2} aria-hidden="true" />
           {variant !== "thumbnail" && (
-            <span className="text-xs leading-relaxed">Hình ảnh đang nghỉ một chút</span>
+            <span className="text-xs leading-relaxed">Không tải được hình ảnh</span>
           )}
         </div>
       )}
       {isLoading && !hasError && (
         <div
-          className="absolute inset-0 animate-pulse bg-[linear-gradient(110deg,#eadfda_30%,#f6ede6_48%,#eadfda_66%)] bg-[length:200%_100%]"
+          className="absolute inset-0 animate-pulse bg-[var(--color-skeleton)]"
           aria-hidden="true"
         />
       )}

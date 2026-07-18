@@ -17,13 +17,16 @@ Yêu cầu Node.js 20.9 trở lên.
 ```bash
 npm install
 npm run dev
+npm test
+npm run test:watch
 npm run lint
 npm run build
 ```
 
 ## Cấu trúc dữ liệu
 
-Ứng dụng bắt đầu bằng `fetch("/data/preferences.json")`. Manifest này trỏ đến nội dung website và từng file danh mục:
+Route `/` đọc `preferences.json` trực tiếp ở server trong lúc render bằng
+`getPreferenceData()`. Manifest này trỏ đến nội dung website và từng file danh mục:
 
 ```text
 public/data/
@@ -66,27 +69,28 @@ Ví dụ item:
 
 Để thêm quà vào danh mục có sẵn, chỉ cần thêm item JSON. Để thêm danh mục, tạo file mới trong `public/data/categories` rồi thêm một đường dẫn vào `preferences.json`. Component không phụ thuộc vào tên hay thứ tự danh mục.
 
-## Base giao diện
+## Kiến trúc frontend
 
-Toàn bộ danh mục dùng chung một chuỗi component, không có component riêng cho từng loại quà:
+JSON trong `public/data` là nguồn nội dung duy nhất. Server component chỉ đọc và
+validate JSON, sau đó truyền dữ liệu đã typed xuống catalogue. Không có client
+fetch, API route hoặc backend song song.
+
+Logic theo domain nằm trong feature folders:
 
 ```text
-PreferenceCatalogue
-  CategoryTabs
-  PreferenceGrid
-    PreferenceCard
-    ProductPagination
-    ProductMessageDialog
+src/features/
+  catalogue/
+    hooks/       # controller và discovery state
+    lib/         # query/filter thuần TypeScript
+  selection/
+    components/  # summary và các vùng nội dung
+    hooks/       # React adapter cho selection
+    lib/         # reducer, migration và storage adapter
 ```
 
-`src/lib/catalogue-layout.ts` là nguồn cấu hình chung cho grid và phân trang:
-
-- Mobile: 2 cột × 2 hàng, tối đa 4 gợi ý/trang.
-- Tablet: 3 cột × 2 hàng, tối đa 6 gợi ý/trang.
-- Desktop: 4 cột × 2 hàng, tối đa 8 gợi ý/trang.
-- Màn hình lớn: 5 cột × 2 hàng, tối đa 10 gợi ý/trang.
-
-Website chỉ render một danh mục tại một thời điểm. Số trang được tính tự động theo số item và kích thước màn hình.
+`PreferenceCatalogue` điều phối màn hình, còn state machine và query có thể test
+độc lập với React/DOM. Grid hiển thị theo batch và dùng nút “Xem thêm”; số item
+được tính từ kết quả tìm kiếm/lọc hiện tại.
 
 ## Ảnh và nguồn tham khảo
 
@@ -102,7 +106,10 @@ Website không tự gửi email và không chứa mật khẩu Gmail. Gửi tự
 
 ## Dữ liệu trên trình duyệt
 
-Lựa chọn được lưu bằng localStorage với key `dieu-em-yeu:preferences:v1`. Dữ liệu chỉ tồn tại trên trình duyệt và thiết bị hiện tại; hai thiết bị khác nhau không tự động nhìn thấy cùng dữ liệu.
+Lựa chọn được lưu bằng localStorage với key `dieu-em-yeu:preferences:v1`. Storage
+adapter chấp nhận schema 1 cũ, migrate về schema 2 và giới hạn lời nhắn ở 500 ký
+tự. Dữ liệu chỉ tồn tại trên trình duyệt và thiết bị hiện tại; hai thiết bị khác
+nhau không tự động nhìn thấy cùng dữ liệu.
 
 ## Deploy Vercel
 

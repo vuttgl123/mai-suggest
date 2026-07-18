@@ -2,6 +2,7 @@ import type {
   PreferenceData,
   PreferenceSelectionState,
 } from "@/types/preference";
+import { selectValidSelection } from "@/features/selection/lib/selection-selectors";
 
 function formatUpdatedAt(updatedAt: string | null): string {
   if (!updatedAt) return "Chưa ghi nhận";
@@ -19,33 +20,31 @@ export function createSelectionText(
   data: PreferenceData,
   selection: PreferenceSelectionState,
 ): string {
-  const sections = data.categories.flatMap((category) => {
-    const likedItems = category.items.filter((item) =>
-      selection.likedItemIds.includes(item.id),
-    );
-    const favoriteId = selection.favoriteByCategory[category.id];
-    const favoriteItem = category.items.find((item) => item.id === favoriteId);
-    const note = selection.notesByCategory[category.id]?.trim();
+  const sections = selectValidSelection(data, selection).map(
+    ({ category, items, favoriteItemId, note }) => {
+      const lines = [category.name.toLocaleUpperCase("vi-VN")];
 
-    if (likedItems.length === 0 && !note) return [];
+      if (items.length > 0) {
+        lines.push("", "Em thích:");
+        for (const item of items) {
+          const favoriteLabel =
+            item.id === favoriteItemId ? " (Yêu thích nhất)" : "";
+          lines.push(`- ${item.name}${favoriteLabel}`);
 
-    const lines = [category.name.toLocaleUpperCase("vi-VN")];
+          const source = [item.sourceName, item.sourceUrl]
+            .filter(Boolean)
+            .join(" - ");
+          if (source) lines.push(`  Nguồn tham khảo: ${source}`);
+        }
+      }
 
-    if (likedItems.length > 0) {
-      lines.push("", "❤️ Em thích:");
-      lines.push(...likedItems.map((item) => `- ${item.name}`));
-    }
+      if (note.trim()) {
+        lines.push("", "Ghi chú:", note.trim());
+      }
 
-    if (favoriteItem) {
-      lines.push("", "⭐ Em thích nhất:", `- ${favoriteItem.name}`);
-    }
-
-    if (note) {
-      lines.push("", "Ghi chú:", note);
-    }
-
-    return [lines.join("\n")];
-  });
+      return lines.join("\n");
+    },
+  );
 
   return [
     "NHỮNG ĐIỀU EM YÊU",
