@@ -33,6 +33,9 @@ function createReader(overrides: Partial<CatalogueReader> = {}): CatalogueReader
   return {
     listCategories: vi.fn(async () => success([])),
     listItems: vi.fn(async () => success([])),
+    listItemPage: vi.fn(async () =>
+      success({ items: [], page: 1, pageSize: 6, total: 0, pageCount: 0 }),
+    ),
     findItemDetailBySlug: vi.fn(async () => success(null)),
     ...overrides,
   };

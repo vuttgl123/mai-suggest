@@ -52,6 +52,14 @@ export interface CatalogueItemSummary {
   primaryImage: CatalogueImage | null;
 }
 
+export interface CatalogueItemPage {
+  items: CatalogueItemSummary[];
+  page: number;
+  pageSize: number;
+  total: number;
+  pageCount: number;
+}
+
 export interface CatalogueItemDetail extends CatalogueItemSummary {
   description: string | null;
   address: string | null;

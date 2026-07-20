@@ -1,28 +1,31 @@
 @import "tailwindcss";
 
 :root {
-  --color-brand: #7a1025;
-  --color-brand-strong: #430813;
-  --color-brand-soft: #f4e1e5;
-  --color-accent: #a96852;
+  --color-brand: #650c1c;
+  --color-brand-strong: #31050c;
+  --color-brand-soft: #e9deda;
+  --color-accent: #a65b45;
   --color-positive: #365647;
   --color-danger: #b42318;
-  --color-paper: #fffaf7;
-  --color-surface: #f8f0ec;
-  --color-ink: #2b141a;
-  --color-muted: #755f66;
-  --color-border: rgb(75 12 28 / 14%);
-  --color-focus: #a03551;
-  --color-skeleton: #eadfda;
-  --color-skeleton-highlight: #f8f2ef;
+  --color-paper: #fff9f3;
+  --color-surface: #f4ece6;
+  --color-ink: #281216;
+  --color-muted: #6f5b5b;
+  --color-border: rgb(49 5 12 / 15%);
+  --color-focus: #8f1730;
+  --color-skeleton: #e8dfd7;
+  --color-skeleton-highlight: #f8f2ed;
   --radius-control: 999px;
   --radius-card: 1.5rem;
   --radius-dialog: 1.75rem;
   --control-height: 44px;
-  --shadow-card: 0 18px 45px rgb(67 8 19 / 8%);
-  --shadow-soft: 0 6px 20px rgb(67 8 19 / 6%);
+  --shadow-card: 0 18px 45px rgb(49 5 12 / 10%);
+  --shadow-soft: 0 6px 20px rgb(49 5 12 / 7%);
   --duration-fast: 160ms;
   --duration-base: 280ms;
+  --duration-exit: 150ms;
+  --duration-enter: 210ms;
+  --duration-move: 400ms;
 
   /* Compatibility aliases while feature components migrate to semantic tokens. */
   --wine: var(--color-brand);
@@ -33,7 +36,7 @@
   --champagne: var(--color-accent);
   --ink: var(--color-ink);
   --muted: var(--color-muted);
-  --soft-rose: #f0dce1;
+  --soft-rose: #eadbd6;
   --hairline: var(--color-border);
 }
 
@@ -50,8 +53,8 @@ body {
   margin: 0;
   overflow-x: clip;
   background:
-    radial-gradient(circle at 9% 2%, rgb(122 16 37 / 8%), transparent 20rem),
-    radial-gradient(circle at 92% 18%, rgb(169 104 82 / 8%), transparent 23rem),
+    radial-gradient(circle at 9% 2%, rgb(101 12 28 / 7%), transparent 20rem),
+    radial-gradient(circle at 92% 18%, rgb(166 91 69 / 7%), transparent 23rem),
     var(--ivory);
   color: var(--ink);
   font-family: var(--font-body), sans-serif;
@@ -176,9 +179,97 @@ a {
 
 .diary-wash {
   background:
-    radial-gradient(circle at 15% 16%, rgb(122 16 37 / 11%), transparent 17rem),
-    radial-gradient(circle at 88% 82%, rgb(169 104 82 / 12%), transparent 19rem),
-    rgb(255 250 247 / 82%);
+    radial-gradient(circle at 15% 16%, rgb(101 12 28 / 8%), transparent 17rem),
+    radial-gradient(circle at 88% 82%, rgb(166 91 69 / 10%), transparent 19rem),
+    rgb(255 249 243 / 88%);
+}
+
+@keyframes fade {
+  from { filter: blur(3px); opacity: 0; }
+  to { filter: blur(0); opacity: 1; }
+}
+
+@keyframes slide {
+  from { translate: var(--slide-offset); }
+  to { translate: 0; }
+}
+
+@keyframes slide-y {
+  from { transform: translateY(var(--slide-y-offset, 10px)); }
+  to { transform: translateY(0); }
+}
+
+::view-transition-old(.fade-out) {
+  animation: var(--duration-exit) ease-in fade reverse;
+}
+
+::view-transition-new(.fade-in) {
+  animation: var(--duration-enter) ease-out var(--duration-exit) both fade;
+}
+
+::view-transition-old(.slide-down) {
+  animation:
+    var(--duration-exit) ease-out both fade reverse,
+    var(--duration-exit) ease-out both slide-y reverse;
+}
+
+::view-transition-new(.slide-up) {
+  animation:
+    var(--duration-enter) ease-in var(--duration-exit) both fade,
+    var(--duration-move) ease-in both slide-y;
+}
+
+::view-transition-old(.nav-forward) {
+  --slide-offset: -60px;
+  animation:
+    var(--duration-exit) ease-in both fade reverse,
+    var(--duration-move) ease-in-out both slide reverse;
+}
+
+::view-transition-new(.nav-forward) {
+  --slide-offset: 60px;
+  animation:
+    var(--duration-enter) ease-out var(--duration-exit) both fade,
+    var(--duration-move) ease-in-out both slide;
+}
+
+::view-transition-old(.nav-back) {
+  --slide-offset: 60px;
+  animation:
+    var(--duration-exit) ease-in both fade reverse,
+    var(--duration-move) ease-in-out both slide reverse;
+}
+
+::view-transition-new(.nav-back) {
+  --slide-offset: -60px;
+  animation:
+    var(--duration-enter) ease-out var(--duration-exit) both fade,
+    var(--duration-move) ease-in-out both slide;
+}
+
+::view-transition-group(.morph) {
+  animation-duration: var(--duration-move);
+}
+
+::view-transition-image-pair(.morph) {
+  animation-name: via-blur;
+}
+
+@keyframes via-blur {
+  30% { filter: blur(3px); }
+}
+
+::view-transition-group(persistent-nav) {
+  animation: none;
+  z-index: 100;
+}
+
+::view-transition-old(persistent-nav) {
+  display: none;
+}
+
+::view-transition-new(persistent-nav) {
+  animation: none;
 }
 
 .summary-scroll {
@@ -197,5 +288,12 @@ a {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
   }
 }

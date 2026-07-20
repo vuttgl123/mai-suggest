@@ -4,13 +4,17 @@ import type { ActiveActor } from "@/modules/identity/domain/current-actor";
 
 interface AppHeaderProps {
   actor: ActiveActor;
+  activeSection?: "catalogue" | "admin";
 }
 
-export function AppHeader({ actor }: AppHeaderProps) {
+export function AppHeader({ actor, activeSection = "catalogue" }: AppHeaderProps) {
   const identity = actor.email ?? "Thành viên";
 
   return (
-    <header className="border-b border-[var(--color-border)] bg-[rgb(255_250_247_/_74%)] backdrop-blur-sm">
+    <header
+      className="border-b border-[var(--color-border)] bg-[rgb(255_249_243_/_82%)] backdrop-blur-sm"
+      style={{ viewTransitionName: "persistent-nav" }}
+    >
       <div className="mx-auto flex min-h-20 max-w-7xl flex-wrap items-center justify-between gap-x-6 gap-y-3 px-5 py-3 sm:px-8 lg:px-10">
         <Link
           className="group inline-flex items-center gap-3 text-[var(--color-brand-strong)]"
@@ -34,14 +38,22 @@ export function AppHeader({ actor }: AppHeaderProps) {
 
         <nav aria-label="Điều hướng chính" className="order-3 w-full sm:order-none sm:w-auto">
           <Link
-            className="inline-flex min-h-10 items-center border-b-2 border-[var(--color-brand)] px-1 text-sm font-semibold text-[var(--color-brand)] transition hover:text-[var(--color-brand-strong)]"
+            className={`inline-flex min-h-10 items-center border-b-2 px-1 text-sm font-semibold transition ${
+              activeSection === "catalogue"
+                ? "border-[var(--color-brand)] text-[var(--color-brand)]"
+                : "border-transparent text-[var(--color-muted)] hover:text-[var(--color-brand-strong)]"
+            }`}
             href="/#collection"
           >
             Bộ sưu tập
           </Link>
           {actor.canManageCatalogue ? (
             <Link
-              className="ml-5 inline-flex min-h-10 items-center px-1 text-sm font-semibold text-[var(--color-muted)] transition hover:text-[var(--color-brand-strong)]"
+              className={`ml-5 inline-flex min-h-10 items-center border-b-2 px-1 text-sm font-semibold transition ${
+                activeSection === "admin"
+                  ? "border-[var(--color-brand)] text-[var(--color-brand)]"
+                  : "border-transparent text-[var(--color-muted)] hover:text-[var(--color-brand-strong)]"
+              }`}
               href="/admin"
             >
               Quản trị

@@ -49,6 +49,14 @@ export interface ManagedCatalogueItem extends CatalogueItemInput {
   updatedAt: string;
 }
 
+export interface ManagedCatalogueItemPage {
+  items: ManagedCatalogueItem[];
+  page: number;
+  pageSize: number;
+  total: number;
+  pageCount: number;
+}
+
 export interface ItemImageInput {
   itemId: string;
   imageUrl: string;

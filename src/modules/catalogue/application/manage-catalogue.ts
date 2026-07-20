@@ -13,6 +13,7 @@ import type {
   ManagedItemLink,
 } from "@/modules/catalogue/domain/catalogue-admin-models";
 import type { CatalogueItemKind, CatalogueLinkType } from "@/modules/catalogue/domain/catalogue-read-models";
+import { isValidItemKeepsakeMetadata } from "@/modules/catalogue/domain/item-keepsakes";
 import {
   requireCatalogueOwner,
   type CurrentActor,
@@ -220,6 +221,7 @@ function normalizeItem(input: CatalogueItemInput): Result<CatalogueItemInput> {
     !isValidRating(input.externalRating) ||
     !isValidReviewCount(input.externalReviewCount) ||
     !isMetadata(input.metadata) ||
+    !isValidItemKeepsakeMetadata(input.metadata) ||
     typeof input.isPublished !== "boolean" ||
     !isOptionalHttpUrl(input.mapUrl)
   ) {

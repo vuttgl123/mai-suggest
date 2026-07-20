@@ -6,12 +6,14 @@ import { SupabaseAllowedUserRepository } from "@/modules/identity/infrastructure
 import { GetVisibleItemDetail } from "@/modules/catalogue/application/get-visible-item-detail";
 import { ListVisibleCategories } from "@/modules/catalogue/application/list-visible-categories";
 import { ListVisibleItems } from "@/modules/catalogue/application/list-visible-items";
+import { ListVisibleItemPage } from "@/modules/catalogue/application/list-visible-item-page";
 import { SupabaseCatalogueReader } from "@/modules/catalogue/infrastructure/supabase-catalogue-reader";
 import { ManageCatalogue } from "@/modules/catalogue/application/manage-catalogue";
 import { SupabaseCatalogueAdminRepository } from "@/modules/catalogue/infrastructure/supabase-catalogue-admin-repository";
 import { SupabaseCatalogueAdminReader } from "@/modules/catalogue/infrastructure/supabase-catalogue-admin-reader";
 import { ListManagedCategories } from "@/modules/catalogue/application/list-managed-categories";
 import { ListManagedItems } from "@/modules/catalogue/application/list-managed-items";
+import { ListManagedItemPage } from "@/modules/catalogue/application/list-managed-item-page";
 import { GetManagedItemDetail } from "@/modules/catalogue/application/get-managed-item-detail";
 import { ManageItemEngagement } from "@/modules/engagement/application/manage-item-engagement";
 import { SupabaseEngagementRepository } from "@/modules/engagement/infrastructure/supabase-engagement-repository";
@@ -31,10 +33,12 @@ export function createBackendForClient(client: SupabaseClient<Database>) {
     manageAllowedUsers: new ManageAllowedUsers(allowedUserRepository),
     listVisibleCategories: new ListVisibleCategories(catalogueReader),
     listVisibleItems: new ListVisibleItems(catalogueReader),
+    listVisibleItemPage: new ListVisibleItemPage(catalogueReader),
     getVisibleItemDetail: new GetVisibleItemDetail(catalogueReader),
     manageCatalogue: new ManageCatalogue(catalogueAdminRepository),
     listManagedCategories: new ListManagedCategories(catalogueAdminReader),
     listManagedItems: new ListManagedItems(catalogueAdminReader),
+    listManagedItemPage: new ListManagedItemPage(catalogueAdminReader),
     getManagedItemDetail: new GetManagedItemDetail(catalogueAdminReader),
     manageItemEngagement: new ManageItemEngagement(engagementRepository),
   };

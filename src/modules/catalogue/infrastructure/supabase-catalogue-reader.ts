@@ -4,11 +4,13 @@ import type {
   CatalogueCategory,
   CatalogueImage,
   CatalogueItemDetail,
+  CatalogueItemPage,
   CatalogueItemSummary,
   CatalogueLink,
 } from "@/modules/catalogue/domain/catalogue-read-models";
 import type {
   CatalogueItemCriteria,
+  CatalogueItemPageCriteria,
   CatalogueReader,
 } from "@/modules/catalogue/application/catalogue-reader";
 import {
@@ -97,6 +99,66 @@ export class SupabaseCatalogueReader implements CatalogueReader {
     );
   }
 
+  async listItemPage(
+    criteria: CatalogueItemPageCriteria,
+  ): Promise<Result<CatalogueItemPage>> {
+    const categoryId = await this.findVisibleCategoryId(criteria.categorySlug);
+    if (!categoryId.ok) return categoryId;
+
+    if (criteria.categorySlug && categoryId.value === null) {
+      return success(emptyItemPage(criteria));
+    }
+
+    const from = (criteria.page - 1) * criteria.pageSize;
+    const to = from + criteria.pageSize - 1;
+    const request = categoryId.value
+      ? this.client
+          .from("items")
+          .select(ITEM_SUMMARY_COLUMNS, { count: "exact" })
+          .eq("category_id", categoryId.value)
+      : this.client.from("items").select(ITEM_SUMMARY_COLUMNS, { count: "exact" });
+    const { data: itemRows, error: itemError, count } = await request
+      .order("title")
+      .range(from, to);
+
+    if (itemError) return failure("UNEXPECTED_FAILURE");
+
+    const total = count ?? 0;
+    if (!itemRows?.length) {
+      return success({
+        ...emptyItemPage(criteria),
+        total,
+        pageCount: Math.ceil(total / criteria.pageSize),
+      });
+    }
+
+    const itemIds = itemRows.map((item) => item.id);
+    const { data: imageRows, error: imageError } = await this.client
+      .from("item_images")
+      .select(ITEM_IMAGE_COLUMNS)
+      .in("item_id", itemIds)
+      .order("sort_order");
+
+    if (imageError) return failure("UNEXPECTED_FAILURE");
+
+    const primaryImages = new Map<string, CatalogueImage>();
+    for (const imageRow of imageRows ?? []) {
+      if (!primaryImages.has(imageRow.item_id)) {
+        primaryImages.set(imageRow.item_id, toCatalogueImage(imageRow));
+      }
+    }
+
+    return success({
+      items: itemRows.map((item) =>
+        toCatalogueItemSummary(item, primaryImages.get(item.id) ?? null),
+      ),
+      page: criteria.page,
+      pageSize: criteria.pageSize,
+      total,
+      pageCount: Math.ceil(total / criteria.pageSize),
+    });
+  }
+
   async findItemDetailBySlug(
     slug: string,
   ): Promise<Result<CatalogueItemDetail | null>> {
@@ -156,4 +218,14 @@ export class SupabaseCatalogueReader implements CatalogueReader {
 
     return success(data?.id ?? null);
   }
+}
+
+function emptyItemPage(criteria: CatalogueItemPageCriteria): CatalogueItemPage {
+  return {
+    items: [],
+    page: criteria.page,
+    pageSize: criteria.pageSize,
+    total: 0,
+    pageCount: 0,
+  };
 }

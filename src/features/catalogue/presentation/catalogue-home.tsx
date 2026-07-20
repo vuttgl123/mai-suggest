@@ -1,24 +1,27 @@
 import Link from "next/link";
+import { ViewTransition } from "react";
 import { ArrowRight, Heart, Sparkles } from "lucide-react";
 import { AppHeader } from "@/components/app-header";
 import { CatalogueItemCard } from "@/features/catalogue/presentation/catalogue-item-card";
+import { CataloguePagination } from "@/features/catalogue/presentation/catalogue-pagination";
+import { createCataloguePath } from "@/features/catalogue/lib/catalogue-navigation";
 import type {
   CatalogueCategory,
-  CatalogueItemSummary,
+  CatalogueItemPage,
 } from "@/modules/catalogue/domain/catalogue-read-models";
 import type { ActiveActor } from "@/modules/identity/domain/current-actor";
 
 interface CatalogueHomeProps {
   actor: ActiveActor;
   categories: CatalogueCategory[];
-  items: CatalogueItemSummary[];
+  itemPage: CatalogueItemPage;
   selectedCategorySlug: string | null;
 }
 
 export function CatalogueHome({
   actor,
   categories,
-  items,
+  itemPage,
   selectedCategorySlug,
 }: CatalogueHomeProps) {
   const categoryNames = new Map(
@@ -39,7 +42,7 @@ export function CatalogueHome({
       >
         Đi tới nội dung chính
       </a>
-      <AppHeader actor={actor} />
+      <AppHeader activeSection="catalogue" actor={actor} />
 
       <main id="main-content" tabIndex={-1}>
         <section className="mx-auto grid max-w-7xl gap-12 px-5 pb-16 pt-16 sm:px-8 sm:pb-24 sm:pt-24 lg:grid-cols-[minmax(0,1.15fr)_minmax(18rem,0.65fr)] lg:items-end lg:gap-20 lg:px-10 lg:pb-28 lg:pt-30">
@@ -67,7 +70,7 @@ export function CatalogueHome({
             />
             <p className="diary-kicker">Bộ sưu tập hôm nay</p>
             <p className="font-display mt-5 text-5xl font-semibold tracking-[-0.06em] text-[var(--color-brand-strong)]">
-              {items.length}
+              {itemPage.total}
             </p>
             <p className="mt-2 max-w-48 text-sm leading-6 text-[var(--color-muted)]">
               điều đang được lưu lại
@@ -94,7 +97,8 @@ export function CatalogueHome({
               {selectedCategory ? (
                 <Link
                   className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-paper)] px-4 text-sm font-semibold text-[var(--color-brand)] transition hover:-translate-y-0.5 hover:border-[var(--color-accent)]"
-                  href="/"
+                  href={createCataloguePath({ categorySlug: null, page: 1 })}
+                  transitionTypes={["collection-change"]}
                 >
                   Xem tất cả
                   <ArrowRight size={16} aria-hidden="true" />
@@ -104,11 +108,11 @@ export function CatalogueHome({
 
             {categories.length ? (
               <nav aria-label="Lọc theo danh mục" className="mt-6 flex flex-wrap gap-2.5">
-                <CategoryLink active={!selectedCategorySlug} href="/" label="Tất cả" />
+                <CategoryLink active={!selectedCategorySlug} href={createCataloguePath({ categorySlug: null, page: 1 })} label="Tất cả" />
                 {categories.map((category) => (
                   <CategoryLink
                     active={category.slug === selectedCategorySlug}
-                    href={`/?category=${encodeURIComponent(category.slug)}`}
+                    href={createCataloguePath({ categorySlug: category.slug, page: 1 })}
                     key={category.id}
                     label={category.name}
                   />
@@ -119,16 +123,40 @@ export function CatalogueHome({
         </section>
 
         <section className="mx-auto max-w-7xl px-5 py-12 sm:px-8 sm:py-16 lg:px-10 lg:py-20">
-          {items.length ? (
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-7">
-              {items.map((item) => (
-                <CatalogueItemCard
-                  categoryName={categoryNames.get(item.categoryId) ?? null}
-                  item={item}
-                  key={item.id}
-                />
-              ))}
-            </div>
+          {itemPage.items.length ? (
+            <>
+              <ViewTransition
+                default="none"
+                enter={{
+                  "collection-change": "fade-in",
+                  "page-forward": "nav-forward",
+                  "page-back": "nav-back",
+                  default: "none",
+                }}
+                exit={{
+                  "collection-change": "fade-out",
+                  "page-forward": "nav-forward",
+                  "page-back": "nav-back",
+                  default: "none",
+                }}
+                key={`${selectedCategorySlug ?? "all"}-${itemPage.page}`}
+              >
+                <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-7">
+                  {itemPage.items.map((item) => (
+                    <CatalogueItemCard
+                      categoryName={categoryNames.get(item.categoryId) ?? null}
+                      item={item}
+                      key={item.id}
+                    />
+                  ))}
+                </div>
+              </ViewTransition>
+              <CataloguePagination
+                categorySlug={selectedCategorySlug}
+                page={itemPage.page}
+                pageCount={itemPage.pageCount}
+              />
+            </>
           ) : (
             <EmptyCollection actor={actor} categoryName={selectedCategory?.name ?? null} />
           )}
@@ -156,6 +184,7 @@ function CategoryLink({
           : "border-[var(--color-border)] bg-[rgb(255_250_247_/_70%)] text-[var(--color-muted)] hover:border-[var(--color-accent)] hover:text-[var(--color-brand)]"
       }`}
       href={href}
+      transitionTypes={["collection-change"]}
     >
       {label}
     </Link>

@@ -3,11 +3,13 @@ import { failure, success, type Result } from "@/core/application/result";
 import type {
   CatalogueAdminReader,
   ManagedCatalogueItemCriteria,
+  ManagedCatalogueItemPageCriteria,
 } from "@/modules/catalogue/application/catalogue-admin-reader";
 import type {
   ManagedCatalogueCategory,
   ManagedCatalogueItem,
   ManagedCatalogueItemDetail,
+  ManagedCatalogueItemPage,
 } from "@/modules/catalogue/domain/catalogue-admin-models";
 import {
   toManagedCategory,
@@ -55,6 +57,33 @@ export class SupabaseCatalogueAdminReader implements CatalogueAdminReader {
 
     if (error) return failure("UNEXPECTED_FAILURE");
     return success((data ?? []).map(toManagedItem));
+  }
+
+  async listManagedItemPage(
+    criteria: ManagedCatalogueItemPageCriteria,
+  ): Promise<Result<ManagedCatalogueItemPage>> {
+    const from = (criteria.page - 1) * criteria.pageSize;
+    const to = from + criteria.pageSize - 1;
+    const request = criteria.categoryId
+      ? this.client
+          .from("items")
+          .select(ITEM_COLUMNS, { count: "exact" })
+          .eq("category_id", criteria.categoryId)
+      : this.client.from("items").select(ITEM_COLUMNS, { count: "exact" });
+    const { data, error, count } = await request
+      .order("created_at", { ascending: false })
+      .range(from, to);
+
+    if (error) return failure("UNEXPECTED_FAILURE");
+
+    const total = count ?? 0;
+    return success({
+      items: (data ?? []).map(toManagedItem),
+      page: criteria.page,
+      pageSize: criteria.pageSize,
+      total,
+      pageCount: Math.ceil(total / criteria.pageSize),
+    });
   }
 
   async findManagedItemDetailById(
