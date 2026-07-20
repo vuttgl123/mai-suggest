@@ -39,6 +39,14 @@ export function AppHeader({ actor }: AppHeaderProps) {
           >
             Bộ sưu tập
           </Link>
+          {actor.canManageCatalogue ? (
+            <Link
+              className="ml-5 inline-flex min-h-10 items-center px-1 text-sm font-semibold text-[var(--color-muted)] transition hover:text-[var(--color-brand-strong)]"
+              href="/admin"
+            >
+              Quản trị
+            </Link>
+          ) : null}
         </nav>
 
         <div className="flex min-w-0 items-center gap-2 text-right">
