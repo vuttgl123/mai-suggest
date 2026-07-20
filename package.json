@@ -9,16 +9,22 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:verify:supabase": "node --test scripts/verify-supabase-connection.test.mjs",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "check:images": "node scripts/check-image-metadata.mjs"
+    "check:images": "node scripts/check-image-metadata.mjs",
+    "verify:supabase": "node --env-file=.env.local scripts/verify-supabase-connection.mjs"
   },
   "dependencies": {
+    "@supabase/ssr": "0.12.3",
+    "@supabase/supabase-js": "2.110.7",
     "lucide-react": "latest",
     "motion": "latest",
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "@supabase/ssr": "0.12.3",
+    "@supabase/supabase-js": "2.110.7"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",

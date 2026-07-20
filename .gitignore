@@ -11,6 +11,9 @@
 # local files
 .DS_Store
 *.pem
+.env.local
+.env.*.local
+docs/secret
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
