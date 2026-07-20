@@ -126,14 +126,14 @@ export function AdminItemEditor({
   }
 
   return (
-    <section className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] p-5 shadow-[var(--shadow-card)] sm:p-7">
+    <section className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] p-4 shadow-[var(--shadow-card)] sm:p-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="diary-kicker">{isEditing ? "Item đang chọn" : "Bắt đầu một điều mới"}</p>
-          <h2 className="font-display mt-2 text-4xl font-semibold tracking-[-0.055em] text-[var(--color-brand-strong)]">
+          <h2 className="font-display mt-2 text-3xl font-semibold tracking-[-0.055em] text-[var(--color-brand-strong)]">
             {isEditing ? selectedItem.title : "Tạo item"}
           </h2>
-          <p className="mt-3 max-w-2xl text-sm leading-7 text-[var(--color-muted)]">
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--color-muted)]">
             Mỗi item có thể là một món quà, điểm đến hoặc trải nghiệm cùng những điều riêng bạn muốn gửi gắm.
           </p>
         </div>
@@ -143,15 +143,15 @@ export function AdminItemEditor({
       </div>
 
       {categories.length ? (
-        <form className="mt-8" onSubmit={handleSubmit}>
+        <form className="mt-6" onSubmit={handleSubmit}>
           <section aria-labelledby="item-information-heading">
             <div className="flex items-center gap-2">
               <PencilLine className="text-[var(--color-accent)]" size={18} aria-hidden="true" />
-              <h3 id="item-information-heading" className="font-display text-3xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]">
+              <h3 id="item-information-heading" className="font-display text-2xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]">
                 Thông tin item
               </h3>
             </div>
-            <div className="mt-6 grid gap-5 sm:grid-cols-2">
+            <div className="mt-5 grid gap-4 sm:grid-cols-2">
               <label className={labelClassName}>
                 Danh mục
                 <select className={inputClassName} defaultValue={defaultCategory ?? undefined} name="categoryId" required>
@@ -223,13 +223,13 @@ export function AdminItemEditor({
 
           <ItemKeepsakeEditor disabled={isPending} onChange={setKeepsakes} value={keepsakes} />
 
-          <Button className="mt-8" disabled={isPending} type="submit">
+          <Button className="mt-6" disabled={isPending} type="submit">
             <Save size={16} aria-hidden="true" />
             {isPending ? "Đang lưu…" : isEditing ? "Lưu item" : "Tạo item"}
           </Button>
         </form>
       ) : (
-        <div className="mt-8 rounded-[var(--radius-card)] border border-dashed border-[var(--color-border)] px-5 py-9 text-center text-sm leading-6 text-[var(--color-muted)]">
+        <div className="mt-6 rounded-[var(--radius-card)] border border-dashed border-[var(--color-border)] px-4 py-8 text-center text-sm leading-6 text-[var(--color-muted)]">
           Hãy tạo ít nhất một danh mục trước khi thêm item.
         </div>
       )}
@@ -360,17 +360,17 @@ function AttachmentSection({
   }
 
   return (
-    <section className="mt-12 border-t border-[var(--color-border)] pt-8" aria-labelledby="attachments-heading">
+    <section className="mt-9 border-t border-[var(--color-border)] pt-6" aria-labelledby="attachments-heading">
       <div className="flex items-center gap-2">
         <Link2 className="text-[var(--color-accent)]" size={18} aria-hidden="true" />
         <div>
           <p className="diary-kicker">Tư liệu item</p>
-          <h3 id="attachments-heading" className="font-display mt-1 text-3xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]">Hình và đường dẫn</h3>
+          <h3 id="attachments-heading" className="font-display mt-1 text-2xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]">Hình và đường dẫn</h3>
         </div>
       </div>
 
-      <div className="mt-6 grid gap-6 xl:grid-cols-2">
-        <div className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[rgb(255_249_243_/_62%)] p-4">
+      <div className="mt-5 grid gap-4 xl:grid-cols-2">
+        <div className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[rgb(255_249_243_/_62%)] p-3">
           <div className="flex items-center gap-2 text-[var(--color-brand-strong)]"><ImagePlus size={17} aria-hidden="true" /><h4 className="text-sm font-bold">Hình ảnh</h4></div>
           <div className="mt-4 space-y-3">
             {item.images.map((image) => (
@@ -398,7 +398,7 @@ function AttachmentSection({
           </form>
         </div>
 
-        <div className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[rgb(255_249_243_/_62%)] p-4">
+        <div className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[rgb(255_249_243_/_62%)] p-3">
           <div className="flex items-center gap-2 text-[var(--color-brand-strong)]"><Link2 size={17} aria-hidden="true" /><h4 className="text-sm font-bold">Đường dẫn</h4></div>
           <div className="mt-4 space-y-3">
             {item.links.map((link) => (

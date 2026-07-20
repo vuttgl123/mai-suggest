@@ -93,11 +93,11 @@ export function AdminCatalogueSidebar({
   }
 
   return (
-    <aside className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[rgb(255_249_243_/_78%)] p-5 shadow-[var(--shadow-soft)] xl:sticky xl:top-6">
+    <aside className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[rgb(255_249_243_/_78%)] p-4 shadow-[var(--shadow-soft)] xl:sticky xl:top-5">
       <div className="flex items-center justify-between gap-3">
         <div>
           <p className="diary-kicker">Bộ sưu tập</p>
-          <h2 className="font-display mt-2 text-2xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]">
+          <h2 className="font-display mt-1 text-xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]">
             Danh mục
           </h2>
         </div>
@@ -114,29 +114,29 @@ export function AdminCatalogueSidebar({
       </div>
 
       {showCreateForm ? (
-        <form className="mt-5 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-paper)] p-4" onSubmit={handleCreate}>
+        <form className="mt-4 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-paper)] p-3" onSubmit={handleCreate}>
           <div className="flex items-start gap-2">
             <FolderPlus className="mt-0.5 text-[var(--color-accent)]" size={18} aria-hidden="true" />
             <p className="text-sm font-semibold text-[var(--color-brand-strong)]">Danh mục mới</p>
           </div>
-          <label className="mt-4 block text-sm font-semibold text-[var(--color-brand-strong)]">
+          <label className="mt-3 block text-sm font-semibold text-[var(--color-brand-strong)]">
             Tên danh mục
             <input className={inputClassName} name="name" required />
           </label>
-          <label className="mt-4 block text-sm font-semibold text-[var(--color-brand-strong)]">
+          <label className="mt-3 block text-sm font-semibold text-[var(--color-brand-strong)]">
             Slug <span className="font-normal text-[var(--color-muted)]">(tự tạo nếu trống)</span>
             <input className={inputClassName} name="slug" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" spellCheck={false} />
           </label>
-          <label className="mt-4 block text-sm font-semibold text-[var(--color-brand-strong)]">
+          <label className="mt-3 block text-sm font-semibold text-[var(--color-brand-strong)]">
             Mô tả <span className="font-normal text-[var(--color-muted)]">(không bắt buộc)</span>
             <textarea className={`${inputClassName} min-h-20 py-3`} name="description" />
           </label>
           <input name="sortOrder" type="hidden" value={categories.length * 10 + 10} readOnly />
-          <label className="mt-4 flex items-center gap-2 text-sm font-semibold text-[var(--color-brand-strong)]">
+          <label className="mt-3 flex items-center gap-2 text-sm font-semibold text-[var(--color-brand-strong)]">
             <input defaultChecked className="h-4 w-4 accent-[var(--color-brand)]" name="isActive" type="checkbox" />
             Hiển thị ngay
           </label>
-          <div className="mt-5 flex gap-2">
+          <div className="mt-4 flex gap-2">
             <Button disabled={isPending} size="compact" type="submit">
               {isPending ? "Đang lưu…" : "Tạo danh mục"}
             </Button>
@@ -147,7 +147,7 @@ export function AdminCatalogueSidebar({
         </form>
       ) : null}
 
-      <nav aria-label="Danh mục quản trị" className="mt-5 space-y-1.5">
+      <nav aria-label="Danh mục quản trị" className="mt-4 space-y-1.5">
         <Link
           aria-current={selectedCategoryId === null ? "page" : undefined}
           className={categoryLinkClassName(selectedCategoryId === null)}

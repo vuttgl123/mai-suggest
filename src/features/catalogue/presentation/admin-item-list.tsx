@@ -51,11 +51,11 @@ export function AdminItemList({
   }
 
   return (
-    <section className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] p-5 shadow-[var(--shadow-soft)] sm:p-6">
+    <section className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] p-4 shadow-[var(--shadow-soft)] sm:p-5">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="diary-kicker">Nội dung</p>
-          <h2 className="font-display mt-2 text-3xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
+          <h2 className="font-display mt-1 text-2xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
             {itemPage.total} item
           </h2>
         </div>
@@ -69,12 +69,12 @@ export function AdminItemList({
       </div>
 
       {itemPage.items.length ? (
-        <ul className="mt-6 space-y-2" aria-label="Danh sách item">
+        <ul className="mt-5 space-y-1.5" aria-label="Danh sách item">
           {itemPage.items.map((item) => (
             <li key={item.id}>
               <Link
                 aria-current={item.id === selectedItemId ? "page" : undefined}
-                className={`block rounded-[var(--radius-card)] border p-4 transition ${
+                className={`block rounded-[var(--radius-card)] border p-3 transition ${
                   item.id === selectedItemId
                     ? "border-[var(--color-brand)] bg-[var(--color-brand-soft)] shadow-[var(--shadow-soft)]"
                     : "border-transparent hover:border-[var(--color-border)] hover:bg-[rgb(255_249_243_/_72%)]"
@@ -123,13 +123,13 @@ export function AdminItemList({
           ))}
         </ul>
       ) : (
-        <div className="mt-6 rounded-[var(--radius-card)] border border-dashed border-[var(--color-border)] px-5 py-10 text-center text-sm leading-6 text-[var(--color-muted)]">
+        <div className="mt-5 rounded-[var(--radius-card)] border border-dashed border-[var(--color-border)] px-4 py-8 text-center text-sm leading-6 text-[var(--color-muted)]">
           Chưa có item trong vùng này. Hãy bắt đầu bằng một điều thật riêng.
         </div>
       )}
 
       {itemPage.pageCount > 1 ? (
-        <nav aria-label="Phân trang item quản trị" className="mt-6 flex items-center justify-between gap-3 border-t border-[var(--color-border)] pt-5">
+        <nav aria-label="Phân trang item quản trị" className="mt-5 flex items-center justify-between gap-3 border-t border-[var(--color-border)] pt-4">
           {itemPage.page > 1 ? (
             <Link className="inline-flex min-h-10 items-center gap-1 text-sm font-semibold text-[var(--color-brand)]" href={selectPath(null, itemPage.page - 1)}>
               <ChevronLeft size={16} aria-hidden="true" />

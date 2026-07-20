@@ -62,11 +62,11 @@ export function ItemKeepsakeEditor({
   }
 
   return (
-    <section aria-labelledby="keepsakes-heading" className="mt-10 border-t border-[var(--color-border)] pt-8">
+    <section aria-labelledby="keepsakes-heading" className="mt-8 border-t border-[var(--color-border)] pt-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="diary-kicker">Nội dung công khai</p>
-          <h3 id="keepsakes-heading" className="font-display mt-2 text-3xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
+          <h3 id="keepsakes-heading" className="font-display mt-1 text-2xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
             Những điều muốn nói
           </h3>
           <p className="mt-2 max-w-xl text-sm leading-6 text-[var(--color-muted)]">
@@ -95,7 +95,7 @@ export function ItemKeepsakeEditor({
       </div>
 
       {value.length ? (
-        <ol className="mt-6 space-y-4">
+        <ol className="mt-5 space-y-3">
           {value.map((keepsake, index) => (
             <KeepsakeForm
               disabled={disabled}
@@ -110,7 +110,7 @@ export function ItemKeepsakeEditor({
           ))}
         </ol>
       ) : (
-        <div className="mt-6 rounded-[var(--radius-card)] border border-dashed border-[var(--color-border)] bg-[rgb(255_249_243_/_65%)] px-5 py-7 text-center">
+        <div className="mt-5 rounded-[var(--radius-card)] border border-dashed border-[var(--color-border)] bg-[rgb(255_249_243_/_65%)] px-4 py-6 text-center">
           <Heart className="mx-auto text-[var(--color-accent)]" size={20} aria-hidden="true" />
           <p className="mt-3 text-sm leading-6 text-[var(--color-muted)]">
             Thêm lời nhắn, thơ hoặc kỷ niệm đầu tiên cho item này.
@@ -142,7 +142,7 @@ function KeepsakeForm({
   const kindLabel = kinds.find((entry) => entry.kind === keepsake.kind)?.label;
 
   return (
-    <li className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[rgb(255_249_243_/_72%)] p-5 shadow-[var(--shadow-soft)]">
+    <li className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[rgb(255_249_243_/_72%)] p-4 shadow-[var(--shadow-soft)]">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="diary-kicker">{kindLabel} · {String(index + 1).padStart(2, "0")}</p>
         <div className="flex items-center gap-1">
@@ -178,7 +178,7 @@ function KeepsakeForm({
           </Button>
         </div>
       </div>
-      <div className="mt-4 grid gap-4">
+      <div className="mt-3 grid gap-3">
         <label className="block text-sm font-semibold text-[var(--color-brand-strong)]">
           Tiêu đề <span className="font-normal text-[var(--color-muted)]">(không bắt buộc)</span>
           <input
@@ -202,7 +202,7 @@ function KeepsakeForm({
         </label>
       </div>
       {confirmRemoval ? (
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[var(--color-danger)]/30 bg-[var(--color-danger)]/10 px-4 py-3">
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[var(--color-danger)]/30 bg-[var(--color-danger)]/10 px-4 py-3">
           <p className="text-sm leading-6 text-[var(--color-danger)]">Xóa mảnh thư này trước khi lưu item?</p>
           <span className="flex gap-2">
             <Button disabled={disabled} onClick={() => setConfirmRemoval(false)} size="compact" type="button" variant="quiet">

@@ -45,23 +45,23 @@ export function CatalogueHome({
       <AppHeader activeSection="catalogue" actor={actor} />
 
       <main id="main-content" tabIndex={-1}>
-        <section className="mx-auto grid max-w-7xl gap-12 px-5 pb-16 pt-16 sm:px-8 sm:pb-24 sm:pt-24 lg:grid-cols-[minmax(0,1.15fr)_minmax(18rem,0.65fr)] lg:items-end lg:gap-20 lg:px-10 lg:pb-28 lg:pt-30">
+        <section className="mx-auto grid max-w-7xl gap-9 px-5 pb-12 pt-12 sm:px-8 sm:pb-16 sm:pt-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(18rem,0.65fr)] lg:items-end lg:gap-14 lg:px-10 lg:pb-20 lg:pt-20">
           <div>
             <p className="diary-kicker">Dành riêng cho những điều dịu dàng</p>
-            <div className="mt-5 flex items-center gap-3 text-[var(--color-accent)]" aria-hidden="true">
+            <div className="mt-4 flex items-center gap-3 text-[var(--color-accent)]" aria-hidden="true">
               <span className="diary-rule" />
               <Heart size={15} fill="currentColor" strokeWidth={1.4} />
             </div>
-            <h1 className="font-display display-xl mt-7 max-w-3xl text-balance font-semibold text-[var(--color-brand-strong)]">
+            <h1 className="font-display display-xl mt-5 max-w-3xl text-balance font-semibold text-[var(--color-brand-strong)]">
               Những điều làm em mỉm cười.
             </h1>
-            <p className="mt-7 max-w-xl text-base leading-8 text-[var(--color-muted)] sm:text-lg">
+            <p className="mt-5 max-w-xl text-base leading-8 text-[var(--color-muted)] sm:text-lg">
               Một nơi nhỏ để gìn giữ những lựa chọn đẹp đẽ, những điểm đến đáng nhớ
               và mọi điều khiến ngày thường trở nên đặc biệt hơn.
             </p>
           </div>
 
-          <aside className="diary-wash relative overflow-hidden rounded-[var(--radius-dialog)] border border-[var(--color-border)] p-7 shadow-[var(--shadow-soft)] sm:p-8">
+          <aside className="diary-wash relative overflow-hidden rounded-[var(--radius-dialog)] border border-[var(--color-border)] p-6 shadow-[var(--shadow-soft)] sm:p-7">
             <Sparkles
               className="absolute right-6 top-6 text-[var(--color-accent)] opacity-70"
               size={24}
@@ -69,7 +69,7 @@ export function CatalogueHome({
               aria-hidden="true"
             />
             <p className="diary-kicker">Bộ sưu tập hôm nay</p>
-            <p className="font-display mt-5 text-5xl font-semibold tracking-[-0.06em] text-[var(--color-brand-strong)]">
+            <p className="font-display mt-4 text-4xl font-semibold tracking-[-0.06em] text-[var(--color-brand-strong)]">
               {itemPage.total}
             </p>
             <p className="mt-2 max-w-48 text-sm leading-6 text-[var(--color-muted)]">
@@ -83,7 +83,7 @@ export function CatalogueHome({
           className="border-y border-[var(--color-border)] bg-[rgb(255_250_247_/_55%)]"
           aria-labelledby="collection-heading"
         >
-          <div className="mx-auto max-w-7xl px-5 py-6 sm:px-8 lg:px-10">
+          <div className="mx-auto max-w-7xl px-5 py-5 sm:px-8 lg:px-10">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
                 <p className="diary-kicker">Khám phá theo tâm trạng</p>
@@ -107,7 +107,7 @@ export function CatalogueHome({
             </div>
 
             {categories.length ? (
-              <nav aria-label="Lọc theo danh mục" className="mt-6 flex flex-wrap gap-2.5">
+              <nav aria-label="Lọc theo danh mục" className="mt-5 flex flex-wrap gap-2.5">
                 <CategoryLink active={!selectedCategorySlug} href={createCataloguePath({ categorySlug: null, page: 1 })} label="Tất cả" />
                 {categories.map((category) => (
                   <CategoryLink
@@ -122,7 +122,7 @@ export function CatalogueHome({
           </div>
         </section>
 
-        <section className="mx-auto max-w-7xl px-5 py-12 sm:px-8 sm:py-16 lg:px-10 lg:py-20">
+        <section className="mx-auto max-w-7xl px-5 py-10 sm:px-8 sm:py-12 lg:px-10 lg:py-16">
           {itemPage.items.length ? (
             <>
               <ViewTransition
@@ -141,7 +141,7 @@ export function CatalogueHome({
                 }}
                 key={`${selectedCategorySlug ?? "all"}-${itemPage.page}`}
               >
-                <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-7">
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
                   {itemPage.items.map((item) => (
                     <CatalogueItemCard
                       categoryName={categoryNames.get(item.categoryId) ?? null}
@@ -199,14 +199,14 @@ function EmptyCollection({
   categoryName: string | null;
 }) {
   return (
-    <div className="diary-wash mx-auto max-w-2xl rounded-[var(--radius-dialog)] border border-[var(--color-border)] px-7 py-14 text-center shadow-[var(--shadow-soft)] sm:px-12 sm:py-16">
+    <div className="diary-wash mx-auto max-w-2xl rounded-[var(--radius-dialog)] border border-[var(--color-border)] px-6 py-10 text-center shadow-[var(--shadow-soft)] sm:px-10 sm:py-12">
       <span
         className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-[var(--color-brand-soft)] text-[var(--color-brand)]"
         aria-hidden="true"
       >
         <Heart size={20} fill="currentColor" strokeWidth={1.3} />
       </span>
-      <h3 className="font-display mt-6 text-balance text-3xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
+      <h3 className="font-display mt-5 text-balance text-2xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
         {categoryName ? `${categoryName} đang chờ một điều đẹp đẽ.` : "Bộ sưu tập đang chờ được bắt đầu."}
       </h3>
       <p className="mx-auto mt-4 max-w-md text-sm leading-7 text-[var(--color-muted)]">

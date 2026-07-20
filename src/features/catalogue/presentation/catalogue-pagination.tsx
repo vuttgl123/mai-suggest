@@ -20,7 +20,7 @@ export function CataloguePagination({
   return (
     <nav
       aria-label="Phân trang bộ sưu tập"
-      className="mt-10 flex flex-wrap items-center justify-center gap-2"
+      className="mt-7 flex flex-wrap items-center justify-center gap-2"
     >
       {page > 1 ? (
         <Link

@@ -15,9 +15,9 @@ export function AppHeader({ actor, activeSection = "catalogue" }: AppHeaderProps
       className="border-b border-[var(--color-border)] bg-[rgb(255_249_243_/_82%)] backdrop-blur-sm"
       style={{ viewTransitionName: "persistent-nav" }}
     >
-      <div className="mx-auto flex min-h-20 max-w-7xl flex-wrap items-center justify-between gap-x-6 gap-y-3 px-5 py-3 sm:px-8 lg:px-10">
+      <div className="mx-auto flex min-h-[4.5rem] max-w-7xl flex-wrap items-center justify-between gap-x-5 gap-y-2 px-5 py-2.5 sm:px-8 lg:px-10">
         <Link
-          className="group inline-flex items-center gap-3 text-[var(--color-brand-strong)]"
+          className="group inline-flex items-center gap-2.5 text-[var(--color-brand-strong)]"
           href="/"
         >
           <span
@@ -30,7 +30,7 @@ export function AppHeader({ actor, activeSection = "catalogue" }: AppHeaderProps
             <span className="font-display block text-xl font-semibold leading-none tracking-[-0.035em]">
               Điều Em Yêu
             </span>
-            <span className="mt-1 block text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--color-muted)]">
+            <span className="mt-0.5 block text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--color-muted)]">
               A small collection
             </span>
           </span>

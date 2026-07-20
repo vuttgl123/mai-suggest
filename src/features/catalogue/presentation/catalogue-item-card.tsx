@@ -46,14 +46,14 @@ export function CatalogueItemCard({
         </div>
       )}
 
-      <div className="space-y-3 p-5 sm:p-6">
+      <div className="space-y-2.5 p-4 sm:p-5">
         {categoryName ? <p className="diary-kicker">{categoryName}</p> : null}
         <div>
-          <h2 className="font-display text-2xl font-semibold leading-tight tracking-[-0.035em] text-[var(--color-brand-strong)] transition group-hover:text-[var(--color-brand)]">
+          <h2 className="font-display text-xl font-semibold leading-tight tracking-[-0.035em] text-[var(--color-brand-strong)] transition group-hover:text-[var(--color-brand)]">
             {item.title}
           </h2>
           {item.summary ? (
-            <p className="mt-2 line-clamp-2 text-sm leading-6 text-[var(--color-muted)]">
+            <p className="mt-1.5 line-clamp-2 text-sm leading-6 text-[var(--color-muted)]">
               {item.summary}
             </p>
           ) : null}

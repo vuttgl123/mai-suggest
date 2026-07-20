@@ -36,18 +36,18 @@ export function AdminCatalogue({
   return (
     <main
       id="admin-content"
-      className="mx-auto max-w-[96rem] px-5 py-10 sm:px-8 sm:py-14 lg:px-10 lg:py-16"
+      className="mx-auto max-w-[96rem] px-5 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12"
       tabIndex={-1}
     >
-      <section className="relative overflow-hidden rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] px-6 py-8 shadow-[var(--shadow-card)] sm:px-9 sm:py-10">
+      <section className="relative overflow-hidden rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] px-5 py-6 shadow-[var(--shadow-card)] sm:px-7 sm:py-8">
         <Sparkles className="absolute right-7 top-7 text-[var(--color-accent)] opacity-65" size={25} strokeWidth={1.25} aria-hidden="true" />
-        <div className="flex flex-wrap items-end justify-between gap-6">
+        <div className="flex flex-wrap items-end justify-between gap-5">
           <div>
             <p className="diary-kicker">Owner workspace</p>
-            <h1 className="font-display mt-4 max-w-3xl text-balance text-5xl font-semibold tracking-[-0.06em] text-[var(--color-brand-strong)] sm:text-6xl">
+            <h1 className="font-display mt-3 max-w-3xl text-balance text-4xl font-semibold tracking-[-0.06em] text-[var(--color-brand-strong)] sm:text-5xl">
               Những điều đẹp đẽ được chăm chút ở đây.
             </h1>
-            <p className="mt-5 max-w-2xl text-sm leading-7 text-[var(--color-muted)] sm:text-base">
+            <p className="mt-4 max-w-2xl text-sm leading-6 text-[var(--color-muted)] sm:text-base">
               Sắp xếp bộ sưu tập, viết những lời riêng tư và chọn cách chúng xuất hiện với người em yêu.
             </p>
           </div>
@@ -72,7 +72,7 @@ export function AdminCatalogue({
       {feedback ? (
         <p
           aria-live="polite"
-          className={`mt-6 rounded-[var(--radius-card)] border px-4 py-3 text-sm leading-6 ${
+          className={`mt-5 rounded-[var(--radius-card)] border px-4 py-3 text-sm leading-6 ${
             feedback.tone === "success"
               ? "border-[var(--color-positive)]/25 bg-[var(--color-positive)]/10 text-[var(--color-positive)]"
               : "border-[var(--color-danger)]/30 bg-[var(--color-danger)]/10 text-[var(--color-danger)]"
@@ -82,7 +82,7 @@ export function AdminCatalogue({
         </p>
       ) : null}
 
-      <section className="mt-8 grid gap-6 xl:grid-cols-[15rem_minmax(19rem,0.65fr)_minmax(30rem,1.15fr)] xl:items-start">
+      <section className="mt-6 grid gap-5 xl:grid-cols-[14rem_minmax(18rem,0.65fr)_minmax(28rem,1.15fr)] xl:items-start">
         <AdminCatalogueSidebar
           categories={categories}
           onFeedback={setFeedback}

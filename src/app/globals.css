@@ -22,10 +22,10 @@
   --shadow-card: 0 18px 45px rgb(49 5 12 / 10%);
   --shadow-soft: 0 6px 20px rgb(49 5 12 / 7%);
   --duration-fast: 160ms;
-  --duration-base: 280ms;
-  --duration-exit: 150ms;
-  --duration-enter: 210ms;
-  --duration-move: 400ms;
+  --duration-base: 240ms;
+  --duration-exit: 130ms;
+  --duration-enter: 180ms;
+  --duration-move: 320ms;
 
   /* Compatibility aliases while feature components migrate to semantic tokens. */
   --wine: var(--color-brand);
@@ -100,14 +100,14 @@ a {
 }
 
 .display-xl {
-  font-size: clamp(3.2rem, 11vw, 6.7rem);
-  line-height: 0.92;
+  font-size: clamp(2.8rem, 9vw, 5.6rem);
+  line-height: 0.96;
   letter-spacing: -0.055em;
 }
 
 .display-lg {
-  font-size: clamp(2.35rem, 6vw, 4.25rem);
-  line-height: 0.98;
+  font-size: clamp(2.15rem, 5vw, 3.7rem);
+  line-height: 1;
   letter-spacing: -0.04em;
 }
 
