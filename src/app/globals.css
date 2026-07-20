@@ -1,26 +1,28 @@
 @import "tailwindcss";
 
 :root {
-  --color-brand: #6b1726;
-  --color-brand-strong: #3b0b13;
-  --color-accent: #805715;
+  --color-brand: #7a1025;
+  --color-brand-strong: #430813;
+  --color-brand-soft: #f4e1e5;
+  --color-accent: #a96852;
   --color-positive: #365647;
   --color-danger: #b42318;
-  --color-paper: #fffdf9;
-  --color-surface: #f5f1ec;
-  --color-ink: #241c1e;
-  --color-muted: #685d60;
-  --color-border: rgb(59 11 19 / 14%);
-  --color-focus: #0b6bcb;
-  --color-skeleton: #e5e0dc;
-  --color-skeleton-highlight: #f4f1ee;
-  --radius-control: 6px;
-  --radius-card: 8px;
-  --radius-dialog: 8px;
+  --color-paper: #fffaf7;
+  --color-surface: #f8f0ec;
+  --color-ink: #2b141a;
+  --color-muted: #755f66;
+  --color-border: rgb(75 12 28 / 14%);
+  --color-focus: #a03551;
+  --color-skeleton: #eadfda;
+  --color-skeleton-highlight: #f8f2ef;
+  --radius-control: 999px;
+  --radius-card: 1.5rem;
+  --radius-dialog: 1.75rem;
   --control-height: 44px;
-  --shadow-card: 0 8px 24px rgb(36 28 30 / 8%);
-  --duration-fast: 140ms;
-  --duration-base: 220ms;
+  --shadow-card: 0 18px 45px rgb(67 8 19 / 8%);
+  --shadow-soft: 0 6px 20px rgb(67 8 19 / 6%);
+  --duration-fast: 160ms;
+  --duration-base: 280ms;
 
   /* Compatibility aliases while feature components migrate to semantic tokens. */
   --wine: var(--color-brand);
@@ -31,7 +33,7 @@
   --champagne: var(--color-accent);
   --ink: var(--color-ink);
   --muted: var(--color-muted);
-  --soft-rose: #eadfe1;
+  --soft-rose: #f0dce1;
   --hairline: var(--color-border);
 }
 
@@ -47,7 +49,10 @@ html {
 body {
   margin: 0;
   overflow-x: clip;
-  background: var(--ivory);
+  background:
+    radial-gradient(circle at 9% 2%, rgb(122 16 37 / 8%), transparent 20rem),
+    radial-gradient(circle at 92% 18%, rgb(169 104 82 / 8%), transparent 23rem),
+    var(--ivory);
   color: var(--ink);
   font-family: var(--font-body), sans-serif;
   text-rendering: optimizeLegibility;
@@ -92,13 +97,15 @@ a {
 }
 
 .display-xl {
-  font-size: 3rem;
-  line-height: 1;
+  font-size: clamp(3.2rem, 11vw, 6.7rem);
+  line-height: 0.92;
+  letter-spacing: -0.055em;
 }
 
 .display-lg {
-  font-size: 2.25rem;
-  line-height: 1.08;
+  font-size: clamp(2.35rem, 6vw, 4.25rem);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
 }
 
 .heading-md {
@@ -117,12 +124,9 @@ a {
 }
 
 @media (min-width: 640px) {
-  .display-xl {
-    font-size: 4.5rem;
-  }
-
+  .display-xl,
   .display-lg {
-    font-size: 3rem;
+    text-wrap: balance;
   }
 }
 
@@ -149,6 +153,32 @@ a {
 
 .paper-card {
   box-shadow: var(--shadow-card);
+}
+
+.diary-shell {
+  min-height: 100vh;
+}
+
+.diary-rule {
+  height: 1px;
+  width: 4.5rem;
+  background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+}
+
+.diary-kicker {
+  color: var(--color-accent);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.diary-wash {
+  background:
+    radial-gradient(circle at 15% 16%, rgb(122 16 37 / 11%), transparent 17rem),
+    radial-gradient(circle at 88% 82%, rgb(169 104 82 / 12%), transparent 19rem),
+    rgb(255 250 247 / 82%);
 }
 
 .summary-scroll {
