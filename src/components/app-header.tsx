@@ -4,7 +4,7 @@ import type { ActiveActor } from "@/modules/identity/domain/current-actor";
 
 interface AppHeaderProps {
   actor: ActiveActor;
-  activeSection?: "catalogue" | "admin";
+  activeSection?: "catalogue" | "journey" | "admin";
 }
 
 export function AppHeader({ actor, activeSection = "catalogue" }: AppHeaderProps) {
@@ -46,6 +46,16 @@ export function AppHeader({ actor, activeSection = "catalogue" }: AppHeaderProps
             href="/#collection"
           >
             Bộ sưu tập
+          </Link>
+          <Link
+            className={`ml-5 inline-flex min-h-10 items-center border-b-2 px-1 text-sm font-semibold transition ${
+              activeSection === "journey"
+                ? "border-[var(--color-brand)] text-[var(--color-brand)]"
+                : "border-transparent text-[var(--color-muted)] hover:text-[var(--color-brand-strong)]"
+            }`}
+            href="/hanh-trinh"
+          >
+            Hành trình
           </Link>
           {actor.canManageCatalogue ? (
             <Link

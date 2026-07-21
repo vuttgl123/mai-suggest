@@ -65,6 +65,12 @@ export function AdminCatalogue({
               Xem bộ sưu tập
               <ExternalLink size={16} aria-hidden="true" />
             </Link>
+            <Link
+              className="inline-flex min-h-11 items-center rounded-full border border-[var(--color-border)] bg-[var(--color-paper)] px-4 text-sm font-semibold text-[var(--color-brand)] transition hover:-translate-y-0.5 hover:border-[var(--color-accent)]"
+              href="/admin/hanh-trinh"
+            >
+              Quản lý hành trình
+            </Link>
           </div>
         </div>
       </section>

@@ -119,6 +119,31 @@ type UserItemStateRow = {
   updated_at: string;
 };
 
+type TimelineEntryRow = {
+  id: string;
+  date_label: string;
+  occurred_on: string | null;
+  title: string;
+  story: string;
+  lesson: string | null;
+  image_url: string | null;
+  image_alt_text: string | null;
+  sort_order: number;
+  is_published: boolean;
+  created_by: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+type TimelineResponseRow = {
+  id: string;
+  timeline_entry_id: string;
+  user_id: string;
+  content: string;
+  created_at: string;
+  updated_at: string;
+};
+
 export interface Database {
   public: {
     Tables: {
@@ -131,6 +156,8 @@ export interface Database {
       ratings: Table<RatingRow>;
       comments: Table<CommentRow>;
       user_item_states: Table<UserItemStateRow>;
+      timeline_entries: Table<TimelineEntryRow>;
+      timeline_responses: Table<TimelineResponseRow>;
     };
     Views: Record<never, never>;
     Functions: Record<never, never>;

@@ -17,6 +17,13 @@ import { ListManagedItemPage } from "@/modules/catalogue/application/list-manage
 import { GetManagedItemDetail } from "@/modules/catalogue/application/get-managed-item-detail";
 import { ManageItemEngagement } from "@/modules/engagement/application/manage-item-engagement";
 import { SupabaseEngagementRepository } from "@/modules/engagement/infrastructure/supabase-engagement-repository";
+import { ListVisibleTimeline } from "@/modules/timeline/application/list-visible-timeline";
+import { ListManagedTimeline } from "@/modules/timeline/application/list-managed-timeline";
+import { GetManagedTimelineEntry } from "@/modules/timeline/application/get-managed-timeline-entry";
+import { ManageTimeline } from "@/modules/timeline/application/manage-timeline";
+import { SupabaseTimelineReader } from "@/modules/timeline/infrastructure/supabase-timeline-reader";
+import { SupabaseTimelineAdminReader } from "@/modules/timeline/infrastructure/supabase-timeline-admin-reader";
+import { SupabaseTimelineRepository } from "@/modules/timeline/infrastructure/supabase-timeline-repository";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import type { Database } from "@/lib/supabase/database.types";
 
@@ -27,6 +34,9 @@ export function createBackendForClient(client: SupabaseClient<Database>) {
   const catalogueAdminRepository = new SupabaseCatalogueAdminRepository(client);
   const catalogueAdminReader = new SupabaseCatalogueAdminReader(client);
   const engagementRepository = new SupabaseEngagementRepository(client);
+  const timelineReader = new SupabaseTimelineReader(client);
+  const timelineAdminReader = new SupabaseTimelineAdminReader(client);
+  const timelineRepository = new SupabaseTimelineRepository(client);
 
   return {
     getCurrentActor: new GetCurrentActor(actorReader),
@@ -41,6 +51,10 @@ export function createBackendForClient(client: SupabaseClient<Database>) {
     listManagedItemPage: new ListManagedItemPage(catalogueAdminReader),
     getManagedItemDetail: new GetManagedItemDetail(catalogueAdminReader),
     manageItemEngagement: new ManageItemEngagement(engagementRepository),
+    listVisibleTimeline: new ListVisibleTimeline(timelineReader),
+    listManagedTimeline: new ListManagedTimeline(timelineAdminReader),
+    getManagedTimelineEntry: new GetManagedTimelineEntry(timelineAdminReader),
+    manageTimeline: new ManageTimeline(timelineRepository),
   };
 }
 
