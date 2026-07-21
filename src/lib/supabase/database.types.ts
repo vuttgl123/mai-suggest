@@ -157,6 +157,26 @@ type FutureLetterRow = {
   updated_at: string;
 };
 
+type SiteThemeSettingsRow = {
+  id: boolean;
+  manual_theme_key: string | null;
+  updated_by: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+type SiteThemeScheduleRow = {
+  id: string;
+  theme_key: string;
+  starts_at: string;
+  ends_at: string;
+  priority: number;
+  is_enabled: boolean;
+  created_by: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
 export interface Database {
   public: {
     Tables: {
@@ -172,6 +192,8 @@ export interface Database {
       timeline_entries: Table<TimelineEntryRow>;
       timeline_responses: Table<TimelineResponseRow>;
       future_letters: Table<FutureLetterRow>;
+      site_theme_settings: Table<SiteThemeSettingsRow>;
+      site_theme_schedules: Table<SiteThemeScheduleRow>;
     };
     Views: Record<never, never>;
     Functions: Record<never, never>;

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Be_Vietnam_Pro, Playfair_Display } from "next/font/google";
+import { createServerBackend } from "@/lib/backend/create-server-backend";
 import "./globals.css";
 
 const displayFont = Playfair_Display({
@@ -32,12 +33,18 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const backend = await createServerBackend();
+  const theme = await backend.resolveSiteTheme.execute();
+
   return (
     <html lang="vi">
-      <body className={`${displayFont.variable} ${bodyFont.variable}`}>
+      <body
+        className={`${displayFont.variable} ${bodyFont.variable}`}
+        data-theme={theme.key}
+      >
         {children}
       </body>
     </html>

@@ -23,6 +23,9 @@ Các cảm xúc cần được ưu tiên là: ấm áp, chân thành, chậm rã
 - Giao diện gọn hơn khoảng 15–20% nhưng vẫn thoáng, chữ dễ đọc và nội dung tình
   cảm không bị dồn ép.
 - Chuyển trang và tương tác nhẹ, mượt; tôn trọng `prefers-reduced-motion`.
+- Không khí theo mùa hoặc sự kiện dùng preset Bordeaux đã kiểm duyệt, có lịch tự
+  động và ghi đè thủ công của Owner; không có custom CSS hoặc theme riêng theo
+  từng người dùng ở giai đoạn này.
 - Google OAuth qua Supabase là phương thức đăng nhập duy nhất.
 - Supabase là nguồn dữ liệu nghiệp vụ duy nhất. Không dùng mock/JSON cho dữ liệu
   thật và không quyết định quyền chỉ ở client.
@@ -54,6 +57,15 @@ Các cảm xúc cần được ưu tiên là: ấm áp, chân thành, chậm rã
 
 Thứ tự dưới đây là thứ tự ưu tiên sản phẩm, không phải cam kết phải triển khai
 ngay cùng lúc. Mỗi mục sẽ có design và migration/RLS riêng trước khi viết code.
+
+### Nền tảng: Không khí giao diện theo mùa và sự kiện
+
+Owner có thể đặt lịch cho các preset như Lời hẹn tháng Hai, Mùa xuân dịu dàng,
+Đêm cuối năm và Chương kỷ niệm; khi không có lịch, Bordeaux Diary vẫn là mặc
+định. Theme được quyết định ở server ngay từ lần vẽ đầu, hiển thị giống nhau cho
+tất cả người xem và chỉ thay token/trang trí tiết chế, không làm đổi nội dung hay
+bố cục nghiệp vụ. Đặc tả chi tiết nằm tại
+`docs/superpowers/specs/2026-07-21-seasonal-theme-system-design.md`.
 
 ### 1. Hộp thư gửi đến tương lai — ưu tiên kế tiếp
 

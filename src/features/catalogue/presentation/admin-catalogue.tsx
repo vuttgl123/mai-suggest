@@ -71,6 +71,12 @@ export function AdminCatalogue({
             >
               Quản lý hành trình
             </Link>
+            <Link
+              className="inline-flex min-h-11 items-center rounded-full border border-[var(--color-border)] bg-[var(--color-paper)] px-4 text-sm font-semibold text-[var(--color-brand)] transition hover:-translate-y-0.5 hover:border-[var(--color-accent)]"
+              href="/admin/khong-khi"
+            >
+              Không khí giao diện
+            </Link>
           </div>
         </div>
       </section>

@@ -1,0 +1,198 @@
+"use client";
+
+import { CalendarClock, Palette, Sparkles } from "lucide-react";
+import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { ThemeScheduleForm } from "@/features/site-theme/presentation/theme-schedule-form";
+import { ThemeScheduleList } from "@/features/site-theme/presentation/theme-schedule-list";
+import {
+  getSiteThemePreset,
+  SITE_THEME_PRESETS,
+  type ResolvedSiteTheme,
+  type SiteThemeKey,
+  type SiteThemeSchedule,
+  type SiteThemeSettings,
+} from "@/modules/site-theme/domain/site-theme-models";
+import { setManualSiteThemeAction } from "@/modules/site-theme/presentation/site-theme-actions";
+
+interface AdminSiteThemeProps {
+  settings: SiteThemeSettings;
+  schedules: SiteThemeSchedule[];
+  resolved: ResolvedSiteTheme;
+}
+
+export function AdminSiteTheme({
+  settings,
+  schedules,
+  resolved,
+}: AdminSiteThemeProps) {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  const [feedback, setFeedback] = useState<string | null>(null);
+  const [editingSchedule, setEditingSchedule] = useState<SiteThemeSchedule | null>(null);
+  const [showComposer, setShowComposer] = useState(false);
+  const resolvedPreset = getSiteThemePreset(resolved.key);
+
+  function chooseMode(themeKey: SiteThemeKey | null) {
+    startTransition(async () => {
+      const result = await setManualSiteThemeAction(themeKey);
+      if (!result.ok) {
+        setFeedback(feedbackFor(result.error.code));
+        return;
+      }
+
+      setFeedback(
+        themeKey === null
+          ? "Đã trở lại chế độ tự động theo lịch."
+          : `Đã chọn ${getSiteThemePreset(themeKey).label} cho toàn bộ không gian.`,
+      );
+      router.refresh();
+    });
+  }
+
+  function startEditing(schedule: SiteThemeSchedule) {
+    setEditingSchedule(schedule);
+    setShowComposer(true);
+  }
+
+  function closeComposer() {
+    setEditingSchedule(null);
+    setShowComposer(false);
+  }
+
+  return (
+    <main
+      className="mx-auto max-w-[88rem] px-5 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12"
+      id="admin-site-theme-content"
+      tabIndex={-1}
+    >
+      <section className="relative overflow-hidden rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] px-5 py-6 shadow-[var(--shadow-card)] sm:px-7 sm:py-8">
+        <Sparkles className="absolute right-6 top-6 text-[var(--color-accent)] opacity-65" size={23} strokeWidth={1.2} aria-hidden="true" />
+        <div className="flex flex-wrap items-end justify-between gap-5">
+          <div>
+            <p className="diary-kicker">Owner workspace · không khí</p>
+            <h1 className="font-display mt-3 max-w-3xl text-balance text-4xl font-semibold tracking-[-0.06em] text-[var(--color-brand-strong)] sm:text-5xl">
+              Để mỗi mùa kể lại một chương thật riêng.
+            </h1>
+            <p className="mt-4 max-w-2xl text-sm leading-6 text-[var(--color-muted)] sm:text-base">
+              Chọn một không khí cho hôm nay hoặc hẹn những khoảng chuyển mình dịu dàng cho các ngày đặc biệt.
+            </p>
+          </div>
+          <div className="min-w-[14rem] rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-control-surface)] px-4 py-3">
+            <p className="text-[10px] font-bold uppercase tracking-[0.13em] text-[var(--color-muted)]">Đang hiển thị</p>
+            <p className="font-display mt-1 text-xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]">
+              {resolvedPreset.label}
+            </p>
+            <p className="mt-1 text-xs leading-5 text-[var(--color-muted)]">{sourceMessage(resolved)}</p>
+          </div>
+        </div>
+      </section>
+
+      {feedback ? (
+        <p aria-live="polite" className="mt-5 rounded-[var(--radius-card)] border border-[var(--color-brand)]/20 bg-[var(--color-brand-soft)]/55 px-4 py-3 text-sm leading-6 text-[var(--color-brand)]">
+          {feedback}
+        </p>
+      ) : null}
+
+      <section className="mt-6 grid gap-5 xl:grid-cols-[22rem_minmax(0,1fr)] xl:items-start">
+        <aside className="space-y-5 xl:sticky xl:top-5">
+          <section className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] p-5 shadow-[var(--shadow-soft)]">
+            <div className="flex items-center gap-2 text-[var(--color-accent)]">
+              <Palette size={18} aria-hidden="true" />
+              <p className="diary-kicker">Chọn cho hiện tại</p>
+            </div>
+            <h2 className="font-display mt-2 text-2xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
+              Tự động hay một lời hẹn riêng?
+            </h2>
+            <fieldset className="mt-5 grid gap-2" disabled={isPending}>
+              <legend className="sr-only">Chế độ không khí giao diện</legend>
+              <label className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border px-3 py-2 text-sm font-semibold transition ${settings.manualThemeKey === null ? "border-[var(--color-brand)] bg-[var(--color-brand-soft)] text-[var(--color-brand)]" : "border-[var(--color-border)] text-[var(--color-muted)] hover:border-[var(--color-accent)]"}`}>
+                <input
+                  checked={settings.manualThemeKey === null}
+                  className="h-4 w-4 accent-[var(--color-brand)]"
+                  name="site-theme-mode"
+                  onChange={() => chooseMode(null)}
+                  type="radio"
+                />
+                <span>
+                  Tự động theo lịch
+                  <small className="mt-0.5 block text-xs font-normal opacity-80">Không có lịch thì dùng Bordeaux Diary.</small>
+                </span>
+              </label>
+              {SITE_THEME_PRESETS.map((preset) => (
+                <label
+                  className={`cursor-pointer rounded-xl border p-3 transition ${settings.manualThemeKey === preset.key ? "border-[var(--color-brand)] bg-[var(--color-brand-soft)] text-[var(--color-brand)]" : "border-[var(--color-border)] text-[var(--color-brand-strong)] hover:border-[var(--color-accent)]"}`}
+                  key={preset.key}
+                >
+                  <span className="flex items-start gap-3">
+                    <input
+                      checked={settings.manualThemeKey === preset.key}
+                      className="mt-0.5 h-4 w-4 accent-[var(--color-brand)]"
+                      name="site-theme-mode"
+                      onChange={() => chooseMode(preset.key)}
+                      type="radio"
+                    />
+                    <span>
+                      <span className="flex items-center gap-2 text-sm font-semibold">
+                        <i className="h-2.5 w-2.5 rounded-full bg-[var(--color-brand)]" aria-hidden="true" />
+                        {preset.label}
+                      </span>
+                      <small className="mt-1 block text-xs font-normal leading-5 text-[var(--color-muted)]">{preset.description}</small>
+                    </span>
+                  </span>
+                </label>
+              ))}
+            </fieldset>
+          </section>
+        </aside>
+
+        <div className="space-y-5">
+          <section className="flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-paper)] px-4 py-3 shadow-[var(--shadow-soft)]">
+            <div className="flex items-center gap-3">
+              <span className="grid h-10 w-10 place-items-center rounded-full bg-[var(--color-brand-soft)] text-[var(--color-brand)]">
+                <CalendarClock size={18} aria-hidden="true" />
+              </span>
+              <p className="text-sm leading-5 text-[var(--color-muted)]">Các lịch có thể chồng nhau; độ ưu tiên cao hơn sẽ được dùng trước.</p>
+            </div>
+            {!showComposer ? (
+              <Button onClick={() => setShowComposer(true)}>
+                <CalendarClock size={16} aria-hidden="true" />
+                Hẹn lịch mới
+              </Button>
+            ) : null}
+          </section>
+
+          {showComposer ? (
+            <ThemeScheduleForm
+              onCancel={closeComposer}
+              onFeedback={setFeedback}
+              schedule={editingSchedule}
+              schedules={schedules}
+            />
+          ) : null}
+
+          <ThemeScheduleList
+            onEdit={startEditing}
+            onFeedback={setFeedback}
+            schedules={schedules}
+          />
+        </div>
+      </section>
+    </main>
+  );
+}
+
+function sourceMessage(resolved: ResolvedSiteTheme): string {
+  if (resolved.source === "manual") return "Đang ghi đè thủ công.";
+  if (resolved.source === "schedule") return "Đang theo lịch đã hẹn.";
+  if (resolved.source === "fallback") return "Đang dùng Bordeaux an toàn vì chưa đọc được cấu hình.";
+  return "Đang dùng Bordeaux mặc định.";
+}
+
+function feedbackFor(code: string): string {
+  if (code === "UNAUTHENTICATED") return "Phiên đăng nhập đã hết. Hãy đăng nhập lại.";
+  if (code === "ACCESS_DENIED") return "Chỉ Owner có thể đổi không khí giao diện.";
+  if (code === "VALIDATION_FAILED") return "Preset chưa hợp lệ.";
+  return "Chưa thể đổi không khí lúc này. Hãy thử lại sau.";
+}

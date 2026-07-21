@@ -29,6 +29,11 @@ import { ListOwnScheduledFutureLetters } from "@/modules/future-letters/applicat
 import { ManageFutureLetters } from "@/modules/future-letters/application/manage-future-letters";
 import { SupabaseFutureLetterReader } from "@/modules/future-letters/infrastructure/supabase-future-letter-reader";
 import { SupabaseFutureLetterRepository } from "@/modules/future-letters/infrastructure/supabase-future-letter-repository";
+import { ResolveSiteTheme } from "@/modules/site-theme/application/resolve-site-theme";
+import { GetManagedSiteTheme } from "@/modules/site-theme/application/get-managed-site-theme";
+import { ManageSiteTheme } from "@/modules/site-theme/application/manage-site-theme";
+import { SupabaseSiteThemeReader } from "@/modules/site-theme/infrastructure/supabase-site-theme-reader";
+import { SupabaseSiteThemeRepository } from "@/modules/site-theme/infrastructure/supabase-site-theme-repository";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import type { Database } from "@/lib/supabase/database.types";
 
@@ -44,6 +49,8 @@ export function createBackendForClient(client: SupabaseClient<Database>) {
   const timelineRepository = new SupabaseTimelineRepository(client);
   const futureLetterReader = new SupabaseFutureLetterReader(client);
   const futureLetterRepository = new SupabaseFutureLetterRepository(client);
+  const siteThemeReader = new SupabaseSiteThemeReader(client);
+  const siteThemeRepository = new SupabaseSiteThemeRepository(client);
 
   return {
     getCurrentActor: new GetCurrentActor(actorReader),
@@ -67,6 +74,9 @@ export function createBackendForClient(client: SupabaseClient<Database>) {
       futureLetterReader,
     ),
     manageFutureLetters: new ManageFutureLetters(futureLetterRepository),
+    resolveSiteTheme: new ResolveSiteTheme(siteThemeReader),
+    getManagedSiteTheme: new GetManagedSiteTheme(siteThemeReader),
+    manageSiteTheme: new ManageSiteTheme(siteThemeRepository),
   };
 }
 

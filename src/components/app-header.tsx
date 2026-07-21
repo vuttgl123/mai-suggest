@@ -12,7 +12,7 @@ export function AppHeader({ actor, activeSection = "catalogue" }: AppHeaderProps
 
   return (
     <header
-      className="border-b border-[var(--color-border)] bg-[rgb(255_249_243_/_82%)] backdrop-blur-sm"
+      className="border-b border-[var(--color-border)] bg-[var(--theme-header-surface)] backdrop-blur-sm"
       style={{ viewTransitionName: "persistent-nav" }}
     >
       <div className="mx-auto flex min-h-[4.5rem] max-w-7xl flex-wrap items-center justify-between gap-x-5 gap-y-2 px-5 py-2.5 sm:px-8 lg:px-10">
@@ -21,7 +21,7 @@ export function AppHeader({ actor, activeSection = "catalogue" }: AppHeaderProps
           href="/"
         >
           <span
-            className="grid h-9 w-9 place-items-center rounded-full bg-[var(--color-brand)] text-white shadow-[0_7px_17px_rgb(122_16_37_/_20%)] transition duration-[var(--duration-fast)] group-hover:scale-105"
+            className="grid h-9 w-9 place-items-center rounded-full bg-[var(--color-brand)] text-white shadow-[var(--theme-button-shadow)] transition duration-[var(--duration-fast)] group-hover:scale-105"
             aria-hidden="true"
           >
             <Heart size={16} fill="currentColor" strokeWidth={1.7} />
@@ -83,7 +83,7 @@ export function AppHeader({ actor, activeSection = "catalogue" }: AppHeaderProps
 
         <div className="flex min-w-0 items-center gap-2 text-right">
           {actor.canManageCatalogue ? (
-            <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-[rgb(122_16_37_/_18%)] bg-[var(--color-brand-soft)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.11em] text-[var(--color-brand)]">
+            <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-[var(--theme-badge-border)] bg-[var(--color-brand-soft)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.11em] text-[var(--color-brand)]">
               <ShieldCheck size={13} aria-hidden="true" />
               Owner
             </span>

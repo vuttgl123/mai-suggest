@@ -21,6 +21,34 @@
   --control-height: 44px;
   --shadow-card: 0 18px 45px rgb(49 5 12 / 10%);
   --shadow-soft: 0 6px 20px rgb(49 5 12 / 7%);
+  --theme-header-surface: rgb(255 249 243 / 82%);
+  --theme-control-surface: rgb(255 250 247 / 82%);
+  --theme-control-hover: #fffdfb;
+  --theme-card-surface: rgb(255 249 243 / 92%);
+  --theme-badge-border: rgb(122 16 37 / 18%);
+  --theme-button-shadow: 0 8px 20px rgb(122 16 37 / 18%);
+  --theme-button-shadow-strong: 0 12px 26px rgb(67 8 19 / 24%);
+  --theme-body-background:
+    radial-gradient(circle at 9% 2%, rgb(101 12 28 / 7%), transparent 20rem),
+    radial-gradient(circle at 92% 18%, rgb(166 91 69 / 7%), transparent 23rem),
+    var(--color-surface);
+  --theme-atmosphere:
+    radial-gradient(circle at 82% 78%, rgb(166 91 69 / 8%), transparent 24rem),
+    radial-gradient(circle at 12% 43%, rgb(101 12 28 / 5%), transparent 20rem);
+  --theme-grain:
+    repeating-radial-gradient(circle at 0 0, rgb(49 5 12 / 3%) 0 0.5px, transparent 0.7px 3px);
+  --theme-wash:
+    radial-gradient(circle at 15% 16%, rgb(101 12 28 / 8%), transparent 17rem),
+    radial-gradient(circle at 88% 82%, rgb(166 91 69 / 10%), transparent 19rem),
+    rgb(255 249 243 / 88%);
+  --theme-timeline-rail: linear-gradient(
+    180deg,
+    transparent,
+    rgb(101 12 28 / 42%) 8%,
+    rgb(166 91 69 / 48%) 92%,
+    transparent
+  );
+  --theme-entry-shadow: 0 0 0 1px rgb(101 12 28 / 32%);
   --duration-fast: 160ms;
   --duration-base: 240ms;
   --duration-exit: 130ms;
@@ -40,6 +68,182 @@
   --hairline: var(--color-border);
 }
 
+body[data-theme="bordeaux"] {
+  --theme-control-hover: #fffdfb;
+}
+
+body[data-theme="valentine"] {
+  --color-brand: #7a1029;
+  --color-brand-strong: #3e0717;
+  --color-brand-soft: #f2dfe2;
+  --color-accent: #b66a64;
+  --color-paper: #fff9f7;
+  --color-surface: #f7eeeb;
+  --color-ink: #2b1017;
+  --color-muted: #76565e;
+  --color-border: rgb(89 13 35 / 16%);
+  --color-focus: #9b1740;
+  --shadow-card: 0 18px 45px rgb(90 13 35 / 12%);
+  --shadow-soft: 0 6px 20px rgb(90 13 35 / 8%);
+  --theme-header-surface: rgb(255 249 247 / 84%);
+  --theme-control-surface: rgb(255 252 251 / 86%);
+  --theme-control-hover: #fff;
+  --theme-card-surface: rgb(255 250 249 / 94%);
+  --theme-badge-border: rgb(122 16 41 / 18%);
+  --theme-button-shadow: 0 8px 20px rgb(122 16 41 / 20%);
+  --theme-button-shadow-strong: 0 12px 26px rgb(62 7 23 / 26%);
+  --theme-body-background:
+    radial-gradient(circle at 10% 0%, rgb(186 84 111 / 12%), transparent 22rem),
+    radial-gradient(circle at 91% 16%, rgb(122 16 41 / 9%), transparent 24rem),
+    var(--color-surface);
+  --theme-atmosphere:
+    radial-gradient(circle at 74% 76%, rgb(197 111 125 / 10%), transparent 21rem),
+    radial-gradient(circle at 20% 36%, rgb(122 16 41 / 6%), transparent 19rem);
+  --theme-grain:
+    repeating-radial-gradient(circle at 0 0, rgb(122 16 41 / 3%) 0 0.5px, transparent 0.7px 3px);
+  --theme-wash:
+    radial-gradient(circle at 18% 14%, rgb(186 84 111 / 10%), transparent 17rem),
+    radial-gradient(circle at 87% 84%, rgb(122 16 41 / 10%), transparent 19rem),
+    rgb(255 249 247 / 90%);
+  --theme-timeline-rail: linear-gradient(
+    180deg,
+    transparent,
+    rgb(122 16 41 / 45%) 8%,
+    rgb(182 106 100 / 48%) 92%,
+    transparent
+  );
+  --theme-entry-shadow: 0 0 0 1px rgb(122 16 41 / 30%);
+}
+
+body[data-theme="spring"] {
+  --color-brand: #741329;
+  --color-brand-strong: #3e0a1b;
+  --color-brand-soft: #e9e2dc;
+  --color-accent: #8a7462;
+  --color-paper: #fffaf4;
+  --color-surface: #f1eee7;
+  --color-ink: #2c1920;
+  --color-muted: #6e6260;
+  --color-border: rgb(76 46 38 / 16%);
+  --color-focus: #8e2040;
+  --shadow-card: 0 18px 45px rgb(72 40 34 / 11%);
+  --shadow-soft: 0 6px 20px rgb(72 40 34 / 8%);
+  --theme-header-surface: rgb(255 250 244 / 84%);
+  --theme-control-surface: rgb(255 253 249 / 86%);
+  --theme-control-hover: #fffefa;
+  --theme-card-surface: rgb(255 251 246 / 93%);
+  --theme-badge-border: rgb(116 19 41 / 18%);
+  --theme-button-shadow: 0 8px 20px rgb(116 19 41 / 18%);
+  --theme-button-shadow-strong: 0 12px 26px rgb(62 10 27 / 24%);
+  --theme-body-background:
+    radial-gradient(circle at 8% 4%, rgb(117 133 101 / 12%), transparent 21rem),
+    radial-gradient(circle at 93% 18%, rgb(116 19 41 / 8%), transparent 23rem),
+    var(--color-surface);
+  --theme-atmosphere:
+    radial-gradient(circle at 78% 76%, rgb(137 116 98 / 11%), transparent 24rem),
+    radial-gradient(circle at 18% 34%, rgb(117 133 101 / 8%), transparent 19rem);
+  --theme-grain:
+    repeating-radial-gradient(circle at 0 0, rgb(70 79 59 / 4%) 0 0.5px, transparent 0.7px 3px);
+  --theme-wash:
+    radial-gradient(circle at 15% 16%, rgb(117 133 101 / 10%), transparent 17rem),
+    radial-gradient(circle at 88% 82%, rgb(116 19 41 / 9%), transparent 19rem),
+    rgb(255 250 244 / 89%);
+  --theme-timeline-rail: linear-gradient(
+    180deg,
+    transparent,
+    rgb(116 19 41 / 42%) 8%,
+    rgb(117 133 101 / 48%) 92%,
+    transparent
+  );
+  --theme-entry-shadow: 0 0 0 1px rgb(116 19 41 / 29%);
+}
+
+body[data-theme="noel"] {
+  --color-brand: #6b1525;
+  --color-brand-strong: #320812;
+  --color-brand-soft: #e7ddd3;
+  --color-accent: #a47b3f;
+  --color-paper: #fff9ee;
+  --color-surface: #f1eee5;
+  --color-ink: #27161a;
+  --color-muted: #665e52;
+  --color-border: rgb(46 77 63 / 18%);
+  --color-focus: #8b1d35;
+  --shadow-card: 0 18px 45px rgb(35 65 52 / 12%);
+  --shadow-soft: 0 6px 20px rgb(35 65 52 / 8%);
+  --theme-header-surface: rgb(255 249 238 / 84%);
+  --theme-control-surface: rgb(255 253 247 / 86%);
+  --theme-control-hover: #fffefa;
+  --theme-card-surface: rgb(255 250 240 / 93%);
+  --theme-badge-border: rgb(107 21 37 / 18%);
+  --theme-button-shadow: 0 8px 20px rgb(47 93 73 / 20%);
+  --theme-button-shadow-strong: 0 12px 26px rgb(31 62 48 / 26%);
+  --theme-body-background:
+    radial-gradient(circle at 8% 4%, rgb(47 93 73 / 12%), transparent 21rem),
+    radial-gradient(circle at 93% 18%, rgb(164 123 63 / 10%), transparent 23rem),
+    var(--color-surface);
+  --theme-atmosphere:
+    radial-gradient(circle at 74% 78%, rgb(164 123 63 / 12%), transparent 23rem),
+    radial-gradient(circle at 20% 30%, rgb(47 93 73 / 9%), transparent 19rem);
+  --theme-grain:
+    radial-gradient(circle at 12% 20%, rgb(255 249 238 / 70%) 0 1px, transparent 1.2px);
+  --theme-wash:
+    radial-gradient(circle at 15% 16%, rgb(47 93 73 / 10%), transparent 17rem),
+    radial-gradient(circle at 88% 82%, rgb(164 123 63 / 12%), transparent 19rem),
+    rgb(255 249 238 / 89%);
+  --theme-timeline-rail: linear-gradient(
+    180deg,
+    transparent,
+    rgb(47 93 73 / 50%) 8%,
+    rgb(164 123 63 / 56%) 92%,
+    transparent
+  );
+  --theme-entry-shadow: 0 0 0 1px rgb(47 93 73 / 32%);
+}
+
+body[data-theme="anniversary"] {
+  --color-brand: #5f1022;
+  --color-brand-strong: #2d0710;
+  --color-brand-soft: #eae0d5;
+  --color-accent: #aa7d43;
+  --color-paper: #fff9f0;
+  --color-surface: #f3ece2;
+  --color-ink: #261318;
+  --color-muted: #6f6058;
+  --color-border: rgb(95 61 32 / 17%);
+  --color-focus: #851a34;
+  --shadow-card: 0 18px 45px rgb(79 45 23 / 12%);
+  --shadow-soft: 0 6px 20px rgb(79 45 23 / 8%);
+  --theme-header-surface: rgb(255 249 240 / 84%);
+  --theme-control-surface: rgb(255 253 248 / 86%);
+  --theme-control-hover: #fffefa;
+  --theme-card-surface: rgb(255 250 243 / 93%);
+  --theme-badge-border: rgb(95 16 34 / 18%);
+  --theme-button-shadow: 0 8px 20px rgb(95 16 34 / 20%);
+  --theme-button-shadow-strong: 0 12px 26px rgb(45 7 16 / 26%);
+  --theme-body-background:
+    radial-gradient(circle at 9% 2%, rgb(170 125 67 / 13%), transparent 20rem),
+    radial-gradient(circle at 92% 18%, rgb(95 16 34 / 10%), transparent 23rem),
+    var(--color-surface);
+  --theme-atmosphere:
+    radial-gradient(circle at 78% 76%, rgb(170 125 67 / 13%), transparent 24rem),
+    radial-gradient(circle at 16% 37%, rgb(95 16 34 / 7%), transparent 20rem);
+  --theme-grain:
+    repeating-radial-gradient(circle at 0 0, rgb(121 80 39 / 4%) 0 0.5px, transparent 0.7px 3px);
+  --theme-wash:
+    radial-gradient(circle at 15% 16%, rgb(170 125 67 / 11%), transparent 17rem),
+    radial-gradient(circle at 88% 82%, rgb(95 16 34 / 10%), transparent 19rem),
+    rgb(255 249 240 / 89%);
+  --theme-timeline-rail: linear-gradient(
+    180deg,
+    transparent,
+    rgb(95 16 34 / 46%) 8%,
+    rgb(170 125 67 / 52%) 92%,
+    transparent
+  );
+  --theme-entry-shadow: 0 0 0 1px rgb(95 16 34 / 30%);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -51,14 +255,31 @@ html {
 
 body {
   margin: 0;
+  isolation: isolate;
+  position: relative;
   overflow-x: clip;
-  background:
-    radial-gradient(circle at 9% 2%, rgb(101 12 28 / 7%), transparent 20rem),
-    radial-gradient(circle at 92% 18%, rgb(166 91 69 / 7%), transparent 23rem),
-    var(--ivory);
+  background: var(--theme-body-background);
   color: var(--ink);
   font-family: var(--font-body), sans-serif;
   text-rendering: optimizeLegibility;
+}
+
+body::before,
+body::after {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+}
+
+body::before {
+  background: var(--theme-atmosphere);
+}
+
+body::after {
+  background-image: var(--theme-grain);
+  opacity: 0.28;
 }
 
 button,
@@ -178,10 +399,7 @@ a {
 }
 
 .diary-wash {
-  background:
-    radial-gradient(circle at 15% 16%, rgb(101 12 28 / 8%), transparent 17rem),
-    radial-gradient(circle at 88% 82%, rgb(166 91 69 / 10%), transparent 19rem),
-    rgb(255 249 243 / 88%);
+  background: var(--theme-wash);
 }
 
 .timeline-rail {
@@ -199,13 +417,7 @@ a {
   left: 0.5rem;
   width: 1px;
   content: "";
-  background: linear-gradient(
-    180deg,
-    transparent,
-    rgb(101 12 28 / 42%) 8%,
-    rgb(166 91 69 / 48%) 92%,
-    transparent
-  );
+  background: var(--theme-timeline-rail);
 }
 
 .timeline-entry {
@@ -223,14 +435,14 @@ a {
   border-radius: 999px;
   content: "";
   background: var(--color-brand);
-  box-shadow: 0 0 0 1px rgb(101 12 28 / 32%);
+  box-shadow: var(--theme-entry-shadow);
 }
 
 .timeline-entry-card {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-dialog);
   padding: 1.25rem;
-  background: rgb(255 249 243 / 92%);
+  background: var(--theme-card-surface);
   box-shadow: var(--shadow-soft);
 }
 
