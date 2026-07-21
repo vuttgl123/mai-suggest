@@ -1,7 +1,7 @@
-import { BookHeart, Heart, Quote, Sparkles } from "lucide-react";
+import { BookHeart, Heart, Sparkles } from "lucide-react";
 import { AppHeader } from "@/components/app-header";
-import { CatalogueItemImage } from "@/features/catalogue/presentation/catalogue-item-image";
-import { TimelineResponsePanel } from "@/features/timeline/presentation/timeline-response-panel";
+import { TimelineChapterCard } from "@/features/timeline/presentation/timeline-chapter-card";
+import { TimelineFeaturedChapter } from "@/features/timeline/presentation/timeline-featured-chapter";
 import type { TimelineEntry } from "@/modules/timeline/domain/timeline-models";
 import type { ActiveActor } from "@/modules/identity/domain/current-actor";
 
@@ -14,6 +14,8 @@ export function RelationshipTimeline({
   actor,
   entries,
 }: RelationshipTimelineProps) {
+  const [featuredEntry, ...chapterEntries] = entries;
+
   return (
     <div className="diary-shell">
       <a
@@ -25,12 +27,17 @@ export function RelationshipTimeline({
       <AppHeader activeSection="journey" actor={actor} />
 
       <main id="journey-content" tabIndex={-1}>
-        <section className="mx-auto max-w-5xl px-5 pb-10 pt-12 text-center sm:px-8 sm:pb-14 sm:pt-16 lg:px-10">
+        <section className="mx-auto max-w-5xl px-5 pb-11 pt-11 text-center sm:px-8 sm:pb-15 sm:pt-17 lg:px-10">
           <span className="mx-auto grid h-11 w-11 place-items-center rounded-full bg-[var(--color-brand-soft)] text-[var(--color-brand)]" aria-hidden="true">
             <BookHeart size={20} strokeWidth={1.35} />
           </span>
           <p className="diary-kicker mt-4">Một cuốn nhật ký chung</p>
-          <h1 className="font-display display-lg mx-auto mt-4 max-w-3xl text-balance font-semibold text-[var(--color-brand-strong)]">
+          <div className="mt-4 flex items-center justify-center gap-3 text-[var(--color-accent)]" aria-hidden="true">
+            <span className="diary-rule" />
+            <span className="h-1.5 w-1.5 rounded-full bg-current" />
+            <span className="diary-rule" />
+          </div>
+          <h1 className="font-display display-lg mx-auto mt-5 max-w-3xl text-balance font-semibold text-[var(--color-brand-strong)]">
             Chúng mình đã lớn lên cùng nhau như thế nào.
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-[var(--color-muted)]">
@@ -39,55 +46,63 @@ export function RelationshipTimeline({
           </p>
         </section>
 
-        {entries.length ? (
-          <section className="border-t border-[var(--color-border)] bg-[rgb(255_249_243_/_55%)] py-10 sm:py-14" aria-labelledby="timeline-heading">
-            <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
-              <h2 id="timeline-heading" className="sr-only">Các cột mốc của hành trình</h2>
-              <ol className="timeline-rail">
-                {entries.map((entry, index) => (
-                  <li
-                    className={`timeline-entry ${index % 2 ? "timeline-entry--right" : ""}`}
-                    id={`timeline-entry-${entry.id}`}
-                    key={entry.id}
+        {featuredEntry ? (
+          <>
+            <section
+              className="relative isolate overflow-hidden border-y border-[var(--color-border)] bg-[rgb(255_249_243_/_55%)]"
+              aria-labelledby="timeline-heading"
+            >
+              <span
+                className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--color-accent)]/45 to-transparent"
+                aria-hidden="true"
+              />
+              <div className="relative mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-14 lg:px-10">
+                <div className="mb-6 max-w-2xl sm:mb-8">
+                  <p className="diary-kicker">Một chương đang mở</p>
+                  <h2
+                    className="font-display mt-2 text-balance text-3xl font-semibold tracking-[-0.05em] text-[var(--color-brand-strong)] sm:text-4xl"
+                    id="timeline-heading"
                   >
-                    <article className="timeline-entry-card">
-                      <div className="flex flex-wrap items-center justify-between gap-3">
-                        <p className="diary-kicker">{entry.dateLabel}</p>
-                        {entry.occurredOn ? (
-                          <time className="text-xs font-semibold text-[var(--color-muted)]" dateTime={entry.occurredOn}>
-                            {formatTimelineDate(entry.occurredOn)}
-                          </time>
-                        ) : null}
-                      </div>
-                      <h3 className="font-display mt-3 text-3xl font-semibold tracking-[-0.05em] text-[var(--color-brand-strong)]">
-                        {entry.title}
-                      </h3>
-                      {entry.imageUrl && entry.imageAltText ? (
-                        <div className="mt-5 overflow-hidden rounded-[calc(var(--radius-card)_-_0.35rem)] border border-[var(--color-border)]">
-                          <CatalogueItemImage alt={entry.imageAltText} src={entry.imageUrl} />
-                        </div>
-                      ) : null}
-                      <p className="mt-5 whitespace-pre-line text-[15px] leading-8 text-[var(--color-ink)]">
-                        {entry.story}
-                      </p>
-                      {entry.lesson ? (
-                        <blockquote className="mt-5 border-l-2 border-[var(--color-accent)] bg-[rgb(166_91_69_/_7%)] px-4 py-3 text-sm leading-7 text-[var(--color-brand)]">
-                          <Quote className="mb-1 text-[var(--color-accent)]" size={16} strokeWidth={1.45} aria-hidden="true" />
-                          {entry.lesson}
-                        </blockquote>
-                      ) : null}
-                      <TimelineResponsePanel
-                        actorId={actor.userId}
-                        canManage={actor.canManageCatalogue}
-                        entryId={entry.id}
-                        responses={entry.responses}
-                      />
-                    </article>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          </section>
+                    Điều mình đang cùng viết
+                  </h2>
+                </div>
+                <TimelineFeaturedChapter
+                  actorId={actor.userId}
+                  canManage={actor.canManageCatalogue}
+                  entry={featuredEntry}
+                />
+              </div>
+            </section>
+
+            {chapterEntries.length ? (
+              <section className="border-b border-[var(--color-border)] bg-[rgb(255_252_248_/_62%)] py-11 sm:py-15">
+                <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
+                  <div className="mx-auto max-w-2xl text-center">
+                    <p className="diary-kicker">Lật lại những trang trước</p>
+                    <h2 className="font-display mt-2 text-balance text-3xl font-semibold tracking-[-0.05em] text-[var(--color-brand-strong)] sm:text-4xl">
+                      Những chương đã viết
+                    </h2>
+                  </div>
+                  <ol className="timeline-rail mt-8 sm:mt-10">
+                    {chapterEntries.map((entry, index) => (
+                      <li
+                        className={`timeline-entry ${index % 2 ? "timeline-entry--right" : ""}`}
+                        id={`timeline-entry-${entry.id}`}
+                        key={entry.id}
+                      >
+                        <TimelineChapterCard
+                          actorId={actor.userId}
+                          canManage={actor.canManageCatalogue}
+                          entry={entry}
+                          sequence={index + 2}
+                        />
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              </section>
+            ) : null}
+          </>
         ) : (
           <section className="mx-auto max-w-3xl px-5 pb-14 sm:px-8 lg:px-10">
             <div className="diary-wash rounded-[var(--radius-dialog)] border border-[var(--color-border)] px-6 py-10 text-center shadow-[var(--shadow-soft)] sm:px-10">
@@ -113,12 +128,4 @@ export function RelationshipTimeline({
       </main>
     </div>
   );
-}
-
-function formatTimelineDate(value: string): string {
-  return new Intl.DateTimeFormat("vi-VN", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  }).format(new Date(`${value}T00:00:00`));
 }

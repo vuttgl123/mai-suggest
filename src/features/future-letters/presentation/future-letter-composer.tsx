@@ -110,7 +110,11 @@ export function FutureLetterComposer({
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="diary-kicker">Một điều để ngày mai mở ra</p>
-            <h2 id="future-letter-composer-title" className="font-display mt-2 text-3xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
+            <div className="mt-3 flex items-center gap-2 text-[var(--color-accent)]" aria-hidden="true">
+              <span className="diary-rule" />
+              <span className="h-1.5 w-1.5 rounded-full bg-current" />
+            </div>
+            <h2 id="future-letter-composer-title" className="font-display mt-3 text-3xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
               {letter ? "Sửa lá thư đang hẹn" : "Hẹn một lá thư"}
             </h2>
           </div>
@@ -119,43 +123,45 @@ export function FutureLetterComposer({
           </Button>
         </div>
 
-        <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--color-muted)]">
+        <p className="mt-4 max-w-2xl rounded-[var(--radius-card)] bg-[rgb(101_12_28_/_4%)] px-4 py-3 text-sm leading-6 text-[var(--color-muted)]">
           Trước giờ hẹn chỉ mình bạn nhìn thấy lá thư này. Khi đến giờ, nó sẽ mở
           ra với tất cả thành viên đang hoạt động.
         </p>
 
         <div className="mt-6 grid gap-4">
-          <label className="future-letter-field">
-            <span>Tiêu đề</span>
-            <input
-              autoComplete="off"
-              className={inputClassName}
-              disabled={isPending}
-              maxLength={160}
-              name="future-letter-title"
-              onChange={(event) => updateDraft({ title: event.target.value })}
-              placeholder="Ví dụ: Mở vào một chiều thật dịu"
-              required
-              value={draft.title}
-            />
-            <small>{draft.title.length}/160</small>
-          </label>
+          <div className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-card-surface)] p-4">
+            <label className="future-letter-field">
+              <span>Tiêu đề</span>
+              <input
+                autoComplete="off"
+                className={inputClassName}
+                disabled={isPending}
+                maxLength={160}
+                name="future-letter-title"
+                onChange={(event) => updateDraft({ title: event.target.value })}
+                placeholder="Ví dụ: Mở vào một chiều thật dịu"
+                required
+                value={draft.title}
+              />
+              <small>{draft.title.length}/160</small>
+            </label>
 
-          <label className="future-letter-field">
-            <span>Lá thư</span>
-            <textarea
-              autoComplete="off"
-              className={`${inputClassName} min-h-48 py-3 leading-7`}
-              disabled={isPending}
-              maxLength={8000}
-              name="future-letter-content"
-              onChange={(event) => updateDraft({ content: event.target.value })}
-              placeholder="Viết điều bạn muốn giữ lại cho một ngày mai…"
-              required
-              value={draft.content}
-            />
-            <small>{draft.content.length}/8000</small>
-          </label>
+            <label className="future-letter-field mt-4">
+              <span>Lá thư</span>
+              <textarea
+                autoComplete="off"
+                className={`${inputClassName} min-h-48 py-3 leading-7`}
+                disabled={isPending}
+                maxLength={8000}
+                name="future-letter-content"
+                onChange={(event) => updateDraft({ content: event.target.value })}
+                placeholder="Viết điều bạn muốn giữ lại cho một ngày mai…"
+                required
+                value={draft.content}
+              />
+              <small>{draft.content.length}/8000</small>
+            </label>
+          </div>
 
           <fieldset className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[rgb(101_12_28_/_4%)] p-4">
             <legend className="px-1 text-sm font-semibold text-[var(--color-brand-strong)]">Thời điểm mở thư</legend>

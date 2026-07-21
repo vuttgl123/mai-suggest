@@ -76,8 +76,15 @@ export function FutureLetterOpeningCard({ letter }: { letter: FutureLetter }) {
 
       {phase !== "sealed" ? (
         <div aria-hidden={phase !== "opened"} className="future-letter-paper" id={`future-letter-${letter.id}`}>
-          <div className="flex flex-wrap items-start justify-between gap-3 border-b border-[var(--color-border)] pb-4">
-            <div className="flex min-w-0 items-center gap-3">
+          <div className="border-b border-[var(--color-border)] pb-4">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-2 text-[var(--color-accent)]">
+                <span className="diary-rule" aria-hidden="true" />
+                <p className="diary-kicker text-[var(--color-accent)]">Gửi lại đúng ngày hẹn</p>
+              </div>
+              <Sparkles className="text-[var(--color-accent)]" size={18} strokeWidth={1.35} aria-hidden="true" />
+            </div>
+            <div className="mt-4 flex min-w-0 items-center gap-3">
               <Avatar displayName={letter.author.displayName} imageUrl={letter.author.avatarUrl} />
               <div className="min-w-0">
                 <p className="truncate text-sm font-bold text-[var(--color-brand-strong)]">{letter.author.displayName}</p>
@@ -86,7 +93,6 @@ export function FutureLetterOpeningCard({ letter }: { letter: FutureLetter }) {
                 </time>
               </div>
             </div>
-            <Sparkles className="text-[var(--color-accent)]" size={18} strokeWidth={1.35} aria-hidden="true" />
           </div>
           <p className="diary-kicker mt-5">Đã mở ra</p>
           <h3 className="font-display mt-2 break-words text-3xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
@@ -101,7 +107,7 @@ export function FutureLetterOpeningCard({ letter }: { letter: FutureLetter }) {
             </div>
           ) : null}
           {letter.musicUrl ? (
-            <a className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-brand-soft)] px-4 text-sm font-semibold text-[var(--color-brand)] transition hover:-translate-y-0.5 hover:bg-[rgb(233_222_218_/_70%)]" href={letter.musicUrl} rel="noreferrer" target="_blank">
+            <a className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-brand-soft)] px-4 text-sm font-semibold text-[var(--color-brand)] transition duration-[var(--duration-fast)] hover:-translate-y-0.5 hover:bg-[rgb(233_222_218_/_70%)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[var(--color-focus)] motion-reduce:transform-none motion-reduce:transition-none" href={letter.musicUrl} rel="noreferrer" target="_blank">
               <Music2 size={16} aria-hidden="true" />
               Nghe bài hát đi cùng lá thư
               <ExternalLink size={14} aria-hidden="true" />

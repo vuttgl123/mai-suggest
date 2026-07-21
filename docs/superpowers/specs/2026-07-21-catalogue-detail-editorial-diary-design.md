@@ -105,16 +105,11 @@ Các unit chỉ nhận read model đã có (`CatalogueItemDetail`, `ItemKeepsake
 
 ## Kiểm chứng sau triển khai
 
-1. Kiểm tra type/lint/build theo script dự án: `rtk tsc`, `rtk npm run lint`,
-   `rtk next build` (hoặc lệnh tương đương nếu `rtk` không hỗ trợ script).
-2. Browser QA trên `/` và item detail tại 320, 390, 768, 1024, 1440px: shared
-   image transition, hero, text dài, thiếu dữ liệu, card keepsake, link ngoài,
-   engagement, hover và focus.
-3. Browser QA keyboard và `prefers-reduced-motion`: skip link/back link/chips
-   truy cập được, không có focus bị che, navigation không còn transform/animation
-   đáng kể khi giảm motion.
-4. Đối chiếu diff: chỉ presentation/CSS/test liên quan; không có thay đổi schema,
-   RLS, credential, `.env.local`, mock data hoặc mã ngoài phạm vi.
+Theo chỉ dẫn hiện tại của người dùng, không chạy automated test, lint, build
+hoặc browser QA cho đợt refactor này. Khi người dùng yêu cầu kiểm chứng trở lại,
+phạm vi cần gồm `/` và item detail tại 320, 390, 768, 1024, 1440px; shared image
+transition, hero, text dài, thiếu dữ liệu, card keepsake, link ngoài,
+engagement, hover, focus, keyboard và `prefers-reduced-motion`.
 
 ## Không thuộc phạm vi
 

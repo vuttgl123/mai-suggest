@@ -58,6 +58,11 @@
 - Dùng `apply_patch` để sửa file. Không dùng shell redirect hay script ghi file
   thay cho `apply_patch`.
 
+## Quy ước Git
+
+- Không tự tạo commit hoặc branch. Chỉ thực hiện một trong hai hành động này khi
+  người dùng yêu cầu rõ ràng trong cuộc hội thoại hiện tại.
+
 ## Chọn skill theo tác vụ
 
 1. Mỗi tác vụ bắt đầu bằng `superpowers:using-superpowers`, rồi chỉ kích hoạt bộ

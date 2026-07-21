@@ -28,6 +28,8 @@ export function FutureLettersExperience({
   const [editingLetter, setEditingLetter] = useState<FutureLetterRecord | null>(
     null,
   );
+  const scheduledCount = scheduledLetters.length;
+  const openedCount = openedLetters.length;
 
   function createLetter() {
     setEditingLetter(null);
@@ -55,7 +57,7 @@ export function FutureLettersExperience({
       <AppHeader activeSection="letters" actor={actor} />
 
       <main id="future-letters-content" tabIndex={-1}>
-        <section className="mx-auto max-w-5xl px-5 pb-9 pt-11 text-center sm:px-8 sm:pb-12 sm:pt-15 lg:px-10">
+        <section className="mx-auto max-w-5xl px-5 pb-10 pt-11 text-center sm:px-8 sm:pb-14 sm:pt-15 lg:px-10">
           <span
             className="mx-auto grid h-11 w-11 place-items-center rounded-full bg-[var(--color-brand-soft)] text-[var(--color-brand)]"
             aria-hidden="true"
@@ -63,13 +65,34 @@ export function FutureLettersExperience({
             <MailPlus size={20} strokeWidth={1.35} />
           </span>
           <p className="diary-kicker mt-4">Một cuộc hẹn với tương lai</p>
-          <h1 className="font-display display-lg mx-auto mt-4 max-w-3xl text-balance font-semibold text-[var(--color-brand-strong)]">
+          <div className="mt-4 flex items-center justify-center gap-3 text-[var(--color-accent)]" aria-hidden="true">
+            <span className="diary-rule" />
+            <span className="h-1.5 w-1.5 rounded-full bg-current" />
+            <span className="diary-rule" />
+          </div>
+          <h1 className="font-display display-lg mx-auto mt-5 max-w-3xl text-balance font-semibold text-[var(--color-brand-strong)]">
             Có những điều chỉ nên mở ra vào đúng một ngày.
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-[15px] leading-7 text-[var(--color-muted)] sm:text-base sm:leading-8">
             Viết cho ngày mai một lời thơ, một lời hứa, hay chỉ một điều mình muốn
             hai đứa cùng nhớ. Đến giờ hẹn, lá thư sẽ tìm được đường để mở ra.
           </p>
+          <div className="mx-auto mt-7 grid max-w-md grid-cols-2 gap-3 text-left">
+            <div className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-card-surface)] px-4 py-3 shadow-[var(--shadow-soft)]">
+              <p className="diary-kicker text-[var(--color-accent)]">Đang niêm phong</p>
+              <p className="font-display mt-2 text-2xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
+                {scheduledCount}
+              </p>
+              <p className="mt-1 text-xs leading-5 text-[var(--color-muted)]">lá thư đang chờ</p>
+            </div>
+            <div className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-card-surface)] px-4 py-3 shadow-[var(--shadow-soft)]">
+              <p className="diary-kicker text-[var(--color-accent)]">Đã đến ngày</p>
+              <p className="font-display mt-2 text-2xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
+                {openedCount}
+              </p>
+              <p className="mt-1 text-xs leading-5 text-[var(--color-muted)]">lá thư đã mở</p>
+            </div>
+          </div>
           <Button className="mt-6" onClick={createLetter} type="button">
             <MailPlus size={16} aria-hidden="true" />
             Hẹn một lá thư
@@ -77,8 +100,12 @@ export function FutureLettersExperience({
         </section>
 
         {scheduledLetters.length ? (
-          <section className="border-y border-[var(--color-border)] bg-[rgb(101_12_28_/_4%)] py-8 sm:py-10">
-            <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
+          <section className="relative isolate overflow-hidden border-y border-[var(--color-border)] bg-[rgb(101_12_28_/_4%)] py-10 sm:py-12">
+            <span
+              className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--color-accent)]/45 to-transparent"
+              aria-hidden="true"
+            />
+            <div className="relative mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
               <ScheduledLetterList letters={scheduledLetters} onEdit={editLetter} />
             </div>
           </section>
@@ -87,7 +114,7 @@ export function FutureLettersExperience({
         <section className="mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-13 lg:px-10" aria-labelledby="opened-letters-heading">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="diary-kicker">Đã đến ngày</p>
+              <p className="diary-kicker">Khoảnh khắc đã đến</p>
               <h2 id="opened-letters-heading" className="font-display mt-2 text-3xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)] sm:text-4xl">
                 Những lá thư đã mở.
               </h2>
