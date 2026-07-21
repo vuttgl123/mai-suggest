@@ -24,6 +24,11 @@ import { ManageTimeline } from "@/modules/timeline/application/manage-timeline";
 import { SupabaseTimelineReader } from "@/modules/timeline/infrastructure/supabase-timeline-reader";
 import { SupabaseTimelineAdminReader } from "@/modules/timeline/infrastructure/supabase-timeline-admin-reader";
 import { SupabaseTimelineRepository } from "@/modules/timeline/infrastructure/supabase-timeline-repository";
+import { ListOpenedFutureLetters } from "@/modules/future-letters/application/list-opened-future-letters";
+import { ListOwnScheduledFutureLetters } from "@/modules/future-letters/application/list-own-scheduled-future-letters";
+import { ManageFutureLetters } from "@/modules/future-letters/application/manage-future-letters";
+import { SupabaseFutureLetterReader } from "@/modules/future-letters/infrastructure/supabase-future-letter-reader";
+import { SupabaseFutureLetterRepository } from "@/modules/future-letters/infrastructure/supabase-future-letter-repository";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import type { Database } from "@/lib/supabase/database.types";
 
@@ -37,6 +42,8 @@ export function createBackendForClient(client: SupabaseClient<Database>) {
   const timelineReader = new SupabaseTimelineReader(client);
   const timelineAdminReader = new SupabaseTimelineAdminReader(client);
   const timelineRepository = new SupabaseTimelineRepository(client);
+  const futureLetterReader = new SupabaseFutureLetterReader(client);
+  const futureLetterRepository = new SupabaseFutureLetterRepository(client);
 
   return {
     getCurrentActor: new GetCurrentActor(actorReader),
@@ -55,6 +62,11 @@ export function createBackendForClient(client: SupabaseClient<Database>) {
     listManagedTimeline: new ListManagedTimeline(timelineAdminReader),
     getManagedTimelineEntry: new GetManagedTimelineEntry(timelineAdminReader),
     manageTimeline: new ManageTimeline(timelineRepository),
+    listOpenedFutureLetters: new ListOpenedFutureLetters(futureLetterReader),
+    listOwnScheduledFutureLetters: new ListOwnScheduledFutureLetters(
+      futureLetterReader,
+    ),
+    manageFutureLetters: new ManageFutureLetters(futureLetterRepository),
   };
 }
 

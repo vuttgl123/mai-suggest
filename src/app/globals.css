@@ -234,6 +234,228 @@ a {
   box-shadow: var(--shadow-soft);
 }
 
+.future-letter-dialog::backdrop {
+  background: rgb(49 5 12 / 48%);
+  backdrop-filter: blur(3px);
+}
+
+.future-letter-dialog {
+  overscroll-behavior: contain;
+}
+
+.future-letter-field {
+  display: block;
+  color: var(--color-brand-strong);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.future-letter-field small {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--color-muted);
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-align: right;
+}
+
+.future-letter-archive {
+  align-items: start;
+}
+
+.future-letter-opening {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-dialog);
+  background:
+    radial-gradient(circle at 52% 26%, rgb(166 91 69 / 14%), transparent 12rem),
+    linear-gradient(155deg, rgb(101 12 28 / 7%), rgb(255 249 243 / 95%) 62%);
+  box-shadow: var(--shadow-soft);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 25rem;
+}
+
+.future-letter-envelope-stage {
+  position: relative;
+  display: grid;
+  min-height: 23.5rem;
+  place-items: center;
+  overflow: hidden;
+  padding: 2rem;
+}
+
+.future-letter-envelope {
+  position: relative;
+  width: min(17rem, 78vw);
+  aspect-ratio: 1.34;
+  overflow: hidden;
+  border: 1px solid rgb(255 249 243 / 26%);
+  border-radius: 0.35rem 0.35rem 0.95rem 0.95rem;
+  background: linear-gradient(140deg, #7f1429, var(--color-brand) 62%, #4c0815);
+  box-shadow: 0 1.5rem 3rem rgb(49 5 12 / 25%);
+}
+
+.future-letter-envelope-shadow {
+  position: absolute;
+  inset: auto 8% -1rem;
+  height: 1.6rem;
+  border-radius: 999px;
+  background: rgb(49 5 12 / 28%);
+  filter: blur(0.8rem);
+}
+
+.future-letter-flap,
+.future-letter-envelope-fold {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(145deg, #8c1931, #570b19);
+}
+
+.future-letter-flap {
+  z-index: 3;
+  height: 58%;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top;
+}
+
+.future-letter-envelope-fold--left {
+  z-index: 2;
+  clip-path: polygon(0 0, 50% 54%, 0 100%);
+}
+
+.future-letter-envelope-fold--right {
+  z-index: 2;
+  clip-path: polygon(100% 0, 50% 54%, 100% 100%);
+  background: linear-gradient(215deg, #761128, #4c0815);
+}
+
+.future-letter-seal {
+  position: absolute;
+  z-index: 4;
+  top: 49%;
+  left: 50%;
+  display: grid;
+  width: 2.65rem;
+  height: 2.65rem;
+  place-items: center;
+  border: 1px solid rgb(255 249 243 / 44%);
+  border-radius: 999px;
+  color: #f8dfc7;
+  background: radial-gradient(circle at 35% 30%, #c98665, #8c3f35 70%);
+  box-shadow: 0 0.4rem 0.9rem rgb(49 5 12 / 20%);
+  transform: translate(-50%, -50%);
+}
+
+.future-letter-halo {
+  position: absolute;
+  width: 19rem;
+  height: 19rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgb(216 161 91 / 28%), transparent 66%);
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+.future-letter-sparks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.future-letter-sparks i {
+  position: absolute;
+  width: 0.32rem;
+  height: 0.32rem;
+  border-radius: 999px;
+  background: #edc389;
+  opacity: 0;
+}
+
+.future-letter-sparks i:nth-child(1) { top: 27%; left: 31%; }
+.future-letter-sparks i:nth-child(2) { top: 19%; left: 47%; }
+.future-letter-sparks i:nth-child(3) { top: 32%; left: 64%; }
+.future-letter-sparks i:nth-child(4) { top: 52%; left: 24%; }
+.future-letter-sparks i:nth-child(5) { top: 58%; left: 72%; }
+.future-letter-sparks i:nth-child(6) { top: 42%; left: 42%; }
+.future-letter-sparks i:nth-child(7) { top: 22%; left: 74%; }
+.future-letter-sparks i:nth-child(8) { top: 68%; left: 38%; }
+.future-letter-sparks i:nth-child(9) { top: 71%; left: 61%; }
+.future-letter-sparks i:nth-child(10) { top: 39%; left: 79%; }
+
+.future-letter-open-control {
+  position: absolute;
+  z-index: 5;
+  bottom: 1.75rem;
+  width: min(20rem, calc(100% - 2.5rem));
+  border: 1px solid rgb(255 249 243 / 62%);
+  border-radius: 1.25rem;
+  padding: 1rem;
+  text-align: center;
+  background: rgb(255 249 243 / 90%);
+  box-shadow: var(--shadow-soft);
+}
+
+.future-letter-paper {
+  position: relative;
+  z-index: 6;
+  margin: 0.85rem;
+  border: 1px solid rgb(49 5 12 / 13%);
+  border-radius: calc(var(--radius-dialog) - 0.55rem);
+  padding: 1.25rem;
+  background:
+    linear-gradient(90deg, transparent 0 1.75rem, rgb(166 91 69 / 10%) 1.75rem 1.82rem, transparent 1.82rem),
+    repeating-linear-gradient(180deg, transparent 0 2.05rem, rgb(166 91 69 / 10%) 2.05rem 2.1rem),
+    var(--color-paper);
+  box-shadow: 0 1rem 2.5rem rgb(49 5 12 / 12%);
+}
+
+.future-letter-opening[data-phase="opening"] .future-letter-flap {
+  animation: future-letter-unseal 420ms cubic-bezier(.22, .7, .24, 1) forwards;
+}
+
+.future-letter-opening[data-phase="opening"] .future-letter-seal {
+  animation: future-letter-seal-soften 260ms ease-out forwards;
+}
+
+.future-letter-opening[data-phase="opening"] .future-letter-halo {
+  animation: future-letter-halo 600ms ease-out forwards;
+}
+
+.future-letter-opening[data-phase="opening"] .future-letter-sparks i {
+  animation: future-letter-spark 480ms ease-out both;
+}
+
+.future-letter-opening[data-phase="opening"] .future-letter-sparks i:nth-child(2n) { animation-delay: 70ms; }
+.future-letter-opening[data-phase="opening"] .future-letter-sparks i:nth-child(3n) { animation-delay: 130ms; }
+
+.future-letter-opening[data-phase="opening"] .future-letter-paper {
+  animation: future-letter-paper-rise 520ms 190ms cubic-bezier(.2, .8, .2, 1) both;
+}
+
+@keyframes future-letter-unseal {
+  to { transform: rotateX(178deg); }
+}
+
+@keyframes future-letter-seal-soften {
+  to { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
+}
+
+@keyframes future-letter-halo {
+  45% { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(1.24); }
+}
+
+@keyframes future-letter-spark {
+  30% { opacity: 1; }
+  to { opacity: 0; transform: translate(var(--spark-x, 0), -2.5rem) scale(0.3); }
+}
+
+@keyframes future-letter-paper-rise {
+  from { opacity: 0; transform: translateY(1.75rem) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 @media (min-width: 768px) {
   .timeline-rail {
     gap: 2.25rem;
@@ -382,5 +604,9 @@ a {
   ::view-transition-group(*) {
     animation-delay: 0s !important;
     animation-duration: 0s !important;
+  }
+
+  .future-letter-opening[data-phase="opening"] .future-letter-paper {
+    animation: none;
   }
 }

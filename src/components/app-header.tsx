@@ -4,7 +4,7 @@ import type { ActiveActor } from "@/modules/identity/domain/current-actor";
 
 interface AppHeaderProps {
   actor: ActiveActor;
-  activeSection?: "catalogue" | "journey" | "admin";
+  activeSection?: "catalogue" | "journey" | "letters" | "admin";
 }
 
 export function AppHeader({ actor, activeSection = "catalogue" }: AppHeaderProps) {
@@ -36,7 +36,7 @@ export function AppHeader({ actor, activeSection = "catalogue" }: AppHeaderProps
           </span>
         </Link>
 
-        <nav aria-label="Điều hướng chính" className="order-3 w-full sm:order-none sm:w-auto">
+        <nav aria-label="Điều hướng chính" className="order-3 flex w-full flex-wrap gap-x-5 sm:order-none sm:w-auto">
           <Link
             className={`inline-flex min-h-10 items-center border-b-2 px-1 text-sm font-semibold transition ${
               activeSection === "catalogue"
@@ -48,7 +48,7 @@ export function AppHeader({ actor, activeSection = "catalogue" }: AppHeaderProps
             Bộ sưu tập
           </Link>
           <Link
-            className={`ml-5 inline-flex min-h-10 items-center border-b-2 px-1 text-sm font-semibold transition ${
+            className={`inline-flex min-h-10 items-center border-b-2 px-1 text-sm font-semibold transition ${
               activeSection === "journey"
                 ? "border-[var(--color-brand)] text-[var(--color-brand)]"
                 : "border-transparent text-[var(--color-muted)] hover:text-[var(--color-brand-strong)]"
@@ -57,9 +57,19 @@ export function AppHeader({ actor, activeSection = "catalogue" }: AppHeaderProps
           >
             Hành trình
           </Link>
+          <Link
+            className={`inline-flex min-h-10 items-center border-b-2 px-1 text-sm font-semibold transition ${
+              activeSection === "letters"
+                ? "border-[var(--color-brand)] text-[var(--color-brand)]"
+                : "border-transparent text-[var(--color-muted)] hover:text-[var(--color-brand-strong)]"
+            }`}
+            href="/thu-hen-ngay-mo"
+          >
+            Thư hẹn ngày mở
+          </Link>
           {actor.canManageCatalogue ? (
             <Link
-              className={`ml-5 inline-flex min-h-10 items-center border-b-2 px-1 text-sm font-semibold transition ${
+              className={`inline-flex min-h-10 items-center border-b-2 px-1 text-sm font-semibold transition ${
                 activeSection === "admin"
                   ? "border-[var(--color-brand)] text-[var(--color-brand)]"
                   : "border-transparent text-[var(--color-muted)] hover:text-[var(--color-brand-strong)]"

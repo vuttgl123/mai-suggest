@@ -144,6 +144,19 @@ type TimelineResponseRow = {
   updated_at: string;
 };
 
+type FutureLetterRow = {
+  id: string;
+  author_id: string;
+  title: string;
+  content: string;
+  opens_at: string;
+  image_url: string | null;
+  image_alt_text: string | null;
+  music_url: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
 export interface Database {
   public: {
     Tables: {
@@ -158,6 +171,7 @@ export interface Database {
       user_item_states: Table<UserItemStateRow>;
       timeline_entries: Table<TimelineEntryRow>;
       timeline_responses: Table<TimelineResponseRow>;
+      future_letters: Table<FutureLetterRow>;
     };
     Views: Record<never, never>;
     Functions: Record<never, never>;
