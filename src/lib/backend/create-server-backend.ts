@@ -16,7 +16,9 @@ import { ListManagedItems } from "@/modules/catalogue/application/list-managed-i
 import { ListManagedItemPage } from "@/modules/catalogue/application/list-managed-item-page";
 import { GetManagedItemDetail } from "@/modules/catalogue/application/get-managed-item-detail";
 import { ManageItemEngagement } from "@/modules/engagement/application/manage-item-engagement";
+import { GetItemEngagementView } from "@/modules/engagement/application/get-item-engagement-view";
 import { SupabaseEngagementRepository } from "@/modules/engagement/infrastructure/supabase-engagement-repository";
+import { SupabaseItemEngagementReader } from "@/modules/engagement/infrastructure/supabase-item-engagement-reader";
 import { ListVisibleTimeline } from "@/modules/timeline/application/list-visible-timeline";
 import { ListManagedTimeline } from "@/modules/timeline/application/list-managed-timeline";
 import { GetManagedTimelineEntry } from "@/modules/timeline/application/get-managed-timeline-entry";
@@ -44,6 +46,7 @@ export function createBackendForClient(client: SupabaseClient<Database>) {
   const catalogueAdminRepository = new SupabaseCatalogueAdminRepository(client);
   const catalogueAdminReader = new SupabaseCatalogueAdminReader(client);
   const engagementRepository = new SupabaseEngagementRepository(client);
+  const itemEngagementReader = new SupabaseItemEngagementReader(client);
   const timelineReader = new SupabaseTimelineReader(client);
   const timelineAdminReader = new SupabaseTimelineAdminReader(client);
   const timelineRepository = new SupabaseTimelineRepository(client);
@@ -65,6 +68,7 @@ export function createBackendForClient(client: SupabaseClient<Database>) {
     listManagedItemPage: new ListManagedItemPage(catalogueAdminReader),
     getManagedItemDetail: new GetManagedItemDetail(catalogueAdminReader),
     manageItemEngagement: new ManageItemEngagement(engagementRepository),
+    getItemEngagementView: new GetItemEngagementView(itemEngagementReader),
     listVisibleTimeline: new ListVisibleTimeline(timelineReader),
     listManagedTimeline: new ListManagedTimeline(timelineAdminReader),
     getManagedTimelineEntry: new GetManagedTimelineEntry(timelineAdminReader),

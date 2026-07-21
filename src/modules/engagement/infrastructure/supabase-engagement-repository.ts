@@ -13,52 +13,17 @@ import type {
   ItemRating,
   ItemUserState,
 } from "@/modules/engagement/domain/engagement-models";
+import {
+  toItemComment,
+  toItemRating,
+  toItemState,
+} from "@/modules/engagement/infrastructure/engagement-mappers";
 import type { Database } from "@/lib/supabase/database.types";
 
 const STATE_COLUMNS =
   "id,item_id,user_id,is_favorite,state,note,created_at,updated_at";
 const RATING_COLUMNS = "id,item_id,user_id,score,note,created_at,updated_at";
 const COMMENT_COLUMNS = "id,item_id,user_id,content,created_at,updated_at";
-
-type StateRow = Database["public"]["Tables"]["user_item_states"]["Row"];
-type RatingRow = Database["public"]["Tables"]["ratings"]["Row"];
-type CommentRow = Database["public"]["Tables"]["comments"]["Row"];
-
-function toItemState(row: StateRow): ItemUserState {
-  return {
-    id: row.id,
-    itemId: row.item_id,
-    userId: row.user_id,
-    isFavorite: row.is_favorite,
-    state: row.state,
-    note: row.note,
-    createdAt: row.created_at,
-    updatedAt: row.updated_at,
-  };
-}
-
-function toItemRating(row: RatingRow): ItemRating {
-  return {
-    id: row.id,
-    itemId: row.item_id,
-    userId: row.user_id,
-    score: row.score,
-    note: row.note,
-    createdAt: row.created_at,
-    updatedAt: row.updated_at,
-  };
-}
-
-function toItemComment(row: CommentRow): ItemComment {
-  return {
-    id: row.id,
-    itemId: row.item_id,
-    userId: row.user_id,
-    content: row.content,
-    createdAt: row.created_at,
-    updatedAt: row.updated_at,
-  };
-}
 
 export class SupabaseEngagementRepository implements EngagementRepository {
   constructor(private readonly client: SupabaseClient<Database>) {}

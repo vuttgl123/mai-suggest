@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ViewTransition } from "react";
-import { Heart } from "lucide-react";
+import { ArrowUpRight, Heart } from "lucide-react";
 import { CatalogueItemImage } from "@/features/catalogue/presentation/catalogue-item-image";
 import type { CatalogueItemSummary } from "@/modules/catalogue/domain/catalogue-read-models";
 
@@ -63,6 +63,10 @@ export function CatalogueItemCard({
             {item.priceLabel}
           </p>
         ) : null}
+        <p className="inline-flex items-center gap-1.5 pt-1 text-sm font-semibold text-[var(--color-brand)] transition duration-[var(--duration-fast)] group-hover:gap-2.5">
+          Mở câu chuyện
+          <ArrowUpRight size={15} aria-hidden="true" />
+        </p>
       </div>
     </Link>
   );

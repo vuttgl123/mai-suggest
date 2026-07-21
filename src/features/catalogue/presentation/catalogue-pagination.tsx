@@ -18,66 +18,71 @@ export function CataloguePagination({
   const pages = visiblePages(page, pageCount);
 
   return (
-    <nav
-      aria-label="Phân trang bộ sưu tập"
-      className="mt-7 flex flex-wrap items-center justify-center gap-2"
-    >
-      {page > 1 ? (
-        <Link
-          className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-paper)] px-4 text-sm font-semibold text-[var(--color-brand)] transition hover:-translate-y-0.5 hover:border-[var(--color-accent)]"
-          href={createCataloguePath({ categorySlug, page: page - 1 })}
-          transitionTypes={["page-back"]}
-        >
-          <ChevronLeft size={16} aria-hidden="true" />
-          Trước
-        </Link>
-      ) : (
-        <span className="inline-flex min-h-11 cursor-not-allowed items-center gap-1.5 rounded-full border border-[var(--color-border)] px-4 text-sm font-semibold text-[var(--color-muted)] opacity-45">
-          <ChevronLeft size={16} aria-hidden="true" />
-          Trước
-        </span>
-      )}
-
-      <div className="flex items-center gap-1" aria-label={`Trang ${page} trên ${pageCount}`}>
-        {pages.map((value) =>
-          typeof value === "number" ? (
-            <Link
-              aria-current={value === page ? "page" : undefined}
-              className={`grid h-11 min-w-11 place-items-center rounded-full px-3 text-sm font-semibold transition ${
-                value === page
-                  ? "bg-[var(--color-brand)] text-white shadow-[0_8px_18px_rgb(49_5_12_/_22%)]"
-                  : "text-[var(--color-muted)] hover:bg-[var(--color-brand-soft)] hover:text-[var(--color-brand)]"
-              }`}
-              href={createCataloguePath({ categorySlug, page: value })}
-              key={value}
-              transitionTypes={[value > page ? "page-forward" : "page-back"]}
-            >
-              {value}
-            </Link>
-          ) : (
-            <span className="grid h-11 min-w-7 place-items-center text-sm text-[var(--color-muted)]" key={value}>
-              …
-            </span>
-          ),
+    <div className="mt-8">
+      <p className="text-center text-sm leading-6 text-[var(--color-muted)]">
+        Xem thêm những điều đã lưu
+      </p>
+      <nav
+        aria-label="Phân trang bộ sưu tập"
+        className="mt-3 flex flex-wrap items-center justify-center gap-2"
+      >
+        {page > 1 ? (
+          <Link
+            className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-paper)] px-4 text-sm font-semibold text-[var(--color-brand)] transition hover:-translate-y-0.5 hover:border-[var(--color-accent)]"
+            href={createCataloguePath({ categorySlug, page: page - 1 })}
+            transitionTypes={["page-back"]}
+          >
+            <ChevronLeft size={16} aria-hidden="true" />
+            Trước
+          </Link>
+        ) : (
+          <span className="inline-flex min-h-11 cursor-not-allowed items-center gap-1.5 rounded-full border border-[var(--color-border)] px-4 text-sm font-semibold text-[var(--color-muted)] opacity-45">
+            <ChevronLeft size={16} aria-hidden="true" />
+            Trước
+          </span>
         )}
-      </div>
 
-      {page < pageCount ? (
-        <Link
-          className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-paper)] px-4 text-sm font-semibold text-[var(--color-brand)] transition hover:-translate-y-0.5 hover:border-[var(--color-accent)]"
-          href={createCataloguePath({ categorySlug, page: page + 1 })}
-          transitionTypes={["page-forward"]}
-        >
-          Sau
-          <ChevronRight size={16} aria-hidden="true" />
-        </Link>
-      ) : (
-        <span className="inline-flex min-h-11 cursor-not-allowed items-center gap-1.5 rounded-full border border-[var(--color-border)] px-4 text-sm font-semibold text-[var(--color-muted)] opacity-45">
-          Sau
-          <ChevronRight size={16} aria-hidden="true" />
-        </span>
-      )}
-    </nav>
+        <div className="flex items-center gap-1" aria-label={`Trang ${page} trên ${pageCount}`}>
+          {pages.map((value) =>
+            typeof value === "number" ? (
+              <Link
+                aria-current={value === page ? "page" : undefined}
+                className={`grid h-11 min-w-11 place-items-center rounded-full px-3 text-sm font-semibold transition ${
+                  value === page
+                    ? "bg-[var(--color-brand)] text-white shadow-[0_8px_18px_rgb(49_5_12_/_22%)]"
+                    : "text-[var(--color-muted)] hover:bg-[var(--color-brand-soft)] hover:text-[var(--color-brand)]"
+                }`}
+                href={createCataloguePath({ categorySlug, page: value })}
+                key={value}
+                transitionTypes={[value > page ? "page-forward" : "page-back"]}
+              >
+                {value}
+              </Link>
+            ) : (
+              <span className="grid h-11 min-w-7 place-items-center text-sm text-[var(--color-muted)]" key={value}>
+                …
+              </span>
+            ),
+          )}
+        </div>
+
+        {page < pageCount ? (
+          <Link
+            className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-paper)] px-4 text-sm font-semibold text-[var(--color-brand)] transition hover:-translate-y-0.5 hover:border-[var(--color-accent)]"
+            href={createCataloguePath({ categorySlug, page: page + 1 })}
+            transitionTypes={["page-forward"]}
+          >
+            Sau
+            <ChevronRight size={16} aria-hidden="true" />
+          </Link>
+        ) : (
+          <span className="inline-flex min-h-11 cursor-not-allowed items-center gap-1.5 rounded-full border border-[var(--color-border)] px-4 text-sm font-semibold text-[var(--color-muted)] opacity-45">
+            Sau
+            <ChevronRight size={16} aria-hidden="true" />
+          </span>
+        )}
+      </nav>
+    </div>
   );
 }
 

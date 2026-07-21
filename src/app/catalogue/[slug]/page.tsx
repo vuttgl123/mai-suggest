@@ -38,12 +38,21 @@ export default async function CatalogueDetailPage({
   const category = categoriesResult.value.find(
     (entry) => entry.id === itemResult.value.categoryId,
   );
+  const engagementResult = await backend.getItemEngagementView.execute(
+    access.actor,
+    itemResult.value.id,
+  );
+
+  if (!engagementResult.ok) {
+    throw new Error("Unable to load catalogue engagement.");
+  }
 
   return (
     <PageTransition>
       <CatalogueDetail
         actor={access.actor}
         categoryName={category?.name ?? null}
+        engagement={engagementResult.value}
         item={itemResult.value}
       />
     </PageTransition>

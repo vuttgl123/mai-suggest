@@ -40,7 +40,12 @@ Các cảm xúc cần được ưu tiên là: ấm áp, chân thành, chậm rã
 ### Catalogue kỷ niệm và gợi ý
 
 - Danh mục và item lấy dữ liệu thật từ Supabase, có phân trang.
+- Bộ sưu tập được mở theo các chương cảm xúc, với một điều nổi bật ở trang đầu
+  mỗi chương để bắt đầu khám phá chậm rãi.
 - Mỗi item có thể chứa lời nhắn, thơ, liên kết và các mẩu kỷ niệm chi tiết.
+- Mỗi active member có một cảm nhận 1–5 sao, lời nhắn tùy chọn và các lời bình
+  chung trên item. Nội dung hiển thị tên/ảnh Google đã đồng bộ; tác giả tự quản
+  lý lời của mình, còn Owner chỉ có thể gỡ khi cần điều tiết.
 - Thành viên đọc và tương tác theo quyền hiện có; Owner có khu vực quản lý nội
   dung riêng tại `/admin`.
 

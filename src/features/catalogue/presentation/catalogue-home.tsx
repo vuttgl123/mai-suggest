@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { ViewTransition } from "react";
-import { ArrowRight, Heart, Sparkles } from "lucide-react";
+import { Heart, Sparkles } from "lucide-react";
 import { AppHeader } from "@/components/app-header";
+import { CatalogueChapterRail } from "@/features/catalogue/presentation/catalogue-chapter-rail";
+import { CatalogueFeaturedItemCard } from "@/features/catalogue/presentation/catalogue-featured-item-card";
 import { CatalogueItemCard } from "@/features/catalogue/presentation/catalogue-item-card";
 import { CataloguePagination } from "@/features/catalogue/presentation/catalogue-pagination";
-import { createCataloguePath } from "@/features/catalogue/lib/catalogue-navigation";
 import type {
   CatalogueCategory,
   CatalogueItemPage,
@@ -33,6 +34,9 @@ export function CatalogueHome({
   const visibleCollectionTitle = selectedCategory
     ? selectedCategory.name
     : "Tất cả điều em yêu";
+  const isFirstPage = itemPage.page === 1;
+  const featuredItem = isFirstPage ? (itemPage.items[0] ?? null) : null;
+  const gridItems = featuredItem ? itemPage.items.slice(1) : itemPage.items;
 
   return (
     <div className="diary-shell">
@@ -45,31 +49,31 @@ export function CatalogueHome({
       <AppHeader activeSection="catalogue" actor={actor} />
 
       <main id="main-content" tabIndex={-1}>
-        <section className="mx-auto grid max-w-7xl gap-9 px-5 pb-12 pt-12 sm:px-8 sm:pb-16 sm:pt-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(18rem,0.65fr)] lg:items-end lg:gap-14 lg:px-10 lg:pb-20 lg:pt-20">
+        <section className="mx-auto grid max-w-7xl gap-7 px-5 pb-9 pt-9 sm:px-8 sm:pb-12 sm:pt-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(17rem,0.55fr)] lg:items-end lg:gap-12 lg:px-10 lg:pb-14 lg:pt-14">
           <div>
             <p className="diary-kicker">Dành riêng cho những điều dịu dàng</p>
             <div className="mt-4 flex items-center gap-3 text-[var(--color-accent)]" aria-hidden="true">
               <span className="diary-rule" />
               <Heart size={15} fill="currentColor" strokeWidth={1.4} />
             </div>
-            <h1 className="font-display display-xl mt-5 max-w-3xl text-balance font-semibold text-[var(--color-brand-strong)]">
+            <h1 className="font-display display-lg mt-4 max-w-3xl text-balance font-semibold text-[var(--color-brand-strong)]">
               Những điều làm em mỉm cười.
             </h1>
-            <p className="mt-5 max-w-xl text-base leading-8 text-[var(--color-muted)] sm:text-lg">
+            <p className="mt-4 max-w-xl text-[15px] leading-7 text-[var(--color-muted)] sm:text-base sm:leading-8">
               Một nơi nhỏ để gìn giữ những lựa chọn đẹp đẽ, những điểm đến đáng nhớ
               và mọi điều khiến ngày thường trở nên đặc biệt hơn.
             </p>
           </div>
 
-          <aside className="diary-wash relative overflow-hidden rounded-[var(--radius-dialog)] border border-[var(--color-border)] p-6 shadow-[var(--shadow-soft)] sm:p-7">
+          <aside className="diary-wash relative overflow-hidden rounded-[var(--radius-card)] border border-[var(--color-border)] p-5 shadow-[var(--shadow-soft)] sm:p-6">
             <Sparkles
               className="absolute right-6 top-6 text-[var(--color-accent)] opacity-70"
-              size={24}
+              size={20}
               strokeWidth={1.25}
               aria-hidden="true"
             />
             <p className="diary-kicker">Bộ sưu tập hôm nay</p>
-            <p className="font-display mt-4 text-4xl font-semibold tracking-[-0.06em] text-[var(--color-brand-strong)]">
+            <p className="font-display mt-3 text-4xl font-semibold tracking-[-0.06em] text-[var(--color-brand-strong)]">
               {itemPage.total}
             </p>
             <p className="mt-2 max-w-48 text-sm leading-6 text-[var(--color-muted)]">
@@ -78,51 +82,11 @@ export function CatalogueHome({
           </aside>
         </section>
 
-        <section
-          id="collection"
-          className="border-y border-[var(--color-border)] bg-[rgb(255_250_247_/_55%)]"
-          aria-labelledby="collection-heading"
-        >
-          <div className="mx-auto max-w-7xl px-5 py-5 sm:px-8 lg:px-10">
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <div>
-                <p className="diary-kicker">Khám phá theo tâm trạng</p>
-                <h2
-                  id="collection-heading"
-                  className="font-display mt-2 text-3xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]"
-                >
-                  {visibleCollectionTitle}
-                </h2>
-              </div>
-              {selectedCategory ? (
-                <Link
-                  className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-paper)] px-4 text-sm font-semibold text-[var(--color-brand)] transition hover:-translate-y-0.5 hover:border-[var(--color-accent)]"
-                  href={createCataloguePath({ categorySlug: null, page: 1 })}
-                  transitionTypes={["collection-change"]}
-                >
-                  Xem tất cả
-                  <ArrowRight size={16} aria-hidden="true" />
-                </Link>
-              ) : null}
-            </div>
+        <div id="collection" className="border-y border-[var(--color-border)] bg-[rgb(255_250_247_/_55%)]">
+          <CatalogueChapterRail categories={categories} selectedCategorySlug={selectedCategorySlug} />
+        </div>
 
-            {categories.length ? (
-              <nav aria-label="Lọc theo danh mục" className="mt-5 flex flex-wrap gap-2.5">
-                <CategoryLink active={!selectedCategorySlug} href={createCataloguePath({ categorySlug: null, page: 1 })} label="Tất cả" />
-                {categories.map((category) => (
-                  <CategoryLink
-                    active={category.slug === selectedCategorySlug}
-                    href={createCataloguePath({ categorySlug: category.slug, page: 1 })}
-                    key={category.id}
-                    label={category.name}
-                  />
-                ))}
-              </nav>
-            ) : null}
-          </div>
-        </section>
-
-        <section className="mx-auto max-w-7xl px-5 py-10 sm:px-8 sm:py-12 lg:px-10 lg:py-16">
+        <section className="mx-auto max-w-7xl px-5 py-9 sm:px-8 sm:py-11 lg:px-10 lg:py-14">
           {itemPage.items.length ? (
             <>
               <ViewTransition
@@ -141,14 +105,47 @@ export function CatalogueHome({
                 }}
                 key={`${selectedCategorySlug ?? "all"}-${itemPage.page}`}
               >
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
-                  {itemPage.items.map((item) => (
-                    <CatalogueItemCard
-                      categoryName={categoryNames.get(item.categoryId) ?? null}
-                      item={item}
-                      key={item.id}
-                    />
-                  ))}
+                <div>
+                  {featuredItem ? (
+                    <section aria-labelledby="featured-item-heading">
+                      <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+                        <div>
+                          <p className="diary-kicker">Điều muốn mở ra trước</p>
+                          <h2 className="font-display mt-1 text-2xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]" id="featured-item-heading">
+                            {visibleCollectionTitle}
+                          </h2>
+                        </div>
+                        <p className="text-sm text-[var(--color-muted)]">Một gợi ý để bắt đầu chậm rãi.</p>
+                      </div>
+                      <CatalogueFeaturedItemCard
+                        categoryName={categoryNames.get(featuredItem.categoryId) ?? null}
+                        item={featuredItem}
+                      />
+                    </section>
+                  ) : null}
+
+                  {gridItems.length ? (
+                    <section className={featuredItem ? "mt-8" : ""} aria-labelledby="saved-things-heading">
+                      <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+                        <div>
+                          <p className="diary-kicker">Những điều đã lưu</p>
+                          <h2 className="font-display mt-1 text-2xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]" id="saved-things-heading">
+                            {featuredItem ? "Còn rất nhiều điều để khám phá" : visibleCollectionTitle}
+                          </h2>
+                        </div>
+                        <p className="text-sm text-[var(--color-muted)]">{itemPage.total} điều đang được gìn giữ</p>
+                      </div>
+                      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
+                        {gridItems.map((item) => (
+                          <CatalogueItemCard
+                            categoryName={categoryNames.get(item.categoryId) ?? null}
+                            item={item}
+                            key={item.id}
+                          />
+                        ))}
+                      </div>
+                    </section>
+                  ) : null}
                 </div>
               </ViewTransition>
               <CataloguePagination
@@ -163,31 +160,6 @@ export function CatalogueHome({
         </section>
       </main>
     </div>
-  );
-}
-
-function CategoryLink({
-  active,
-  href,
-  label,
-}: {
-  active: boolean;
-  href: string;
-  label: string;
-}) {
-  return (
-    <Link
-      aria-current={active ? "page" : undefined}
-      className={`inline-flex min-h-10 items-center rounded-full border px-4 text-sm font-semibold transition duration-[var(--duration-fast)] ${
-        active
-          ? "border-[var(--color-brand)] bg-[var(--color-brand)] text-white shadow-[0_6px_16px_rgb(122_16_37_/_18%)]"
-          : "border-[var(--color-border)] bg-[rgb(255_250_247_/_70%)] text-[var(--color-muted)] hover:border-[var(--color-accent)] hover:text-[var(--color-brand)]"
-      }`}
-      href={href}
-      transitionTypes={["collection-change"]}
-    >
-      {label}
-    </Link>
   );
 }
 
