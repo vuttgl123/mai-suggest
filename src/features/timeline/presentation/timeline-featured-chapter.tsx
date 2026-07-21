@@ -32,7 +32,7 @@ export function TimelineFeaturedChapter({
             : ""
         }`}
       >
-        {hasImage ? (
+        {entry.imageUrl && entry.imageAltText ? (
           <div className="overflow-hidden border-b border-[var(--color-border)] lg:border-b-0 lg:border-r">
             <CatalogueItemImage alt={entry.imageAltText} src={entry.imageUrl} />
           </div>
