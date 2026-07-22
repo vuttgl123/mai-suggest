@@ -43,7 +43,7 @@ export function AdminSiteTheme({
   const [transitionTarget, setTransitionTarget] = useState<SiteThemeKey | null>(null);
   const [transitionStep, setTransitionStep] = useState<0 | 1 | 2 | 3>(0);
   const [isCancellingTransition, setIsCancellingTransition] = useState(false);
-  const transitionTimerRefs = useRef<ReturnType<typeof window.setTimeout>[]>([]);
+  const transitionTimerRefs = useRef<number[]>([]);
   const resolvedPreset = getSiteThemePreset(resolved.key);
 
   useEffect(() => {
