@@ -1,11 +1,9 @@
 import Link from "next/link";
-import { DiaryBook } from "@/components/diary/diary-book";
-import { DiarySurface } from "@/components/diary/diary-surface";
 
 export default function AccessDeniedPage() {
   return (
-    <DiaryBook className="grid place-items-center px-6 text-center" role="main">
-      <DiarySurface className="max-w-md p-8" kind="note">
+    <main className="grid min-h-screen place-items-center bg-[var(--color-surface)] px-6 text-center">
+      <section className="max-w-md rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-paper)] p-8 shadow-sm">
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-accent)]">
           Chưa có quyền truy cập
         </p>
@@ -21,7 +19,7 @@ export default function AccessDeniedPage() {
         >
           Dùng tài khoản Google khác
         </Link>
-      </DiarySurface>
-    </DiaryBook>
+      </section>
+    </main>
   );
 }

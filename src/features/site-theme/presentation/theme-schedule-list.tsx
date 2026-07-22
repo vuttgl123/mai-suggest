@@ -41,7 +41,7 @@ export function ThemeScheduleList({
   }
 
   return (
-    <section className="diary-surface diary-surface--ledger p-5 sm:p-6">
+    <section className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] p-5 shadow-[var(--shadow-soft)] sm:p-6">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="diary-kicker">Các khoảng đã hẹn</p>
@@ -68,7 +68,7 @@ export function ThemeScheduleList({
 
             return (
               <li
-                className="diary-ledger-row rounded-[var(--radius-card)] border p-4"
+                className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-control-surface)] p-4"
                 key={schedule.id}
               >
                 <div className="flex flex-wrap items-start justify-between gap-3">

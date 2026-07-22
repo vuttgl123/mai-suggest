@@ -41,7 +41,7 @@ export function FutureLetterOpeningCard({ letter }: { letter: FutureLetter }) {
   return (
     <article
       aria-label={`Thư từ ${letter.author.displayName}`}
-      className="future-letter-opening diary-surface diary-surface--page"
+      className="future-letter-opening"
       data-phase={phase}
       ref={articleRef}
       tabIndex={-1}
@@ -102,7 +102,7 @@ export function FutureLetterOpeningCard({ letter }: { letter: FutureLetter }) {
             {letter.content}
           </p>
           {letter.imageUrl && letter.imageAltText ? (
-            <div className="diary-surface diary-surface--print mt-6">
+            <div className="mt-6 overflow-hidden rounded-[calc(var(--radius-card)_-_0.35rem)] border border-[var(--color-border)]">
               <CatalogueItemImage alt={letter.imageAltText} src={letter.imageUrl} />
             </div>
           ) : null}

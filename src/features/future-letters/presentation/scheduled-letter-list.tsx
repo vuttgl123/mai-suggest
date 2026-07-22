@@ -142,8 +142,8 @@ function ScheduledLetterCard({
     <li
       className={
         isFeatured
-          ? "diary-surface diary-surface--spread relative p-5 sm:p-6"
-          : "diary-surface diary-surface--page p-4"
+          ? "relative overflow-hidden rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--theme-card-surface)] p-5 shadow-[var(--shadow-card)] sm:p-6"
+          : "rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-paper)] p-4 shadow-[var(--shadow-soft)]"
       }
     >
       {isFeatured ? (

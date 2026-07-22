@@ -126,7 +126,7 @@ export function AdminItemEditor({
   }
 
   return (
-    <section className="diary-surface diary-surface--ledger p-4 sm:p-6">
+    <section className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] p-4 shadow-[var(--shadow-card)] sm:p-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="diary-kicker">{isEditing ? "Item đang chọn" : "Bắt đầu một điều mới"}</p>
@@ -146,7 +146,7 @@ export function AdminItemEditor({
         <form className="mt-6" onSubmit={handleSubmit}>
           <section
             aria-labelledby="item-information-heading"
-            className="diary-ledger-row rounded-[var(--radius-card)] border p-4 sm:p-5"
+            className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-control-surface)] p-4 sm:p-5"
           >
             <div className="flex items-center gap-2">
               <PencilLine className="text-[var(--color-accent)]" size={18} aria-hidden="true" />

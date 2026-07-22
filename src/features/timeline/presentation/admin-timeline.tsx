@@ -49,7 +49,7 @@ export function AdminTimeline({ entries, selectedEntry }: AdminTimelineProps) {
 
       {feedback ? <p aria-live="polite" className="mt-5 rounded-[var(--radius-card)] border border-[var(--color-brand)]/15 bg-[var(--color-brand-soft)]/50 px-4 py-3 text-sm leading-6 text-[var(--color-brand)]">{feedback}</p> : null}
 
-      <section className="diary-section-rule mt-5 grid gap-5 py-5 xl:grid-cols-[20rem_minmax(0,1fr)] xl:items-start">
+      <section className="mt-5 grid gap-5 xl:grid-cols-[20rem_minmax(0,1fr)] xl:items-start">
         <AdminTimelineList entries={entries} selectedEntryId={selectedEntry?.id ?? null} />
         <ViewTransition
           default="none"

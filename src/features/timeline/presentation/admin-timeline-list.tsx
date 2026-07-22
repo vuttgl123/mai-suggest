@@ -13,7 +13,7 @@ export function AdminTimelineList({
   selectedEntryId,
 }: AdminTimelineListProps) {
   return (
-    <aside className="diary-surface diary-surface--ledger p-4 xl:sticky xl:top-5">
+    <aside className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[rgb(255_249_243_/_78%)] p-4 shadow-[var(--shadow-soft)] xl:sticky xl:top-5">
       <div className="flex items-end justify-between gap-3">
         <div>
           <p className="diary-kicker">Các chương</p>
@@ -33,7 +33,7 @@ export function AdminTimelineList({
             <li key={entry.id}>
               <Link
                 aria-current={selectedEntryId === entry.id ? "page" : undefined}
-                className={`diary-ledger-row block rounded-[var(--radius-card)] border p-3 transition ${
+                className={`block rounded-[var(--radius-card)] border p-3 transition ${
                   selectedEntryId === entry.id
                     ? "border-[var(--color-brand)] bg-[var(--color-brand-soft)] shadow-[var(--shadow-soft)]"
                     : "border-transparent hover:border-[var(--color-border)] hover:bg-[var(--color-paper)]"

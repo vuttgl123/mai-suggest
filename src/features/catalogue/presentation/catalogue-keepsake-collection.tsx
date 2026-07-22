@@ -9,7 +9,7 @@ export function CatalogueKeepsakeCollection({
   keepsakes,
 }: CatalogueKeepsakeCollectionProps) {
   return (
-    <section className="diary-section-rule relative isolate border-y border-[var(--color-border)] py-8 sm:py-10">
+    <section className="relative isolate overflow-hidden border-y border-[var(--color-border)] bg-[rgb(255_249_243_/_72%)]">
       <span
         className="pointer-events-none absolute -right-32 -top-20 h-72 w-72 rounded-full bg-[var(--color-brand-soft)] opacity-60 blur-3xl"
         aria-hidden="true"
@@ -19,7 +19,7 @@ export function CatalogueKeepsakeCollection({
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto max-w-5xl px-5 py-8 sm:px-8 sm:py-11 lg:px-10">
+      <div className="relative mx-auto max-w-5xl px-5 py-11 sm:px-8 sm:py-15 lg:px-10">
         <div className="mx-auto max-w-2xl text-center">
           <span
             className="mx-auto grid h-11 w-11 place-items-center rounded-full bg-[var(--color-brand-soft)] text-[var(--color-brand)]"
@@ -44,7 +44,7 @@ export function CatalogueKeepsakeCollection({
             ))}
           </div>
         ) : (
-          <div className="diary-surface diary-surface--note mt-8 px-5 py-8 text-center sm:px-8">
+          <div className="diary-wash mt-8 rounded-[var(--radius-card)] border border-[var(--color-border)] px-5 py-8 text-center shadow-[var(--shadow-soft)] sm:px-8">
             <Sparkles
               className="mx-auto text-[var(--color-accent)]"
               size={21}
@@ -73,7 +73,7 @@ function KeepsakeCard({
   const copy = keepsakeCopy(keepsake.kind);
 
   return (
-    <article className="diary-surface diary-surface--page relative p-5 sm:p-6">
+    <article className="relative overflow-hidden rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-paper)] p-5 shadow-[var(--shadow-soft)] sm:p-6">
       <span
         className="absolute inset-x-7 top-0 h-px bg-gradient-to-r from-transparent via-[var(--color-accent)]/65 to-transparent"
         aria-hidden="true"

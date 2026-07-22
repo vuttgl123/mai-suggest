@@ -51,7 +51,7 @@ export function AdminItemList({
   }
 
   return (
-    <section className="diary-surface diary-surface--ledger p-4 sm:p-5">
+    <section className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] p-4 shadow-[var(--shadow-soft)] sm:p-5">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="diary-kicker">Nội dung</p>
@@ -74,7 +74,7 @@ export function AdminItemList({
             <li key={item.id}>
               <Link
                 aria-current={item.id === selectedItemId ? "page" : undefined}
-                className={`diary-ledger-row block rounded-[var(--radius-card)] border p-3 transition ${
+                className={`block rounded-[var(--radius-card)] border p-3 transition ${
                   item.id === selectedItemId
                     ? "border-[var(--color-brand)] bg-[var(--color-brand-soft)] shadow-[var(--shadow-soft)]"
                     : "border-transparent hover:border-[var(--color-border)] hover:bg-[rgb(255_249_243_/_72%)]"

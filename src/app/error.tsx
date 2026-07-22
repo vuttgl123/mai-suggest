@@ -1,8 +1,6 @@
 "use client";
 
 import { RefreshCw } from "lucide-react";
-import { DiaryBook } from "@/components/diary/diary-book";
-import { DiarySurface } from "@/components/diary/diary-surface";
 import { Button } from "@/components/ui/button";
 
 interface ErrorPageProps {
@@ -12,8 +10,8 @@ interface ErrorPageProps {
 
 export default function ErrorPage({ reset }: ErrorPageProps) {
   return (
-    <DiaryBook className="grid place-items-center px-5 py-12 sm:px-8" role="main">
-      <DiarySurface className="w-full max-w-lg p-8 text-center sm:p-12" kind="note">
+    <main className="diary-shell grid min-h-screen place-items-center px-5 py-12 sm:px-8">
+      <section className="diary-wash w-full max-w-lg rounded-[var(--radius-dialog)] border border-[var(--color-border)] p-8 text-center shadow-[var(--shadow-card)] sm:p-12">
         <span
           className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-[var(--color-brand-soft)] text-[var(--color-brand)]"
           aria-hidden="true"
@@ -31,7 +29,7 @@ export default function ErrorPage({ reset }: ErrorPageProps) {
           <RefreshCw size={16} aria-hidden="true" />
           Thử lại
         </Button>
-      </DiarySurface>
-    </DiaryBook>
+      </section>
+    </main>
   );
 }

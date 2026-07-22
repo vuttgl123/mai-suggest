@@ -33,7 +33,7 @@ export function TimelineFeaturedChapter({
         }`}
       >
         {entry.imageUrl && entry.imageAltText ? (
-          <div className="diary-surface diary-surface--print m-3 mb-0 overflow-hidden lg:mb-3">
+          <div className="overflow-hidden border-b border-[var(--color-border)] lg:border-b-0 lg:border-r">
             <CatalogueItemImage alt={entry.imageAltText} src={entry.imageUrl} />
           </div>
         ) : null}

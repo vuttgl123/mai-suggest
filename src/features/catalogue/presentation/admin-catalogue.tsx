@@ -80,7 +80,7 @@ export function AdminCatalogue({
         </p>
       ) : null}
 
-      <section className="diary-section-rule mt-5 grid gap-5 py-5 xl:grid-cols-[minmax(23rem,0.82fr)_minmax(34rem,1.18fr)] xl:items-start">
+      <section className="mt-5 grid gap-5 xl:grid-cols-[minmax(23rem,0.82fr)_minmax(34rem,1.18fr)] xl:items-start">
         <div className="grid gap-5 lg:grid-cols-[13rem_minmax(0,1fr)] xl:items-start">
           <AdminCatalogueSidebar
             categories={categories}

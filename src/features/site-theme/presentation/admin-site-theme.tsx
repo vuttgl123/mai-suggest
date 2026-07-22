@@ -1,12 +1,12 @@
 "use client";
 
 import { CalendarClock, Palette } from "lucide-react";
-import dynamic from "next/dynamic";
 import { useEffect, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { AdminWorkspaceHeader } from "@/components/admin/admin-workspace-header";
 import { AdminWorkspaceSwitcher } from "@/components/admin/admin-workspace-switcher";
 import { Button } from "@/components/ui/button";
+import { ThemeScheduleForm } from "@/features/site-theme/presentation/theme-schedule-form";
 import { ThemeScheduleList } from "@/features/site-theme/presentation/theme-schedule-list";
 import { ThemeScenePicker } from "@/features/site-theme/presentation/theme-scene-picker";
 import { ThemeSceneTransitionProgress } from "@/features/site-theme/presentation/theme-scene-transition-progress";
@@ -23,13 +23,6 @@ import {
   setManualSiteThemeAction,
   startThemeSceneTransitionAction,
 } from "@/modules/site-theme/presentation/site-theme-actions";
-
-const loadThemeScheduleForm = () =>
-  import("@/features/site-theme/presentation/theme-schedule-form").then(
-    (module) => module.ThemeScheduleForm,
-  );
-
-const ThemeScheduleForm = dynamic(loadThemeScheduleForm, { ssr: false });
 
 interface AdminSiteThemeProps {
   settings: SiteThemeSettings;
@@ -154,13 +147,8 @@ export function AdminSiteTheme({
   }
 
   function startEditing(schedule: SiteThemeSchedule) {
-    void loadThemeScheduleForm();
     setEditingSchedule(schedule);
     setShowComposer(true);
-  }
-
-  function preloadScheduleForm() {
-    void loadThemeScheduleForm();
   }
 
   function closeComposer() {
@@ -200,9 +188,9 @@ export function AdminSiteTheme({
         </p>
       ) : null}
 
-      <section className="diary-section-rule mt-5 grid gap-5 py-5 xl:grid-cols-[minmax(19rem,0.72fr)_minmax(0,1.28fr)] xl:items-start">
+      <section className="mt-5 grid gap-5 xl:grid-cols-[minmax(19rem,0.72fr)_minmax(0,1.28fr)] xl:items-start">
         <aside className="space-y-5 xl:sticky xl:top-5">
-          <section className="diary-surface diary-surface--ledger p-5">
+          <section className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] p-5 shadow-[var(--shadow-soft)]">
             <div className="flex items-center gap-2 text-[var(--color-accent)]">
               <Palette size={18} aria-hidden="true" />
               <p className="diary-kicker">Chọn cho hiện tại</p>
@@ -228,7 +216,7 @@ export function AdminSiteTheme({
         </aside>
 
         <div className="space-y-5">
-          <section className="diary-surface diary-surface--ledger flex flex-wrap items-center justify-between gap-3 px-4 py-3">
+          <section className="flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-paper)] px-4 py-3 shadow-[var(--shadow-soft)]">
             <div className="flex items-center gap-3">
               <span className="grid h-10 w-10 place-items-center rounded-full bg-[var(--color-brand-soft)] text-[var(--color-brand)]">
                 <CalendarClock size={18} aria-hidden="true" />
@@ -238,12 +226,7 @@ export function AdminSiteTheme({
             {!showComposer ? (
               <Button
                 disabled={transitionTarget !== null || isPending}
-                onClick={() => {
-                  preloadScheduleForm();
-                  setShowComposer(true);
-                }}
-                onFocus={preloadScheduleForm}
-                onMouseEnter={preloadScheduleForm}
+                onClick={() => setShowComposer(true)}
               >
                 <CalendarClock size={16} aria-hidden="true" />
                 Hẹn lịch mới

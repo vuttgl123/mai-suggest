@@ -93,7 +93,7 @@ export function AdminCatalogueSidebar({
   }
 
   return (
-    <aside className="diary-surface diary-surface--ledger p-3 xl:sticky xl:top-5">
+    <aside className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[rgb(255_249_243_/_78%)] p-3 shadow-[var(--shadow-soft)] xl:sticky xl:top-5">
       <div className="flex items-center justify-between gap-3">
         <div>
           <p className="diary-kicker">Bộ sưu tập</p>
@@ -114,7 +114,7 @@ export function AdminCatalogueSidebar({
       </div>
 
       {showCreateForm ? (
-        <form className="diary-ledger-row mt-4 rounded-[var(--radius-card)] border p-3" onSubmit={handleCreate}>
+        <form className="mt-4 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-paper)] p-3" onSubmit={handleCreate}>
           <div className="flex items-start gap-2">
             <FolderPlus className="mt-0.5 text-[var(--color-accent)]" size={18} aria-hidden="true" />
             <p className="text-sm font-semibold text-[var(--color-brand-strong)]">Danh mục mới</p>
