@@ -148,7 +148,7 @@ export function ThemeScheduleForm({
           submit();
         }}
       >
-        <label className={fieldLabelClassName}>
+        <label className={`${fieldLabelClassName} rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-control-surface)] p-3`}>
           Preset
           <select
             autoComplete="off"
@@ -168,7 +168,7 @@ export function ThemeScheduleForm({
         </label>
 
         <div className="grid gap-3 sm:grid-cols-2">
-          <label className={fieldLabelClassName}>
+          <label className={`${fieldLabelClassName} rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-control-surface)] p-3`}>
             Bắt đầu
             <input
               autoComplete="off"
@@ -192,7 +192,7 @@ export function ThemeScheduleForm({
               value={draft.startTime}
             />
           </label>
-          <label className={fieldLabelClassName}>
+          <label className={`${fieldLabelClassName} rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-control-surface)] p-3`}>
             Kết thúc
             <input
               autoComplete="off"
@@ -218,7 +218,7 @@ export function ThemeScheduleForm({
         </div>
 
         <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
-          <label className={fieldLabelClassName}>
+          <label className={`${fieldLabelClassName} rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-control-surface)] p-3`}>
             Độ ưu tiên
             <input
               autoComplete="off"

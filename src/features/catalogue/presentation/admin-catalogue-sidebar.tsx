@@ -93,11 +93,11 @@ export function AdminCatalogueSidebar({
   }
 
   return (
-    <aside className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[rgb(255_249_243_/_78%)] p-4 shadow-[var(--shadow-soft)] xl:sticky xl:top-5">
+    <aside className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[rgb(255_249_243_/_78%)] p-3 shadow-[var(--shadow-soft)] xl:sticky xl:top-5">
       <div className="flex items-center justify-between gap-3">
         <div>
           <p className="diary-kicker">Bộ sưu tập</p>
-          <h2 className="font-display mt-1 text-xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]">
+          <h2 className="font-display mt-1 text-lg font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]">
             Danh mục
           </h2>
         </div>
@@ -147,7 +147,7 @@ export function AdminCatalogueSidebar({
         </form>
       ) : null}
 
-      <nav aria-label="Danh mục quản trị" className="mt-4 space-y-1.5">
+      <nav aria-label="Danh mục quản trị" className="mt-4 space-y-1">
         <Link
           aria-current={selectedCategoryId === null ? "page" : undefined}
           className={categoryLinkClassName(selectedCategoryId === null)}
@@ -180,17 +180,19 @@ export function AdminCatalogueSidebar({
                 </div>
               </div>
             ) : (
-              <Button
-                className="mt-1 w-full justify-start px-3 text-[11px]"
-                disabled={isPending}
-                onClick={() => setConfirmingCategoryId(category.id)}
-                size="compact"
-                type="button"
-                variant="quiet"
-              >
-                <Trash2 size={13} aria-hidden="true" />
-                Xóa nếu danh mục trống
-              </Button>
+              selectedCategoryId === category.id ? (
+                <Button
+                  className="mt-1 w-full justify-start px-3 text-[11px]"
+                  disabled={isPending}
+                  onClick={() => setConfirmingCategoryId(category.id)}
+                  size="compact"
+                  type="button"
+                  variant="quiet"
+                >
+                  <Trash2 size={13} aria-hidden="true" />
+                  Xóa nếu danh mục trống
+                </Button>
+              ) : null
             )}
           </div>
         ))}

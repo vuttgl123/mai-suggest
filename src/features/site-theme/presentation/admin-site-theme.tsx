@@ -1,8 +1,10 @@
 "use client";
 
-import { CalendarClock, Palette, Sparkles } from "lucide-react";
+import { CalendarClock, Palette } from "lucide-react";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { AdminWorkspaceHeader } from "@/components/admin/admin-workspace-header";
+import { AdminWorkspaceSwitcher } from "@/components/admin/admin-workspace-switcher";
 import { Button } from "@/components/ui/button";
 import { ThemeScheduleForm } from "@/features/site-theme/presentation/theme-schedule-form";
 import { ThemeScheduleList } from "@/features/site-theme/presentation/theme-schedule-list";
@@ -67,27 +69,25 @@ export function AdminSiteTheme({
       id="admin-site-theme-content"
       tabIndex={-1}
     >
-      <section className="relative overflow-hidden rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] px-5 py-6 shadow-[var(--shadow-card)] sm:px-7 sm:py-8">
-        <Sparkles className="absolute right-6 top-6 text-[var(--color-accent)] opacity-65" size={23} strokeWidth={1.2} aria-hidden="true" />
-        <div className="flex flex-wrap items-end justify-between gap-5">
-          <div>
-            <p className="diary-kicker">Owner workspace · không khí</p>
-            <h1 className="font-display mt-3 max-w-3xl text-balance text-4xl font-semibold tracking-[-0.06em] text-[var(--color-brand-strong)] sm:text-5xl">
-              Để mỗi mùa kể lại một chương thật riêng.
-            </h1>
-            <p className="mt-4 max-w-2xl text-sm leading-6 text-[var(--color-muted)] sm:text-base">
-              Chọn một không khí cho hôm nay hoặc hẹn những khoảng chuyển mình dịu dàng cho các ngày đặc biệt.
+      <AdminWorkspaceHeader
+        description="Chọn một không khí cho hôm nay hoặc hẹn những khoảng chuyển mình dịu dàng cho các ngày đặc biệt."
+        eyebrow="Quản trị · không khí"
+        summary={
+          <div className="min-w-[13rem] rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-control-surface)] px-4 py-3">
+            <p className="text-[10px] font-bold uppercase tracking-[0.13em] text-[var(--color-muted)]">
+              Đang hiển thị
             </p>
-          </div>
-          <div className="min-w-[14rem] rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-control-surface)] px-4 py-3">
-            <p className="text-[10px] font-bold uppercase tracking-[0.13em] text-[var(--color-muted)]">Đang hiển thị</p>
             <p className="font-display mt-1 text-xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]">
               {resolvedPreset.label}
             </p>
-            <p className="mt-1 text-xs leading-5 text-[var(--color-muted)]">{sourceMessage(resolved)}</p>
+            <p className="mt-1 text-xs leading-5 text-[var(--color-muted)]">
+              {sourceMessage(resolved)}
+            </p>
           </div>
-        </div>
-      </section>
+        }
+        title="Để mỗi mùa kể lại một chương thật riêng."
+      />
+      <AdminWorkspaceSwitcher active="theme" />
 
       {feedback ? (
         <p aria-live="polite" className="mt-5 rounded-[var(--radius-card)] border border-[var(--color-brand)]/20 bg-[var(--color-brand-soft)]/55 px-4 py-3 text-sm leading-6 text-[var(--color-brand)]">
@@ -95,7 +95,7 @@ export function AdminSiteTheme({
         </p>
       ) : null}
 
-      <section className="mt-6 grid gap-5 xl:grid-cols-[22rem_minmax(0,1fr)] xl:items-start">
+      <section className="mt-5 grid gap-5 xl:grid-cols-[minmax(19rem,0.72fr)_minmax(0,1.28fr)] xl:items-start">
         <aside className="space-y-5 xl:sticky xl:top-5">
           <section className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] p-5 shadow-[var(--shadow-soft)]">
             <div className="flex items-center gap-2 text-[var(--color-accent)]">

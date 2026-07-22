@@ -73,7 +73,10 @@ export function ThemeScheduleList({
               >
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <div className="flex flex-wrap items-center gap-2">
+                    <p className="text-sm font-semibold leading-6 text-[var(--color-brand-strong)]">
+                      {formatThemeScheduleDateTime(schedule.startsAt)} → {formatThemeScheduleDateTime(schedule.endsAt)}
+                    </p>
+                    <div className="mt-2 flex flex-wrap items-center gap-2">
                       <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-brand)]" aria-hidden="true" />
                       <p className="font-display text-lg font-semibold tracking-[-0.035em] text-[var(--color-brand-strong)]">
                         {preset.label}
@@ -82,9 +85,6 @@ export function ThemeScheduleList({
                         {schedule.isEnabled ? "Bật" : "Tắt"}
                       </span>
                     </div>
-                    <p className="mt-2 text-xs leading-5 text-[var(--color-muted)]">
-                      {formatThemeScheduleDateTime(schedule.startsAt)} → {formatThemeScheduleDateTime(schedule.endsAt)}
-                    </p>
                     <p className="mt-1 text-xs font-semibold text-[var(--color-accent)]">
                       Ưu tiên {schedule.priority}
                     </p>

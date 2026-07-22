@@ -103,7 +103,10 @@ export function AdminTimelineEditor({
       </div>
 
       <form className="mt-6" onSubmit={submitEntry}>
-        <section aria-labelledby="timeline-story-heading">
+        <section
+          aria-labelledby="timeline-story-heading"
+          className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-control-surface)] p-4 sm:p-5"
+        >
           <div className="flex items-center gap-2">
             <BookHeart className="text-[var(--color-accent)]" size={18} aria-hidden="true" />
             <h3 id="timeline-story-heading" className="font-display text-2xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]">Thời điểm và câu chuyện</h3>
@@ -117,7 +120,7 @@ export function AdminTimelineEditor({
           </div>
         </section>
 
-        <section className="mt-8 border-t border-[var(--color-border)] pt-6" aria-labelledby="timeline-image-heading">
+        <section className="mt-5 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[rgb(255_249_243_/_62%)] p-4 sm:p-5" aria-labelledby="timeline-image-heading">
           <div className="flex items-center gap-2"><ImagePlus className="text-[var(--color-accent)]" size={18} aria-hidden="true" /><h3 id="timeline-image-heading" className="font-display text-2xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]">Ảnh và hiển thị</h3></div>
           <div className="mt-5 grid gap-4 sm:grid-cols-2">
             <label className={`${labelClassName} sm:col-span-2`}>URL hình ảnh <span className="font-normal text-[var(--color-muted)]">(không bắt buộc)</span><input className={inputClassName} defaultValue={selectedEntry?.imageUrl ?? ""} name="imageUrl" placeholder="https://…" type="url" /></label>
@@ -127,7 +130,7 @@ export function AdminTimelineEditor({
           </div>
         </section>
 
-        <div className="mt-6 flex flex-wrap gap-2">
+        <div className="mt-6 flex flex-wrap gap-2 border-t border-[var(--color-border)] pt-4 lg:sticky lg:bottom-4 lg:z-10 lg:rounded-[var(--radius-card)] lg:border lg:bg-[var(--color-paper)]/95 lg:px-4 lg:py-3 lg:shadow-[var(--shadow-soft)] lg:backdrop-blur">
           <Button disabled={isPending} type="submit"><Save size={16} aria-hidden="true" />{isPending ? "Đang lưu…" : isEditing ? "Lưu mốc" : "Tạo mốc"}</Button>
           {selectedEntry ? <Button disabled={isPending} onClick={() => setConfirmingDelete(true)} type="button" variant="quiet"><Trash2 size={15} aria-hidden="true" />Xóa mốc</Button> : null}
         </div>

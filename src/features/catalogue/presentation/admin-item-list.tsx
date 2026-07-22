@@ -69,7 +69,7 @@ export function AdminItemList({
       </div>
 
       {itemPage.items.length ? (
-        <ul className="mt-5 space-y-1.5" aria-label="Danh sách item">
+        <ul className="mt-4 space-y-1.5" aria-label="Danh sách item">
           {itemPage.items.map((item) => (
             <li key={item.id}>
               <Link
@@ -85,8 +85,10 @@ export function AdminItemList({
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
                     <p className="truncate text-sm font-semibold text-[var(--color-brand-strong)]">{item.title}</p>
-                    <p className="mt-1 text-xs leading-5 text-[var(--color-muted)]">
-                      {item.isPublished ? "Đang hiển thị" : "Bản nháp"} · {item.kind}
+                    <p className="mt-1 flex flex-wrap gap-x-1.5 text-xs leading-5 text-[var(--color-muted)]">
+                      <span>{item.isPublished ? "Đang hiển thị" : "Bản nháp"}</span>
+                      <span aria-hidden="true">·</span>
+                      <span>{item.kind}</span>
                     </p>
                   </div>
                   <span className={`shrink-0 rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-[0.1em] ${item.isPublished ? "bg-[var(--color-positive)]/10 text-[var(--color-positive)]" : "bg-[var(--color-brand-soft)] text-[var(--color-brand)]"}`}>
@@ -106,7 +108,7 @@ export function AdminItemList({
                     </Button>
                   </div>
                 </div>
-              ) : (
+              ) : item.id === selectedItemId ? (
                 <Button
                   className="mt-1 w-full justify-start px-3 text-[11px]"
                   disabled={isPending}
@@ -118,7 +120,7 @@ export function AdminItemList({
                   <Trash2 size={13} aria-hidden="true" />
                   Xóa item
                 </Button>
-              )}
+              ) : null}
             </li>
           ))}
         </ul>

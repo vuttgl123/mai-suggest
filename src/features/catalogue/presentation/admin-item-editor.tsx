@@ -144,7 +144,10 @@ export function AdminItemEditor({
 
       {categories.length ? (
         <form className="mt-6" onSubmit={handleSubmit}>
-          <section aria-labelledby="item-information-heading">
+          <section
+            aria-labelledby="item-information-heading"
+            className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-control-surface)] p-4 sm:p-5"
+          >
             <div className="flex items-center gap-2">
               <PencilLine className="text-[var(--color-accent)]" size={18} aria-hidden="true" />
               <h3 id="item-information-heading" className="font-display text-2xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]">
@@ -223,10 +226,12 @@ export function AdminItemEditor({
 
           <ItemKeepsakeEditor disabled={isPending} onChange={setKeepsakes} value={keepsakes} />
 
-          <Button className="mt-6" disabled={isPending} type="submit">
-            <Save size={16} aria-hidden="true" />
-            {isPending ? "Đang lưu…" : isEditing ? "Lưu item" : "Tạo item"}
-          </Button>
+          <div className="mt-6 flex flex-wrap gap-2 border-t border-[var(--color-border)] pt-4 lg:sticky lg:bottom-4 lg:z-10 lg:rounded-[var(--radius-card)] lg:border lg:bg-[var(--color-paper)]/95 lg:px-4 lg:py-3 lg:shadow-[var(--shadow-soft)] lg:backdrop-blur">
+            <Button disabled={isPending} type="submit">
+              <Save size={16} aria-hidden="true" />
+              {isPending ? "Đang lưu…" : isEditing ? "Lưu item" : "Tạo item"}
+            </Button>
+          </div>
         </form>
       ) : (
         <div className="mt-6 rounded-[var(--radius-card)] border border-dashed border-[var(--color-border)] px-4 py-8 text-center text-sm leading-6 text-[var(--color-muted)]">

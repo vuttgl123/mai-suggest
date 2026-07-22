@@ -41,17 +41,19 @@ export function AdminTimelineList({
                 href={createAdminTimelinePath({ entryId: entry.id })}
                 transitionTypes={["admin-select"]}
               >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <p className="diary-kicker text-[9px]">{entry.dateLabel}</p>
-                    <p className="mt-1 truncate text-sm font-semibold text-[var(--color-brand-strong)]">{entry.title}</p>
-                  </div>
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <p className="diary-kicker text-[9px]">{entry.dateLabel}</p>
                   <span className={`shrink-0 rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-[0.1em] ${entry.isPublished ? "bg-[var(--color-positive)]/10 text-[var(--color-positive)]" : "bg-[var(--color-brand-soft)] text-[var(--color-brand)]"}`}>
                     {entry.isPublished ? "Live" : "Draft"}
                   </span>
                 </div>
-                <p className="mt-2 text-xs leading-5 text-[var(--color-muted)]">
-                  Thứ tự {entry.sortOrder} · {entry.responseCount} hồi đáp
+                <p className="mt-2 text-balance text-sm font-semibold leading-5 text-[var(--color-brand-strong)]">
+                  {entry.title}
+                </p>
+                <p className="mt-2 flex flex-wrap gap-x-1.5 text-xs leading-5 text-[var(--color-muted)]">
+                  <span>Thứ tự {entry.sortOrder}</span>
+                  <span aria-hidden="true">·</span>
+                  <span>{entry.responseCount} hồi đáp</span>
                 </p>
               </Link>
             </li>
