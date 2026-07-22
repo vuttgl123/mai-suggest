@@ -1,7 +1,7 @@
 # Cinematic Diary Intro Landing Design
 
 **Date:** 2026-07-22  
-**Status:** Implemented with approved opening and extended-intro corrections; source/diff review only by user request
+**Status:** Implemented with approved opening, extended-intro, and hardcover-geometry corrections; source/diff review only by user request
 
 ## Goal
 
@@ -171,3 +171,26 @@ the same motion. It uses `200svh` on desktop and `160svh` on mobile:
    the ordinary header and catalogue as the next visual chapter.
 
 No additional renderer, image, model, data request, or route is introduced.
+
+## Hardcover journal geometry reconstruction — approved 2026-07-22
+
+The journal is rebuilt as a compact hardbound volume instead of a cover plus
+independent sheets placed above it. The current construction is structurally
+invalid: its upper sheet reaches `y=0.367` while the closed front-cover surface
+is only `y=0.17`; its paper block and brass pieces also cross that surface.
+
+The corrected physical stack, from bottom to top, is:
+
+1. rear leather cover: `0.14` thick at `y=-0.21`;
+2. paper block: `0.20` thick at `y=-0.036`, leaving a `0.004` gap above the
+   rear cover;
+3. six thin page layers: `0.012` thick, beginning at `y=0.076` with `0.0115`
+   spacing; their highest surface is `y=0.1395`;
+4. front leather cover: `0.14` thick with its hinge center at `y=0.2175`, so
+   its lower surface clears the page stack by `0.008` when closed.
+
+The spine becomes a single tall leather strip joining the two covers. The
+floating brass corner and oversized front-edge bar are replaced by a low-profile
+title plate and one inset rule, both seated on the front-cover surface. Page
+motion keeps its existing tiny scroll response but starts from the new packed
+page coordinates. The positive, near-flat opening direction remains unchanged.

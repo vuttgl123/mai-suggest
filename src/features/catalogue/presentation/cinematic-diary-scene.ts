@@ -107,63 +107,70 @@ export function createCinematicDiaryScene(
     }),
   );
 
+  const coverThickness = 0.14;
+  const pageCount = 6;
+  const pageThickness = 0.012;
+  const pageSpacing = 0.0115;
+  const pageStartY = 0.076;
+  const pageStackTop = pageStartY + (pageCount - 1) * pageSpacing + pageThickness / 2;
+  const frontCoverY = pageStackTop + coverThickness / 2 + 0.008;
+
   const rearCover = new THREE.Mesh(
-    registerGeometry(new THREE.BoxGeometry(3.25, 0.16, 4.38, 4, 1, 4)),
+    registerGeometry(new THREE.BoxGeometry(3.25, coverThickness, 4.38, 4, 1, 4)),
     leatherMaterial,
   );
-  rearCover.position.y = -0.18;
+  rearCover.position.y = -0.21;
   journal.add(rearCover);
 
   const spine = new THREE.Mesh(
-    registerGeometry(new THREE.BoxGeometry(0.18, 0.25, 4.46, 1, 1, 5)),
+    registerGeometry(new THREE.BoxGeometry(0.18, 0.58, 4.46, 1, 1, 5)),
     leatherEdgeMaterial,
   );
-  spine.position.set(-1.56, -0.04, 0);
+  spine.position.set(-1.56, 0, 0);
   journal.add(spine);
 
   const pageBlock = new THREE.Mesh(
-    registerGeometry(new THREE.BoxGeometry(3.08, 0.28, 4.12, 2, 1, 4)),
+    registerGeometry(new THREE.BoxGeometry(3.08, 0.2, 4.12, 2, 1, 4)),
     paperEdgeMaterial,
   );
-  pageBlock.position.y = 0.04;
+  pageBlock.position.y = -0.036;
   journal.add(pageBlock);
 
   const pages: THREE.Mesh[] = [];
-  for (let index = 0; index < 7; index += 1) {
+  for (let index = 0; index < pageCount; index += 1) {
     const page = new THREE.Mesh(
-      registerGeometry(new THREE.BoxGeometry(3.02, 0.018, 4.05, 1, 1, 3)),
+      registerGeometry(new THREE.BoxGeometry(3.02, pageThickness, 4.05, 1, 1, 3)),
       paperMaterial,
     );
-    page.position.set(0.03 + (index % 2) * 0.015, 0.19 + index * 0.028, 0);
-    page.rotation.z = (index - 3) * 0.004;
+    page.position.set(0.02, pageStartY + index * pageSpacing, 0);
     journal.add(page);
     pages.push(page);
   }
 
   const frontHinge = new THREE.Group();
-  frontHinge.position.set(-1.56, 0.09, 0);
+  frontHinge.position.set(-1.56, frontCoverY, 0);
   journal.add(frontHinge);
 
   const frontCover = new THREE.Mesh(
-    registerGeometry(new THREE.BoxGeometry(3.25, 0.16, 4.38, 4, 1, 4)),
+    registerGeometry(new THREE.BoxGeometry(3.25, coverThickness, 4.38, 4, 1, 4)),
     leatherMaterial,
   );
   frontCover.position.set(1.625, 0, 0);
   frontHinge.add(frontCover);
 
-  const brassBinding = new THREE.Mesh(
-    registerGeometry(new THREE.BoxGeometry(3.3, 0.034, 0.1, 2, 1, 1)),
+  const brassTitlePlate = new THREE.Mesh(
+    registerGeometry(new THREE.BoxGeometry(0.86, 0.014, 0.38, 2, 1, 2)),
     brassMaterial,
   );
-  brassBinding.position.set(1.625, 0.1, -1.78);
-  frontHinge.add(brassBinding);
+  brassTitlePlate.position.set(1.6, 0.077, 0.12);
+  frontHinge.add(brassTitlePlate);
 
-  const brassCorner = new THREE.Mesh(
-    registerGeometry(new THREE.BoxGeometry(0.25, 0.04, 0.25)),
+  const brassRule = new THREE.Mesh(
+    registerGeometry(new THREE.BoxGeometry(1.85, 0.012, 0.025, 2, 1, 1)),
     brassMaterial,
   );
-  brassCorner.position.set(3.0, 0.105, 1.98);
-  frontHinge.add(brassCorner);
+  brassRule.position.set(1.6, 0.076, -1.5);
+  frontHinge.add(brassRule);
 
   const shadowMaterial = registerMaterial(
     new THREE.MeshBasicMaterial({
@@ -243,8 +250,8 @@ export function createCinematicDiaryScene(
     frontHinge.rotation.z = THREE.MathUtils.lerp(0.015, Math.PI * 0.9, openingProgress);
     pages.forEach((page, index) => {
       const pageProgress = THREE.MathUtils.clamp((openingProgress - index * 0.08) * 1.35, 0, 1);
-      page.rotation.z = (index - 3) * 0.002 + pageProgress * (0.006 + index * 0.001);
-      page.position.y = 0.19 + index * 0.028 + Math.sin(time * 1.2 + index) * 0.004 * idle;
+      page.rotation.z = pageProgress * (0.0025 + index * 0.0005);
+      page.position.y = pageStartY + index * pageSpacing + Math.sin(time * 1.2 + index) * 0.004 * idle;
     });
 
     journal.rotation.x = -0.46 + renderedPointerY * 0.045 + Math.sin(time * 0.8) * 0.012 * idle;
