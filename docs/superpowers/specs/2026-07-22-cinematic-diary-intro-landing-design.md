@@ -1,7 +1,7 @@
 # Cinematic Diary Intro Landing Design
 
 **Date:** 2026-07-22  
-**Status:** Implemented in the current workspace; source/diff review only by user request
+**Status:** Implemented with approved opening and extended-intro corrections; source/diff review only by user request
 
 ## Goal
 
@@ -140,3 +140,34 @@ fine pointer is available; it never changes opening progress.
   and usable with JavaScript, WebGL, or motion disabled.
 - One bounded Three.js renderer is client-only, dynamically loaded, paused off
   screen, and fully disposed on unmount.
+
+## Opening correction — approved 2026-07-22
+
+The initial implementation put the spine at the left edge but rotated the front
+cover around its Z axis in the negative direction. That lowers its free edge
+through the journal instead of lifting it, which makes the book appear to open
+backwards. Its `1.48` radian endpoint also leaves the cover too upright.
+
+The corrected motion keeps the same spine and scene structure, but rotates the
+front cover in the positive direction toward the camera and lets it settle at
+roughly `0.9π` radians (about 162 degrees). This ends in a near-flat open-book
+pose rather than a vertical display. The page movement remains intentionally
+subtle: smaller staggered lifts accompany the cover without making the page
+block look like a fan or a separate animated object.
+
+## Extended intro chapter — approved 2026-07-22
+
+The intro becomes a three-act scroll sequence rather than a longer version of
+the same motion. It uses `200svh` on desktop and `160svh` on mobile:
+
+1. **Invitation (0–16%)** — the closed journal and opening title get a calm
+   moment before any movement.
+2. **Opening (16–72%)** — the corrected cover opens toward the camera; the
+   pages respond only as a very small secondary movement.
+3. **First page (72–90%)** — the cover is already settled. The camera moves a
+   little higher and closer to the open spread while a single quiet line appears:
+   “Có những điều đẹp nhất cần được mở thật chậm.”
+4. **Handoff (90–100%)** — the new line and decorative scene fade back, leaving
+   the ordinary header and catalogue as the next visual chapter.
+
+No additional renderer, image, model, data request, or route is introduced.

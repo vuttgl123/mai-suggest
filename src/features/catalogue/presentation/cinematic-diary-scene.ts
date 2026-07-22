@@ -44,7 +44,10 @@ export function createCinematicDiaryScene(
   const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
   const closedCameraPosition = new THREE.Vector3(0, 2.9, 8.35);
   const openCameraPosition = new THREE.Vector3(0, 3.55, 6.15);
-  const cameraTarget = new THREE.Vector3(0, 0, 0);
+  const readingCameraPosition = new THREE.Vector3(0, 4.08, 5.45);
+  const closedCameraTarget = new THREE.Vector3(0, 0, 0);
+  const readingCameraTarget = new THREE.Vector3(-0.14, 0.04, 0.06);
+  const cameraTarget = new THREE.Vector3();
   camera.position.copy(closedCameraPosition);
 
   const geometries: THREE.BufferGeometry[] = [];
@@ -232,30 +235,33 @@ export function createCinematicDiaryScene(
     renderedPointerX = THREE.MathUtils.damp(renderedPointerX, targetPointerX, 8, 1 / 60);
     renderedPointerY = THREE.MathUtils.damp(renderedPointerY, targetPointerY, 8, 1 / 60);
 
-    const progress = THREE.MathUtils.smoothstep(renderedProgress, 0, 1);
-    const idle = 1 - progress;
+    const openingProgress = THREE.MathUtils.smoothstep(renderedProgress, 0.16, 0.72);
+    const readingProgress = THREE.MathUtils.smoothstep(renderedProgress, 0.72, 0.9);
+    const idle = 1 - openingProgress;
     const time = timestamp * 0.001;
 
-    frontHinge.rotation.z = THREE.MathUtils.lerp(-0.03, -1.48, progress);
+    frontHinge.rotation.z = THREE.MathUtils.lerp(0.015, Math.PI * 0.9, openingProgress);
     pages.forEach((page, index) => {
-      const pageProgress = THREE.MathUtils.clamp((progress - index * 0.065) * 2.2, 0, 1);
-      page.rotation.z = (index - 3) * 0.004 - pageProgress * (0.015 + index * 0.002);
+      const pageProgress = THREE.MathUtils.clamp((openingProgress - index * 0.08) * 1.35, 0, 1);
+      page.rotation.z = (index - 3) * 0.002 + pageProgress * (0.006 + index * 0.001);
       page.position.y = 0.19 + index * 0.028 + Math.sin(time * 1.2 + index) * 0.004 * idle;
     });
 
     journal.rotation.x = -0.46 + renderedPointerY * 0.045 + Math.sin(time * 0.8) * 0.012 * idle;
     journal.rotation.y = -0.12 + renderedPointerX * 0.13;
     journal.rotation.z = 0.12 + renderedPointerX * 0.035;
-    journal.position.y = Math.sin(time * 1.1) * 0.055 * idle + progress * 0.08;
-    shadow.scale.x = 1.04 - progress * 0.13;
-    shadowMaterial.opacity = 0.16 - progress * 0.05;
+    journal.position.y = Math.sin(time * 1.1) * 0.055 * idle + openingProgress * 0.06 + readingProgress * 0.02;
+    shadow.scale.x = 1.04 - openingProgress * 0.13;
+    shadowMaterial.opacity = 0.16 - openingProgress * 0.05;
     dust.rotation.y = time * 0.045;
     dust.position.y = 0.1 + Math.sin(time * 0.45) * 0.12;
-    warmLight.intensity = 16 + progress * 6;
+    warmLight.intensity = 16 + openingProgress * 4 + readingProgress * 2;
 
-    camera.position.lerpVectors(closedCameraPosition, openCameraPosition, progress);
+    camera.position.lerpVectors(closedCameraPosition, openCameraPosition, openingProgress);
+    camera.position.lerp(readingCameraPosition, readingProgress);
     camera.position.x += renderedPointerX * 0.13;
     camera.position.y += renderedPointerY * 0.08;
+    cameraTarget.lerpVectors(closedCameraTarget, readingCameraTarget, readingProgress);
     camera.lookAt(cameraTarget);
     renderer.render(scene, camera);
     frameId = window.requestAnimationFrame(render);

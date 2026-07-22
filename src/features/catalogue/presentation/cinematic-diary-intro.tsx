@@ -21,12 +21,16 @@ function readPalette(): CinematicDiaryPalette {
 }
 
 function getPhase(progress: number) {
-  if (progress < 0.12) {
+  if (progress < 0.16) {
     return "closed";
   }
 
-  if (progress < 0.78) {
+  if (progress < 0.72) {
     return "opening";
+  }
+
+  if (progress < 0.9) {
+    return "reading";
   }
 
   return "handoff";
@@ -157,6 +161,9 @@ export function CinematicDiaryIntro() {
           </h1>
           <p className="cinematic-diary-intro__description">
             Một nơi nhỏ để gìn giữ những lựa chọn đẹp đẽ và những ngày thường trở nên đặc biệt.
+          </p>
+          <p className="cinematic-diary-intro__reading-line">
+            Có những điều đẹp nhất cần được mở thật chậm.
           </p>
           <a className="cinematic-diary-intro__cta" href="#collection">
             Khám phá chương đầu <span aria-hidden="true">↓</span>
