@@ -2,6 +2,9 @@ import Link from "next/link";
 import { ViewTransition } from "react";
 import { Heart, Sparkles } from "lucide-react";
 import { AppHeader } from "@/components/app-header";
+import { DiaryBook } from "@/components/diary/diary-book";
+import { DiaryMark, DiaryRule } from "@/components/diary/diary-mark";
+import { DiarySurface } from "@/components/diary/diary-surface";
 import { CatalogueChapterRail } from "@/features/catalogue/presentation/catalogue-chapter-rail";
 import { CatalogueFeaturedItemCard } from "@/features/catalogue/presentation/catalogue-featured-item-card";
 import { CatalogueItemCard } from "@/features/catalogue/presentation/catalogue-item-card";
@@ -40,7 +43,7 @@ export function CatalogueHome({
   const gridItems = featuredItem ? itemPage.items.slice(1) : itemPage.items;
 
   return (
-    <div className="diary-shell">
+    <DiaryBook>
       <a
         className="sr-only absolute left-5 top-4 z-50 rounded-full bg-[var(--color-brand-strong)] px-4 py-2 text-sm font-semibold text-white focus:not-sr-only"
         href="#main-content"
@@ -51,11 +54,11 @@ export function CatalogueHome({
       <AppHeader activeSection="catalogue" actor={actor} />
 
       <main id="main-content" tabIndex={-1}>
-        <section className="mx-auto grid max-w-7xl gap-7 px-5 pb-9 pt-9 sm:px-8 sm:pb-12 sm:pt-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(17rem,0.55fr)] lg:items-end lg:gap-12 lg:px-10 lg:pb-14 lg:pt-14">
+        <section className="diary-section-rule mx-auto grid max-w-7xl gap-7 px-5 pb-9 pt-9 sm:px-8 sm:pb-12 sm:pt-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(17rem,0.55fr)] lg:items-end lg:gap-12 lg:px-10 lg:pb-14 lg:pt-14">
           <div>
-            <p className="diary-kicker">Dành riêng cho những điều dịu dàng</p>
+            <DiaryMark>Dành riêng cho những điều dịu dàng</DiaryMark>
             <div className="mt-4 flex items-center gap-3 text-[var(--color-accent)]" aria-hidden="true">
-              <span className="diary-rule" />
+              <DiaryRule />
               <Heart size={15} fill="currentColor" strokeWidth={1.4} />
             </div>
             <h1 className="font-display display-lg mt-4 max-w-3xl text-balance font-semibold text-[var(--color-brand-strong)]">
@@ -67,7 +70,7 @@ export function CatalogueHome({
             </p>
           </div>
 
-          <aside className="diary-wash relative overflow-hidden rounded-[var(--radius-card)] border border-[var(--color-border)] p-5 shadow-[var(--shadow-soft)] sm:p-6">
+          <aside className="diary-surface diary-surface--note relative p-5 sm:p-6">
             <Sparkles
               className="absolute right-6 top-6 text-[var(--color-accent)] opacity-70"
               size={20}
@@ -84,7 +87,7 @@ export function CatalogueHome({
           </aside>
         </section>
 
-        <div id="collection" className="border-y border-[var(--color-border)] bg-[rgb(255_250_247_/_55%)]">
+        <div id="collection" className="diary-index border-y border-[var(--color-border)]">
           <CatalogueChapterRail categories={categories} selectedCategorySlug={selectedCategorySlug} />
         </div>
 
@@ -112,7 +115,7 @@ export function CatalogueHome({
                     <section aria-labelledby="featured-item-heading">
                       <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
                         <div>
-                          <p className="diary-kicker">Điều muốn mở ra trước</p>
+                          <DiaryMark>Điều muốn mở ra trước</DiaryMark>
                           <h2 className="font-display mt-1 text-2xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]" id="featured-item-heading">
                             {visibleCollectionTitle}
                           </h2>
@@ -130,7 +133,7 @@ export function CatalogueHome({
                     <section className={featuredItem ? "mt-8" : ""} aria-labelledby="saved-things-heading">
                       <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
                         <div>
-                          <p className="diary-kicker">Những điều đã lưu</p>
+                          <DiaryMark>Những điều đã lưu</DiaryMark>
                           <h2 className="font-display mt-1 text-2xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]" id="saved-things-heading">
                             {featuredItem ? "Còn rất nhiều điều để khám phá" : visibleCollectionTitle}
                           </h2>
@@ -161,7 +164,7 @@ export function CatalogueHome({
           )}
         </section>
       </main>
-    </div>
+    </DiaryBook>
   );
 }
 
@@ -173,7 +176,10 @@ function EmptyCollection({
   categoryName: string | null;
 }) {
   return (
-    <div className="diary-wash mx-auto max-w-2xl rounded-[var(--radius-dialog)] border border-[var(--color-border)] px-6 py-10 text-center shadow-[var(--shadow-soft)] sm:px-10 sm:py-12">
+    <DiarySurface
+      className="mx-auto max-w-2xl px-6 py-10 text-center sm:px-10 sm:py-12"
+      kind="note"
+    >
       <span
         className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-[var(--color-brand-soft)] text-[var(--color-brand)]"
         aria-hidden="true"
@@ -188,6 +194,6 @@ function EmptyCollection({
           ? "Khi em thêm nội dung từ khu vực quản trị, những điều được chọn sẽ xuất hiện tại đây."
           : "Những điều được chọn sẽ xuất hiện ở đây khi bộ sưu tập được cập nhật."}
       </p>
-    </div>
+    </DiarySurface>
   );
 }

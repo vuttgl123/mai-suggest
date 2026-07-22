@@ -30,7 +30,7 @@ export function ThemeSceneTransitionProgress({
   return (
     <section
       aria-live="polite"
-      className="theme-scene-transition rounded-[var(--radius-dialog)] border border-[var(--color-accent)]/30 bg-[var(--color-paper)] p-5 shadow-[var(--shadow-card)]"
+      className="theme-scene-transition diary-surface diary-surface--ledger border-[var(--color-accent)]/30 p-5"
     >
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>

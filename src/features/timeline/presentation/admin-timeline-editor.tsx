@@ -86,7 +86,7 @@ export function AdminTimelineEditor({
   }
 
   return (
-    <section className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] p-4 shadow-[var(--shadow-card)] sm:p-6">
+    <section className="diary-surface diary-surface--ledger p-4 sm:p-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="diary-kicker">{isEditing ? "Mốc đang chọn" : "Một chương mới"}</p>
@@ -105,7 +105,7 @@ export function AdminTimelineEditor({
       <form className="mt-6" onSubmit={submitEntry}>
         <section
           aria-labelledby="timeline-story-heading"
-          className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-control-surface)] p-4 sm:p-5"
+          className="diary-ledger-row rounded-[var(--radius-card)] border p-4 sm:p-5"
         >
           <div className="flex items-center gap-2">
             <BookHeart className="text-[var(--color-accent)]" size={18} aria-hidden="true" />
@@ -120,7 +120,7 @@ export function AdminTimelineEditor({
           </div>
         </section>
 
-        <section className="mt-5 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[rgb(255_249_243_/_62%)] p-4 sm:p-5" aria-labelledby="timeline-image-heading">
+        <section className="diary-ledger-row mt-5 rounded-[var(--radius-card)] border p-4 sm:p-5" aria-labelledby="timeline-image-heading">
           <div className="flex items-center gap-2"><ImagePlus className="text-[var(--color-accent)]" size={18} aria-hidden="true" /><h3 id="timeline-image-heading" className="font-display text-2xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]">Ảnh và hiển thị</h3></div>
           <div className="mt-5 grid gap-4 sm:grid-cols-2">
             <label className={`${labelClassName} sm:col-span-2`}>URL hình ảnh <span className="font-normal text-[var(--color-muted)]">(không bắt buộc)</span><input className={inputClassName} defaultValue={selectedEntry?.imageUrl ?? ""} name="imageUrl" placeholder="https://…" type="url" /></label>

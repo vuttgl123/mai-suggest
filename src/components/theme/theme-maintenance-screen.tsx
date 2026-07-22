@@ -2,6 +2,8 @@ import {
   getSiteThemePreset,
   type SiteThemeKey,
 } from "@/modules/site-theme/domain/site-theme-models";
+import { DiaryBook } from "@/components/diary/diary-book";
+import { DiarySurface } from "@/components/diary/diary-surface";
 
 interface ThemeMaintenanceScreenProps {
   targetThemeKey: SiteThemeKey;
@@ -13,8 +15,8 @@ export function ThemeMaintenanceScreen({
   const preset = getSiteThemePreset(targetThemeKey);
 
   return (
-    <main className="theme-maintenance-screen diary-shell" role="status">
-      <section className="theme-maintenance-card">
+    <DiaryBook className="theme-maintenance-screen" role="status">
+      <DiarySurface className="theme-maintenance-card" kind="ledger">
         <p className="diary-kicker">{preset.label}</p>
         <h1 className="font-display">Không gian đang thay áo mới</h1>
         <p>
@@ -26,7 +28,7 @@ export function ThemeMaintenanceScreen({
           <i />
           <i />
         </span>
-      </section>
-    </main>
+      </DiarySurface>
+    </DiaryBook>
   );
 }

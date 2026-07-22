@@ -208,7 +208,7 @@ export function CatalogueEngagementPanel({
         </div>
 
         <form
-          className="mt-5 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-card-surface)] p-4 sm:p-5"
+          className="diary-surface diary-surface--ledger mt-5 p-4 sm:p-5"
           onSubmit={(event) => {
             event.preventDefault();
             createComment();
@@ -249,7 +249,7 @@ export function CatalogueEngagementPanel({
 
               return (
                 <li
-                  className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-paper)] p-4 sm:p-5"
+                  className="diary-surface diary-surface--page p-4 sm:p-5"
                   key={comment.id}
                 >
                   <div className="flex items-start gap-3">
@@ -396,7 +396,7 @@ function RatingForm({
 }) {
   return (
     <section
-      className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-card-surface)] p-5 shadow-[var(--shadow-soft)] sm:p-6"
+      className="diary-surface diary-surface--ledger p-5 sm:p-6"
       aria-labelledby="my-rating-heading"
     >
       <p className="diary-kicker">Cảm nhận của bạn</p>

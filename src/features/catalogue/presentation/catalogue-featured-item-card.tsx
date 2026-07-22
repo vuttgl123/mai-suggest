@@ -17,11 +17,11 @@ export function CatalogueFeaturedItemCard({
 
   return (
     <Link
-      className="group grid overflow-hidden rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--theme-card-surface)] shadow-[var(--shadow-card)] transition duration-300 hover:-translate-y-0.5 hover:border-[var(--color-accent)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-focus)] md:grid-cols-[minmax(13rem,0.8fr)_minmax(0,1fr)]"
+      className="catalogue-featured-item-card group grid overflow-hidden rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--theme-card-surface)] shadow-[var(--shadow-card)] transition duration-300 hover:-translate-y-0.5 hover:border-[var(--color-accent)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-focus)] md:grid-cols-[minmax(13rem,0.8fr)_minmax(0,1fr)]"
       href={`/catalogue/${encodeURIComponent(item.slug)}`}
       transitionTypes={["nav-forward"]}
     >
-      <div className="relative overflow-hidden">
+      <div className="diary-surface diary-surface--print relative m-3 mb-0 overflow-hidden md:mb-3">
         {image ? (
           <ViewTransition default="none" name={`item-image-${item.id}`} share="morph">
             <CatalogueItemImage alt={image.altText ?? item.title} src={image.url} />
@@ -44,7 +44,7 @@ export function CatalogueFeaturedItemCard({
         </span>
       </div>
 
-      <div className="flex flex-col justify-center p-6 sm:p-7 lg:p-8">
+      <div className="diary-ledger-row flex flex-col justify-center p-6 sm:p-7 lg:p-8">
         <p className="diary-kicker">{categoryName ?? "Một điều được lưu lại"}</p>
         <h3 className="font-display mt-3 text-balance text-3xl font-semibold tracking-[-0.055em] text-[var(--color-brand-strong)] transition group-hover:text-[var(--color-brand)] sm:text-4xl">
           {item.title}

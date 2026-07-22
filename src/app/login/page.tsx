@@ -1,4 +1,6 @@
 import { GoogleSignInButton } from "@/features/identity/components/google-sign-in-button";
+import { DiaryBook } from "@/components/diary/diary-book";
+import { DiarySurface } from "@/components/diary/diary-surface";
 import { normalizeAuthNextPath } from "@/features/identity/lib/auth-navigation";
 import { Heart, Sparkles } from "lucide-react";
 
@@ -22,8 +24,8 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
     firstSearchParam(params.error) === "oauth_callback_failed";
 
   return (
-    <main className="diary-shell grid min-h-screen place-items-center px-5 py-8 sm:px-8 sm:py-12">
-      <div className="grid w-full max-w-5xl overflow-hidden rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] shadow-[var(--shadow-card)] lg:grid-cols-[0.95fr_1.05fr]">
+    <DiaryBook className="grid place-items-center px-5 py-8 sm:px-8 sm:py-12" role="main">
+      <DiarySurface className="grid w-full max-w-5xl lg:grid-cols-[0.95fr_1.05fr]" kind="spread">
         <section className="relative overflow-hidden bg-[var(--color-brand-strong)] px-8 py-12 text-white sm:px-12 sm:py-16">
           <div
             className="absolute -right-20 -top-20 h-56 w-56 rounded-full border border-white/15"
@@ -53,7 +55,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
           </div>
         </section>
 
-        <section className="diary-wash px-8 py-12 sm:px-12 sm:py-16">
+        <section className="diary-surface diary-surface--page px-8 py-12 sm:px-12 sm:py-16">
           <p className="diary-kicker">Chào mừng trở lại</p>
           <h2 className="font-display mt-4 text-balance text-4xl font-semibold tracking-[-0.05em] text-[var(--color-brand-strong)] sm:text-5xl">
             Mình cùng mở lại bộ sưu tập nhé.
@@ -73,7 +75,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
             <GoogleSignInButton nextPath={nextPath} />
           </div>
         </section>
-      </div>
-    </main>
+      </DiarySurface>
+    </DiaryBook>
   );
 }

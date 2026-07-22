@@ -8,6 +8,8 @@ import {
   Quote,
 } from "lucide-react";
 import { CatalogueItemImage } from "@/features/catalogue/presentation/catalogue-item-image";
+import { DiaryMark, DiaryRule } from "@/components/diary/diary-mark";
+import { DiarySurface } from "@/components/diary/diary-surface";
 import type { CatalogueItemDetail } from "@/modules/catalogue/domain/catalogue-read-models";
 
 interface CatalogueDetailHeroProps {
@@ -31,7 +33,7 @@ export function CatalogueDetailHero({
       </Link>
 
       <div className="mt-5 grid gap-7 lg:mt-7 lg:grid-cols-[minmax(0,1.08fr)_minmax(22rem,0.72fr)] lg:items-center lg:gap-14">
-        <div className="relative overflow-hidden rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] shadow-[var(--shadow-card)] lg:sticky lg:top-24">
+        <DiarySurface className="relative lg:sticky lg:top-24" kind="print">
           {item.primaryImage ? (
             <ViewTransition
               default="none"
@@ -62,12 +64,12 @@ export function CatalogueDetailHero({
             className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[rgb(49_5_12_/_18%)] to-transparent"
             aria-hidden="true"
           />
-        </div>
+        </DiarySurface>
 
-        <div className="py-1 lg:py-8">
-          <p className="diary-kicker">
+        <DiarySurface className="px-5 py-6 sm:px-7 lg:px-8 lg:py-9" kind="spread">
+          <DiaryMark>
             {categoryName ?? "Một điều được lưu lại"}
-          </p>
+          </DiaryMark>
           <h1 className="font-display mt-4 text-balance text-4xl font-semibold tracking-[-0.06em] text-[var(--color-brand-strong)] sm:text-5xl xl:text-6xl">
             {item.title}
           </h1>
@@ -93,11 +95,11 @@ export function CatalogueDetailHero({
           {item.description ? (
             <div className="mt-7">
               <div className="flex items-center gap-2 text-[var(--color-accent)]">
-                <span className="diary-rule" aria-hidden="true" />
+                <DiaryRule />
                 <Quote size={17} strokeWidth={1.45} aria-hidden="true" />
-                <p className="diary-kicker text-[var(--color-accent)]">
+                <DiaryMark className="text-[var(--color-accent)]">
                   Câu chuyện
-                </p>
+                </DiaryMark>
               </div>
               <p className="mt-3 whitespace-pre-line text-base leading-8 text-[var(--color-ink)]">
                 {item.description}
@@ -121,7 +123,7 @@ export function CatalogueDetailHero({
               ))}
             </div>
           ) : null}
-        </div>
+        </DiarySurface>
       </div>
     </section>
   );

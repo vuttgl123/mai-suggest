@@ -1,0 +1,199 @@
+/* Shared physical-journal surfaces. Feature-specific geometry remains in globals.css. */
+
+.diary-book {
+  min-height: calc(100svh - 0.9rem);
+  margin: 0.45rem;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);
+  border-radius: clamp(1rem, 2vw, 1.8rem);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--color-brand-strong) 5%, transparent), transparent 6%, transparent 94%, color-mix(in srgb, var(--color-brand-strong) 5%, transparent)),
+    var(--theme-wash);
+  box-shadow:
+    0 1.2rem 3.5rem color-mix(in srgb, var(--color-brand-strong) 32%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, var(--color-paper) 54%, transparent);
+}
+
+.diary-book::after {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  opacity: 0.28;
+  background: var(--theme-grain);
+  mix-blend-mode: multiply;
+}
+
+.diary-surface {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid var(--theme-frame-border);
+}
+
+.diary-surface::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  content: none;
+  opacity: 0.34;
+  background: var(--theme-grain);
+  mix-blend-mode: multiply;
+}
+
+.diary-surface--spread::before,
+.diary-surface--ledger::before,
+.diary-surface--note::before {
+  content: "";
+}
+
+.diary-surface--page,
+.diary-surface--spread,
+.diary-surface--ledger {
+  box-shadow: var(--theme-frame-inset);
+}
+
+.diary-surface--page {
+  border-radius: var(--radius-card);
+  background: var(--theme-card-surface);
+  box-shadow: var(--shadow-soft), var(--theme-frame-inset);
+}
+
+.diary-surface--spread {
+  border-radius: var(--radius-dialog);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--color-brand-strong) 6%, transparent), transparent 9% 49%, color-mix(in srgb, var(--color-brand-strong) 5%, transparent) 50%, transparent 51% 91%, color-mix(in srgb, var(--color-brand-strong) 6%, transparent)),
+    var(--theme-wash);
+  box-shadow: var(--shadow-card), var(--theme-frame-inset);
+}
+
+.diary-surface--ledger {
+  border-radius: calc(var(--radius-card) - 0.25rem);
+  background:
+    repeating-linear-gradient(0deg, transparent 0 2rem, color-mix(in srgb, var(--color-brand) 8%, transparent) 2rem 2.05rem),
+    var(--theme-control-surface);
+  box-shadow: var(--shadow-soft), var(--theme-frame-inset);
+}
+
+.diary-surface--note {
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--color-paper) 58%, transparent), transparent 44%),
+    var(--color-brand-soft);
+  box-shadow: var(--shadow-soft), var(--theme-frame-inset);
+}
+
+.diary-surface--print {
+  padding: clamp(0.42rem, 1vw, 0.65rem);
+  border-color: color-mix(in srgb, var(--color-accent) 34%, transparent);
+  border-radius: 0.35rem 0.55rem 0.45rem 0.6rem;
+  background: var(--color-paper);
+  box-shadow:
+    0 1.15rem 1.8rem color-mix(in srgb, var(--color-brand-strong) 18%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, var(--color-paper) 82%, transparent);
+  transition: transform var(--duration-base), box-shadow var(--duration-base);
+}
+
+.diary-surface--print:hover {
+  box-shadow:
+    0 1.45rem 2.3rem color-mix(in srgb, var(--color-brand-strong) 24%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, var(--color-paper) 82%, transparent);
+  transform: translateY(-0.2rem) rotate(-0.15deg);
+}
+
+.app-header.diary-header {
+  border-bottom-color: color-mix(in srgb, var(--color-accent) 28%, transparent);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--color-brand-strong) 8%, transparent), transparent 12% 88%, color-mix(in srgb, var(--color-brand-strong) 8%, transparent)),
+    var(--theme-header-surface);
+  box-shadow: 0 0.5rem 1.4rem color-mix(in srgb, var(--color-brand-strong) 8%, transparent);
+}
+
+.app-header.diary-header::before {
+  position: absolute;
+  inset: 0.4rem 0.7rem;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 18%, transparent);
+  border-radius: calc(var(--radius-card) - 0.45rem);
+  pointer-events: none;
+  content: "";
+}
+
+.app-header.diary-header .app-header-mark {
+  position: relative;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 68%, transparent);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--color-paper) 18%, transparent),
+    var(--theme-button-shadow-strong);
+}
+
+.diary-index {
+  position: relative;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--color-brand-strong) 5%, transparent), transparent 10% 90%, color-mix(in srgb, var(--color-brand-strong) 5%, transparent)),
+    var(--theme-control-surface);
+}
+
+.diary-section-rule {
+  position: relative;
+}
+
+.diary-section-rule::before,
+.diary-section-rule::after {
+  position: absolute;
+  right: 7%;
+  left: 7%;
+  height: 1px;
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-accent) 56%, transparent), transparent);
+}
+
+.diary-section-rule::before { top: 0; }
+.diary-section-rule::after { bottom: 0; }
+
+.diary-ledger-row {
+  border-color: color-mix(in srgb, var(--color-brand) 16%, transparent);
+  background: color-mix(in srgb, var(--color-paper) 76%, transparent);
+}
+
+.timeline-rail::after {
+  position: absolute;
+  top: 0.75rem;
+  bottom: 0.75rem;
+  left: 0.43rem;
+  width: 0.18rem;
+  pointer-events: none;
+  content: "";
+  background: repeating-linear-gradient(180deg, var(--color-accent) 0 0.22rem, transparent 0.22rem 0.52rem);
+  opacity: 0.7;
+}
+
+.diary-book .timeline-entry::before {
+  background:
+    radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--color-paper) 76%, transparent), transparent 30%),
+    var(--color-brand);
+  box-shadow: 0 0 0 0.16rem color-mix(in srgb, var(--color-accent) 30%, transparent), var(--theme-entry-shadow);
+}
+
+@media (max-width: 639px) {
+  .diary-book {
+    min-height: calc(100svh - 0.5rem);
+    margin: 0.25rem;
+    border-radius: 0.95rem;
+  }
+
+  .app-header.diary-header::before {
+    inset: 0.28rem 0.4rem;
+  }
+
+  .diary-surface--print:hover {
+    transform: none;
+  }
+
+  .timeline-rail::after { left: 0.43rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .diary-surface--print:hover { transform: none; }
+}

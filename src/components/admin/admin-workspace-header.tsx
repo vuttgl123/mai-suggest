@@ -17,7 +17,7 @@ export function AdminWorkspaceHeader({
   title,
 }: AdminWorkspaceHeaderProps) {
   return (
-    <section className="relative overflow-hidden rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] px-5 py-6 shadow-[var(--shadow-card)] sm:px-7 sm:py-7">
+    <section className="diary-surface diary-surface--ledger relative px-5 py-6 sm:px-7 sm:py-7">
       <Sparkles
         aria-hidden="true"
         className="absolute right-6 top-6 text-[var(--color-accent)] opacity-65"

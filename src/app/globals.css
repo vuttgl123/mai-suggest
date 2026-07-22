@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "../styles/diary-surfaces.css";
 
 :root {
   --color-brand: #650c1c;
@@ -322,7 +323,10 @@ body {
   isolation: isolate;
   position: relative;
   overflow-x: clip;
-  background: var(--theme-body-background);
+  background:
+    radial-gradient(circle at 10% 0%, color-mix(in srgb, var(--color-accent) 20%, transparent), transparent 28rem),
+    radial-gradient(circle at 92% 100%, color-mix(in srgb, var(--color-brand) 45%, transparent), transparent 32rem),
+    linear-gradient(145deg, var(--color-brand-strong), color-mix(in srgb, var(--color-brand) 82%, var(--color-brand-strong)));
   color: var(--ink);
   font-family: var(--font-body), sans-serif;
   text-rendering: optimizeLegibility;
@@ -333,6 +337,7 @@ body {
   z-index: -1;
   inset: 0;
   overflow: hidden;
+  contain: paint;
   pointer-events: none;
 }
 
@@ -699,6 +704,16 @@ label {
 
 .future-letter-archive {
   align-items: start;
+}
+
+.catalogue-item-card {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 31rem;
+}
+
+.catalogue-featured-item-card {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 38rem;
 }
 
 .future-letter-opening {

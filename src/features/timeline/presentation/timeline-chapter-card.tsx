@@ -44,7 +44,7 @@ export function TimelineChapterCard({
         {entry.title}
       </h3>
       {entry.imageUrl && entry.imageAltText ? (
-        <div className="mt-5 overflow-hidden rounded-[calc(var(--radius-card)_-_0.35rem)] border border-[var(--color-border)]">
+        <div className="diary-surface diary-surface--print mt-5">
           <CatalogueItemImage alt={entry.imageAltText} src={entry.imageUrl} />
         </div>
       ) : null}

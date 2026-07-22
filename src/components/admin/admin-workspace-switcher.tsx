@@ -32,7 +32,7 @@ export function AdminWorkspaceSwitcher({ active }: AdminWorkspaceSwitcherProps) 
   return (
     <nav
       aria-label="Khu vực quản trị"
-      className="mt-4 overflow-x-auto rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-control-surface)] p-1.5 shadow-[var(--shadow-soft)]"
+      className="diary-surface diary-surface--ledger mt-4 overflow-x-auto p-1.5"
     >
       <div className="flex min-w-max gap-1">
         {workspaces.map(({ href, icon: Icon, key, label }) => {

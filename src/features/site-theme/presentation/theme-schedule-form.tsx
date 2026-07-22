@@ -126,7 +126,7 @@ export function ThemeScheduleForm({
   const heading = schedule ? "Chỉnh một khoảng không khí" : "Hẹn không khí mới";
 
   return (
-    <section className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] p-5 shadow-[var(--shadow-soft)] sm:p-6">
+    <section className="diary-surface diary-surface--ledger p-5 sm:p-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="diary-kicker">Lịch tự động · giờ Việt Nam</p>
