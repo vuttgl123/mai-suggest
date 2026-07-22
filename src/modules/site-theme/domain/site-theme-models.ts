@@ -10,6 +10,16 @@ export type SiteThemeKey = (typeof SITE_THEME_KEYS)[number];
 
 export const DEFAULT_SITE_THEME_KEY: SiteThemeKey = "bordeaux";
 
+export type ThemeTransitionState = "idle" | "transitioning";
+
+export const THEME_SCENE_TRANSITION_DURATION_MS = 90_000;
+
+export interface ThemeSceneTransition {
+  targetThemeKey: SiteThemeKey;
+  startedAt: string;
+  expiresAt: string;
+}
+
 export interface SiteThemePreset {
   key: SiteThemeKey;
   label: string;
@@ -53,6 +63,9 @@ export function getSiteThemePreset(key: SiteThemeKey): SiteThemePreset {
 
 export interface SiteThemeSettings {
   manualThemeKey: SiteThemeKey | null;
+  transitionState: ThemeTransitionState;
+  transitionTargetThemeKey: SiteThemeKey | null;
+  transitionStartedAt: string | null;
   updatedAt: string;
 }
 
@@ -79,6 +92,7 @@ export interface ResolvedSiteTheme {
   key: SiteThemeKey;
   source: "manual" | "schedule" | "default" | "fallback";
   scheduleId: string | null;
+  transition: ThemeSceneTransition | null;
 }
 
 export interface SiteThemeManagement {

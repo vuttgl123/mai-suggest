@@ -3,7 +3,10 @@ import type {
   SiteThemeSchedule,
   SiteThemeSettings,
 } from "@/modules/site-theme/domain/site-theme-models";
-import { isSiteThemeKey } from "@/modules/site-theme/domain/site-theme-validation";
+import {
+  isSiteThemeKey,
+  isThemeSceneTransition,
+} from "@/modules/site-theme/domain/site-theme-validation";
 
 export type SiteThemeSettingsRow =
   Database["public"]["Tables"]["site_theme_settings"]["Row"];
@@ -23,12 +26,36 @@ type SiteThemeScheduleSource = Pick<
 >;
 
 export function toSiteThemeSettings(
-  row: Pick<SiteThemeSettingsRow, "manual_theme_key" | "updated_at">,
+  row: Pick<
+    SiteThemeSettingsRow,
+    | "manual_theme_key"
+    | "transition_state"
+    | "transition_target_theme_key"
+    | "transition_started_at"
+    | "updated_at"
+  >,
 ): SiteThemeSettings {
+  const manualThemeKey = isSiteThemeKey(row.manual_theme_key)
+    ? row.manual_theme_key
+    : null;
+  const targetThemeKey = row.transition_target_theme_key;
+  const startedAt = row.transition_started_at;
+
+  if (isThemeSceneTransition(row.transition_state, targetThemeKey, startedAt)) {
+    return {
+      manualThemeKey,
+      transitionState: "transitioning",
+      transitionTargetThemeKey: targetThemeKey,
+      transitionStartedAt: startedAt,
+      updatedAt: row.updated_at,
+    };
+  }
+
   return {
-    manualThemeKey: isSiteThemeKey(row.manual_theme_key)
-      ? row.manual_theme_key
-      : null,
+    manualThemeKey,
+    transitionState: "idle",
+    transitionTargetThemeKey: null,
+    transitionStartedAt: null,
     updatedAt: row.updated_at,
   };
 }

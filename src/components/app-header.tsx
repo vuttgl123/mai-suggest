@@ -12,7 +12,7 @@ export function AppHeader({ actor, activeSection = "catalogue" }: AppHeaderProps
 
   return (
     <header
-      className="border-b border-[var(--color-border)] bg-[var(--theme-header-surface)] backdrop-blur-sm"
+      className="app-header border-b border-[var(--color-border)] bg-[var(--theme-header-surface)] backdrop-blur-sm"
       style={{ viewTransitionName: "persistent-nav" }}
     >
       <div className="mx-auto flex min-h-[4.5rem] max-w-7xl flex-wrap items-center justify-between gap-x-5 gap-y-2 px-5 py-2.5 sm:px-8 lg:px-10">
@@ -21,7 +21,7 @@ export function AppHeader({ actor, activeSection = "catalogue" }: AppHeaderProps
           href="/"
         >
           <span
-            className="grid h-9 w-9 place-items-center rounded-full bg-[var(--color-brand)] text-white shadow-[var(--theme-button-shadow)] transition duration-[var(--duration-fast)] group-hover:scale-105"
+            className="app-header-mark grid h-9 w-9 place-items-center rounded-full bg-[var(--color-brand)] text-white shadow-[var(--theme-button-shadow)] transition duration-[var(--duration-fast)] group-hover:scale-105"
             aria-hidden="true"
           >
             <Heart size={16} fill="currentColor" strokeWidth={1.7} />

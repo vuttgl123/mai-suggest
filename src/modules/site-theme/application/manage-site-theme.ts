@@ -32,6 +32,39 @@ export class ManageSiteTheme {
     return this.repository.setManualTheme(owner.value.userId, themeKey);
   }
 
+  async startSceneTransition(
+    actor: CurrentActor,
+    themeKey: SiteThemeKey,
+  ): Promise<Result<SiteThemeSettings>> {
+    const owner = requireCatalogueOwner(actor);
+    if (!owner.ok) return owner;
+    if (!isSiteThemeKey(themeKey)) return failure("VALIDATION_FAILED");
+
+    return this.repository.startSceneTransition(
+      owner.value.userId,
+      themeKey,
+      new Date().toISOString(),
+    );
+  }
+
+  async commitSceneTransition(
+    actor: CurrentActor,
+  ): Promise<Result<SiteThemeSettings>> {
+    const owner = requireCatalogueOwner(actor);
+    if (!owner.ok) return owner;
+
+    return this.repository.commitSceneTransition(owner.value.userId);
+  }
+
+  async cancelSceneTransition(
+    actor: CurrentActor,
+  ): Promise<Result<SiteThemeSettings>> {
+    const owner = requireCatalogueOwner(actor);
+    if (!owner.ok) return owner;
+
+    return this.repository.cancelSceneTransition(owner.value.userId);
+  }
+
   async createSchedule(
     actor: CurrentActor,
     input: SiteThemeScheduleInput,

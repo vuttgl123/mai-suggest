@@ -1,22 +1,28 @@
 "use client";
 
 import { CalendarClock, Palette } from "lucide-react";
-import { useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { AdminWorkspaceHeader } from "@/components/admin/admin-workspace-header";
 import { AdminWorkspaceSwitcher } from "@/components/admin/admin-workspace-switcher";
 import { Button } from "@/components/ui/button";
 import { ThemeScheduleForm } from "@/features/site-theme/presentation/theme-schedule-form";
 import { ThemeScheduleList } from "@/features/site-theme/presentation/theme-schedule-list";
+import { ThemeScenePicker } from "@/features/site-theme/presentation/theme-scene-picker";
+import { ThemeSceneTransitionProgress } from "@/features/site-theme/presentation/theme-scene-transition-progress";
 import {
   getSiteThemePreset,
-  SITE_THEME_PRESETS,
   type ResolvedSiteTheme,
   type SiteThemeKey,
   type SiteThemeSchedule,
   type SiteThemeSettings,
 } from "@/modules/site-theme/domain/site-theme-models";
-import { setManualSiteThemeAction } from "@/modules/site-theme/presentation/site-theme-actions";
+import {
+  cancelThemeSceneTransitionAction,
+  commitThemeSceneTransitionAction,
+  setManualSiteThemeAction,
+  startThemeSceneTransitionAction,
+} from "@/modules/site-theme/presentation/site-theme-actions";
 
 interface AdminSiteThemeProps {
   settings: SiteThemeSettings;
@@ -34,9 +40,48 @@ export function AdminSiteTheme({
   const [feedback, setFeedback] = useState<string | null>(null);
   const [editingSchedule, setEditingSchedule] = useState<SiteThemeSchedule | null>(null);
   const [showComposer, setShowComposer] = useState(false);
+  const [transitionTarget, setTransitionTarget] = useState<SiteThemeKey | null>(null);
+  const [transitionStep, setTransitionStep] = useState<0 | 1 | 2 | 3>(0);
+  const [isCancellingTransition, setIsCancellingTransition] = useState(false);
+  const transitionTimerRefs = useRef<ReturnType<typeof window.setTimeout>[]>([]);
   const resolvedPreset = getSiteThemePreset(resolved.key);
 
+  useEffect(() => {
+    return () => clearTransitionTimers();
+  }, []);
+
+  function clearTransitionTimers() {
+    transitionTimerRefs.current.forEach((timer) => window.clearTimeout(timer));
+    transitionTimerRefs.current = [];
+  }
+
+  function scheduleTransitionTimer(callback: () => void, delay: number) {
+    const timer = window.setTimeout(callback, delay);
+    transitionTimerRefs.current.push(timer);
+  }
+
   function chooseMode(themeKey: SiteThemeKey | null) {
+    if (themeKey !== null) {
+      startTransition(async () => {
+        const result = await startThemeSceneTransitionAction(themeKey);
+        if (!result.ok) {
+          setFeedback(transitionFeedbackFor(result.error.code));
+          return;
+        }
+
+        setFeedback(null);
+        setShowComposer(false);
+        setEditingSchedule(null);
+        setTransitionTarget(themeKey);
+        setTransitionStep(0);
+        clearTransitionTimers();
+        scheduleTransitionTimer(() => setTransitionStep(1), 420);
+        scheduleTransitionTimer(() => setTransitionStep(2), 900);
+        scheduleTransitionTimer(() => commitSceneTransition(), 1_350);
+      });
+      return;
+    }
+
     startTransition(async () => {
       const result = await setManualSiteThemeAction(themeKey);
       if (!result.ok) {
@@ -45,10 +90,58 @@ export function AdminSiteTheme({
       }
 
       setFeedback(
-        themeKey === null
-          ? "Đã trở lại chế độ tự động theo lịch."
-          : `Đã chọn ${getSiteThemePreset(themeKey).label} cho toàn bộ không gian.`,
+        "Đã trở lại chế độ tự động theo lịch.",
       );
+      router.refresh();
+    });
+  }
+
+  function commitSceneTransition() {
+    startTransition(async () => {
+      const result = await commitThemeSceneTransitionAction();
+      if (!result.ok) {
+        await recoverFromTransitionFailure(transitionFeedbackFor(result.error.code));
+        return;
+      }
+
+      setTransitionStep(3);
+      setFeedback("Đã mở ra không khí mới cho toàn bộ không gian.");
+      scheduleTransitionTimer(() => {
+        clearTransitionTimers();
+        setTransitionTarget(null);
+        setTransitionStep(0);
+        router.refresh();
+      }, 320);
+    });
+  }
+
+  async function recoverFromTransitionFailure(message: string) {
+    clearTransitionTimers();
+    const cancelResult = await cancelThemeSceneTransitionAction();
+    setTransitionTarget(null);
+    setTransitionStep(0);
+    setFeedback(
+      cancelResult.ok
+        ? message
+        : `${message} Chưa thể hủy trạng thái chuyển cảnh; hệ thống sẽ tự mở lại trong tối đa 90 giây.`,
+    );
+  }
+
+  function cancelSceneTransition() {
+    clearTransitionTimers();
+    setIsCancellingTransition(true);
+    startTransition(async () => {
+      const result = await cancelThemeSceneTransitionAction();
+      setIsCancellingTransition(false);
+
+      if (!result.ok) {
+        setFeedback(transitionFeedbackFor(result.error.code));
+        return;
+      }
+
+      setTransitionTarget(null);
+      setTransitionStep(0);
+      setFeedback("Đã dừng chuyển cảnh. Không gian hiện tại vẫn được giữ nguyên.");
       router.refresh();
     });
   }
@@ -105,46 +198,21 @@ export function AdminSiteTheme({
             <h2 className="font-display mt-2 text-2xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
               Tự động hay một lời hẹn riêng?
             </h2>
-            <fieldset className="mt-5 grid gap-2" disabled={isPending}>
-              <legend className="sr-only">Chế độ không khí giao diện</legend>
-              <label className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border px-3 py-2 text-sm font-semibold transition ${settings.manualThemeKey === null ? "border-[var(--color-brand)] bg-[var(--color-brand-soft)] text-[var(--color-brand)]" : "border-[var(--color-border)] text-[var(--color-muted)] hover:border-[var(--color-accent)]"}`}>
-                <input
-                  checked={settings.manualThemeKey === null}
-                  className="h-4 w-4 accent-[var(--color-brand)]"
-                  name="site-theme-mode"
-                  onChange={() => chooseMode(null)}
-                  type="radio"
-                />
-                <span>
-                  Tự động theo lịch
-                  <small className="mt-0.5 block text-xs font-normal opacity-80">Không có lịch thì dùng Bordeaux Diary.</small>
-                </span>
-              </label>
-              {SITE_THEME_PRESETS.map((preset) => (
-                <label
-                  className={`cursor-pointer rounded-xl border p-3 transition ${settings.manualThemeKey === preset.key ? "border-[var(--color-brand)] bg-[var(--color-brand-soft)] text-[var(--color-brand)]" : "border-[var(--color-border)] text-[var(--color-brand-strong)] hover:border-[var(--color-accent)]"}`}
-                  key={preset.key}
-                >
-                  <span className="flex items-start gap-3">
-                    <input
-                      checked={settings.manualThemeKey === preset.key}
-                      className="mt-0.5 h-4 w-4 accent-[var(--color-brand)]"
-                      name="site-theme-mode"
-                      onChange={() => chooseMode(preset.key)}
-                      type="radio"
-                    />
-                    <span>
-                      <span className="flex items-center gap-2 text-sm font-semibold">
-                        <i className="h-2.5 w-2.5 rounded-full bg-[var(--color-brand)]" aria-hidden="true" />
-                        {preset.label}
-                      </span>
-                      <small className="mt-1 block text-xs font-normal leading-5 text-[var(--color-muted)]">{preset.description}</small>
-                    </span>
-                  </span>
-                </label>
-              ))}
-            </fieldset>
+            <ThemeScenePicker
+              disabled={transitionTarget !== null || isPending}
+              manualThemeKey={settings.manualThemeKey}
+              onChange={chooseMode}
+            />
           </section>
+
+          {transitionTarget !== null ? (
+            <ThemeSceneTransitionProgress
+              isCancelling={isCancellingTransition || isPending}
+              onCancel={cancelSceneTransition}
+              step={transitionStep}
+              targetThemeKey={transitionTarget}
+            />
+          ) : null}
         </aside>
 
         <div className="space-y-5">
@@ -156,7 +224,10 @@ export function AdminSiteTheme({
               <p className="text-sm leading-5 text-[var(--color-muted)]">Các lịch có thể chồng nhau; độ ưu tiên cao hơn sẽ được dùng trước.</p>
             </div>
             {!showComposer ? (
-              <Button onClick={() => setShowComposer(true)}>
+              <Button
+                disabled={transitionTarget !== null || isPending}
+                onClick={() => setShowComposer(true)}
+              >
                 <CalendarClock size={16} aria-hidden="true" />
                 Hẹn lịch mới
               </Button>
@@ -195,4 +266,12 @@ function feedbackFor(code: string): string {
   if (code === "ACCESS_DENIED") return "Chỉ Owner có thể đổi không khí giao diện.";
   if (code === "VALIDATION_FAILED") return "Preset chưa hợp lệ.";
   return "Chưa thể đổi không khí lúc này. Hãy thử lại sau.";
+}
+
+function transitionFeedbackFor(code: string): string {
+  if (code === "NOT_FOUND") {
+    return "Lần chuyển cảnh này không còn hiệu lực. Hãy thử chọn lại không khí.";
+  }
+
+  return feedbackFor(code);
 }

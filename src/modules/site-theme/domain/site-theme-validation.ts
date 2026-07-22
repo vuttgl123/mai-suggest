@@ -16,6 +16,19 @@ export function isSiteThemeKey(
   );
 }
 
+export function isThemeSceneTransition(
+  state: string | null | undefined,
+  targetThemeKey: string | null | undefined,
+  startedAt: string | null | undefined,
+): targetThemeKey is SiteThemeKey {
+  return (
+    state === "transitioning" &&
+    isSiteThemeKey(targetThemeKey) &&
+    typeof startedAt === "string" &&
+    !Number.isNaN(new Date(startedAt).getTime())
+  );
+}
+
 export function normalizeSiteThemeScheduleInput(
   input: SiteThemeScheduleInput,
 ): Result<SiteThemeScheduleInput> {

@@ -19,6 +19,28 @@ export async function setManualSiteThemeAction(
   );
 }
 
+export async function startThemeSceneTransitionAction(themeKey: SiteThemeKey) {
+  return runServerAction((backend, actor) =>
+    backend.manageSiteTheme.startSceneTransition(actor, themeKey),
+  );
+}
+
+export async function commitThemeSceneTransitionAction() {
+  return revalidateAfterMutation(
+    await runServerAction((backend, actor) =>
+      backend.manageSiteTheme.commitSceneTransition(actor),
+    ),
+  );
+}
+
+export async function cancelThemeSceneTransitionAction() {
+  return revalidateAfterMutation(
+    await runServerAction((backend, actor) =>
+      backend.manageSiteTheme.cancelSceneTransition(actor),
+    ),
+  );
+}
+
 export async function createSiteThemeScheduleAction(
   input: SiteThemeScheduleInput,
 ) {

@@ -11,12 +11,16 @@ import {
 } from "@/modules/site-theme/infrastructure/site-theme-mappers";
 import type { Database } from "@/lib/supabase/database.types";
 
-const SETTINGS_COLUMNS = "manual_theme_key,updated_at";
+const SETTINGS_COLUMNS =
+  "manual_theme_key,transition_state,transition_target_theme_key,transition_started_at,updated_at";
 const SCHEDULE_COLUMNS =
   "id,theme_key,starts_at,ends_at,priority,is_enabled,created_at,updated_at";
 
 const AUTOMATIC_SETTINGS: SiteThemeSettings = {
   manualThemeKey: null,
+  transitionState: "idle",
+  transitionTargetThemeKey: null,
+  transitionStartedAt: null,
   updatedAt: "",
 };
 

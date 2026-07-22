@@ -11,6 +11,13 @@ export interface SiteThemeRepository {
     ownerId: string,
     themeKey: SiteThemeKey | null,
   ): Promise<Result<SiteThemeSettings>>;
+  startSceneTransition(
+    ownerId: string,
+    targetThemeKey: SiteThemeKey,
+    startedAt: string,
+  ): Promise<Result<SiteThemeSettings>>;
+  commitSceneTransition(ownerId: string): Promise<Result<SiteThemeSettings>>;
+  cancelSceneTransition(ownerId: string): Promise<Result<SiteThemeSettings>>;
   createSchedule(
     ownerId: string,
     input: SiteThemeScheduleInput,

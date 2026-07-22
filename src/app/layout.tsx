@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Be_Vietnam_Pro, Playfair_Display } from "next/font/google";
+import { ThemeAtmosphere } from "@/components/theme/theme-atmosphere";
+import { ThemeMaintenanceScreen } from "@/components/theme/theme-maintenance-screen";
 import { createServerBackend } from "@/lib/backend/create-server-backend";
 import "./globals.css";
 
@@ -38,14 +40,20 @@ export default async function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const backend = await createServerBackend();
   const theme = await backend.resolveSiteTheme.execute();
+  const activeThemeKey = theme.transition?.targetThemeKey ?? theme.key;
 
   return (
     <html lang="vi">
       <body
         className={`${displayFont.variable} ${bodyFont.variable}`}
-        data-theme={theme.key}
+        data-theme={activeThemeKey}
       >
-        {children}
+        <ThemeAtmosphere theme={activeThemeKey} />
+        {theme.transition ? (
+          <ThemeMaintenanceScreen targetThemeKey={activeThemeKey} />
+        ) : (
+          children
+        )}
       </body>
     </html>
   );

@@ -160,6 +160,9 @@ type FutureLetterRow = {
 type SiteThemeSettingsRow = {
   id: boolean;
   manual_theme_key: string | null;
+  transition_state: "idle" | "transitioning";
+  transition_target_theme_key: string | null;
+  transition_started_at: string | null;
   updated_by: string | null;
   created_at: string;
   updated_at: string;
