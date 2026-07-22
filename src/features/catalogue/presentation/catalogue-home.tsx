@@ -6,6 +6,7 @@ import { CatalogueChapterRail } from "@/features/catalogue/presentation/catalogu
 import { CatalogueFeaturedItemCard } from "@/features/catalogue/presentation/catalogue-featured-item-card";
 import { CatalogueItemCard } from "@/features/catalogue/presentation/catalogue-item-card";
 import { CataloguePagination } from "@/features/catalogue/presentation/catalogue-pagination";
+import { CinematicDiaryIntro } from "@/features/catalogue/presentation/cinematic-diary-intro";
 import type {
   CatalogueCategory,
   CatalogueItemPage,
@@ -46,6 +47,7 @@ export function CatalogueHome({
       >
         Đi tới nội dung chính
       </a>
+      <CinematicDiaryIntro />
       <AppHeader activeSection="catalogue" actor={actor} />
 
       <main id="main-content" tabIndex={-1}>
