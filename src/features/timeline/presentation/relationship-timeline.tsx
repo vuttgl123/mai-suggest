@@ -1,8 +1,11 @@
 import { BookHeart, Heart, Sparkles } from "lucide-react";
 import { AppHeader } from "@/components/app-header";
 import { TimelineChapterCard } from "@/features/timeline/presentation/timeline-chapter-card";
+import { TimelineFilmControls } from "@/features/timeline/presentation/timeline-film-controls";
 import type { TimelineEntry } from "@/modules/timeline/domain/timeline-models";
 import type { ActiveActor } from "@/modules/identity/domain/current-actor";
+
+const TIMELINE_FILM_VIEWPORT_ID = "timeline-film-viewport";
 
 interface RelationshipTimelineProps {
   actor: ActiveActor;
@@ -58,29 +61,33 @@ export function RelationshipTimeline({
                   Hành trình của chúng mình
                 </h2>
               </div>
-              <div
-                aria-label="Cuộn phim các chương trong hành trình"
-                className="timeline-film-viewport mt-8 sm:mt-10"
-                role="region"
-                tabIndex={0}
-              >
-                <ol className="timeline-filmstrip">
-                  {entries.map((entry, index) => (
-                    <li
-                      className="timeline-film-frame"
-                      id={`timeline-entry-${entry.id}`}
-                      key={entry.id}
-                    >
-                      <TimelineChapterCard
-                        actorId={actor.userId}
-                        canManage={actor.canManageCatalogue}
-                        entry={entry}
-                        sequence={index + 1}
-                      />
-                      <TimelineFilmMarker entry={entry} />
-                    </li>
-                  ))}
-                </ol>
+              <div className="timeline-film-stage mt-8 sm:mt-10">
+                <div
+                  aria-label="Cuộn phim các chương trong hành trình"
+                  className="timeline-film-viewport"
+                  id={TIMELINE_FILM_VIEWPORT_ID}
+                  role="region"
+                  tabIndex={0}
+                >
+                  <ol className="timeline-filmstrip">
+                    {entries.map((entry, index) => (
+                      <li
+                        className="timeline-film-frame"
+                        id={`timeline-entry-${entry.id}`}
+                        key={entry.id}
+                      >
+                        <TimelineChapterCard
+                          actorId={actor.userId}
+                          canManage={actor.canManageCatalogue}
+                          entry={entry}
+                          sequence={index + 1}
+                        />
+                        <TimelineFilmMarker entry={entry} />
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+                {entries.length > 1 ? <TimelineFilmControls viewportId={TIMELINE_FILM_VIEWPORT_ID} /> : null}
               </div>
             </div>
           </section>
