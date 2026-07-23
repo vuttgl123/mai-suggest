@@ -1,80 +1,66 @@
-# Hành trình cuộn phim ngang — thiết kế
+# Hành trình cuộn phim đồng cấp — thiết kế
 
 **Trạng thái:** Đã được người dùng duyệt và triển khai theo đặc tả này.
 
 ## Mục tiêu
 
-Biến phần các chương đã viết trong Hành trình từ timeline dọc xen kẽ thành một
-cuộn phim ngang có thể vuốt. Mỗi chương là một frame; ngay dưới frame là mốc
-riêng gồm chấm, ngày và tiêu đề chương để người đọc nhận ra nhịp thời gian mà
-không phải dùng một thanh dọc tách rời.
+Trình bày mọi chương trong Hành trình với cùng một cấp bậc thị giác: cùng nằm
+trong cuộn phim ngang, cùng cấu trúc frame và cùng mốc thời gian. Không còn
+chương nào được coi là cảnh mở đầu hay nổi bật hơn các chương khác.
 
 ## Phạm vi bố cục
 
-- `TimelineFeaturedChapter` vẫn là cảnh mở đầu lớn, đặt phía trên như hiện tại.
-  Nó không được đưa vào film strip để giữ một điểm bắt đầu cảm xúc rõ ràng.
-- Chỉ `chapterEntries` (các chương sau cảnh mở đầu) dùng film strip.
-- Header, trạng thái không có dữ liệu, dữ liệu timeline, ảnh, phản hồi, quyền,
-  admin và Supabase không đổi.
+- Giữ phần giới thiệu đầu trang để đặt cảm xúc cho Hành trình.
+- Bỏ hoàn toàn khối `TimelineFeaturedChapter`, nhãn “Một chương đang mở” và
+  tiêu đề “Điều mình đang cùng viết”.
+- Toàn bộ `entries`, gồm cả phần tử đầu tiên, được render theo thứ tự dữ liệu
+  trong một film strip duy nhất. `TimelineChapterCard` nhận `sequence` bắt đầu
+  từ 1.
+- Khi chưa có dữ liệu, giữ nguyên trạng thái rỗng hiện tại.
+- Header, dữ liệu timeline, ảnh, phản hồi, quyền, admin và Supabase không đổi.
 
-## Cuộn phim
+## Cuộn phim và mốc thời gian
 
-- Dùng cuộn ngang native trên một `<ol>` có `overflow-x: auto`, `scroll-snap`
-  theo từng frame, `overscroll-behavior-x: contain` và `touch-action: pan-x`.
-  Không thêm carousel JavaScript, drag library hay request dữ liệu client.
-- Frame rộng khoảng 84–88% viewport trên mobile để vẫn thấy mép frame tiếp theo;
-  từ màn hình rộng hơn, frame giữ bề rộng đọc thoải mái khoảng 24–27rem. Người
-  dùng vuốt trên cảm ứng hoặc cuộn ngang tự nhiên bằng trackpad/scrollbar trên
-  desktop.
-- Film strip có bề mặt giấy Bordeaux hiện hữu, đường viền tinh tế và dải lỗ
-  phim nhỏ ở đầu/cuối viewport bằng CSS trang trí. Không dùng nền đen, neon,
-  poster phim hoặc hiệu ứng chuyển động mới.
-- Cả strip có nhãn truy cập riêng và nhận focus bằng bàn phím. Native scrollbar
-  được giữ để không che mất khả năng khám phá trên desktop.
+- Giữ cơ chế cuộn native hiện hữu: viewport ngang, `scroll-snap` theo frame,
+  `overscroll-behavior-x: contain`, `touch-action: pan-x` và native scrollbar.
+  Không thêm carousel JavaScript, auto-scroll, drag library hoặc request dữ
+  liệu client.
+- Mỗi entry là một frame có cùng class và cùng thành phần mốc dưới card: đường
+  rail ngắn, chấm Bordeaux, ngày và tên chương. Dù nội dung dài khác nhau, các
+  mốc vẫn thẳng hàng nhờ hàng grid chung.
+- Hiệu ứng lỗ phim, bề mặt giấy, kích thước responsive và tối ưu
+  `content-visibility` của các frame giữ nguyên.
 
-## Frame và mốc thời gian
+## Khả năng truy cập và trạng thái biên
 
-- Mỗi `<li>` là một cột flex, card nội dung (`TimelineChapterCard`) chiếm phần
-  thân còn mốc ở đáy. Cùng một grid row làm các mốc thẳng hàng, kể cả khi phần
-  chữ của từng card dài khác nhau.
-- Mốc gồm đoạn rail ngang ngắn, chấm Bordeaux viền giấy, `entry.dateLabel` và
-  `entry.title` (tối đa hai dòng). Tên chương xuất hiện tại chính dấu mốc theo
-  yêu cầu, trong khi tiêu đề đầy đủ trong card vẫn giữ để đọc liên tục và có
-  heading của nội dung.
-- Số thứ tự nhẹ trong card, nội dung, ảnh, quote và phản hồi giữ nguyên. Frame
-  dài dùng `content-visibility: auto` với intrinsic size để cuộn không phải vẽ
-  tất cả nội dung ngoài màn hình ngay lập tức.
-
-## Responsive và giảm chuyển động
-
-- Mobile: frame hẹp hơn viewport, snap theo đầu frame và mốc nằm ngay bên dưới
-  card; thao tác chính là vuốt.
-- Tablet/desktop: frame không phình quá rộng, nhiều frame có thể hiện trong vùng
-  nhìn; trackpad/scrollbar dùng được, không có auto-scroll.
-- Không dùng `scroll-behavior: smooth` riêng cho strip; `prefers-reduced-motion`
-  không bị thêm animation hay thay đổi hành vi bất ngờ.
+- Vùng film strip tiếp tục có nhãn truy cập và nhận focus; danh sách vẫn dùng
+  cấu trúc ngữ nghĩa `<ol>` / `<li>`.
+- Một entry vẫn được hiển thị như một frame duy nhất; không tạo khối đặc biệt.
+- Không đổi xử lý ảnh, nội dung dài, phản hồi hoặc quyền chỉnh sửa trong từng
+  `TimelineChapterCard`.
 
 ## Thay đổi mã dự kiến
 
-- `relationship-timeline.tsx`: thay `<ol className="timeline-rail">` bằng
-  viewport film strip, frame class và `TimelineFilmMarker` cục bộ để render
-  `dateLabel` + `title` dưới mỗi `TimelineChapterCard`.
-- `globals.css`: thay các selector `timeline-rail`/`timeline-entry` dọc bằng
-  selector film strip ngang, khung frame, mốc dưới card và media query liên quan.
-- `timeline-chapter-card.tsx`: chỉ bổ sung class cho phép card chiếm thân frame
-  khi cần; không đổi props hay nội dung.
+- `relationship-timeline.tsx`: dùng toàn bộ `entries` cho film strip duy nhất,
+  bỏ import/render `TimelineFeaturedChapter`, wrapper điều kiện `featuredEntry`
+  và section của chương nổi bật; giữ `TimelineFilmMarker` cho từng frame.
+- `globals.css`: chỉ điều chỉnh selector khi cần để film strip đứng độc lập;
+  không thiết kế một biến thể frame đầu tiên.
+- Không thay đổi API props, domain model, route, query Supabase hay component
+  card.
 
 ## Ngoài phạm vi
 
-- Carousel JavaScript, nút điều khiển trái/phải, autoplay, drag dependency,
-  View Transition mới, pagination hay thay đổi URL.
-- Đưa chương nổi bật vào strip, đổi thứ tự dữ liệu, thay đổi mốc admin hoặc
-  thêm dữ liệu mới.
+- Chọn thủ công chương nổi bật, thay đổi thứ tự entry hoặc thêm trường dữ liệu
+  để đánh dấu ưu tiên.
+- Carousel JavaScript, nút trái/phải, autoplay, pagination, View Transition mới
+  hoặc thay đổi URL.
 - Test, lint, build, browser QA, commit hoặc tạo nhánh theo yêu cầu đã chốt.
 
 ## Xác minh dự kiến
 
-Chỉ rà soát tĩnh: cấu trúc `ol/li`, các class scroll-snap/focus/reduced-motion,
-marker đủ `dateLabel` + `title`, dữ liệu và quyền giữ nguyên, và diff giới hạn
-vào ba file đã nêu. Không tuyên bố đã QA tương tác vì user không yêu cầu chạy
-browser/test/build.
+Chỉ rà soát tĩnh: mọi `entries` được map trong một `<ol>` duy nhất, số thứ tự
+bắt đầu từ 1, không còn import/render `TimelineFeaturedChapter` hay text của
+khối nổi bật, marker đủ ngày và tiêu đề, dữ liệu/quyền giữ nguyên và diff chỉ
+chạm phạm vi cần thiết. Không tuyên bố đã QA tương tác vì không chạy
+browser/test/build theo yêu cầu.

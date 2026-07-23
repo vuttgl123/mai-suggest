@@ -1,7 +1,6 @@
 import { BookHeart, Heart, Sparkles } from "lucide-react";
 import { AppHeader } from "@/components/app-header";
 import { TimelineChapterCard } from "@/features/timeline/presentation/timeline-chapter-card";
-import { TimelineFeaturedChapter } from "@/features/timeline/presentation/timeline-featured-chapter";
 import type { TimelineEntry } from "@/modules/timeline/domain/timeline-models";
 import type { ActiveActor } from "@/modules/identity/domain/current-actor";
 
@@ -14,8 +13,6 @@ export function RelationshipTimeline({
   actor,
   entries,
 }: RelationshipTimelineProps) {
-  const [featuredEntry, ...chapterEntries] = entries;
-
   return (
     <div className="diary-shell">
       <a
@@ -46,77 +43,47 @@ export function RelationshipTimeline({
           </p>
         </section>
 
-        {featuredEntry ? (
-          <>
-            <section
-              className="relative isolate overflow-hidden border-y border-[var(--color-border)] bg-[rgb(255_249_243_/_55%)]"
-              aria-labelledby="timeline-heading"
-            >
-              <span
-                className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--color-accent)]/45 to-transparent"
-                aria-hidden="true"
-              />
-              <div className="relative mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-14 lg:px-10">
-                <div className="mb-6 max-w-2xl sm:mb-8">
-                  <p className="diary-kicker">Một chương đang mở</p>
-                  <h2
-                    className="font-display mt-2 text-balance text-3xl font-semibold tracking-[-0.05em] text-[var(--color-brand-strong)] sm:text-4xl"
-                    id="timeline-heading"
-                  >
-                    Điều mình đang cùng viết
-                  </h2>
-                </div>
-                <TimelineFeaturedChapter
-                  actorId={actor.userId}
-                  canManage={actor.canManageCatalogue}
-                  entry={featuredEntry}
-                />
+        {entries.length ? (
+          <section
+            aria-labelledby="timeline-heading"
+            className="border-y border-[var(--color-border)] bg-[rgb(255_252_248_/_62%)] py-11 sm:py-15"
+          >
+            <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
+              <div className="mx-auto max-w-2xl text-center">
+                <p className="diary-kicker">Từng trang mình đã viết</p>
+                <h2
+                  className="font-display mt-2 text-balance text-3xl font-semibold tracking-[-0.05em] text-[var(--color-brand-strong)] sm:text-4xl"
+                  id="timeline-heading"
+                >
+                  Hành trình của chúng mình
+                </h2>
               </div>
-            </section>
-
-            {chapterEntries.length ? (
-              <section
-                aria-labelledby="past-timeline-heading"
-                className="border-b border-[var(--color-border)] bg-[rgb(255_252_248_/_62%)] py-11 sm:py-15"
+              <div
+                aria-label="Cuộn phim các chương trong hành trình"
+                className="timeline-film-viewport mt-8 sm:mt-10"
+                role="region"
+                tabIndex={0}
               >
-                <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
-                  <div className="mx-auto max-w-2xl text-center">
-                    <p className="diary-kicker">Lật lại những trang trước</p>
-                    <h2
-                      className="font-display mt-2 text-balance text-3xl font-semibold tracking-[-0.05em] text-[var(--color-brand-strong)] sm:text-4xl"
-                      id="past-timeline-heading"
+                <ol className="timeline-filmstrip">
+                  {entries.map((entry, index) => (
+                    <li
+                      className="timeline-film-frame"
+                      id={`timeline-entry-${entry.id}`}
+                      key={entry.id}
                     >
-                      Những chương đã viết
-                    </h2>
-                  </div>
-                  <div
-                    aria-label="Cuộn phim các chương đã viết"
-                    className="timeline-film-viewport mt-8 sm:mt-10"
-                    role="region"
-                    tabIndex={0}
-                  >
-                    <ol className="timeline-filmstrip">
-                      {chapterEntries.map((entry, index) => (
-                        <li
-                          className="timeline-film-frame"
-                          id={`timeline-entry-${entry.id}`}
-                          key={entry.id}
-                        >
-                          <TimelineChapterCard
-                            actorId={actor.userId}
-                            canManage={actor.canManageCatalogue}
-                            entry={entry}
-                            sequence={index + 2}
-                          />
-                          <TimelineFilmMarker entry={entry} />
-                        </li>
-                      ))}
-                    </ol>
-                  </div>
-                </div>
-              </section>
-            ) : null}
-          </>
+                      <TimelineChapterCard
+                        actorId={actor.userId}
+                        canManage={actor.canManageCatalogue}
+                        entry={entry}
+                        sequence={index + 1}
+                      />
+                      <TimelineFilmMarker entry={entry} />
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+          </section>
         ) : (
           <section className="mx-auto max-w-3xl px-5 pb-14 sm:px-8 lg:px-10">
             <div className="diary-wash rounded-[var(--radius-dialog)] border border-[var(--color-border)] px-6 py-10 text-center shadow-[var(--shadow-soft)] sm:px-10">

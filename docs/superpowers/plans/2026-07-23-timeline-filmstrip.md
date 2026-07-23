@@ -1,320 +1,205 @@
-# Timeline Filmstrip Implementation Plan
+# Timeline Equal Filmstrip Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Present the previously written relationship chapters as a native, horizontally swipeable Bordeaux film strip with a labelled milestone under every frame.
+**Goal:** Render every relationship chapter as an equal frame in one horizontally swipeable Bordeaux film strip.
 
-**Architecture:** RelationshipTimeline keeps its current server data and featured opening chapter, but replaces only the old vertical rail markup with an accessible horizontal scroll viewport. Each film frame remains a TimelineChapterCard plus a local marker rendered from the same TimelineEntry. CSS establishes the snap strip, aligned flex frames, understated film perforations and individual bottom milestones without a client carousel.
+**Architecture:** `RelationshipTimeline` remains a Server Component and consumes the existing ordered `entries` read model. It will render one film-strip section whenever entries exist, map all entries to the existing `TimelineChapterCard`, and retain the local `TimelineFilmMarker` beneath each card. Existing global film-strip CSS remains the sole interaction and layout layer; it needs no first-frame variant.
 
-**Tech Stack:** Next.js App Router, React Server Components, TypeScript strict, Tailwind CSS, global CSS, existing TimelineEntry read model.
+**Tech Stack:** Next.js App Router, React Server Components, TypeScript strict, Tailwind CSS, global CSS, existing `TimelineEntry` read model.
 
 ## Global Constraints
 
-- Do not create a branch, worktree, commit, test, build, lint, browser QA, migration, RLS change, data change, new client component, carousel dependency, View Transition, or URL state.
-- Preserve the featured opening chapter, TimelineChapterCard content, entry order, entry IDs, image URLs, response panel, actor permissions, header, and empty state.
-- Only old `chapterEntries` may become film frames. The film strip must use native `overflow-x: auto`, scroll-snap, touch pan, contained overscroll, a visible native scrollbar and no auto-scroll/smooth-scroll behavior.
-- Every frame must render a lower marker using `entry.dateLabel` and `entry.title`; markers align at the bottom of the grid row despite unequal card content length.
-- Keep the Bordeaux Diary aesthetic: paper surfaces, restrained Bordeaux/copper rail and decorative perforations; do not introduce a dark cinema theme, neon, or animation.
+- Do not create a branch, worktree, commit, test, build, lint, browser QA, migration, RLS change, data change, new client component, carousel dependency, View Transition or URL state.
+- Preserve entry order and IDs, `TimelineChapterCard` content and props (except its existing `sequence` value), image URLs, response panel, actor permissions, header and empty state.
+- Every non-empty entry uses the native horizontal film strip with `overflow-x: auto`, scroll snap, touch pan, contained overscroll and native scrollbar. Do not introduce auto-scroll or smooth-scroll behaviour.
+- Remove the featured entry split and all special opening chapter copy. Sequence numbers begin at 1 for the first entry.
+- Keep the existing Bordeaux paper surface, decorative perforations, responsive widths and `content-visibility`; do not introduce a dark cinema theme, animation or a visual priority variant.
 - Per the user's explicit instruction, source/diff inspection is the only verification. Do not claim runtime or visual verification.
 
 ---
 
 ## File structure
 
-- Modify `src/features/timeline/presentation/relationship-timeline.tsx`: replace the vertical old-chapter rail with the semantic viewport, film frame and local marker component.
-- Modify `src/app/globals.css`: replace the unused vertical timeline rail selectors with horizontal film-strip and marker styles, including responsive width rules.
+- Modify `src/features/timeline/presentation/relationship-timeline.tsx`: render all timeline entries as one semantic film strip and remove the featured-chapter dependency.
+- Inspect `src/app/globals.css`: retain the shared film-strip class contract without adding a first-frame CSS variant.
+- Modify `docs/superpowers/specs/2026-07-23-timeline-filmstrip-design.md`: record completed implementation status.
+- Modify `docs/superpowers/plans/2026-07-23-timeline-filmstrip.md`: record completed plan steps.
 
-### Task 1: Render film frames and semantic milestones
+### Task 1: Render all timeline entries as equal film frames
 
 **Files:**
-- Modify: `src/features/timeline/presentation/relationship-timeline.tsx`
+- Modify: `src/features/timeline/presentation/relationship-timeline.tsx:1-145`
 
 **Interfaces:**
-- Consumes the existing `TimelineEntry` and `TimelineChapterCard` props unchanged.
-- Produces local `TimelineFilmMarker({ entry }: { entry: TimelineEntry })`.
-- Leaves `TimelineFeaturedChapter` and its `featuredEntry` destructuring unchanged.
+- Consumes `entries: TimelineEntry[]`, `TimelineChapterCard` and the existing local `TimelineFilmMarker({ entry }: { entry: TimelineEntry })`.
+- Produces one `timeline-filmstrip` ordered list for every non-empty `entries` array.
+- Does not import or render `TimelineFeaturedChapter`.
 
-- [x] **Step 1: Replace only the old vertical `<ol>`**
+- [x] **Step 1: Remove the featured chapter split and import**
 
-Replace the `chapterEntries.length` section body after its heading with this
-structure, preserving the existing `chapterEntries.map` order and card props:
+Delete:
 
 ```tsx
-<section
-  className="border-b border-[var(--color-border)] bg-[rgb(255_252_248_/_62%)] py-11 sm:py-15"
-  aria-labelledby="past-timeline-heading"
->
-  <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
-    <div className="mx-auto max-w-2xl text-center">
-      <p className="diary-kicker">Lật lại những trang trước</p>
-      <h2
-        className="font-display mt-2 text-balance text-3xl font-semibold tracking-[-0.05em] text-[var(--color-brand-strong)] sm:text-4xl"
-        id="past-timeline-heading"
+import { TimelineFeaturedChapter } from "@/features/timeline/presentation/timeline-featured-chapter";
+
+const [featuredEntry, ...chapterEntries] = entries;
+```
+
+No replacement local state or client hook is needed. The existing `entries` prop
+is the single ordered data source.
+
+- [x] **Step 2: Replace the featured/chapter conditional with one equal strip**
+
+After the existing introductory `<section>`, render this conditional. Keep the
+existing empty-state JSX exactly as it is in the `: (...)` branch.
+
+```tsx
+{entries.length ? (
+  <section
+    aria-labelledby="timeline-heading"
+    className="border-y border-[var(--color-border)] bg-[rgb(255_252_248_/_62%)] py-11 sm:py-15"
+  >
+    <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
+      <div className="mx-auto max-w-2xl text-center">
+        <p className="diary-kicker">Từng trang mình đã viết</p>
+        <h2
+          className="font-display mt-2 text-balance text-3xl font-semibold tracking-[-0.05em] text-[var(--color-brand-strong)] sm:text-4xl"
+          id="timeline-heading"
+        >
+          Hành trình của chúng mình
+        </h2>
+      </div>
+      <div
+        aria-label="Cuộn phim các chương trong hành trình"
+        className="timeline-film-viewport mt-8 sm:mt-10"
+        role="region"
+        tabIndex={0}
       >
-        Những chương đã viết
-      </h2>
+        <ol className="timeline-filmstrip">
+          {entries.map((entry, index) => (
+            <li
+              className="timeline-film-frame"
+              id={`timeline-entry-${entry.id}`}
+              key={entry.id}
+            >
+              <TimelineChapterCard
+                actorId={actor.userId}
+                canManage={actor.canManageCatalogue}
+                entry={entry}
+                sequence={index + 1}
+              />
+              <TimelineFilmMarker entry={entry} />
+            </li>
+          ))}
+        </ol>
+      </div>
     </div>
-    <div
-      aria-label="Cuộn phim các chương đã viết"
-      className="timeline-film-viewport mt-8 sm:mt-10"
-      tabIndex={0}
-    >
-      <ol className="timeline-filmstrip">
-        {chapterEntries.map((entry, index) => (
-          <li className="timeline-film-frame" id={`timeline-entry-${entry.id}`} key={entry.id}>
-            <TimelineChapterCard
-              actorId={actor.userId}
-              canManage={actor.canManageCatalogue}
-              entry={entry}
-              sequence={index + 2}
-            />
-            <TimelineFilmMarker entry={entry} />
-          </li>
-        ))}
-      </ol>
-    </div>
-  </div>
-</section>
+  </section>
+) : (
+  // Retain the current empty-state section unchanged.
+)}
 ```
 
-Do not retain `timeline-rail`, `timeline-entry`, or `timeline-entry--right`
-classes in JSX.
+The complete replacement must not retain the “Một chương đang mở”, “Điều mình
+đang cùng viết” or “Những chương đã viết” labels. The empty branch must retain
+its full existing JSX instead of the comment shown above.
 
-- [x] **Step 2: Add the date-and-title marker in the same module**
+- [x] **Step 3: Preserve the marker and card contract**
 
-Add after `RelationshipTimeline`:
+Do not modify `TimelineFilmMarker` or `TimelineChapterCard`. The call below is
+the only per-frame extension and keeps date semantics in the local component:
 
 ```tsx
-function TimelineFilmMarker({ entry }: { entry: TimelineEntry }) {
-  const dateLabel = entry.occurredOn ? (
-    <time className="timeline-film-marker-date" dateTime={entry.occurredOn}>
-      {entry.dateLabel}
-    </time>
-  ) : (
-    <p className="timeline-film-marker-date">{entry.dateLabel}</p>
-  );
-
-  return (
-    <div className="timeline-film-marker">
-      <span className="timeline-film-marker-dot" aria-hidden="true" />
-      {dateLabel}
-      <p className="timeline-film-marker-title">{entry.title}</p>
-    </div>
-  );
-}
+<TimelineFilmMarker entry={entry} />
 ```
 
-This preserves semantic dates when available, puts both required values below
-the frame, and does not change the title heading inside TimelineChapterCard.
+Each `TimelineChapterCard` must continue to receive `actorId`,
+`canManage`, `entry` and `sequence`; only `sequence` changes from `index + 2`
+to `index + 1`.
 
-- [x] **Step 3: Static inspect the server-only structure**
-
-Run: `rtk read src/features/timeline/presentation/relationship-timeline.tsx`
-
-Expected: the featured chapter is still rendered before the old chapters; each
-old entry has one `li`, card, marker, date label and title; no client hook,
-database call, or changed TimelineChapterCard prop exists.
-
-### Task 2: Replace the vertical rail CSS with the native film strip
+### Task 2: Confirm the shared film-strip styling has no featured variant
 
 **Files:**
-- Modify: `src/app/globals.css`
+- Inspect: `src/app/globals.css:630-740,1253-1275`
 
 **Interfaces:**
-- Consumes `.timeline-film-viewport`, `.timeline-filmstrip`,
-  `.timeline-film-frame`, `.timeline-film-marker`,
-  `.timeline-film-marker-dot`, `.timeline-film-marker-date`, and
-  `.timeline-film-marker-title` from Task 1.
-- Produces a one-row horizontal grid with equal-height frame columns and aligned
-  lower markers.
+- Consumes the existing `.timeline-film-viewport`, `.timeline-filmstrip`,
+  `.timeline-film-frame` and marker classes emitted in Task 1.
+- Produces no CSS changes unless inspection finds a selector that targets a
+  special first frame.
 
-- [x] **Step 1: Replace the existing vertical timeline rail block**
+- [x] **Step 1: Inspect frame and responsive selector scope**
 
-Remove the base selectors `.timeline-rail`, `.timeline-rail::before`,
-`.timeline-entry`, `.timeline-entry::before`, and the old standalone
-`.timeline-entry-card` block. Add the following base styles in their place:
+Run:
 
-```css
-.timeline-film-viewport {
-  margin-inline: -1.25rem;
-  padding-inline: 1.25rem;
-  padding-bottom: 0.65rem;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scrollbar-color: var(--color-accent) transparent;
-  touch-action: pan-x;
-}
-
-.timeline-filmstrip {
-  display: grid;
-  grid-auto-columns: 86vw;
-  grid-auto-flow: column;
-  grid-template-rows: minmax(0, 1fr);
-  gap: 1rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  scroll-snap-type: x mandatory;
-}
-
-.timeline-film-frame {
-  position: relative;
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  padding-block: 0.45rem;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  content-visibility: auto;
-  contain-intrinsic-size: auto 34rem;
-}
-
-.timeline-film-frame::before,
-.timeline-film-frame::after {
-  position: absolute;
-  right: 0.8rem;
-  left: 0.8rem;
-  height: 0.25rem;
-  content: "";
-  pointer-events: none;
-  background: radial-gradient(circle, rgb(101 12 28 / 24%) 1.5px, transparent 1.8px) 0 50% / 0.9rem 0.25rem repeat-x;
-}
-
-.timeline-film-frame::before { top: 0; }
-.timeline-film-frame::after { bottom: 0; }
-
-.timeline-film-frame .timeline-entry-card {
-  flex: 1;
-}
-
-.timeline-entry-card {
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-dialog);
-  padding: 1.25rem;
-  background-color: var(--theme-card-surface);
-  background-image: var(--theme-card-highlight);
-  box-shadow: var(--shadow-soft);
-}
-
-.timeline-film-marker {
-  position: relative;
-  min-height: 5.7rem;
-  margin-top: 1rem;
-  border-top: 1px solid var(--theme-timeline-rail);
-  padding: 1rem 0.35rem 0;
-}
-
-.timeline-film-marker-dot {
-  position: absolute;
-  top: -0.43rem;
-  left: 0.8rem;
-  width: 0.82rem;
-  height: 0.82rem;
-  border: 3px solid var(--color-paper);
-  border-radius: 999px;
-  background: var(--color-brand);
-  box-shadow: var(--theme-entry-shadow);
-}
-
-.timeline-film-marker-date,
-.timeline-film-marker-title {
-  margin: 0;
-}
-
-.timeline-film-marker-date {
-  color: var(--color-accent);
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.13em;
-  line-height: 1.35;
-  text-transform: uppercase;
-}
-
-.timeline-film-marker-title {
-  display: -webkit-box;
-  max-width: 22rem;
-  margin-top: 0.35rem;
-  overflow: hidden;
-  color: var(--color-brand-strong);
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: -0.025em;
-  line-height: 1.35;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
+```bash
+rg -n "timeline-film|timeline-entry-card|first-child|nth-child|featured" src/app/globals.css
 ```
 
-- [x] **Step 2: Replace the old `@media (min-width: 768px)` timeline rules**
-
-Delete only the `.timeline-rail`, `.timeline-entry`,
-`.timeline-entry--right`, and `.timeline-entry-card` declarations inside that
-media block. Add these responsive rules outside or inside their own media blocks:
+Expected: film-strip selectors style every `.timeline-film-frame` identically;
+there is no first-frame/featured selector. Existing viewport interaction rules
+continue to include:
 
 ```css
-@media (min-width: 640px) {
-  .timeline-film-viewport {
-    margin-inline: 0;
-    padding-inline: 0;
-  }
-
-  .timeline-filmstrip {
-    grid-auto-columns: minmax(23rem, 26rem);
-    gap: 1.25rem;
-  }
-}
-
-@media (min-width: 768px) {
-  .timeline-entry-card {
-    padding: 1.5rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .timeline-filmstrip {
-    gap: 1.5rem;
-  }
-}
+overflow-x: auto;
+overscroll-behavior-x: contain;
+touch-action: pan-x;
+scroll-snap-type: x mandatory;
 ```
 
-Keep unrelated selectors in the existing 768px media block exactly as they are.
+- [x] **Step 2: Leave global CSS unchanged when the contract already fits**
 
-- [x] **Step 3: Static inspect interaction and alignment rules**
+No CSS edit is required for equal frames: `.timeline-filmstrip` already places
+each frame in the same auto-column grid, and `.timeline-film-frame` already
+makes every card flex into the same row before its marker. Do not add selector
+branches for the first entry.
 
-Run: `rg -n "timeline-film|timeline-rail|timeline-entry--right|scroll-snap|overscroll-behavior|touch-action|content-visibility" src/app/globals.css src/features/timeline/presentation/relationship-timeline.tsx`
-
-Expected: only film-strip selectors remain; the viewport has native horizontal
-interaction, each frame is a vertical flex container, card flexes into the
-shared row, and the marker carries a lower rail and dot.
-
-### Task 3: Scope review and source-only handoff
+### Task 3: Source-only scope review and documentation status
 
 **Files:**
-- Modify: `docs/superpowers/specs/2026-07-23-timeline-filmstrip-design.md` (status)
-- Modify: `docs/superpowers/plans/2026-07-23-timeline-filmstrip.md` (mark completed boxes)
-- Inspect: `src/features/timeline/presentation/relationship-timeline.tsx` and `src/app/globals.css`
+- Modify: `docs/superpowers/specs/2026-07-23-timeline-filmstrip-design.md:3`
+- Modify: `docs/superpowers/plans/2026-07-23-timeline-filmstrip.md`
+- Inspect: `src/features/timeline/presentation/relationship-timeline.tsx`, `src/app/globals.css`
 
 **Interfaces:**
-- Consumes the approved layout and CSS class contract from Tasks 1–2.
-- Produces source-only evidence and a verification-boundary record.
+- Consumes the equal film-strip source contract from Tasks 1–2.
+- Produces a scoped source/diff review record without runtime claims.
 
-- [x] **Step 1: Re-read the approved design against the source**
+- [x] **Step 1: Mark the approved spec as implemented**
 
-Check: opening chapter remains separate, only old chapters map to frames,
-native scroll-snap/scrollbar/touch pan are present, marker includes date+title,
-frame markers align through shared grid row + flex, no JavaScript carousel or
-data/security change exists, and no animation was added.
+Change its status line to:
 
-- [x] **Step 2: Inspect the semantic diff**
+```md
+**Trạng thái:** Đã được người dùng duyệt và triển khai theo đặc tả này.
+```
 
-Run: `git diff --ignore-space-at-eol --unified=0 -- src/features/timeline/presentation/relationship-timeline.tsx src/app/globals.css docs/superpowers/specs/2026-07-23-timeline-filmstrip-design.md docs/superpowers/plans/2026-07-23-timeline-filmstrip.md`
+- [x] **Step 2: Perform static source checks**
 
-Expected: only the film-strip JSX/CSS and related documents appear. Do not use
-`git diff --check`, because the workspace has pre-existing line-ending noise.
+Run:
 
-- [x] **Step 3: State verification limits honestly**
+```bash
+rg -n "TimelineFeaturedChapter|featuredEntry|chapterEntries|Một chương đang mở|Điều mình đang cùng viết|Những chương đã viết" src/features/timeline/presentation/relationship-timeline.tsx
+```
 
-State that static source and scoped-diff review were run, while test, lint,
-build and browser interaction QA were intentionally not run by the user's
-explicit request. Do not claim runtime/visual verification.
+Expected: no results. Then run:
+
+```bash
+rg -n "entries\.map|sequence=\{index \+ 1\}|TimelineFilmMarker|timeline-film-viewport|timeline-filmstrip" src/features/timeline/presentation/relationship-timeline.tsx
+```
+
+Expected: all entries map to one list, start at sequence 1 and receive the
+existing marker.
+
+- [x] **Step 3: Review the scoped semantic diff and document completion**
+
+Run:
+
+```bash
+git diff --ignore-space-at-eol --unified=0 -- src/features/timeline/presentation/relationship-timeline.tsx src/app/globals.css docs/superpowers/specs/2026-07-23-timeline-filmstrip-design.md docs/superpowers/plans/2026-07-23-timeline-filmstrip.md
+```
+
+Expected: semantic source changes are limited to the equal film strip and
+associated documents; no Supabase, permission or route change appears. Mark
+the completed checkboxes in this plan. Report only static source/diff review;
+do not run or claim test, lint, build or browser QA.
