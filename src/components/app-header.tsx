@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Heart, ShieldCheck } from "lucide-react";
+import { NavigationLink } from "@/components/ui/navigation-link";
 import type { ActiveActor } from "@/modules/identity/domain/current-actor";
 
 interface AppHeaderProps {
@@ -37,47 +38,51 @@ export function AppHeader({ actor, activeSection = "catalogue" }: AppHeaderProps
         </Link>
 
         <nav aria-label="Điều hướng chính" className="order-3 flex w-full flex-wrap gap-x-5 sm:order-none sm:w-auto">
-          <Link
+          <NavigationLink
             className={`inline-flex min-h-10 items-center border-b-2 px-1 text-sm font-semibold transition ${
               activeSection === "catalogue"
                 ? "border-[var(--color-brand)] text-[var(--color-brand)]"
                 : "border-transparent text-[var(--color-muted)] hover:text-[var(--color-brand-strong)]"
             }`}
             href="/#collection"
+            prefetch
           >
             Bộ sưu tập
-          </Link>
-          <Link
+          </NavigationLink>
+          <NavigationLink
             className={`inline-flex min-h-10 items-center border-b-2 px-1 text-sm font-semibold transition ${
               activeSection === "journey"
                 ? "border-[var(--color-brand)] text-[var(--color-brand)]"
                 : "border-transparent text-[var(--color-muted)] hover:text-[var(--color-brand-strong)]"
             }`}
             href="/hanh-trinh"
+            prefetch
           >
             Hành trình
-          </Link>
-          <Link
+          </NavigationLink>
+          <NavigationLink
             className={`inline-flex min-h-10 items-center border-b-2 px-1 text-sm font-semibold transition ${
               activeSection === "letters"
                 ? "border-[var(--color-brand)] text-[var(--color-brand)]"
                 : "border-transparent text-[var(--color-muted)] hover:text-[var(--color-brand-strong)]"
             }`}
             href="/thu-hen-ngay-mo"
+            prefetch
           >
             Thư hẹn ngày mở
-          </Link>
+          </NavigationLink>
           {actor.canManageCatalogue ? (
-            <Link
+            <NavigationLink
               className={`inline-flex min-h-10 items-center border-b-2 px-1 text-sm font-semibold transition ${
                 activeSection === "admin"
                   ? "border-[var(--color-brand)] text-[var(--color-brand)]"
                   : "border-transparent text-[var(--color-muted)] hover:text-[var(--color-brand-strong)]"
               }`}
               href="/admin"
+              prefetch
             >
               Quản trị
-            </Link>
+            </NavigationLink>
           ) : null}
         </nav>
 

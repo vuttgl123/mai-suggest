@@ -24,7 +24,11 @@ export function CatalogueFeaturedItemCard({
       <div className="relative overflow-hidden">
         {image ? (
           <ViewTransition default="none" name={`item-image-${item.id}`} share="morph">
-            <CatalogueItemImage alt={image.altText ?? item.title} src={image.url} />
+            <CatalogueItemImage
+              alt={image.altText ?? item.title}
+              priority
+              src={image.url}
+            />
           </ViewTransition>
         ) : (
           <div className="relative flex aspect-[4/5] items-center justify-center overflow-hidden bg-[linear-gradient(145deg,_var(--color-brand-soft),_var(--color-paper)_62%,_rgb(169_104_82_/_18%))]">

@@ -519,6 +519,29 @@ label {
   touch-action: manipulation;
 }
 
+.navigation-link {
+  position: relative;
+}
+
+.navigation-link__pending {
+  position: absolute;
+  right: 0.45rem;
+  bottom: 0.18rem;
+  left: 0.45rem;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--color-accent);
+  opacity: 0;
+  transform: scaleX(0.2);
+  transform-origin: left;
+  transition: opacity 100ms ease, transform 160ms ease;
+}
+
+.navigation-link__pending[data-pending] {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
 ::selection {
   background: var(--soft-rose);
   color: var(--deep-wine);
@@ -1237,7 +1260,7 @@ label {
 }
 
 ::view-transition-new(.fade-in) {
-  animation: var(--duration-enter) ease-out var(--duration-exit) both fade;
+  animation: var(--duration-enter) ease-out both fade;
 }
 
 ::view-transition-old(.slide-down) {

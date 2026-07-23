@@ -40,6 +40,7 @@ export function CatalogueDetailHero({
             >
               <CatalogueItemImage
                 alt={item.primaryImage.altText ?? item.title}
+                priority
                 src={item.primaryImage.url}
               />
             </ViewTransition>

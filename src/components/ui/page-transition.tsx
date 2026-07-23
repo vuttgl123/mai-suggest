@@ -9,14 +9,14 @@ export function PageTransition({ children }: { children: ReactNode }) {
         "nav-back": "nav-back",
         "page-forward": "nav-forward",
         "page-back": "nav-back",
-        default: "slide-up",
+        default: "fade-in",
       }}
       exit={{
         "nav-forward": "nav-forward",
         "nav-back": "nav-back",
         "page-forward": "nav-forward",
         "page-back": "nav-back",
-        default: "slide-down",
+        default: "fade-out",
       }}
     >
       {children}

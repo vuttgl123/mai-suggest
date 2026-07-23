@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 
-import Link from "next/link";
 import { ArrowRight, BookOpen } from "lucide-react";
+import { NavigationLink } from "@/components/ui/navigation-link";
 import { createCataloguePath } from "@/features/catalogue/lib/catalogue-navigation";
 import type { CatalogueCategory } from "@/modules/catalogue/domain/catalogue-read-models";
 
@@ -26,7 +26,7 @@ export function CatalogueChapterRail({
             Mỗi chương là một cách khác để tìm lại điều làm ngày thường trở nên đặc biệt.
           </p>
         </div>
-        <Link
+        <NavigationLink
           aria-current={selectedCategorySlug === null ? "page" : undefined}
           className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition duration-[var(--duration-fast)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[var(--color-focus)] ${
             selectedCategorySlug === null
@@ -38,7 +38,7 @@ export function CatalogueChapterRail({
         >
           Xem tất cả
           <ArrowRight size={16} aria-hidden="true" />
-        </Link>
+        </NavigationLink>
       </div>
 
       {categories.length ? (
@@ -47,7 +47,7 @@ export function CatalogueChapterRail({
             const isActive = category.slug === selectedCategorySlug;
 
             return (
-              <Link
+              <NavigationLink
                 aria-current={isActive ? "page" : undefined}
                 className={`group relative isolate min-h-36 overflow-hidden rounded-[var(--radius-card)] border p-4 shadow-[var(--shadow-soft)] transition duration-300 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[var(--color-focus)] ${
                   isActive
@@ -104,7 +104,7 @@ export function CatalogueChapterRail({
                   size={18}
                   aria-hidden="true"
                 />
-              </Link>
+              </NavigationLink>
             );
           })}
         </nav>
