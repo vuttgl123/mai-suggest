@@ -75,30 +75,44 @@ export function RelationshipTimeline({
             </section>
 
             {chapterEntries.length ? (
-              <section className="border-b border-[var(--color-border)] bg-[rgb(255_252_248_/_62%)] py-11 sm:py-15">
+              <section
+                aria-labelledby="past-timeline-heading"
+                className="border-b border-[var(--color-border)] bg-[rgb(255_252_248_/_62%)] py-11 sm:py-15"
+              >
                 <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
                   <div className="mx-auto max-w-2xl text-center">
                     <p className="diary-kicker">Lật lại những trang trước</p>
-                    <h2 className="font-display mt-2 text-balance text-3xl font-semibold tracking-[-0.05em] text-[var(--color-brand-strong)] sm:text-4xl">
+                    <h2
+                      className="font-display mt-2 text-balance text-3xl font-semibold tracking-[-0.05em] text-[var(--color-brand-strong)] sm:text-4xl"
+                      id="past-timeline-heading"
+                    >
                       Những chương đã viết
                     </h2>
                   </div>
-                  <ol className="timeline-rail mt-8 sm:mt-10">
-                    {chapterEntries.map((entry, index) => (
-                      <li
-                        className={`timeline-entry ${index % 2 ? "timeline-entry--right" : ""}`}
-                        id={`timeline-entry-${entry.id}`}
-                        key={entry.id}
-                      >
-                        <TimelineChapterCard
-                          actorId={actor.userId}
-                          canManage={actor.canManageCatalogue}
-                          entry={entry}
-                          sequence={index + 2}
-                        />
-                      </li>
-                    ))}
-                  </ol>
+                  <div
+                    aria-label="Cuộn phim các chương đã viết"
+                    className="timeline-film-viewport mt-8 sm:mt-10"
+                    role="region"
+                    tabIndex={0}
+                  >
+                    <ol className="timeline-filmstrip">
+                      {chapterEntries.map((entry, index) => (
+                        <li
+                          className="timeline-film-frame"
+                          id={`timeline-entry-${entry.id}`}
+                          key={entry.id}
+                        >
+                          <TimelineChapterCard
+                            actorId={actor.userId}
+                            canManage={actor.canManageCatalogue}
+                            entry={entry}
+                            sequence={index + 2}
+                          />
+                          <TimelineFilmMarker entry={entry} />
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
                 </div>
               </section>
             ) : null}
@@ -126,6 +140,24 @@ export function RelationshipTimeline({
           </section>
         )}
       </main>
+    </div>
+  );
+}
+
+function TimelineFilmMarker({ entry }: { entry: TimelineEntry }) {
+  const dateLabel = entry.occurredOn ? (
+    <time className="timeline-film-marker-date" dateTime={entry.occurredOn}>
+      {entry.dateLabel}
+    </time>
+  ) : (
+    <p className="timeline-film-marker-date">{entry.dateLabel}</p>
+  );
+
+  return (
+    <div className="timeline-film-marker">
+      <span className="timeline-film-marker-dot" aria-hidden="true" />
+      {dateLabel}
+      <p className="timeline-film-marker-title">{entry.title}</p>
     </div>
   );
 }
