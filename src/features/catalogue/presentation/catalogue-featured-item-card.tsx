@@ -17,14 +17,18 @@ export function CatalogueFeaturedItemCard({
 
   return (
     <Link
-      className="group grid overflow-hidden rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--theme-card-surface)] shadow-[var(--shadow-card)] transition duration-300 hover:-translate-y-0.5 hover:border-[var(--color-accent)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-focus)] md:grid-cols-[minmax(13rem,0.8fr)_minmax(0,1fr)]"
+      className="group grid overflow-hidden rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--theme-card-surface)] shadow-[var(--shadow-card)] transition duration-300 hover:-translate-y-0.5 hover:border-[var(--color-accent)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-focus)] md:grid-cols-[minmax(13rem,0.8fr)_minmax(0,1fr)] md:items-stretch"
       href={`/catalogue/${encodeURIComponent(item.slug)}`}
       transitionTypes={["nav-forward"]}
     >
       <div className="relative overflow-hidden">
         {image ? (
           <ViewTransition default="none" name={`item-image-${item.id}`} share="morph">
-            <CatalogueItemImage alt={image.altText ?? item.title} src={image.url} />
+            <CatalogueItemImage
+              alt={image.altText ?? item.title}
+              src={image.url}
+              variant="content-fill"
+            />
           </ViewTransition>
         ) : (
           <div className="relative flex aspect-[4/5] items-center justify-center overflow-hidden bg-[linear-gradient(145deg,_var(--color-brand-soft),_var(--color-paper)_62%,_rgb(169_104_82_/_18%))]">

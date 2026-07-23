@@ -9,19 +9,34 @@
 import { Heart } from "lucide-react";
 import { useState } from "react";
 
+type CatalogueItemImageVariant = "portrait" | "content-fill";
+
 interface CatalogueItemImageProps {
   src: string;
   alt: string;
+  variant?: CatalogueItemImageVariant;
 }
 
-export function CatalogueItemImage({ src, alt }: CatalogueItemImageProps) {
+export function CatalogueItemImage({
+  src,
+  alt,
+  variant = "portrait",
+}: CatalogueItemImageProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const frameClassName =
+    variant === "content-fill"
+      ? "relative h-full min-h-64 overflow-hidden bg-[var(--color-skeleton)]"
+      : "relative aspect-[4/5] overflow-hidden bg-[var(--color-skeleton)]";
+  const fallbackClassName =
+    variant === "content-fill"
+      ? "flex h-full min-h-64 flex-col items-center justify-center gap-2 bg-[var(--color-skeleton)] px-4 text-center text-[var(--color-muted)]"
+      : "flex aspect-[4/5] flex-col items-center justify-center gap-2 bg-[var(--color-skeleton)] px-4 text-center text-[var(--color-muted)]";
 
   if (hasError) {
     return (
       <div
-        className="flex aspect-[4/5] flex-col items-center justify-center gap-2 bg-[var(--color-skeleton)] px-4 text-center text-[var(--color-muted)]"
+        className={fallbackClassName}
         role="img"
         aria-label={alt}
       >
@@ -34,7 +49,7 @@ export function CatalogueItemImage({ src, alt }: CatalogueItemImageProps) {
   return (
     <div
       aria-busy={isLoading || undefined}
-      className="relative aspect-[4/5] overflow-hidden bg-[var(--color-skeleton)]"
+      className={frameClassName}
     >
       <img
         alt={alt}

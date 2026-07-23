@@ -28,13 +28,17 @@ export function TimelineFeaturedChapter({
       <div
         className={`relative ${
           hasImage
-            ? "grid lg:grid-cols-[minmax(15rem,0.86fr)_minmax(0,1fr)]"
+            ? "grid lg:grid-cols-[minmax(15rem,0.86fr)_minmax(0,1fr)] lg:items-stretch"
             : ""
         }`}
       >
         {entry.imageUrl && entry.imageAltText ? (
           <div className="overflow-hidden border-b border-[var(--color-border)] lg:border-b-0 lg:border-r">
-            <CatalogueItemImage alt={entry.imageAltText} src={entry.imageUrl} />
+            <CatalogueItemImage
+              alt={entry.imageAltText}
+              src={entry.imageUrl}
+              variant="content-fill"
+            />
           </div>
         ) : null}
 
