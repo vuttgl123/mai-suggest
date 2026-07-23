@@ -6,12 +6,14 @@ interface CataloguePaginationProps {
   categorySlug: string | null;
   page: number;
   pageCount: number;
+  query: string | null;
 }
 
 export function CataloguePagination({
   categorySlug,
   page,
   pageCount,
+  query,
 }: CataloguePaginationProps) {
   if (pageCount <= 1) return null;
 
@@ -29,7 +31,8 @@ export function CataloguePagination({
         {page > 1 ? (
           <Link
             className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-paper)] px-4 text-sm font-semibold text-[var(--color-brand)] transition hover:-translate-y-0.5 hover:border-[var(--color-accent)]"
-            href={createCataloguePath({ categorySlug, page: page - 1 })}
+            href={createCataloguePath({ categorySlug, page: page - 1, query })}
+            scroll={false}
             transitionTypes={["page-back"]}
           >
             <ChevronLeft size={16} aria-hidden="true" />
@@ -52,8 +55,9 @@ export function CataloguePagination({
                     ? "bg-[var(--color-brand)] text-white shadow-[0_8px_18px_rgb(49_5_12_/_22%)]"
                     : "text-[var(--color-muted)] hover:bg-[var(--color-brand-soft)] hover:text-[var(--color-brand)]"
                 }`}
-                href={createCataloguePath({ categorySlug, page: value })}
+                href={createCataloguePath({ categorySlug, page: value, query })}
                 key={value}
+                scroll={false}
                 transitionTypes={[value > page ? "page-forward" : "page-back"]}
               >
                 {value}
@@ -69,7 +73,8 @@ export function CataloguePagination({
         {page < pageCount ? (
           <Link
             className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-paper)] px-4 text-sm font-semibold text-[var(--color-brand)] transition hover:-translate-y-0.5 hover:border-[var(--color-accent)]"
-            href={createCataloguePath({ categorySlug, page: page + 1 })}
+            href={createCataloguePath({ categorySlug, page: page + 1, query })}
+            scroll={false}
             transitionTypes={["page-forward"]}
           >
             Sau

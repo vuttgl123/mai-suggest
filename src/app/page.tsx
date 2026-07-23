@@ -2,6 +2,7 @@ import { CatalogueHome } from "@/features/catalogue/presentation/catalogue-home"
 import { PageTransition } from "@/components/ui/page-transition";
 import {
   firstSearchParam,
+  parseCatalogueSearchQuery,
   parsePositivePage,
   PUBLIC_PAGE_SIZE,
 } from "@/features/catalogue/lib/catalogue-navigation";
@@ -13,6 +14,7 @@ interface HomePageProps {
   searchParams: Promise<{
     category?: string | string[];
     page?: string | string[];
+    q?: string | string[];
   }>;
 }
 
@@ -22,13 +24,19 @@ export default async function Home({ searchParams }: HomePageProps) {
     requireActivePageAccess(),
   ]);
   const categorySlug = firstSearchParam(params.category);
+  const searchQuery = parseCatalogueSearchQuery(params.q);
   const requestedPage = parsePositivePage(params.page);
 
   const [categoriesResult, itemsResult] = await Promise.all([
     backend.listVisibleCategories.execute(actor),
     backend.listVisibleItemPage.execute(
       actor,
-      { categorySlug: categorySlug ?? undefined, page: requestedPage, pageSize: PUBLIC_PAGE_SIZE },
+      {
+        categorySlug: categorySlug ?? undefined,
+        page: requestedPage,
+        pageSize: PUBLIC_PAGE_SIZE,
+        query: searchQuery ?? undefined,
+      },
     ),
   ]);
 
@@ -42,6 +50,7 @@ export default async function Home({ searchParams }: HomePageProps) {
           categorySlug: categorySlug ?? undefined,
           page: itemsResult.value.pageCount,
           pageSize: PUBLIC_PAGE_SIZE,
+          query: searchQuery ?? undefined,
         })
       : itemsResult;
 
@@ -55,6 +64,7 @@ export default async function Home({ searchParams }: HomePageProps) {
         actor={actor}
         categories={categoriesResult.value}
         itemPage={itemPage.value}
+        searchQuery={searchQuery}
         selectedCategorySlug={categorySlug}
       />
     </PageTransition>

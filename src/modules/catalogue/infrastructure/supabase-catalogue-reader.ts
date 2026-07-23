@@ -20,6 +20,7 @@ import {
   toCatalogueItemSummary,
   toCatalogueLink,
 } from "@/modules/catalogue/infrastructure/catalogue-mappers";
+import { normalizeCatalogueSearchQuery } from "@/modules/catalogue/domain/catalogue-search-query";
 import type { Database } from "@/lib/supabase/database.types";
 
 const CATEGORY_COLUMNS = "id,slug,name,description,icon,cover_image_url,sort_order";
@@ -111,12 +112,21 @@ export class SupabaseCatalogueReader implements CatalogueReader {
 
     const from = (criteria.page - 1) * criteria.pageSize;
     const to = from + criteria.pageSize - 1;
-    const request = categoryId.value
-      ? this.client
-          .from("items")
-          .select(ITEM_SUMMARY_COLUMNS, { count: "exact" })
-          .eq("category_id", categoryId.value)
-      : this.client.from("items").select(ITEM_SUMMARY_COLUMNS, { count: "exact" });
+    let request = this.client
+      .from("items")
+      .select(ITEM_SUMMARY_COLUMNS, { count: "exact" });
+
+    if (categoryId.value) {
+      request = request.eq("category_id", categoryId.value);
+    }
+
+    const searchQuery = normalizeCatalogueSearchQuery(criteria.query);
+    if (searchQuery) {
+      request = request.or(
+        `title.ilike.%${searchQuery}%,summary.ilike.%${searchQuery}%`,
+      );
+    }
+
     const { data: itemRows, error: itemError, count } = await request
       .order("title")
       .range(from, to);

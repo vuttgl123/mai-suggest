@@ -6,6 +6,7 @@ import { CatalogueChapterRail } from "@/features/catalogue/presentation/catalogu
 import { CatalogueFeaturedItemCard } from "@/features/catalogue/presentation/catalogue-featured-item-card";
 import { CatalogueItemCard } from "@/features/catalogue/presentation/catalogue-item-card";
 import { CataloguePagination } from "@/features/catalogue/presentation/catalogue-pagination";
+import { CatalogueSearch } from "@/features/catalogue/presentation/catalogue-search";
 import { CinematicDiaryIntro } from "@/features/catalogue/presentation/cinematic-diary-intro";
 import type {
   CatalogueCategory,
@@ -17,6 +18,7 @@ interface CatalogueHomeProps {
   actor: ActiveActor;
   categories: CatalogueCategory[];
   itemPage: CatalogueItemPage;
+  searchQuery: string | null;
   selectedCategorySlug: string | null;
 }
 
@@ -24,6 +26,7 @@ export function CatalogueHome({
   actor,
   categories,
   itemPage,
+  searchQuery,
   selectedCategorySlug,
 }: CatalogueHomeProps) {
   const categoryNames = new Map(
@@ -85,12 +88,22 @@ export function CatalogueHome({
         </section>
 
         <div id="collection" className="border-y border-[var(--color-border)] bg-[rgb(255_250_247_/_55%)]">
-          <CatalogueChapterRail categories={categories} selectedCategorySlug={selectedCategorySlug} />
+          <CatalogueChapterRail
+            categories={categories}
+            query={searchQuery}
+            selectedCategorySlug={selectedCategorySlug}
+          />
         </div>
 
         <section className="mx-auto max-w-7xl px-5 py-9 sm:px-8 sm:py-11 lg:px-10 lg:py-14">
-          {itemPage.items.length ? (
-            <>
+          <CatalogueSearch
+            categorySlug={selectedCategorySlug}
+            query={searchQuery}
+            resultCount={itemPage.total}
+          />
+          <div className="mt-8">
+            {itemPage.items.length ? (
+              <>
               <ViewTransition
                 default="none"
                 enter={{
@@ -105,7 +118,7 @@ export function CatalogueHome({
                   "page-back": "nav-back",
                   default: "none",
                 }}
-                key={`${selectedCategorySlug ?? "all"}-${itemPage.page}`}
+                key={`${selectedCategorySlug ?? "all"}-${searchQuery ?? "all"}-${itemPage.page}`}
               >
                 <div>
                   {featuredItem ? (
@@ -154,11 +167,17 @@ export function CatalogueHome({
                 categorySlug={selectedCategorySlug}
                 page={itemPage.page}
                 pageCount={itemPage.pageCount}
+                query={searchQuery}
               />
-            </>
-          ) : (
-            <EmptyCollection actor={actor} categoryName={selectedCategory?.name ?? null} />
-          )}
+              </>
+            ) : (
+              <EmptyCollection
+                actor={actor}
+                categoryName={selectedCategory?.name ?? null}
+                searchQuery={searchQuery}
+              />
+            )}
+          </div>
         </section>
       </main>
     </div>
@@ -168,9 +187,11 @@ export function CatalogueHome({
 function EmptyCollection({
   actor,
   categoryName,
+  searchQuery,
 }: {
   actor: ActiveActor;
   categoryName: string | null;
+  searchQuery: string | null;
 }) {
   return (
     <div className="diary-wash mx-auto max-w-2xl rounded-[var(--radius-dialog)] border border-[var(--color-border)] px-6 py-10 text-center shadow-[var(--shadow-soft)] sm:px-10 sm:py-12">
@@ -181,12 +202,18 @@ function EmptyCollection({
         <Heart size={20} fill="currentColor" strokeWidth={1.3} />
       </span>
       <h3 className="font-display mt-5 text-balance text-2xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
-        {categoryName ? `${categoryName} đang chờ một điều đẹp đẽ.` : "Bộ sưu tập đang chờ được bắt đầu."}
+        {searchQuery
+          ? `Chưa tìm thấy điều nào cho “${searchQuery}”.`
+          : categoryName
+            ? `${categoryName} đang chờ một điều đẹp đẽ.`
+            : "Bộ sưu tập đang chờ được bắt đầu."}
       </h3>
       <p className="mx-auto mt-4 max-w-md text-sm leading-7 text-[var(--color-muted)]">
-        {actor.canManageCatalogue
-          ? "Khi em thêm nội dung từ khu vực quản trị, những điều được chọn sẽ xuất hiện tại đây."
-          : "Những điều được chọn sẽ xuất hiện ở đây khi bộ sưu tập được cập nhật."}
+        {searchQuery
+          ? "Em thử đổi một vài từ khác, hoặc mở lại toàn bộ những điều đã lưu nhé."
+          : actor.canManageCatalogue
+            ? "Khi em thêm nội dung từ khu vực quản trị, những điều được chọn sẽ xuất hiện tại đây."
+            : "Những điều được chọn sẽ xuất hiện ở đây khi bộ sưu tập được cập nhật."}
       </p>
     </div>
   );

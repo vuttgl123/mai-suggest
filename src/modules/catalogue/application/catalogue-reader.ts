@@ -13,6 +13,7 @@ export interface CatalogueItemCriteria {
 export interface CatalogueItemPageCriteria extends CatalogueItemCriteria {
   page: number;
   pageSize: number;
+  query?: string;
 }
 
 export interface CatalogueReader {

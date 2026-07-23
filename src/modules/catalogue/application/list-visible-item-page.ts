@@ -6,6 +6,7 @@ import type {
   CatalogueItemPageCriteria,
   CatalogueReader,
 } from "@/modules/catalogue/application/catalogue-reader";
+import { normalizeCatalogueSearchQuery } from "@/modules/catalogue/domain/catalogue-search-query";
 import type { CurrentActor } from "@/modules/identity/domain/current-actor";
 import { requireActiveActor } from "@/modules/identity/domain/current-actor";
 
@@ -22,7 +23,10 @@ export class ListVisibleItemPage {
       return failure("VALIDATION_FAILED");
     }
 
-    return this.catalogueReader.listItemPage(criteria);
+    return this.catalogueReader.listItemPage({
+      ...criteria,
+      query: normalizeCatalogueSearchQuery(criteria.query) ?? undefined,
+    });
   }
 }
 

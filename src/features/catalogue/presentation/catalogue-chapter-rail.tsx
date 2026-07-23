@@ -7,11 +7,13 @@ import type { CatalogueCategory } from "@/modules/catalogue/domain/catalogue-rea
 
 interface CatalogueChapterRailProps {
   categories: CatalogueCategory[];
+  query: string | null;
   selectedCategorySlug: string | null;
 }
 
 export function CatalogueChapterRail({
   categories,
+  query,
   selectedCategorySlug,
 }: CatalogueChapterRailProps) {
   return (
@@ -33,7 +35,8 @@ export function CatalogueChapterRail({
               ? "border-[var(--color-brand)] bg-[var(--color-brand)] text-white shadow-[var(--theme-button-shadow)]"
               : "border-[var(--color-border)] bg-[var(--theme-control-surface)] text-[var(--color-brand)] hover:-translate-y-0.5 hover:border-[var(--color-accent)]"
           }`}
-          href={createCataloguePath({ categorySlug: null, page: 1 })}
+          href={createCataloguePath({ categorySlug: null, page: 1, query })}
+          scroll={false}
           transitionTypes={["collection-change"]}
         >
           Xem tất cả
@@ -54,8 +57,13 @@ export function CatalogueChapterRail({
                     ? "border-[var(--color-brand)] bg-[var(--color-brand)] text-white shadow-[var(--theme-button-shadow)]"
                     : "border-[var(--color-border)] bg-[var(--theme-card-surface)] text-[var(--color-brand-strong)] hover:border-[var(--color-accent)] hover:shadow-[var(--shadow-card)]"
                 }`}
-                href={createCataloguePath({ categorySlug: category.slug, page: 1 })}
+                href={createCataloguePath({
+                  categorySlug: category.slug,
+                  page: 1,
+                  query,
+                })}
                 key={category.id}
+                scroll={false}
                 transitionTypes={["collection-change"]}
               >
                 {category.coverImageUrl ? (
