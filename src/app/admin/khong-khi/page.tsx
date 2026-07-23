@@ -1,27 +1,14 @@
-import { redirect } from "next/navigation";
 import { AppHeader } from "@/components/app-header";
 import { PageTransition } from "@/components/ui/page-transition";
 import { AdminSiteTheme } from "@/features/site-theme/presentation/admin-site-theme";
-import { createServerBackend } from "@/lib/backend/create-server-backend";
-import { resolveActivePageAccess } from "@/modules/identity/presentation/active-page-access";
+import { requireCatalogueOwnerPageAccess } from "@/lib/backend/require-page-access";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminSiteThemePage() {
-  const backend = await createServerBackend();
-  const access = resolveActivePageAccess(
-    await backend.getCurrentActor.execute(),
-  );
+  const { actor, backend } = await requireCatalogueOwnerPageAccess();
 
-  if (access.kind === "redirect") {
-    redirect(access.to);
-  }
-
-  if (!access.actor.canManageCatalogue) {
-    redirect("/access-denied");
-  }
-
-  const management = await backend.getManagedSiteTheme.execute(access.actor);
+  const management = await backend.getManagedSiteTheme.execute(actor);
   if (!management.ok) {
     throw new Error("Unable to load owner site theme management.");
   }
@@ -35,7 +22,7 @@ export default async function AdminSiteThemePage() {
         >
           Đi tới quản trị không khí giao diện
         </a>
-        <AppHeader activeSection="admin" actor={access.actor} />
+        <AppHeader activeSection="admin" actor={actor} />
         <AdminSiteTheme {...management.value} />
       </div>
     </PageTransition>

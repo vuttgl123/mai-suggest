@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import { CatalogueHome } from "@/features/catalogue/presentation/catalogue-home";
 import { PageTransition } from "@/components/ui/page-transition";
 import {
@@ -6,8 +5,7 @@ import {
   parsePositivePage,
   PUBLIC_PAGE_SIZE,
 } from "@/features/catalogue/lib/catalogue-navigation";
-import { createServerBackend } from "@/lib/backend/create-server-backend";
-import { resolveActivePageAccess } from "@/modules/identity/presentation/active-page-access";
+import { requireActivePageAccess } from "@/lib/backend/require-page-access";
 
 export const dynamic = "force-dynamic";
 
@@ -19,24 +17,17 @@ interface HomePageProps {
 }
 
 export default async function Home({ searchParams }: HomePageProps) {
-  const [params, backend] = await Promise.all([
+  const [params, { actor, backend }] = await Promise.all([
     searchParams,
-    createServerBackend(),
+    requireActivePageAccess(),
   ]);
   const categorySlug = firstSearchParam(params.category);
   const requestedPage = parsePositivePage(params.page);
-  const access = resolveActivePageAccess(
-    await backend.getCurrentActor.execute(),
-  );
-
-  if (access.kind === "redirect") {
-    redirect(access.to);
-  }
 
   const [categoriesResult, itemsResult] = await Promise.all([
-    backend.listVisibleCategories.execute(access.actor),
+    backend.listVisibleCategories.execute(actor),
     backend.listVisibleItemPage.execute(
-      access.actor,
+      actor,
       { categorySlug: categorySlug ?? undefined, page: requestedPage, pageSize: PUBLIC_PAGE_SIZE },
     ),
   ]);
@@ -47,7 +38,7 @@ export default async function Home({ searchParams }: HomePageProps) {
 
   const itemPage =
     itemsResult.value.pageCount > 0 && requestedPage > itemsResult.value.pageCount
-      ? await backend.listVisibleItemPage.execute(access.actor, {
+      ? await backend.listVisibleItemPage.execute(actor, {
           categorySlug: categorySlug ?? undefined,
           page: itemsResult.value.pageCount,
           pageSize: PUBLIC_PAGE_SIZE,
@@ -61,7 +52,7 @@ export default async function Home({ searchParams }: HomePageProps) {
   return (
     <PageTransition>
       <CatalogueHome
-        actor={access.actor}
+        actor={actor}
         categories={categoriesResult.value}
         itemPage={itemPage.value}
         selectedCategorySlug={categorySlug}

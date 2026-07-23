@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { FolderPlus, Plus, Trash2 } from "lucide-react";
+import { FolderPlus, Pencil, Plus, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useTransition, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import type { AdminFeedback } from "@/features/catalogue/presentation/admin-catalogue-feedback";
 import { feedbackForFailure } from "@/features/catalogue/presentation/admin-catalogue-feedback";
+import { AdminCategoryEditor } from "@/features/catalogue/presentation/admin-category-editor";
 import { createAdminCataloguePath } from "@/features/catalogue/lib/admin-catalogue-navigation";
 import type { ManagedCatalogueCategory } from "@/modules/catalogue/domain/catalogue-admin-models";
 import {
@@ -29,6 +30,9 @@ export function AdminCatalogueSidebar({
   const [isPending, startTransition] = useTransition();
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [confirmingCategoryId, setConfirmingCategoryId] = useState<string | null>(null);
+  const [editingCategoryId, setEditingCategoryId] = useState<string | null>(null);
+  const editingCategory =
+    categories.find((category) => category.id === editingCategoryId) ?? null;
 
   function runMutation(operation: () => Promise<void>) {
     startTransition(operation);
@@ -93,6 +97,7 @@ export function AdminCatalogueSidebar({
   }
 
   return (
+    <>
     <aside className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[rgb(255_249_243_/_78%)] p-3 shadow-[var(--shadow-soft)] xl:sticky xl:top-5">
       <div className="flex items-center justify-between gap-3">
         <div>
@@ -167,6 +172,19 @@ export function AdminCatalogueSidebar({
                 {category.isActive ? "Live" : "Ẩn"}
               </span>
             </Link>
+            {selectedCategoryId === category.id ? (
+              <Button
+                className="mt-1 w-full justify-start px-3 text-[11px]"
+                disabled={isPending}
+                onClick={() => setEditingCategoryId(category.id)}
+                size="compact"
+                type="button"
+                variant="quiet"
+              >
+                <Pencil size={13} aria-hidden="true" />
+                Sửa danh mục
+              </Button>
+            ) : null}
             {confirmingCategoryId === category.id ? (
               <div className="mt-2 rounded-xl border border-[var(--color-danger)]/30 bg-[var(--color-danger)]/10 p-3">
                 <p className="text-xs leading-5 text-[var(--color-danger)]">Xóa danh mục này nếu nó đã trống?</p>
@@ -198,6 +216,13 @@ export function AdminCatalogueSidebar({
         ))}
       </nav>
     </aside>
+      <AdminCategoryEditor
+        category={editingCategory}
+        isOpen={editingCategory !== null}
+        onClose={() => setEditingCategoryId(null)}
+        onFeedback={onFeedback}
+      />
+    </>
   );
 }
 

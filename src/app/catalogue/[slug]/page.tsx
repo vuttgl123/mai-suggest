@@ -1,8 +1,7 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { CatalogueDetail } from "@/features/catalogue/presentation/catalogue-detail";
 import { PageTransition } from "@/components/ui/page-transition";
-import { createServerBackend } from "@/lib/backend/create-server-backend";
-import { resolveActivePageAccess } from "@/modules/identity/presentation/active-page-access";
+import { requireActivePageAccess } from "@/lib/backend/require-page-access";
 
 export const dynamic = "force-dynamic";
 
@@ -13,18 +12,14 @@ interface CatalogueDetailPageProps {
 export default async function CatalogueDetailPage({
   params,
 }: CatalogueDetailPageProps) {
-  const [{ slug }, backend] = await Promise.all([params, createServerBackend()]);
-  const access = resolveActivePageAccess(
-    await backend.getCurrentActor.execute(),
-  );
-
-  if (access.kind === "redirect") {
-    redirect(access.to);
-  }
+  const [{ slug }, { actor, backend }] = await Promise.all([
+    params,
+    requireActivePageAccess(),
+  ]);
 
   const [itemResult, categoriesResult] = await Promise.all([
-    backend.getVisibleItemDetail.execute(access.actor, slug),
-    backend.listVisibleCategories.execute(access.actor),
+    backend.getVisibleItemDetail.execute(actor, slug),
+    backend.listVisibleCategories.execute(actor),
   ]);
 
   if (!itemResult.ok) {
@@ -39,7 +34,7 @@ export default async function CatalogueDetailPage({
     (entry) => entry.id === itemResult.value.categoryId,
   );
   const engagementResult = await backend.getItemEngagementView.execute(
-    access.actor,
+    actor,
     itemResult.value.id,
   );
 
@@ -50,7 +45,7 @@ export default async function CatalogueDetailPage({
   return (
     <PageTransition>
       <CatalogueDetail
-        actor={access.actor}
+        actor={actor}
         categoryName={category?.name ?? null}
         engagement={engagementResult.value}
         item={itemResult.value}

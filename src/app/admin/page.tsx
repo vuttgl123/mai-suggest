@@ -1,13 +1,11 @@
-import { redirect } from "next/navigation";
 import { AppHeader } from "@/components/app-header";
 import { PageTransition } from "@/components/ui/page-transition";
 import { AdminCatalogue } from "@/features/catalogue/presentation/admin-catalogue";
-import { createServerBackend } from "@/lib/backend/create-server-backend";
+import { requireCatalogueOwnerPageAccess } from "@/lib/backend/require-page-access";
 import {
   firstSearchParam,
   parsePositivePage,
 } from "@/features/catalogue/lib/catalogue-navigation";
-import { resolveActivePageAccess } from "@/modules/identity/presentation/active-page-access";
 
 export const dynamic = "force-dynamic";
 
@@ -22,31 +20,23 @@ interface AdminPageProps {
 const ADMIN_PAGE_SIZE = 10;
 
 export default async function AdminPage({ searchParams }: AdminPageProps) {
-  const [params, backend] = await Promise.all([searchParams, createServerBackend()]);
+  const [params, { actor, backend }] = await Promise.all([
+    searchParams,
+    requireCatalogueOwnerPageAccess(),
+  ]);
   const selectedCategoryId = firstSearchParam(params.category);
   const requestedPage = parsePositivePage(params.page);
   const selectedItemId = firstSearchParam(params.item);
-  const access = resolveActivePageAccess(
-    await backend.getCurrentActor.execute(),
-  );
-
-  if (access.kind === "redirect") {
-    redirect(access.to);
-  }
-
-  if (!access.actor.canManageCatalogue) {
-    redirect("/access-denied");
-  }
 
   const [categoriesResult, itemsResult, selectedItemResult] = await Promise.all([
-    backend.listManagedCategories.execute(access.actor),
-    backend.listManagedItemPage.execute(access.actor, {
+    backend.listManagedCategories.execute(actor),
+    backend.listManagedItemPage.execute(actor, {
       categoryId: selectedCategoryId ?? undefined,
       page: requestedPage,
       pageSize: ADMIN_PAGE_SIZE,
     }),
     selectedItemId
-      ? backend.getManagedItemDetail.execute(access.actor, selectedItemId)
+      ? backend.getManagedItemDetail.execute(actor, selectedItemId)
       : Promise.resolve(null),
   ]);
 
@@ -56,7 +46,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
 
   const itemPage =
     itemsResult.value.pageCount > 0 && requestedPage > itemsResult.value.pageCount
-      ? await backend.listManagedItemPage.execute(access.actor, {
+      ? await backend.listManagedItemPage.execute(actor, {
           categoryId: selectedCategoryId ?? undefined,
           page: itemsResult.value.pageCount,
           pageSize: ADMIN_PAGE_SIZE,
@@ -82,7 +72,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
         >
           Đi tới nội dung quản trị
         </a>
-        <AppHeader activeSection="admin" actor={access.actor} />
+        <AppHeader activeSection="admin" actor={actor} />
         <AdminCatalogue
           categories={categoriesResult.value}
           itemPage={itemPage.value}

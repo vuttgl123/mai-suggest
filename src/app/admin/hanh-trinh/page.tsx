@@ -1,9 +1,7 @@
-import { redirect } from "next/navigation";
 import { AppHeader } from "@/components/app-header";
 import { PageTransition } from "@/components/ui/page-transition";
 import { AdminTimeline } from "@/features/timeline/presentation/admin-timeline";
-import { createServerBackend } from "@/lib/backend/create-server-backend";
-import { resolveActivePageAccess } from "@/modules/identity/presentation/active-page-access";
+import { requireCatalogueOwnerPageAccess } from "@/lib/backend/require-page-access";
 
 export const dynamic = "force-dynamic";
 
@@ -14,24 +12,16 @@ interface AdminTimelinePageProps {
 export default async function AdminTimelinePage({
   searchParams,
 }: AdminTimelinePageProps) {
-  const [params, backend] = await Promise.all([searchParams, createServerBackend()]);
+  const [params, { actor, backend }] = await Promise.all([
+    searchParams,
+    requireCatalogueOwnerPageAccess(),
+  ]);
   const entryId = firstSearchParam(params.entry);
-  const access = resolveActivePageAccess(
-    await backend.getCurrentActor.execute(),
-  );
-
-  if (access.kind === "redirect") {
-    redirect(access.to);
-  }
-
-  if (!access.actor.canManageCatalogue) {
-    redirect("/access-denied");
-  }
 
   const [entriesResult, selectedEntryResult] = await Promise.all([
-    backend.listManagedTimeline.execute(access.actor),
+    backend.listManagedTimeline.execute(actor),
     entryId
-      ? backend.getManagedTimelineEntry.execute(access.actor, entryId)
+      ? backend.getManagedTimelineEntry.execute(actor, entryId)
       : Promise.resolve(null),
   ]);
 
@@ -52,7 +42,7 @@ export default async function AdminTimelinePage({
         >
           Đi tới quản trị hành trình
         </a>
-        <AppHeader activeSection="admin" actor={access.actor} />
+        <AppHeader activeSection="admin" actor={actor} />
         <AdminTimeline entries={entriesResult.value} selectedEntry={selectedEntry} />
       </div>
     </PageTransition>
