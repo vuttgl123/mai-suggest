@@ -796,6 +796,60 @@ label {
   overscroll-behavior: contain;
 }
 
+.future-letter-composer {
+  display: grid;
+  height: 100%;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+.future-letter-composer-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid var(--color-border);
+  padding: 1.25rem 1.25rem 1rem;
+  background: linear-gradient(135deg, rgb(101 12 28 / 6%), transparent 58%);
+}
+
+.future-letter-composer-body {
+  min-height: 0;
+  padding: 1.25rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.future-letter-composer-note {
+  margin: 0;
+  border: 1px solid rgb(101 12 28 / 10%);
+  border-radius: var(--radius-card);
+  padding: 0.8rem 0.95rem;
+  color: var(--color-muted);
+  background: rgb(101 12 28 / 4%);
+  font-size: 0.875rem;
+  line-height: 1.65;
+}
+
+.future-letter-composer-writing {
+  background: var(--theme-card-surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.future-letter-composer-schedule {
+  background: rgb(101 12 28 / 4%);
+}
+
+.future-letter-composer-details {
+  background: rgb(255 251 246 / 62%);
+}
+
+.future-letter-composer-footer {
+  border-top: 1px solid var(--color-border);
+  padding: 1rem 1.25rem 1.25rem;
+  background: rgb(255 250 244 / 92%);
+}
+
 .future-letter-field {
   display: block;
   color: var(--color-brand-strong);
@@ -810,6 +864,20 @@ label {
   font-size: 0.7rem;
   font-weight: 500;
   text-align: right;
+}
+
+@media (min-width: 640px) {
+  .future-letter-composer-header {
+    padding: 1.5rem 1.75rem 1.1rem;
+  }
+
+  .future-letter-composer-body {
+    padding: 1.5rem 1.75rem;
+  }
+
+  .future-letter-composer-footer {
+    padding: 1rem 1.75rem 1.5rem;
+  }
 }
 
 .future-letter-archive {
