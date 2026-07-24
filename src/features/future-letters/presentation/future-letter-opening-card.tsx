@@ -1,34 +1,60 @@
 "use client";
 
-import { ExternalLink, Heart, MailOpen, Music2, Sparkles } from "lucide-react";
+import { ChevronsUp, ExternalLink, Heart, MailOpen, Music2, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CatalogueItemImage } from "@/features/catalogue/presentation/catalogue-item-image";
 import { formatFutureLetterDateTime } from "@/modules/future-letters/domain/future-letter-time";
 import type { FutureLetter } from "@/modules/future-letters/domain/future-letter-models";
 
-type OpeningPhase = "sealed" | "unsealing" | "revealing" | "opened";
+type OpeningPhase = "sealed" | "unsealing" | "revealing" | "opened" | "preview";
 
-export function FutureLetterOpeningCard({ letter }: { letter: FutureLetter }) {
+interface FutureLetterOpeningCardProps {
+  isActive: boolean;
+  letter: FutureLetter;
+  onActivate: () => void;
+  onClose: () => void;
+}
+
+function clearPhaseTimers(timerRefs: { current: number[] }) {
+  timerRefs.current.forEach((timer) => window.clearTimeout(timer));
+  timerRefs.current = [];
+}
+
+export function FutureLetterOpeningCard({
+  isActive,
+  letter,
+  onActivate,
+  onClose,
+}: FutureLetterOpeningCardProps) {
   const [phase, setPhase] = useState<OpeningPhase>("sealed");
+  const [hasBeenOpened, setHasBeenOpened] = useState(false);
   const articleRef = useRef<HTMLElement>(null);
+  const previewButtonRef = useRef<HTMLButtonElement>(null);
   const phaseTimersRef = useRef<number[]>([]);
 
   useEffect(() => {
-    return () => {
-      phaseTimersRef.current.forEach((timer) => window.clearTimeout(timer));
-      phaseTimersRef.current = [];
-    };
+    return () => clearPhaseTimers(phaseTimersRef);
   }, []);
 
   useEffect(() => {
+    if (isActive) return;
+
+    clearPhaseTimers(phaseTimersRef);
+    setPhase(hasBeenOpened ? "preview" : "sealed");
+  }, [hasBeenOpened, isActive]);
+
+  useEffect(() => {
     if (phase === "opened") articleRef.current?.focus();
+    if (phase === "preview") previewButtonRef.current?.focus();
   }, [phase]);
 
   function openLetter() {
     if (phase !== "sealed") return;
 
+    onActivate();
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setHasBeenOpened(true);
       setPhase("opened");
       return;
     }
@@ -40,18 +66,67 @@ export function FutureLetterOpeningCard({ letter }: { letter: FutureLetter }) {
 
   function schedulePhase(nextPhase: OpeningPhase, delay: number) {
     phaseTimersRef.current.push(
-      window.setTimeout(() => setPhase(nextPhase), delay),
+      window.setTimeout(() => {
+        if (nextPhase === "opened") setHasBeenOpened(true);
+        setPhase(nextPhase);
+      }, delay),
     );
+  }
+
+  function readAgain() {
+    onActivate();
+    setPhase("opened");
+  }
+
+  function collapseLetter() {
+    clearPhaseTimers(phaseTimersRef);
+    setPhase("preview");
+    onClose();
   }
 
   const isEnvelopeVisible = phase !== "opened";
   const isPaperVisible = phase === "revealing" || phase === "opened";
   const hasImageBackdrop = Boolean(letter.imageUrl && letter.imageAltText);
 
+  if (phase === "preview") {
+    return (
+      <article
+        aria-label={`Thư đã mở từ ${letter.author.displayName}`}
+        className="future-letter-opening future-letter-opening--preview"
+        data-active={isActive ? "true" : "false"}
+      >
+        <p aria-live="polite" className="sr-only">Lá thư đã được thu gọn.</p>
+        <div className="future-letter-preview">
+          <div>
+            <p className="diary-kicker">Đã mở</p>
+            <h3 className="font-display mt-2 break-words text-2xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
+              {letter.title}
+            </h3>
+            <p className="mt-2 text-sm text-[var(--color-muted)]">
+              {letter.author.displayName} · {formatFutureLetterDateTime(letter.opensAt)}
+            </p>
+          </div>
+          <Button
+            className="future-letter-preview__action"
+            onClick={readAgain}
+            ref={previewButtonRef}
+            size="compact"
+            type="button"
+            variant="quiet"
+          >
+            <MailOpen size={15} aria-hidden="true" />
+            Đọc lại
+          </Button>
+        </div>
+      </article>
+    );
+  }
+
   return (
     <article
       aria-label={`Thư từ ${letter.author.displayName}`}
       className="future-letter-opening"
+      data-active={isActive ? "true" : "false"}
       data-phase={phase}
       ref={articleRef}
       tabIndex={-1}
@@ -112,13 +187,27 @@ export function FutureLetterOpeningCard({ letter }: { letter: FutureLetter }) {
           ) : null}
           {hasImageBackdrop ? <span aria-hidden="true" className="future-letter-paper-scrim" /> : null}
           <div className="future-letter-paper-content">
-            <div className="border-b border-[var(--color-border)] pb-4">
+            <div className="future-letter-reader-header border-b border-[var(--color-border)] pb-4">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-2 text-[var(--color-accent)]">
                   <span className="diary-rule" aria-hidden="true" />
                   <p className="diary-kicker text-[var(--color-accent)]">Gửi lại đúng ngày hẹn</p>
                 </div>
-                <Sparkles className="text-[var(--color-accent)]" size={18} strokeWidth={1.35} aria-hidden="true" />
+                <div className="flex items-center gap-2">
+                  <Sparkles className="text-[var(--color-accent)]" size={18} strokeWidth={1.35} aria-hidden="true" />
+                  {phase === "opened" ? (
+                    <Button
+                      className="future-letter-reader-header__action"
+                      onClick={collapseLetter}
+                      size="compact"
+                      type="button"
+                      variant="quiet"
+                    >
+                      <ChevronsUp size={15} aria-hidden="true" />
+                      Thu gọn thư
+                    </Button>
+                  ) : null}
+                </div>
               </div>
               <div className="mt-4 flex min-w-0 items-center gap-3">
                 <Avatar displayName={letter.author.displayName} imageUrl={letter.author.avatarUrl} />
@@ -152,6 +241,21 @@ export function FutureLetterOpeningCard({ letter }: { letter: FutureLetter }) {
             <p className="mt-5 break-words whitespace-pre-line text-[15px] leading-8 text-[var(--color-ink)]">
               {letter.content}
             </p>
+            {phase === "opened" ? (
+              <div className="future-letter-reader-closeout">
+                <p>Đã đọc xong lá thư này?</p>
+                <Button
+                  className="future-letter-reader-closeout__action"
+                  onClick={collapseLetter}
+                  size="compact"
+                  type="button"
+                  variant="quiet"
+                >
+                  <ChevronsUp size={15} aria-hidden="true" />
+                  Thu gọn thư
+                </Button>
+              </div>
+            ) : null}
           </div>
         </div>
       ) : null}

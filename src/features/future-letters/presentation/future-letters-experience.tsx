@@ -28,6 +28,7 @@ export function FutureLettersExperience({
   const [editingLetter, setEditingLetter] = useState<FutureLetterRecord | null>(
     null,
   );
+  const [activeLetterId, setActiveLetterId] = useState<string | null>(null);
   const scheduledCount = scheduledLetters.length;
   const openedCount = openedLetters.length;
 
@@ -129,7 +130,17 @@ export function FutureLettersExperience({
           {openedLetters.length ? (
             <div className="future-letter-archive mt-6 grid gap-5 lg:grid-cols-2">
               {openedLetters.map((letter) => (
-                <FutureLetterOpeningCard key={letter.id} letter={letter} />
+                <FutureLetterOpeningCard
+                  isActive={activeLetterId === letter.id}
+                  key={letter.id}
+                  letter={letter}
+                  onActivate={() => setActiveLetterId(letter.id)}
+                  onClose={() =>
+                    setActiveLetterId((currentId) =>
+                      currentId === letter.id ? null : currentId,
+                    )
+                  }
+                />
               ))}
             </div>
           ) : (
