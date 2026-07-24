@@ -10,6 +10,7 @@ import {
 } from "@/modules/future-letters/domain/future-letter-validation";
 import {
   requireActiveActor,
+  requireCatalogueOwner,
   type CurrentActor,
 } from "@/modules/identity/domain/current-actor";
 
@@ -48,7 +49,7 @@ export class ManageFutureLetters {
     );
   }
 
-  async delete(
+  async deleteOwnScheduled(
     actor: CurrentActor,
     letterId: string,
   ): Promise<Result<void>> {
@@ -56,6 +57,20 @@ export class ManageFutureLetters {
     if (!activeActor.ok) return activeActor;
     if (!hasFutureLetterId(letterId)) return failure("VALIDATION_FAILED");
 
-    return this.repository.delete(letterId.trim(), activeActor.value.userId);
+    return this.repository.deleteOwnScheduled(
+      letterId.trim(),
+      activeActor.value.userId,
+    );
+  }
+
+  async deleteManaged(
+    actor: CurrentActor,
+    letterId: string,
+  ): Promise<Result<void>> {
+    const owner = requireCatalogueOwner(actor);
+    if (!owner.ok) return owner;
+    if (!hasFutureLetterId(letterId)) return failure("VALIDATION_FAILED");
+
+    return this.repository.deleteManaged(letterId.trim());
   }
 }

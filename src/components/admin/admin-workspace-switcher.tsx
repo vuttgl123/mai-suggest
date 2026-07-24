@@ -1,7 +1,7 @@
-import { BookHeart, Palette, Shapes, type LucideIcon } from "lucide-react";
+import { BookHeart, MailOpen, Palette, Shapes, type LucideIcon } from "lucide-react";
 import Link from "next/link";
 
-export type AdminWorkspace = "catalogue" | "timeline" | "theme";
+export type AdminWorkspace = "catalogue" | "timeline" | "theme" | "letters";
 
 interface AdminWorkspaceSwitcherProps {
   active: AdminWorkspace;
@@ -25,6 +25,12 @@ const workspaces: Array<{
     icon: Palette,
     key: "theme",
     label: "Không khí",
+  },
+  {
+    href: "/admin/thu-hen-ngay-mo",
+    icon: MailOpen,
+    key: "letters",
+    label: "Thư hẹn",
   },
 ];
 

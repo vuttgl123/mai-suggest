@@ -7,18 +7,17 @@ import { CatalogueItemImage } from "@/features/catalogue/presentation/catalogue-
 import { formatFutureLetterDateTime } from "@/modules/future-letters/domain/future-letter-time";
 import type { FutureLetter } from "@/modules/future-letters/domain/future-letter-models";
 
-type OpeningPhase = "sealed" | "opening" | "opened";
+type OpeningPhase = "sealed" | "unsealing" | "revealing" | "opened";
 
 export function FutureLetterOpeningCard({ letter }: { letter: FutureLetter }) {
   const [phase, setPhase] = useState<OpeningPhase>("sealed");
   const articleRef = useRef<HTMLElement>(null);
-  const openingTimer = useRef<number | null>(null);
+  const phaseTimersRef = useRef<number[]>([]);
 
   useEffect(() => {
     return () => {
-      if (openingTimer.current !== null) {
-        window.clearTimeout(openingTimer.current);
-      }
+      phaseTimersRef.current.forEach((timer) => window.clearTimeout(timer));
+      phaseTimersRef.current = [];
     };
   }, []);
 
@@ -34,9 +33,19 @@ export function FutureLetterOpeningCard({ letter }: { letter: FutureLetter }) {
       return;
     }
 
-    setPhase("opening");
-    openingTimer.current = window.setTimeout(() => setPhase("opened"), 720);
+    setPhase("unsealing");
+    schedulePhase("revealing", 460);
+    schedulePhase("opened", 1_020);
   }
+
+  function schedulePhase(nextPhase: OpeningPhase, delay: number) {
+    phaseTimersRef.current.push(
+      window.setTimeout(() => setPhase(nextPhase), delay),
+    );
+  }
+
+  const isEnvelopeVisible = phase !== "opened";
+  const isPaperVisible = phase === "revealing" || phase === "opened";
 
   return (
     <article
@@ -46,16 +55,31 @@ export function FutureLetterOpeningCard({ letter }: { letter: FutureLetter }) {
       ref={articleRef}
       tabIndex={-1}
     >
-      {phase !== "opened" ? (
+      <p aria-live="polite" className="sr-only">
+        {phase === "unsealing"
+          ? "Triện sáp đang mở."
+          : phase === "revealing"
+            ? "Lá thư đang hiện ra."
+            : phase === "opened"
+              ? "Lá thư đã mở."
+              : ""}
+      </p>
+
+      {isEnvelopeVisible ? (
         <div className="future-letter-envelope-stage">
+          <span className="future-letter-light" aria-hidden="true" />
           <div className="future-letter-envelope" aria-hidden="true">
             <span className="future-letter-envelope-shadow" />
+            <span className="future-letter-envelope-liner" />
             <span className="future-letter-flap" />
             <span className="future-letter-envelope-fold future-letter-envelope-fold--left" />
             <span className="future-letter-envelope-fold future-letter-envelope-fold--right" />
             <span className="future-letter-seal"><Heart size={16} fill="currentColor" strokeWidth={1.4} /></span>
           </div>
           <span className="future-letter-halo" aria-hidden="true" />
+          <span className="future-letter-seal-fragments" aria-hidden="true">
+            {Array.from({ length: 12 }, (_, index) => <i key={index} />)}
+          </span>
           <span className="future-letter-sparks" aria-hidden="true">
             {Array.from({ length: 10 }, (_, index) => <i key={index} />)}
           </span>
@@ -74,7 +98,7 @@ export function FutureLetterOpeningCard({ letter }: { letter: FutureLetter }) {
         </div>
       ) : null}
 
-      {phase !== "sealed" ? (
+      {isPaperVisible ? (
         <div aria-hidden={phase !== "opened"} className="future-letter-paper" id={`future-letter-${letter.id}`}>
           <div className="border-b border-[var(--color-border)] pb-4">
             <div className="flex flex-wrap items-center justify-between gap-3">

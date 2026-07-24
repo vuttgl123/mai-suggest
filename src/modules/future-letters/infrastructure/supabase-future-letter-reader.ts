@@ -45,6 +45,28 @@ export class SupabaseFutureLetterReader implements FutureLetterReader {
     );
   }
 
+  async listManaged(): Promise<Result<FutureLetter[]>> {
+    const { data, error } = await this.client
+      .from("future_letters")
+      .select(FUTURE_LETTER_COLUMNS)
+      .order("opens_at", { ascending: false });
+
+    if (error) return failure("UNEXPECTED_FAILURE");
+    if (!data?.length) return success([]);
+
+    const authors = await this.loadAuthors(data);
+    if (!authors.ok) return authors;
+
+    return success(
+      data.map((row) =>
+        toFutureLetter(
+          row,
+          authors.value.get(row.author_id) ?? fallbackFutureLetterAuthor,
+        ),
+      ),
+    );
+  }
+
   async listOwnScheduled(
     authorId: string,
     serverNow: string,

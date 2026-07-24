@@ -27,6 +27,7 @@ import { SupabaseTimelineReader } from "@/modules/timeline/infrastructure/supaba
 import { SupabaseTimelineAdminReader } from "@/modules/timeline/infrastructure/supabase-timeline-admin-reader";
 import { SupabaseTimelineRepository } from "@/modules/timeline/infrastructure/supabase-timeline-repository";
 import { ListOpenedFutureLetters } from "@/modules/future-letters/application/list-opened-future-letters";
+import { ListManagedFutureLetters } from "@/modules/future-letters/application/list-managed-future-letters";
 import { ListOwnScheduledFutureLetters } from "@/modules/future-letters/application/list-own-scheduled-future-letters";
 import { ManageFutureLetters } from "@/modules/future-letters/application/manage-future-letters";
 import { SupabaseFutureLetterReader } from "@/modules/future-letters/infrastructure/supabase-future-letter-reader";
@@ -74,6 +75,7 @@ export function createBackendForClient(client: SupabaseClient<Database>) {
     getManagedTimelineEntry: new GetManagedTimelineEntry(timelineAdminReader),
     manageTimeline: new ManageTimeline(timelineRepository),
     listOpenedFutureLetters: new ListOpenedFutureLetters(futureLetterReader),
+    listManagedFutureLetters: new ListManagedFutureLetters(futureLetterReader),
     listOwnScheduledFutureLetters: new ListOwnScheduledFutureLetters(
       futureLetterReader,
     ),

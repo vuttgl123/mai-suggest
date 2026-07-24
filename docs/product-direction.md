@@ -83,9 +83,10 @@ Giá trị: tạo cảm giác mong chờ, rất phù hợp với nhịp chậm c
 trùng vai trò với catalogue.
 
 Mặc định đã chốt: trước giờ mở chỉ tác giả thấy và sửa/xóa được thư; sau giờ mở
-mọi active member đều đọc được, còn nội dung không thể bị sửa/xóa. Khoảnh khắc
-mở dùng nghi thức phong bì Bordeaux với chuyển động nhẹ, ánh sáng đồng và hạt
-trang trí rất tiết chế; reduced motion mở thư tức thì.
+mọi active member đều đọc được, Owner có thể gỡ thư khi cần điều tiết nội dung,
+còn tác giả không thể sửa/xóa nữa. Khoảnh khắc mở dùng nghi thức phong bì
+Bordeaux với chuyển động nhẹ, ánh sáng đồng và hạt trang trí rất tiết chế;
+reduced motion mở thư tức thì.
 
 ### 2. Lịch những ngày của hai đứa
 

@@ -60,12 +60,27 @@ export class SupabaseFutureLetterRepository implements FutureLetterRepository {
     return data ? success(toFutureLetterRecord(data)) : failure("NOT_FOUND");
   }
 
-  async delete(letterId: string, authorId: string): Promise<Result<void>> {
+  async deleteOwnScheduled(
+    letterId: string,
+    authorId: string,
+  ): Promise<Result<void>> {
     const { data, error } = await this.client
       .from("future_letters")
       .delete()
       .eq("id", letterId)
       .eq("author_id", authorId)
+      .select("id")
+      .maybeSingle();
+
+    if (error) return failure("UNEXPECTED_FAILURE");
+    return data ? success(undefined) : failure("NOT_FOUND");
+  }
+
+  async deleteManaged(letterId: string): Promise<Result<void>> {
+    const { data, error } = await this.client
+      .from("future_letters")
+      .delete()
+      .eq("id", letterId)
       .select("id")
       .maybeSingle();
 

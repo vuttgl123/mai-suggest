@@ -6,6 +6,7 @@ import type {
 
 export interface FutureLetterReader {
   listOpened(serverNow: string): Promise<Result<FutureLetter[]>>;
+  listManaged(): Promise<Result<FutureLetter[]>>;
   listOwnScheduled(
     authorId: string,
     serverNow: string,

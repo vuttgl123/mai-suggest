@@ -27,7 +27,15 @@ export async function updateFutureLetterAction(
 
 export async function deleteFutureLetterAction(letterId: string) {
   const result = await runServerAction((backend, actor) =>
-    backend.manageFutureLetters.delete(actor, letterId),
+    backend.manageFutureLetters.deleteOwnScheduled(actor, letterId),
+  );
+
+  return revalidateAfterMutation(result);
+}
+
+export async function deleteManagedFutureLetterAction(letterId: string) {
+  const result = await runServerAction((backend, actor) =>
+    backend.manageFutureLetters.deleteManaged(actor, letterId),
   );
 
   return revalidateAfterMutation(result);

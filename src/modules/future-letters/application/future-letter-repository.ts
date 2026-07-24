@@ -14,5 +14,6 @@ export interface FutureLetterRepository {
     authorId: string,
     input: FutureLetterInput,
   ): Promise<Result<FutureLetterRecord>>;
-  delete(letterId: string, authorId: string): Promise<Result<void>>;
+  deleteOwnScheduled(letterId: string, authorId: string): Promise<Result<void>>;
+  deleteManaged(letterId: string): Promise<Result<void>>;
 }
