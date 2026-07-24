@@ -1145,6 +1145,7 @@ label {
 .future-letter-paper {
   position: relative;
   z-index: 6;
+  isolation: isolate;
   margin: 0.85rem;
   border: 1px solid rgb(49 5 12 / 13%);
   border-radius: calc(var(--radius-dialog) - 0.55rem);
@@ -1154,6 +1155,80 @@ label {
     repeating-linear-gradient(180deg, transparent 0 2.05rem, rgb(166 91 69 / 10%) 2.05rem 2.1rem),
     var(--color-paper);
   box-shadow: 0 1rem 2.5rem rgb(49 5 12 / 12%);
+}
+
+.future-letter-paper-image,
+.future-letter-paper-scrim {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.future-letter-paper-image {
+  z-index: -2;
+  background: var(--color-paper);
+}
+
+.future-letter-paper-image > div {
+  height: 100%;
+  min-height: 100%;
+}
+
+.future-letter-paper-image > [role="img"] {
+  opacity: 0;
+}
+
+.future-letter-paper-scrim {
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgb(255 249 243 / 91%) 0%, rgb(255 249 243 / 76%) 34%, rgb(255 249 243 / 86%) 100%),
+    linear-gradient(90deg, rgb(101 12 28 / 30%), transparent 38%, rgb(101 12 28 / 15%));
+}
+
+.future-letter-paper-content {
+  position: relative;
+  z-index: 0;
+}
+
+.future-letter-title-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+.future-letter-title-row > h3 {
+  flex: 1 1 15rem;
+  margin-top: 0;
+}
+
+.future-letter-music-link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0.625rem 0.875rem;
+  color: var(--color-brand);
+  background: rgb(255 249 243 / 76%);
+  font-size: 0.875rem;
+  font-weight: 700;
+  transition: transform var(--duration-fast), background var(--duration-fast);
+}
+
+.future-letter-music-link:hover {
+  transform: translateY(-0.125rem);
+  background: rgb(255 249 243 / 92%);
+}
+
+.future-letter-music-link:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
 }
 
 .future-letter-opening[data-phase="unsealing"] .future-letter-flap {

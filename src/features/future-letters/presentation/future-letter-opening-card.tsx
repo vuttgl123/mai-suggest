@@ -46,6 +46,7 @@ export function FutureLetterOpeningCard({ letter }: { letter: FutureLetter }) {
 
   const isEnvelopeVisible = phase !== "opened";
   const isPaperVisible = phase === "revealing" || phase === "opened";
+  const hasImageBackdrop = Boolean(letter.imageUrl && letter.imageAltText);
 
   return (
     <article
@@ -99,44 +100,59 @@ export function FutureLetterOpeningCard({ letter }: { letter: FutureLetter }) {
       ) : null}
 
       {isPaperVisible ? (
-        <div aria-hidden={phase !== "opened"} className="future-letter-paper" id={`future-letter-${letter.id}`}>
-          <div className="border-b border-[var(--color-border)] pb-4">
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div className="flex items-center gap-2 text-[var(--color-accent)]">
-                <span className="diary-rule" aria-hidden="true" />
-                <p className="diary-kicker text-[var(--color-accent)]">Gửi lại đúng ngày hẹn</p>
-              </div>
-              <Sparkles className="text-[var(--color-accent)]" size={18} strokeWidth={1.35} aria-hidden="true" />
+        <div
+          aria-hidden={phase !== "opened"}
+          className="future-letter-paper"
+          id={`future-letter-${letter.id}`}
+        >
+          {hasImageBackdrop ? (
+            <div className="future-letter-paper-image">
+              <CatalogueItemImage alt={letter.imageAltText!} src={letter.imageUrl!} variant="content-fill" />
             </div>
-            <div className="mt-4 flex min-w-0 items-center gap-3">
-              <Avatar displayName={letter.author.displayName} imageUrl={letter.author.avatarUrl} />
-              <div className="min-w-0">
-                <p className="truncate text-sm font-bold text-[var(--color-brand-strong)]">{letter.author.displayName}</p>
-                <time className="mt-0.5 block text-xs text-[var(--color-muted)]" dateTime={letter.opensAt}>
-                  Hẹn mở {formatFutureLetterDateTime(letter.opensAt)}
-                </time>
+          ) : null}
+          {hasImageBackdrop ? <span aria-hidden="true" className="future-letter-paper-scrim" /> : null}
+          <div className="future-letter-paper-content">
+            <div className="border-b border-[var(--color-border)] pb-4">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-2 text-[var(--color-accent)]">
+                  <span className="diary-rule" aria-hidden="true" />
+                  <p className="diary-kicker text-[var(--color-accent)]">Gửi lại đúng ngày hẹn</p>
+                </div>
+                <Sparkles className="text-[var(--color-accent)]" size={18} strokeWidth={1.35} aria-hidden="true" />
+              </div>
+              <div className="mt-4 flex min-w-0 items-center gap-3">
+                <Avatar displayName={letter.author.displayName} imageUrl={letter.author.avatarUrl} />
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-bold text-[var(--color-brand-strong)]">{letter.author.displayName}</p>
+                  <time className="mt-0.5 block text-xs text-[var(--color-muted)]" dateTime={letter.opensAt}>
+                    Hẹn mở {formatFutureLetterDateTime(letter.opensAt)}
+                  </time>
+                </div>
               </div>
             </div>
+            <p className="diary-kicker mt-5">Đã mở ra</p>
+            <div className="future-letter-title-row">
+              <h3 className="font-display min-w-0 break-words text-3xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
+                {letter.title}
+              </h3>
+              {letter.musicUrl ? (
+                <a
+                  aria-label={`Nghe bài hát đi cùng thư: ${letter.title}`}
+                  className="future-letter-music-link"
+                  href={letter.musicUrl}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <Music2 size={16} aria-hidden="true" />
+                  <span>Bài hát</span>
+                  <ExternalLink size={14} aria-hidden="true" />
+                </a>
+              ) : null}
+            </div>
+            <p className="mt-5 break-words whitespace-pre-line text-[15px] leading-8 text-[var(--color-ink)]">
+              {letter.content}
+            </p>
           </div>
-          <p className="diary-kicker mt-5">Đã mở ra</p>
-          <h3 className="font-display mt-2 break-words text-3xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
-            {letter.title}
-          </h3>
-          <p className="mt-5 break-words whitespace-pre-line text-[15px] leading-8 text-[var(--color-ink)]">
-            {letter.content}
-          </p>
-          {letter.imageUrl && letter.imageAltText ? (
-            <div className="mt-6 overflow-hidden rounded-[calc(var(--radius-card)_-_0.35rem)] border border-[var(--color-border)]">
-              <CatalogueItemImage alt={letter.imageAltText} src={letter.imageUrl} />
-            </div>
-          ) : null}
-          {letter.musicUrl ? (
-            <a className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-brand-soft)] px-4 text-sm font-semibold text-[var(--color-brand)] transition duration-[var(--duration-fast)] hover:-translate-y-0.5 hover:bg-[rgb(233_222_218_/_70%)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[var(--color-focus)] motion-reduce:transform-none motion-reduce:transition-none" href={letter.musicUrl} rel="noreferrer" target="_blank">
-              <Music2 size={16} aria-hidden="true" />
-              Nghe bài hát đi cùng lá thư
-              <ExternalLink size={14} aria-hidden="true" />
-            </a>
-          ) : null}
         </div>
       ) : null}
     </article>
