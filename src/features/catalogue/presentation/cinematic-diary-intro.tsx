@@ -160,7 +160,13 @@ export function CinematicDiaryIntro() {
       ref={sectionRef}
     >
       <div className="cinematic-diary-intro__stage" ref={stageRef}>
-        <div aria-hidden="true" className="cinematic-diary-intro__fallback" />
+        <div aria-hidden="true" className="cinematic-diary-intro__fallback">
+          <span className="cinematic-diary-intro__fallback-spread">
+            <span className="cinematic-diary-intro__fallback-crease" />
+            <span className="cinematic-diary-intro__fallback-mark" />
+          </span>
+          <span className="cinematic-diary-intro__fallback-cover" />
+        </div>
         <canvas aria-hidden="true" className="cinematic-diary-intro__canvas" ref={canvasRef} />
         <div className="cinematic-diary-intro__copy">
           <p className="cinematic-diary-intro__kicker">Một chương dành riêng cho hai người</p>

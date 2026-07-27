@@ -1900,33 +1900,71 @@ label {
   bottom: auto;
   left: 50%;
   z-index: 0;
+  pointer-events: none;
   width: min(33rem, 72vw);
   height: auto;
   aspect-ratio: 1.34;
-  border: 1px solid color-mix(in srgb, var(--color-accent) 38%, transparent);
-  border-radius: 0.75rem 1.15rem 0.95rem 0.8rem;
   opacity: calc(1 - var(--diary-intro-progress));
-  transform: translate(-50%, -50%) rotateX(57deg) rotateZ(-12deg);
+  transform: translate(-50%, -50%) rotateX(54deg) rotateZ(-9deg);
   transform-style: preserve-3d;
-  background:
-    linear-gradient(103deg, color-mix(in srgb, var(--color-brand-strong) 42%, transparent), transparent 17% 84%, color-mix(in srgb, var(--color-paper) 20%, transparent)),
-    linear-gradient(145deg, var(--color-brand-strong), var(--color-brand) 54%, var(--color-brand-strong));
-  box-shadow:
-    -0.6rem 0.7rem 0 color-mix(in srgb, var(--color-paper) 92%, var(--color-surface)),
-    -0.8rem 1rem 1.4rem color-mix(in srgb, var(--color-brand-strong) 22%, transparent),
-    1.25rem 2.1rem 3.2rem color-mix(in srgb, var(--color-brand-strong) 30%, transparent);
-  transition: opacity 500ms ease;
+  transition: opacity 500ms ease, transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.cinematic-diary-intro__fallback::before,
-.cinematic-diary-intro__fallback::after {
+.cinematic-diary-intro__fallback-spread,
+.cinematic-diary-intro__fallback-cover,
+.cinematic-diary-intro__fallback-crease,
+.cinematic-diary-intro__fallback-mark {
+  position: absolute;
+  display: block;
+}
+
+.cinematic-diary-intro__fallback-spread,
+.cinematic-diary-intro__fallback-cover {
+  inset: 4% 3%;
+  border-radius: 0.75rem 1.1rem 0.9rem 0.82rem;
+  transform-style: preserve-3d;
+}
+
+.cinematic-diary-intro__fallback-spread {
+  z-index: 1;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 28%, transparent);
+  background:
+    linear-gradient(90deg, transparent 49.2%, color-mix(in srgb, var(--color-brand-strong) 13%, transparent) 49.8% 50.2%, transparent 50.8%),
+    repeating-linear-gradient(0deg, transparent 0 1.25rem, color-mix(in srgb, var(--color-brand) 7%, transparent) 1.29rem 1.34rem),
+    linear-gradient(90deg, var(--color-paper) 0 49.3%, var(--color-surface) 49.3% 50.7%, var(--color-paper) 50.7%);
+  box-shadow:
+    0 0.9rem 1.8rem color-mix(in srgb, var(--color-brand-strong) 14%, transparent),
+    inset 0 0 0 0.16rem color-mix(in srgb, var(--color-paper) 65%, transparent);
+}
+
+.cinematic-diary-intro__fallback-cover {
+  z-index: 2;
+  transform-origin: 4% 50%;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 42%, transparent);
+  background:
+    linear-gradient(103deg, color-mix(in srgb, var(--color-brand-strong) 48%, transparent), transparent 18% 82%, color-mix(in srgb, var(--color-paper) 18%, transparent)),
+    linear-gradient(145deg, var(--color-brand-strong), var(--color-brand) 54%, var(--color-brand-strong));
+  box-shadow:
+    -0.45rem 0.65rem 0 color-mix(in srgb, var(--color-paper) 92%, var(--color-surface)),
+    -0.7rem 1rem 1.4rem color-mix(in srgb, var(--color-brand-strong) 22%, transparent),
+    1rem 1.8rem 2.7rem color-mix(in srgb, var(--color-brand-strong) 26%, transparent);
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cinematic-diary-intro__fallback-cover::before,
+.cinematic-diary-intro__fallback-cover::after,
+.cinematic-diary-intro__fallback-mark::before,
+.cinematic-diary-intro__fallback-mark::after {
   position: absolute;
   pointer-events: none;
   content: "";
 }
 
-.cinematic-diary-intro__fallback::before {
-  inset: 1rem 0.95rem auto;
+.cinematic-diary-intro__fallback-cover::before {
+  top: 1rem;
+  right: 0.95rem;
+  left: 0.95rem;
   height: 0.16rem;
   border-radius: 999px;
   opacity: 0.92;
@@ -1934,17 +1972,74 @@ label {
   box-shadow: 0 0.3rem 0 color-mix(in srgb, var(--color-paper) 18%, transparent);
 }
 
-.cinematic-diary-intro__fallback::after {
+.cinematic-diary-intro__fallback-cover::after {
   right: 1.3rem;
   bottom: 1.3rem;
-  width: 1.8rem;
-  height: 1.8rem;
+  width: 1.9rem;
+  height: 1.9rem;
   border: 1px solid color-mix(in srgb, var(--color-accent) 72%, transparent);
+  border-radius: 50% 50% 50% 12%;
   background: color-mix(in srgb, var(--color-accent) 18%, transparent);
+  transform: rotate(-45deg);
+}
+
+.cinematic-diary-intro__fallback-crease {
+  top: 5%;
+  bottom: 5%;
+  left: 50%;
+  width: 0.12rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-brand-strong) 17%, transparent);
+  box-shadow: 0 0 0.3rem color-mix(in srgb, var(--color-brand-strong) 10%, transparent);
+  transform: translateX(-50%);
+}
+
+.cinematic-diary-intro__fallback-mark {
+  top: 19%;
+  right: 17%;
+  width: 1.15rem;
+  height: 1.15rem;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 65%, transparent);
+  border-radius: 50% 50% 50% 12%;
+  opacity: 0.7;
+  transform: rotate(-45deg);
+}
+
+.cinematic-diary-intro__fallback-mark::before,
+.cinematic-diary-intro__fallback-mark::after {
+  width: 0.56rem;
+  height: 0.56rem;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 38%, transparent);
+  border-radius: 50%;
+  content: "";
+}
+
+.cinematic-diary-intro__fallback-mark::before {
+  top: -0.3rem;
+  left: -0.03rem;
+}
+
+.cinematic-diary-intro__fallback-mark::after {
+  top: -0.03rem;
+  left: 0.42rem;
 }
 
 .cinematic-diary-intro[data-scene-ready="true"] .cinematic-diary-intro__fallback {
   opacity: 0.12;
+}
+
+.cinematic-diary-intro[data-phase="opening"] .cinematic-diary-intro__fallback-cover {
+  transform: rotateY(-48deg) translateX(-3%);
+}
+
+.cinematic-diary-intro[data-phase="reading"] .cinematic-diary-intro__fallback-cover,
+.cinematic-diary-intro[data-phase="handoff"] .cinematic-diary-intro__fallback-cover {
+  transform: rotateY(-152deg) translateX(-5%);
+}
+
+.cinematic-diary-intro[data-phase="reading"] .cinematic-diary-intro__fallback-mark,
+.cinematic-diary-intro[data-phase="handoff"] .cinematic-diary-intro__fallback-mark {
+  opacity: 1;
 }
 
 .cinematic-diary-intro__copy {
@@ -2125,7 +2220,22 @@ label {
     width: min(20rem, 72vw);
     margin: 0 auto;
     opacity: 1;
-    transform: rotateX(54deg) rotateZ(-12deg);
+    transform: rotateX(52deg) rotateZ(-9deg);
+    transition: none;
+  }
+
+  .cinematic-diary-intro[data-scene-ready="true"] .cinematic-diary-intro__fallback {
+    opacity: 1;
+  }
+
+  .cinematic-diary-intro__fallback-cover {
+    transition: none;
+    transform: none;
+  }
+
+  .cinematic-diary-intro__fallback-mark {
+    transition: none;
+    transform: rotate(-45deg);
   }
 
   .cinematic-diary-intro__copy {
