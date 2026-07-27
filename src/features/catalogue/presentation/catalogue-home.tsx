@@ -23,20 +23,6 @@ interface CatalogueHomeProps {
   selectedCategorySlug: string | null;
 }
 
-function getCatalogueCardGridClassName(index: number, itemCount: number) {
-  const isCenteredLastCard = itemCount % 2 === 1 && index === itemCount - 1;
-
-  if (isCenteredLastCard) {
-    return "lg:col-span-6 lg:col-start-4";
-  }
-
-  const pairPosition = index % 4;
-
-  return pairPosition === 0 || pairPosition === 3
-    ? "lg:col-span-7"
-    : "lg:col-span-5";
-}
-
 export function CatalogueHome({
   actor,
   categories,
@@ -194,10 +180,7 @@ export function CatalogueHome({
                       </div>
                       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-12 lg:gap-6">
                         {gridItems.map((item, index) => (
-                          <div
-                            className={getCatalogueCardGridClassName(index, gridItems.length)}
-                            key={item.id}
-                          >
+                          <div className={index % 5 === 0 ? "lg:col-span-5" : index % 3 === 0 ? "lg:col-span-4" : "lg:col-span-3"} key={item.id}>
                             <CatalogueItemCard
                               categoryName={categoryNames.get(item.categoryId) ?? null}
                               item={item}
