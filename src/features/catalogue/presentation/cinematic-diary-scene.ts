@@ -26,8 +26,9 @@ export interface CinematicDiaryScene {
 
 const MAX_PIXEL_RATIO = 1.5;
 const DUST_COUNT = 42;
-const PAGE_WIDTH = 3.02;
-const PAGE_DEPTH = 4.05;
+const BOOK_SIZE = 3.42;
+const PAGE_WIDTH = BOOK_SIZE - 0.24;
+const PAGE_DEPTH = BOOK_SIZE - 0.24;
 
 function color(value: string, fallback: string) {
   return new THREE.Color(value || fallback);
@@ -80,6 +81,7 @@ export function createCinematicDiaryScene(
 
   const geometries: THREE.BufferGeometry[] = [];
   const materials: THREE.Material[] = [];
+  const textures: THREE.Texture[] = [];
   const registerGeometry = <T extends THREE.BufferGeometry>(geometry: T) => {
     geometries.push(geometry);
     return geometry;
@@ -87,6 +89,10 @@ export function createCinematicDiaryScene(
   const registerMaterial = <T extends THREE.Material>(material: T) => {
     materials.push(material);
     return material;
+  };
+  const registerTexture = <T extends THREE.Texture>(texture: T) => {
+    textures.push(texture);
+    return texture;
   };
 
   const journal = new THREE.Group();
@@ -146,55 +152,87 @@ export function createCinematicDiaryScene(
       opacity: 0.08,
     }),
   );
+  const letterCanvas = document.createElement("canvas");
+  letterCanvas.width = 1024;
+  letterCanvas.height = 360;
+  const letterContext = letterCanvas.getContext("2d");
+  const letterTexture = registerTexture(new THREE.CanvasTexture(letterCanvas));
+  letterTexture.colorSpace = THREE.SRGBColorSpace;
+  const drawLettering = (fillColor: string) => {
+    if (!letterContext) {
+      return;
+    }
+
+    letterContext.clearRect(0, 0, letterCanvas.width, letterCanvas.height);
+    letterContext.fillStyle = fillColor;
+    letterContext.font = "italic 58px Georgia, Times New Roman, serif";
+    letterContext.textAlign = "center";
+    letterContext.textBaseline = "middle";
+    letterContext.fillText("Anh yêu em", letterCanvas.width / 2, letterCanvas.height / 2);
+    letterTexture.needsUpdate = true;
+  };
+  drawLettering(palette.brandStrong || "#4a142a");
+  const letterMaterial = registerMaterial(
+    new THREE.MeshBasicMaterial({
+      color: 0xffffff,
+      depthWrite: false,
+      map: letterTexture,
+      opacity: 0.04,
+      side: THREE.DoubleSide,
+      transparent: true,
+      toneMapped: false,
+    }),
+  );
 
   const coverThickness = 0.15;
   const pageStackY = 0.08;
   const frontCoverY = 0.23;
+  const spineX = -BOOK_SIZE / 2 + 0.065;
 
   const rearCover = new THREE.Mesh(
-    registerGeometry(new RoundedBoxGeometry(3.25, coverThickness, 4.38, 5, 0.09)),
+    registerGeometry(new RoundedBoxGeometry(BOOK_SIZE, coverThickness, BOOK_SIZE, 5, 0.09)),
     leatherMaterial,
   );
   rearCover.position.y = -0.21;
   journal.add(rearCover);
 
   const spine = new THREE.Mesh(
-    registerGeometry(new RoundedBoxGeometry(0.22, 0.58, 4.46, 5, 0.09)),
+    registerGeometry(new RoundedBoxGeometry(0.22, 0.58, BOOK_SIZE + 0.08, 5, 0.09)),
     leatherEdgeMaterial,
   );
-  spine.position.set(-1.56, -0.02, 0);
+  spine.position.set(spineX, -0.02, 0);
   journal.add(spine);
 
   const pageBlock = new THREE.Mesh(
-    registerGeometry(new RoundedBoxGeometry(3.08, 0.2, 4.12, 5, 0.065)),
+    registerGeometry(new RoundedBoxGeometry(BOOK_SIZE - 0.15, 0.2, BOOK_SIZE - 0.15, 5, 0.065)),
     paperEdgeMaterial,
   );
   pageBlock.position.y = -0.036;
   journal.add(pageBlock);
 
   const frontHinge = new THREE.Group();
-  frontHinge.position.set(-1.56, frontCoverY, 0);
+  frontHinge.position.set(spineX, frontCoverY, 0);
   journal.add(frontHinge);
 
   const frontCover = new THREE.Mesh(
-    registerGeometry(new RoundedBoxGeometry(3.25, coverThickness, 4.38, 5, 0.09)),
+    registerGeometry(new RoundedBoxGeometry(BOOK_SIZE, coverThickness, BOOK_SIZE, 5, 0.09)),
     leatherMaterial,
   );
-  frontCover.position.set(1.625, 0, 0);
+  frontCover.position.set(BOOK_SIZE / 2, 0, 0);
   frontHinge.add(frontCover);
 
   const brassTitlePlate = new THREE.Mesh(
     registerGeometry(new RoundedBoxGeometry(0.86, 0.018, 0.38, 4, 0.05)),
     brassMaterial,
   );
-  brassTitlePlate.position.set(1.6, coverThickness / 2 + 0.018, 0.12);
+  brassTitlePlate.position.set(BOOK_SIZE / 2 - 0.025, coverThickness / 2 + 0.018, 0.12);
   frontHinge.add(brassTitlePlate);
 
   const brassRule = new THREE.Mesh(
     registerGeometry(new RoundedBoxGeometry(1.85, 0.014, 0.025, 3, 0.01)),
     brassMaterial,
   );
-  brassRule.position.set(1.6, coverThickness / 2 + 0.016, -1.5);
+  brassRule.position.set(BOOK_SIZE / 2 - 0.025, coverThickness / 2 + 0.016, -BOOK_SIZE / 2 + 0.25);
   frontHinge.add(brassRule);
 
   const bendablePages: Array<{
@@ -213,7 +251,7 @@ export function createCinematicDiaryScene(
       }),
     );
     const page = new THREE.Mesh(geometry, paperMaterial);
-    page.position.set(-1.5, pageStackY + index * 0.014, 0);
+    page.position.set(-BOOK_SIZE / 2 + 0.12, pageStackY + index * 0.014, 0);
     journal.add(page);
     bendablePages.push({ geometry, index, mesh: page });
   }
@@ -239,6 +277,15 @@ export function createCinematicDiaryScene(
   heartMark.position.set(0.82, 0.12, -0.06);
   heartMark.scale.setScalar(0.26);
   journal.add(heartMark);
+
+  const letterMark = new THREE.Mesh(
+    registerGeometry(new THREE.PlaneGeometry(1.58, 0.56)),
+    letterMaterial,
+  );
+  letterMark.rotation.x = -Math.PI / 2;
+  letterMark.position.set(0.82, 0.122, 0.52);
+  letterMark.scale.setScalar(0.92);
+  journal.add(letterMark);
 
   const shadowMaterial = registerMaterial(
     new THREE.MeshBasicMaterial({
@@ -352,6 +399,8 @@ export function createCinematicDiaryScene(
     spreadDetailMaterial.opacity = 0.1 + readingProgress * 0.46;
     heartMaterial.opacity = 0.08 + pageRevealProgress * 0.82;
     heartMark.scale.setScalar(0.22 + readingProgress * 0.05);
+    letterMaterial.opacity = 0.04 + readingProgress * 0.78;
+    letterMark.scale.setScalar(0.88 + readingProgress * 0.08);
     pageCurlShadowMaterial.opacity = 0.035 + pageRevealProgress * 0.09;
     pageCurlShadow.scale.set(1.04 - pageRevealProgress * 0.2, 0.82, 1);
     pageCurlShadow.rotation.z = -pageRevealProgress * 0.2;
@@ -408,6 +457,7 @@ export function createCinematicDiaryScene(
     brassMaterial.color.set(nextPalette.accent || "#e6ad58");
     heartMaterial.color.set(nextPalette.accent || "#e6ad58");
     spreadDetailMaterial.color.set(nextPalette.brand || "#741f43");
+    drawLettering(nextPalette.brandStrong || "#4a142a");
     shadowMaterial.color.set(nextPalette.brandStrong || "#4a142a");
     pageCurlShadowMaterial.color.set(nextPalette.brandStrong || "#4a142a");
     dustMaterial.color.set(nextPalette.accent || "#e6ad58");
@@ -427,6 +477,7 @@ export function createCinematicDiaryScene(
       }
       geometries.forEach((geometry) => geometry.dispose());
       materials.forEach((material) => material.dispose());
+      textures.forEach((texture) => texture.dispose());
       renderer.renderLists.dispose();
       renderer.dispose();
       renderer.forceContextLoss();

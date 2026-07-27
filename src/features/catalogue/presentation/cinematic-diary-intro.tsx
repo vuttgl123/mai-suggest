@@ -164,6 +164,7 @@ export function CinematicDiaryIntro() {
           <span className="cinematic-diary-intro__fallback-spread">
             <span className="cinematic-diary-intro__fallback-crease" />
             <span className="cinematic-diary-intro__fallback-mark" />
+            <span className="cinematic-diary-intro__fallback-note">Anh yêu em</span>
           </span>
           <span className="cinematic-diary-intro__fallback-cover" />
         </div>

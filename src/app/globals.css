@@ -1903,7 +1903,7 @@ label {
   pointer-events: none;
   width: min(33rem, 72vw);
   height: auto;
-  aspect-ratio: 1.34;
+  aspect-ratio: 1;
   opacity: calc(1 - var(--diary-intro-progress));
   transform: translate(-50%, -50%) rotateX(54deg) rotateZ(-9deg);
   transform-style: preserve-3d;
@@ -2024,6 +2024,21 @@ label {
   left: 0.42rem;
 }
 
+.cinematic-diary-intro__fallback-note {
+  position: absolute;
+  top: 43%;
+  right: 9%;
+  color: var(--color-brand-strong);
+  font-family: var(--font-display, Georgia, serif);
+  font-size: clamp(0.82rem, 1.7vw, 1.08rem);
+  font-style: italic;
+  letter-spacing: 0.02em;
+  opacity: 0.22;
+  white-space: nowrap;
+  transform: rotate(-2deg);
+  transition: opacity 520ms ease;
+}
+
 .cinematic-diary-intro[data-scene-ready="true"] .cinematic-diary-intro__fallback {
   opacity: 0.12;
 }
@@ -2040,6 +2055,11 @@ label {
 .cinematic-diary-intro[data-phase="reading"] .cinematic-diary-intro__fallback-mark,
 .cinematic-diary-intro[data-phase="handoff"] .cinematic-diary-intro__fallback-mark {
   opacity: 1;
+}
+
+.cinematic-diary-intro[data-phase="reading"] .cinematic-diary-intro__fallback-note,
+.cinematic-diary-intro[data-phase="handoff"] .cinematic-diary-intro__fallback-note {
+  opacity: 0.88;
 }
 
 .cinematic-diary-intro__copy {
@@ -2236,6 +2256,10 @@ label {
   .cinematic-diary-intro__fallback-mark {
     transition: none;
     transform: rotate(-45deg);
+  }
+
+  .cinematic-diary-intro__fallback-note {
+    transition: none;
   }
 
   .cinematic-diary-intro__copy {
