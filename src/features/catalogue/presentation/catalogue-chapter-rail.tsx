@@ -17,11 +17,11 @@ export function CatalogueChapterRail({
   selectedCategorySlug,
 }: CatalogueChapterRailProps) {
   return (
-    <section aria-labelledby="chapters-heading" className="mx-auto max-w-7xl px-5 py-8 sm:px-8 sm:py-10 lg:px-10">
+    <section aria-labelledby="chapters-heading" className="diary-container diary-section">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="diary-kicker">Khám phá theo tâm trạng</p>
-          <h2 className="font-display mt-2 text-3xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]" id="chapters-heading">
+          <p className="text-sm font-semibold text-[var(--color-accent)]">Khám phá theo tâm trạng</p>
+          <h2 className="font-display mt-2 text-3xl font-semibold tracking-[-0.05em] text-[var(--color-brand-strong)]" id="chapters-heading">
             Chọn một chương hôm nay
           </h2>
           <p className="mt-2 max-w-xl text-sm leading-7 text-[var(--color-muted)]">
@@ -45,14 +45,14 @@ export function CatalogueChapterRail({
       </div>
 
       {categories.length ? (
-        <nav aria-label="Chọn chương bộ sưu tập" className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        <nav aria-label="Chọn chương bộ sưu tập" className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {categories.map((category) => {
             const isActive = category.slug === selectedCategorySlug;
 
             return (
               <Link
                 aria-current={isActive ? "page" : undefined}
-                className={`group relative isolate min-h-36 overflow-hidden rounded-[var(--radius-card)] border p-4 shadow-[var(--shadow-soft)] transition duration-300 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[var(--color-focus)] ${
+                className={`group relative isolate min-h-40 overflow-hidden rounded-[var(--radius-card)] border p-5 shadow-[var(--shadow-soft)] transition duration-300 hover:-translate-y-1 focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[var(--color-focus)] ${
                   isActive
                     ? "border-[var(--color-brand)] bg-[var(--color-brand)] text-white shadow-[var(--theme-button-shadow)]"
                     : "border-[var(--color-border)] bg-[var(--theme-card-surface)] text-[var(--color-brand-strong)] hover:border-[var(--color-accent)] hover:shadow-[var(--shadow-card)]"
@@ -70,7 +70,7 @@ export function CatalogueChapterRail({
                   <>
                     <img
                       alt=""
-                      className="absolute inset-0 -z-20 h-full w-full object-cover opacity-35 transition duration-500 group-hover:scale-105"
+                      className="absolute inset-0 -z-20 h-full w-full object-cover opacity-28 transition duration-700 group-hover:scale-105"
                       decoding="async"
                       height={360}
                       loading="lazy"
@@ -96,7 +96,7 @@ export function CatalogueChapterRail({
                   <BookOpen size={16} strokeWidth={1.45} />
                 </span>
                 <div className="mt-3 pr-6">
-                  <p className="font-display text-xl font-semibold tracking-[-0.035em]">{category.name}</p>
+                  <p className="font-display text-2xl font-semibold tracking-[-0.045em]">{category.name}</p>
                   {category.description ? (
                     <p className={`mt-1.5 line-clamp-2 text-sm leading-6 ${isActive ? "text-white/84" : "text-[var(--color-muted)]"}`}>
                       {category.description}

@@ -18,7 +18,7 @@ export default function ErrorPage({ reset }: ErrorPageProps) {
         >
           <RefreshCw size={21} strokeWidth={1.6} />
         </span>
-        <p className="diary-kicker mt-6">Có một nhịp nhỏ bị ngắt quãng</p>
+        <p className="mt-6 text-sm font-semibold text-[var(--color-accent)]">Có một nhịp nhỏ bị ngắt quãng</p>
         <h1 className="font-display mt-3 text-4xl font-semibold tracking-[-0.05em] text-[var(--color-brand-strong)]">
           Chưa thể mở bộ sưu tập.
         </h1>

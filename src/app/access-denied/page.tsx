@@ -1,10 +1,12 @@
 import Link from "next/link";
+import { LockKeyhole } from "lucide-react";
 
 export default function AccessDeniedPage() {
   return (
-    <main className="grid min-h-screen place-items-center bg-[var(--color-surface)] px-6 text-center">
-      <section className="max-w-md rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-paper)] p-8 shadow-sm">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-accent)]">
+    <main className="diary-shell grid min-h-[100dvh] place-items-center px-5 py-8">
+      <section className="diary-wash w-full max-w-lg rounded-[var(--radius-frame)] border border-[var(--color-border)] p-7 text-center shadow-[var(--shadow-card)] sm:p-10">
+        <span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-[var(--color-brand-soft)] text-[var(--color-brand)]" aria-hidden="true"><LockKeyhole size={20} strokeWidth={1.4} /></span>
+        <p className="mt-5 text-sm font-semibold text-[var(--color-accent)]">
           Chưa có quyền truy cập
         </p>
         <h1 className="font-display mt-4 text-4xl font-semibold text-[var(--color-brand-strong)]">
@@ -15,7 +17,7 @@ export default function AccessDeniedPage() {
         </p>
         <Link
           href="/login"
-          className="mt-7 inline-flex min-h-11 items-center rounded-[var(--radius-control)] bg-[var(--color-brand)] px-5 text-sm font-semibold text-white"
+          className="mt-7 inline-flex min-h-11 items-center rounded-full bg-[var(--color-brand)] px-5 text-sm font-semibold text-white transition hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[var(--color-focus)]"
         >
           Dùng tài khoản Google khác
         </Link>

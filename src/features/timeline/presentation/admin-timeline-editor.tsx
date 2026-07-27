@@ -86,10 +86,10 @@ export function AdminTimelineEditor({
   }
 
   return (
-    <section className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] p-4 shadow-[var(--shadow-card)] sm:p-6">
+    <section className="rounded-[var(--radius-frame)] border border-[var(--color-border)] bg-[var(--surface-elevated)] p-4 shadow-[var(--shadow-card)] sm:p-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="diary-kicker">{isEditing ? "Mốc đang chọn" : "Một chương mới"}</p>
+          <p className="text-sm font-semibold text-[var(--color-accent)]">{isEditing ? "Mốc đang chọn" : "Một chương mới"}</p>
           <h2 className="font-display mt-2 text-3xl font-semibold tracking-[-0.055em] text-[var(--color-brand-strong)]">
             {selectedEntry?.title ?? "Viết mốc đầu tiên"}
           </h2>
@@ -97,8 +97,8 @@ export function AdminTimelineEditor({
             Hãy kể về điều đã xảy ra, điều mình cảm nhận, và một điều cả hai đã cùng học được.
           </p>
         </div>
-        <span className={`rounded-full px-3 py-1.5 text-xs font-bold uppercase tracking-[0.11em] ${selectedEntry?.isPublished ? "bg-[var(--color-positive)]/10 text-[var(--color-positive)]" : "bg-[var(--color-brand-soft)] text-[var(--color-brand)]"}`}>
-          {selectedEntry?.isPublished ? "Published" : "Draft"}
+        <span className={`rounded-full px-3 py-1.5 text-xs font-semibold ${selectedEntry?.isPublished ? "bg-[var(--color-positive)]/10 text-[var(--color-positive)]" : "bg-[var(--color-brand-soft)] text-[var(--color-brand)]"}`}>
+          {selectedEntry?.isPublished ? "Đang hiển thị" : "Bản nháp"}
         </span>
       </div>
 

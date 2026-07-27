@@ -13,7 +13,7 @@ import {
   X,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import {
   createItemCommentAction,
@@ -50,11 +50,6 @@ export function CatalogueEngagementPanel({
   const [editingContent, setEditingContent] = useState("");
   const [confirmingCommentId, setConfirmingCommentId] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<string | null>(null);
-
-  useEffect(() => {
-    setScore(myRating?.score ?? 0);
-    setNote(myRating?.note ?? "");
-  }, [myRating?.id, myRating?.note, myRating?.score]);
 
   function runMutation(operation: () => Promise<void>) {
     startTransition(operation);
@@ -166,7 +161,7 @@ export function CatalogueEngagementPanel({
         >
           <Heart size={20} fill="currentColor" strokeWidth={1.35} />
         </span>
-        <p className="diary-kicker mt-4">Một điều nhỏ để hiểu nhau hơn</p>
+        <p className="mt-4 text-sm font-semibold text-[var(--color-accent)]">Một điều nhỏ để hiểu nhau hơn</p>
         <h2
           className="font-display mt-2 text-balance text-3xl font-semibold tracking-[-0.05em] text-[var(--color-brand-strong)] sm:text-4xl"
           id="engagement-heading"
@@ -196,13 +191,13 @@ export function CatalogueEngagementPanel({
           <div className="flex items-center gap-2 text-[var(--color-brand-strong)]">
             <MessageCircleHeart className="text-[var(--color-accent)]" size={19} strokeWidth={1.45} aria-hidden="true" />
             <div>
-              <p className="diary-kicker">Cùng giữ lại</p>
+              <p className="text-sm font-semibold text-[var(--color-accent)]">Cùng giữ lại</p>
               <h3 className="font-display mt-1 text-2xl font-semibold tracking-[-0.04em]" id="comments-heading">
                 Lời bình của chúng mình
               </h3>
             </div>
           </div>
-          <span className="rounded-full bg-[var(--color-brand-soft)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--color-brand)]">
+          <span className="rounded-full bg-[var(--color-brand-soft)] px-3 py-1 text-xs font-semibold text-[var(--color-brand)]">
             {engagement.comments.length} lời bình
           </span>
         </div>
@@ -399,12 +394,12 @@ function RatingForm({
       className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-card-surface)] p-5 shadow-[var(--shadow-soft)] sm:p-6"
       aria-labelledby="my-rating-heading"
     >
-      <p className="diary-kicker">Cảm nhận của bạn</p>
+      <p className="text-sm font-semibold text-[var(--color-accent)]">Cảm nhận của bạn</p>
       <h3 className="font-display mt-2 text-2xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]" id="my-rating-heading">
         Điều này làm bạn thích đến đâu?
       </h3>
       <p className="mt-2 text-sm leading-7 text-[var(--color-muted)]">
-        Không cần giống nhau — chỉ cần thật với cảm nhận của mình.
+        Không cần giống nhau, chỉ cần thật với cảm nhận của mình.
       </p>
 
       <form
@@ -479,12 +474,12 @@ function RatingList({ ratings }: { ratings: ItemEngagementView["ratings"] }) {
     >
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="diary-kicker">Những cảm nhận đã lưu</p>
+          <p className="text-sm font-semibold text-[var(--color-accent)]">Những cảm nhận đã lưu</p>
           <h3 className="font-display mt-1 text-2xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]" id="ratings-heading">
             Mỗi người một góc nhìn
           </h3>
         </div>
-        <span className="rounded-full bg-[var(--color-brand-soft)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--color-brand)]">
+        <span className="rounded-full bg-[var(--color-brand-soft)] px-3 py-1 text-xs font-semibold text-[var(--color-brand)]">
           {ratings.length} cảm nhận
         </span>
       </div>

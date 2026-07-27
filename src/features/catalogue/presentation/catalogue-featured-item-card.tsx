@@ -17,7 +17,7 @@ export function CatalogueFeaturedItemCard({
 
   return (
     <Link
-      className="group grid overflow-hidden rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--theme-card-surface)] shadow-[var(--shadow-card)] transition duration-300 hover:-translate-y-0.5 hover:border-[var(--color-accent)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-focus)] md:grid-cols-[minmax(13rem,0.8fr)_minmax(0,1fr)] md:items-stretch"
+      className="group grid overflow-hidden rounded-[var(--radius-frame)] border border-[var(--color-border)] bg-[var(--surface-elevated)] shadow-[var(--shadow-card)] transition duration-500 hover:-translate-y-1 hover:border-[var(--color-accent)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-focus)] md:grid-cols-[minmax(16rem,0.9fr)_minmax(0,1.1fr)] md:items-stretch"
       href={`/catalogue/${encodeURIComponent(item.slug)}`}
       transitionTypes={["nav-forward"]}
     >
@@ -42,14 +42,14 @@ export function CatalogueFeaturedItemCard({
             />
           </div>
         )}
-        <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-white/45 bg-[rgb(49_5_12_/_62%)] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-white backdrop-blur-sm">
+        <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-white/45 bg-[rgb(49_5_12_/_62%)] px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-sm">
           <Sparkles size={13} aria-hidden="true" />
           Mở ra trước
         </span>
       </div>
 
       <div className="flex flex-col justify-center p-6 sm:p-7 lg:p-8">
-        <p className="diary-kicker">{categoryName ?? "Một điều được lưu lại"}</p>
+        <p className="text-sm font-semibold text-[var(--color-accent)]">{categoryName ?? "Một điều được lưu lại"}</p>
         <h3 className="font-display mt-3 text-balance text-3xl font-semibold tracking-[-0.055em] text-[var(--color-brand-strong)] transition group-hover:text-[var(--color-brand)] sm:text-4xl">
           {item.title}
         </h3>
@@ -58,7 +58,7 @@ export function CatalogueFeaturedItemCard({
             {item.summary}
           </p>
         ) : null}
-        <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
+        <div className="mt-7 flex flex-wrap items-center justify-between gap-3">
           {item.priceLabel ? (
             <p className="text-sm font-semibold text-[var(--color-brand)]">{item.priceLabel}</p>
           ) : (

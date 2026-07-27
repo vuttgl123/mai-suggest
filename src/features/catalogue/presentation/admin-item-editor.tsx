@@ -126,10 +126,10 @@ export function AdminItemEditor({
   }
 
   return (
-    <section className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] p-4 shadow-[var(--shadow-card)] sm:p-6">
+    <section className="rounded-[var(--radius-frame)] border border-[var(--color-border)] bg-[var(--surface-elevated)] p-4 shadow-[var(--shadow-card)] sm:p-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="diary-kicker">{isEditing ? "Item đang chọn" : "Bắt đầu một điều mới"}</p>
+          <p className="text-sm font-semibold text-[var(--color-accent)]">{isEditing ? "Item đang chọn" : "Bắt đầu một điều mới"}</p>
           <h2 className="font-display mt-2 text-3xl font-semibold tracking-[-0.055em] text-[var(--color-brand-strong)]">
             {isEditing ? selectedItem.title : "Tạo item"}
           </h2>
@@ -137,8 +137,8 @@ export function AdminItemEditor({
             Mỗi item có thể là một món quà, điểm đến hoặc trải nghiệm cùng những điều riêng bạn muốn gửi gắm.
           </p>
         </div>
-        <span className={`rounded-full px-3 py-1.5 text-xs font-bold uppercase tracking-[0.11em] ${selectedItem?.isPublished ? "bg-[var(--color-positive)]/10 text-[var(--color-positive)]" : "bg-[var(--color-brand-soft)] text-[var(--color-brand)]"}`}>
-          {selectedItem?.isPublished ? "Published" : "Draft"}
+        <span className={`rounded-full px-3 py-1.5 text-xs font-semibold ${selectedItem?.isPublished ? "bg-[var(--color-positive)]/10 text-[var(--color-positive)]" : "bg-[var(--color-brand-soft)] text-[var(--color-brand)]"}`}>
+          {selectedItem?.isPublished ? "Đang hiển thị" : "Bản nháp"}
         </span>
       </div>
 

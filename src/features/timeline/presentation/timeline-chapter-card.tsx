@@ -17,7 +17,7 @@ export function TimelineChapterCard({
   sequence,
 }: TimelineChapterCardProps) {
   return (
-    <article className="timeline-entry-card relative overflow-hidden">
+    <article className="timeline-entry-card group relative overflow-hidden">
       <span
         className="absolute inset-x-7 top-0 h-px bg-gradient-to-r from-transparent via-[var(--color-accent)]/65 to-transparent"
         aria-hidden="true"
@@ -30,7 +30,7 @@ export function TimelineChapterCard({
       </span>
 
       <div className="flex flex-wrap items-center justify-between gap-3 pr-13">
-        <p className="diary-kicker">{entry.dateLabel}</p>
+        <p className="text-sm font-semibold text-[var(--color-accent)]">{entry.dateLabel}</p>
         {entry.occurredOn ? (
           <time
             className="text-xs font-semibold text-[var(--color-muted)]"
@@ -44,7 +44,7 @@ export function TimelineChapterCard({
         {entry.title}
       </h3>
       {entry.imageUrl && entry.imageAltText ? (
-        <div className="mt-5 overflow-hidden rounded-[calc(var(--radius-card)_-_0.35rem)] border border-[var(--color-border)]">
+        <div className="mt-5 overflow-hidden rounded-[calc(var(--radius-card)_-_0.35rem)] border border-[var(--color-border)] transition duration-500 group-hover:border-[var(--color-accent)]">
           <CatalogueItemImage alt={entry.imageAltText} src={entry.imageUrl} />
         </div>
       ) : null}

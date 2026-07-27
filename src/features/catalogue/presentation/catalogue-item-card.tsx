@@ -17,7 +17,7 @@ export function CatalogueItemCard({
 
   return (
     <Link
-      className="group block overflow-hidden rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[rgb(255_250_247_/_80%)] shadow-[var(--shadow-soft)] transition duration-300 hover:-translate-y-1 hover:border-[var(--color-accent)] hover:shadow-[var(--shadow-card)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-focus)]"
+      className="group block h-full overflow-hidden rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[color-mix(in_srgb,var(--surface-elevated)_82%,transparent)] shadow-[var(--shadow-soft)] transition duration-500 hover:-translate-y-1 hover:border-[var(--color-accent)] hover:shadow-[var(--shadow-card)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-focus)]"
       href={`/catalogue/${encodeURIComponent(item.slug)}`}
       transitionTypes={["nav-forward"]}
     >
@@ -47,7 +47,7 @@ export function CatalogueItemCard({
       )}
 
       <div className="space-y-2.5 p-4 sm:p-5">
-        {categoryName ? <p className="diary-kicker">{categoryName}</p> : null}
+        {categoryName ? <p className="text-xs font-semibold text-[var(--color-accent)]">{categoryName}</p> : null}
         <div>
           <h2 className="font-display text-xl font-semibold leading-tight tracking-[-0.035em] text-[var(--color-brand-strong)] transition group-hover:text-[var(--color-brand)]">
             {item.title}

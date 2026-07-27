@@ -1,7 +1,7 @@
 "use client";
 
 import { CalendarPlus, Check, X } from "lucide-react";
-import { useEffect, useMemo, useRef, useState, useTransition } from "react";
+import { useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
@@ -50,34 +50,23 @@ export function ThemeScheduleForm({
   const endTimeRef = useRef<HTMLInputElement>(null);
   const priorityRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    setDraft(createDraft(schedule));
-    setValidationMessage(null);
-  }, [schedule]);
+  const timeRange = resolveTimeRange(draft);
+  const hasOverlap =
+    timeRange !== null &&
+    Number.isInteger(Number(draft.priority)) &&
+    schedules.some((entry) => {
+      if (!entry.isEnabled || entry.id === schedule?.id) return false;
+      const entryStart = new Date(entry.startsAt).getTime();
+      const entryEnd = new Date(entry.endsAt).getTime();
+      const start = new Date(timeRange.startsAt).getTime();
+      const end = new Date(timeRange.endsAt).getTime();
 
-  const timeRange = useMemo(
-    () => resolveTimeRange(draft),
-    [draft.endDate, draft.endTime, draft.startDate, draft.startTime],
-  );
-  const hasOverlap = useMemo(
-    () =>
-      timeRange !== null &&
-      Number.isInteger(Number(draft.priority)) &&
-      schedules.some((entry) => {
-        if (!entry.isEnabled || entry.id === schedule?.id) return false;
-        const entryStart = new Date(entry.startsAt).getTime();
-        const entryEnd = new Date(entry.endsAt).getTime();
-        const start = new Date(timeRange.startsAt).getTime();
-        const end = new Date(timeRange.endsAt).getTime();
-
-        return (
-          entryStart < end &&
-          entryEnd > start &&
-          entry.priority >= Number(draft.priority)
-        );
-      }),
-    [draft.priority, schedule?.id, schedules, timeRange],
-  );
+      return (
+        entryStart < end &&
+        entryEnd > start &&
+        entry.priority >= Number(draft.priority)
+      );
+    });
 
   function updateDraft(patch: Partial<ThemeScheduleDraft>) {
     setDraft((current) => ({ ...current, ...patch }));
@@ -126,10 +115,10 @@ export function ThemeScheduleForm({
   const heading = schedule ? "Chỉnh một khoảng không khí" : "Hẹn không khí mới";
 
   return (
-    <section className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] p-5 shadow-[var(--shadow-soft)] sm:p-6">
+    <section className="rounded-[var(--radius-frame)] border border-[var(--color-border)] bg-[var(--surface-elevated)] p-5 shadow-[var(--shadow-soft)] sm:p-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="diary-kicker">Lịch tự động · giờ Việt Nam</p>
+          <p className="text-sm font-semibold text-[var(--color-accent)]">Lịch tự động · giờ Việt Nam</p>
           <h2 className="font-display mt-2 text-2xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
             {heading}
           </h2>

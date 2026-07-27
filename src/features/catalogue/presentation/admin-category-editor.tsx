@@ -47,15 +47,13 @@ export function AdminCategoryEditor({
     const dialog = dialogRef.current;
     if (!dialog) return;
 
-    if (isOpen && category) {
-      setDraft(createDraft(category));
-      setFeedback(null);
+    if (isOpen) {
       if (!dialog.open) dialog.showModal();
       return;
     }
 
     if (dialog.open) dialog.close();
-  }, [category, isOpen]);
+  }, [isOpen]);
 
   function updateDraft(patch: Partial<CategoryDraft>) {
     setDraft((current) => ({ ...current, ...patch }));
@@ -112,7 +110,7 @@ export function AdminCategoryEditor({
       <form className="admin-category-editor" onSubmit={submit}>
         <header className="admin-category-editor-header">
           <div>
-            <p className="diary-kicker">Bộ sưu tập · một chương nhỏ</p>
+            <p className="text-sm font-semibold text-[var(--color-accent)]">Bộ sưu tập · một chương nhỏ</p>
             <div
               aria-hidden="true"
               className="mt-3 flex items-center gap-2 text-[var(--color-accent)]"

@@ -9,7 +9,7 @@ export function CatalogueKeepsakeCollection({
   keepsakes,
 }: CatalogueKeepsakeCollectionProps) {
   return (
-    <section className="relative isolate overflow-hidden border-y border-[var(--color-border)] bg-[rgb(255_249_243_/_72%)]">
+    <section className="diary-section-tint relative isolate overflow-hidden">
       <span
         className="pointer-events-none absolute -right-32 -top-20 h-72 w-72 rounded-full bg-[var(--color-brand-soft)] opacity-60 blur-3xl"
         aria-hidden="true"
@@ -19,22 +19,22 @@ export function CatalogueKeepsakeCollection({
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto max-w-5xl px-5 py-11 sm:px-8 sm:py-15 lg:px-10">
-        <div className="mx-auto max-w-2xl text-center">
+      <div className="diary-container diary-section relative">
+        <div className="max-w-2xl">
           <span
             className="mx-auto grid h-11 w-11 place-items-center rounded-full bg-[var(--color-brand-soft)] text-[var(--color-brand)]"
             aria-hidden="true"
           >
             <BookHeart size={20} strokeWidth={1.45} />
           </span>
-          <p className="diary-kicker mt-4">Một góc chỉ dành cho chúng mình</p>
-          <h2 className="font-display mt-2 text-balance text-3xl font-semibold tracking-[-0.05em] text-[var(--color-brand-strong)] sm:text-4xl">
+          <p className="mt-4 text-sm font-semibold text-[var(--color-accent)]">Một góc chỉ dành cho chúng mình</p>
+          <h2 className="font-display mt-2 text-balance text-4xl font-semibold tracking-[-0.055em] text-[var(--color-brand-strong)] sm:text-5xl">
             Những điều muốn nói
           </h2>
         </div>
 
         {keepsakes.length ? (
-          <div className="mt-8 grid gap-4 md:grid-cols-2 md:gap-5">
+          <div className="mt-10 grid gap-5 md:grid-cols-2 md:gap-6">
             {keepsakes.map((keepsake, index) => (
               <KeepsakeCard
                 keepsake={keepsake}
@@ -86,7 +86,7 @@ function KeepsakeCard({
       </span>
       <div className="flex items-center gap-2 text-[var(--color-accent)]">
         <Quote size={18} strokeWidth={1.45} aria-hidden="true" />
-        <p className="diary-kicker text-[var(--color-accent)]">{copy.label}</p>
+        <p className="text-sm font-semibold text-[var(--color-accent)]">{copy.label}</p>
       </div>
       {keepsake.title ? (
         <h3 className="font-display mt-4 max-w-[82%] text-2xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]">

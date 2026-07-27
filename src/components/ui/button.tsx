@@ -30,7 +30,7 @@ export function buttonClassName({
   className?: string;
 } = {}) {
   return [
-    "inline-flex items-center justify-center gap-2 rounded-[var(--radius-control)] border font-semibold transition duration-[var(--duration-fast)] ease-out disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0",
+    "inline-flex touch-manipulation items-center justify-center gap-2 whitespace-nowrap rounded-[var(--radius-control)] border font-semibold transition duration-[var(--duration-fast)] ease-out active:scale-[0.98] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[var(--color-focus)] disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none",
     variantClassNames[variant],
     sizeClassNames[size],
     className,

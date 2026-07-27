@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useMotionValueEvent, useScroll } from "motion/react";
 
 import type {
   CinematicDiaryPalette,
@@ -40,7 +41,23 @@ export function CinematicDiaryIntro() {
   const sectionRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sceneRef = useRef<CinematicDiaryScene | null>(null);
   const [isSceneReady, setIsSceneReady] = useState(false);
+  const { scrollYProgress } = useScroll({
+    offset: ["start start", "end end"],
+    target: sectionRef,
+  });
+
+  useMotionValueEvent(scrollYProgress, "change", (progress) => {
+    const section = sectionRef.current;
+    if (!section) {
+      return;
+    }
+
+    section.style.setProperty("--diary-intro-progress", String(progress));
+    section.dataset.phase = getPhase(progress);
+    sceneRef.current?.setProgress(progress);
+  });
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -57,31 +74,21 @@ export function CinematicDiaryIntro() {
     }
 
     let cancelled = false;
-    let diaryScene: CinematicDiaryScene | null = null;
     let isIntersecting = true;
 
     const updateActivity = () => {
-      diaryScene?.setActive(isIntersecting && !document.hidden);
-    };
-
-    const updateProgress = () => {
-      const bounds = section.getBoundingClientRect();
-      const range = Math.max(section.offsetHeight - window.innerHeight, 1);
-      const progress = Math.min(1, Math.max(0, -bounds.top / range));
-      section.style.setProperty("--diary-intro-progress", String(progress));
-      section.dataset.phase = getPhase(progress);
-      diaryScene?.setProgress(progress);
+      sceneRef.current?.setActive(isIntersecting && !document.hidden);
     };
 
     const resize = () => {
-      diaryScene?.resize(stage.clientWidth, stage.clientHeight);
+      sceneRef.current?.resize(stage.clientWidth, stage.clientHeight);
     };
 
     const onPointerMove = (event: PointerEvent) => {
       const bounds = stage.getBoundingClientRect();
       const x = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
       const y = ((event.clientY - bounds.top) / bounds.height) * 2 - 1;
-      diaryScene?.setPointer(x, y);
+      sceneRef.current?.setPointer(x, y);
     };
 
     const pointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
@@ -93,7 +100,7 @@ export function CinematicDiaryIntro() {
     resizeObserver.observe(stage);
 
     const themeObserver = new MutationObserver(() => {
-      diaryScene?.setPalette(readPalette());
+      sceneRef.current?.setPalette(readPalette());
     });
     themeObserver.observe(document.body, { attributes: true, attributeFilter: ["data-theme"] });
 
@@ -106,9 +113,7 @@ export function CinematicDiaryIntro() {
     );
     intersectionObserver.observe(section);
 
-    window.addEventListener("scroll", updateProgress, { passive: true });
     document.addEventListener("visibilitychange", updateActivity);
-    updateProgress();
 
     const initialiseScene = async () => {
       try {
@@ -119,9 +124,12 @@ export function CinematicDiaryIntro() {
           return;
         }
 
-        diaryScene = createCinematicDiaryScene(canvas, readPalette());
+        sceneRef.current = createCinematicDiaryScene(canvas, readPalette());
         resize();
-        updateProgress();
+        const progress = scrollYProgress.get();
+        section.style.setProperty("--diary-intro-progress", String(progress));
+        section.dataset.phase = getPhase(progress);
+        sceneRef.current.setProgress(progress);
         updateActivity();
         setIsSceneReady(true);
       } catch {
@@ -133,15 +141,15 @@ export function CinematicDiaryIntro() {
 
     return () => {
       cancelled = true;
-      window.removeEventListener("scroll", updateProgress);
       window.removeEventListener("pointermove", onPointerMove);
       document.removeEventListener("visibilitychange", updateActivity);
       resizeObserver.disconnect();
       themeObserver.disconnect();
       intersectionObserver.disconnect();
-      diaryScene?.dispose();
+      sceneRef.current?.dispose();
+      sceneRef.current = null;
     };
-  }, []);
+  }, [scrollYProgress]);
 
   return (
     <section

@@ -22,9 +22,9 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
     firstSearchParam(params.error) === "oauth_callback_failed";
 
   return (
-    <main className="diary-shell grid min-h-screen place-items-center px-5 py-8 sm:px-8 sm:py-12">
-      <div className="grid w-full max-w-5xl overflow-hidden rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] shadow-[var(--shadow-card)] lg:grid-cols-[0.95fr_1.05fr]">
-        <section className="relative overflow-hidden bg-[var(--color-brand-strong)] px-8 py-12 text-white sm:px-12 sm:py-16">
+    <main className="diary-shell grid min-h-[100dvh] place-items-center px-4 py-5 sm:px-8 sm:py-10">
+      <div className="grid w-full max-w-6xl overflow-hidden rounded-[var(--radius-frame)] border border-[var(--color-border)] bg-[var(--color-paper)] shadow-[var(--shadow-card)] lg:grid-cols-[0.92fr_1.08fr]">
+        <section className="relative min-h-[28rem] overflow-hidden bg-[var(--color-brand-strong)] px-7 py-9 text-white sm:px-12 sm:py-14 lg:min-h-[36rem]">
           <div
             className="absolute -right-20 -top-20 h-56 w-56 rounded-full border border-white/15"
             aria-hidden="true"
@@ -37,7 +37,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
             <span className="grid h-11 w-11 place-items-center rounded-full bg-white/12 text-[var(--soft-rose)]">
               <Heart size={19} fill="currentColor" strokeWidth={1.4} aria-hidden="true" />
             </span>
-            <p className="mt-10 text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--soft-rose)]">
+            <p className="mt-10 text-sm font-semibold text-[var(--soft-rose)]" translate="no">
               Điều Em Yêu
             </p>
             <h1 className="font-display mt-4 max-w-sm text-balance text-5xl font-semibold leading-[0.95] tracking-[-0.055em] sm:text-6xl">
@@ -46,15 +46,15 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
             <p className="mt-6 max-w-sm text-sm leading-7 text-white/72 sm:text-base">
               Giữ lại những nơi muốn đến, những điều muốn thử và mọi lựa chọn khiến em vui.
             </p>
-            <span className="mt-auto inline-flex items-center gap-2 pt-14 text-xs font-semibold uppercase tracking-[0.14em] text-white/62">
+            <span className="mt-auto inline-flex items-center gap-2 pt-14 text-xs font-semibold text-white/62">
               <Sparkles size={15} aria-hidden="true" />
-              Carefully kept
+              Giữ lại thật kỹ
             </span>
           </div>
         </section>
 
-        <section className="diary-wash px-8 py-12 sm:px-12 sm:py-16">
-          <p className="diary-kicker">Chào mừng trở lại</p>
+        <section className="diary-wash px-7 py-9 sm:px-12 sm:py-14">
+          <p className="text-sm font-semibold text-[var(--color-accent)]">Chào mừng trở lại</p>
           <h2 className="font-display mt-4 text-balance text-4xl font-semibold tracking-[-0.05em] text-[var(--color-brand-strong)] sm:text-5xl">
             Mình cùng mở lại bộ sưu tập nhé.
           </h2>

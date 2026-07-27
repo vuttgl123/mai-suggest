@@ -98,10 +98,10 @@ export function AdminCatalogueSidebar({
 
   return (
     <>
-    <aside className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[rgb(255_249_243_/_78%)] p-3 shadow-[var(--shadow-soft)] xl:sticky xl:top-5">
+    <aside className="rounded-[var(--radius-frame)] border border-[var(--color-border)] bg-[color-mix(in_srgb,var(--surface-elevated)_82%,transparent)] p-3 shadow-[var(--shadow-soft)] xl:sticky xl:top-5">
       <div className="flex items-center justify-between gap-3">
         <div>
-          <p className="diary-kicker">Bộ sưu tập</p>
+          <p className="text-sm font-semibold text-[var(--color-accent)]">Bộ sưu tập</p>
           <h2 className="font-display mt-1 text-lg font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]">
             Danh mục
           </h2>
@@ -168,7 +168,7 @@ export function AdminCatalogueSidebar({
               href={createAdminCataloguePath({ categoryId: category.id, itemId: null, page: 1 })}
             >
               <span className="min-w-0 truncate">{category.name}</span>
-              <span className="shrink-0 text-[10px] font-bold uppercase tracking-[0.1em] opacity-70">
+            <span className="shrink-0 text-[10px] font-semibold opacity-70">
                 {category.isActive ? "Live" : "Ẩn"}
               </span>
             </Link>
@@ -221,6 +221,7 @@ export function AdminCatalogueSidebar({
         isOpen={editingCategory !== null}
         onClose={() => setEditingCategoryId(null)}
         onFeedback={onFeedback}
+        key={editingCategory?.id ?? "closed"}
       />
     </>
   );

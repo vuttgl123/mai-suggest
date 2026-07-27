@@ -51,10 +51,10 @@ export function AdminItemList({
   }
 
   return (
-    <section className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] p-4 shadow-[var(--shadow-soft)] sm:p-5">
+    <section className="rounded-[var(--radius-frame)] border border-[var(--color-border)] bg-[var(--surface-elevated)] p-4 shadow-[var(--shadow-soft)] sm:p-5">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="diary-kicker">Nội dung</p>
+          <p className="text-sm font-semibold text-[var(--color-accent)]">Nội dung</p>
           <h2 className="font-display mt-1 text-2xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
             {itemPage.total} item
           </h2>
@@ -91,7 +91,7 @@ export function AdminItemList({
                       <span>{item.kind}</span>
                     </p>
                   </div>
-                  <span className={`shrink-0 rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-[0.1em] ${item.isPublished ? "bg-[var(--color-positive)]/10 text-[var(--color-positive)]" : "bg-[var(--color-brand-soft)] text-[var(--color-brand)]"}`}>
+                  <span className={`shrink-0 rounded-full px-2 py-1 text-[10px] font-semibold ${item.isPublished ? "bg-[var(--color-positive)]/10 text-[var(--color-positive)]" : "bg-[var(--color-brand-soft)] text-[var(--color-brand)]"}`}>
                     {item.isPublished ? "Live" : "Draft"}
                   </span>
                 </div>

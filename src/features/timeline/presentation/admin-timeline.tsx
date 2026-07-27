@@ -24,7 +24,7 @@ export function AdminTimeline({ entries, selectedEntry }: AdminTimelineProps) {
   return (
     <main
       id="admin-timeline-content"
-      className="mx-auto max-w-[90rem] px-5 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12"
+      className="diary-container diary-section pt-8 sm:pt-10"
       tabIndex={-1}
     >
       <AdminWorkspaceHeader
@@ -39,7 +39,7 @@ export function AdminTimeline({ entries, selectedEntry }: AdminTimelineProps) {
         description="Viết các cột mốc, giữ chúng ở dạng nháp cho đến khi sẵn sàng, và gìn giữ những lời hồi đáp được gửi lại."
         eyebrow="Quản trị · hành trình"
         summary={
-          <span className="rounded-full bg-[var(--color-brand-soft)] px-3 py-1.5 text-xs font-bold uppercase tracking-[0.11em] text-[var(--color-brand)]">
+          <span className="rounded-full bg-[var(--color-brand-soft)] px-3 py-1.5 text-xs font-semibold text-[var(--color-brand)]">
             {publishedCount}/{entries.length} công khai
           </span>
         }
@@ -49,7 +49,7 @@ export function AdminTimeline({ entries, selectedEntry }: AdminTimelineProps) {
 
       {feedback ? <p aria-live="polite" className="mt-5 rounded-[var(--radius-card)] border border-[var(--color-brand)]/15 bg-[var(--color-brand-soft)]/50 px-4 py-3 text-sm leading-6 text-[var(--color-brand)]">{feedback}</p> : null}
 
-      <section className="mt-5 grid gap-5 xl:grid-cols-[20rem_minmax(0,1fr)] xl:items-start">
+      <section className="mt-7 grid gap-6 xl:grid-cols-[20rem_minmax(0,1fr)] xl:items-start">
         <AdminTimelineList entries={entries} selectedEntryId={selectedEntry?.id ?? null} />
         <ViewTransition
           default="none"

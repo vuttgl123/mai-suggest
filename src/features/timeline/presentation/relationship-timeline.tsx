@@ -27,41 +27,48 @@ export function RelationshipTimeline({
       <AppHeader activeSection="journey" actor={actor} />
 
       <main id="journey-content" tabIndex={-1}>
-        <section className="mx-auto max-w-5xl px-5 pb-11 pt-11 text-center sm:px-8 sm:pb-15 sm:pt-17 lg:px-10">
-          <span className="mx-auto grid h-11 w-11 place-items-center rounded-full bg-[var(--color-brand-soft)] text-[var(--color-brand)]" aria-hidden="true">
-            <BookHeart size={20} strokeWidth={1.35} />
-          </span>
-          <p className="diary-kicker mt-4">Một cuốn nhật ký chung</p>
-          <div className="mt-4 flex items-center justify-center gap-3 text-[var(--color-accent)]" aria-hidden="true">
-            <span className="diary-rule" />
-            <span className="h-1.5 w-1.5 rounded-full bg-current" />
-            <span className="diary-rule" />
+        <section className="diary-container diary-section grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(17rem,0.46fr)] lg:items-end lg:gap-16">
+          <div className="max-w-3xl">
+            <div className="flex items-center gap-3 text-[var(--color-accent)]" aria-hidden="true">
+              <BookHeart size={20} strokeWidth={1.35} />
+              <span className="h-px w-16 bg-[var(--color-accent)]/55" />
+            </div>
+            <p className="mt-5 text-sm font-semibold text-[var(--color-accent)]">Một cuốn nhật ký chung</p>
+            <h1 className="font-display display-xl mt-3 max-w-3xl text-balance font-semibold text-[var(--color-brand-strong)]">
+              Chúng mình đã lớn lên cùng nhau như thế nào.
+            </h1>
+            <p className="mt-6 max-w-2xl text-base leading-8 text-[var(--color-muted)]">
+              Không chỉ là những ngày đã đi qua, mà còn là những điều mình đã cùng học,
+              cùng vượt qua và vẫn đang lựa chọn mỗi ngày.
+            </p>
           </div>
-          <h1 className="font-display display-lg mx-auto mt-5 max-w-3xl text-balance font-semibold text-[var(--color-brand-strong)]">
-            Chúng mình đã lớn lên cùng nhau như thế nào.
-          </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-[var(--color-muted)]">
-            Không chỉ là những ngày đã đi qua, mà còn là những điều mình đã cùng học,
-            cùng vượt qua và vẫn đang lựa chọn mỗi ngày.
-          </p>
+          <aside className="diary-wash relative overflow-hidden rounded-[var(--radius-card)] border border-[var(--color-border)] p-5 shadow-[var(--shadow-soft)] sm:p-6">
+            <span className="absolute -right-8 -top-10 h-28 w-28 rounded-full border border-[var(--color-accent)]/35" aria-hidden="true" />
+            <p className="text-sm font-semibold text-[var(--color-accent)]">Các chương đã mở</p>
+            <p className="font-display mt-2 text-5xl font-semibold tracking-[-0.07em] text-[var(--color-brand-strong)]">{entries.length}</p>
+            <p className="mt-2 max-w-xs text-sm leading-6 text-[var(--color-muted)]">Mỗi mốc là một lần mình chọn nhớ về nhau.</p>
+          </aside>
         </section>
 
         {entries.length ? (
           <section
             aria-labelledby="timeline-heading"
-            className="border-y border-[var(--color-border)] bg-[rgb(255_252_248_/_62%)] py-11 sm:py-15"
+            className="diary-section-tint"
           >
-            <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
-              <div className="mx-auto max-w-2xl text-center">
-                <p className="diary-kicker">Từng trang mình đã viết</p>
-                <h2
-                  className="font-display mt-2 text-balance text-3xl font-semibold tracking-[-0.05em] text-[var(--color-brand-strong)] sm:text-4xl"
-                  id="timeline-heading"
-                >
-                  Hành trình của chúng mình
-                </h2>
+            <div className="diary-container diary-section">
+              <div className="flex flex-wrap items-end justify-between gap-5">
+                <div>
+                  <p className="text-sm font-semibold text-[var(--color-accent)]">Từng trang mình đã viết</p>
+                  <h2
+                    className="font-display mt-2 text-balance text-4xl font-semibold tracking-[-0.055em] text-[var(--color-brand-strong)] sm:text-5xl"
+                    id="timeline-heading"
+                  >
+                    Hành trình của chúng mình
+                  </h2>
+                </div>
+                <p className="max-w-xs text-sm leading-6 text-[var(--color-muted)]">Kéo ngang để lần giở từng chương.</p>
               </div>
-              <div className="timeline-film-stage mt-8 sm:mt-10">
+              <div className="timeline-film-stage mt-9 sm:mt-11">
                 <div
                   aria-label="Cuộn phim các chương trong hành trình"
                   className="timeline-film-viewport"
@@ -102,7 +109,7 @@ export function RelationshipTimeline({
               </h2>
               <p className="mx-auto mt-3 max-w-lg text-sm leading-7 text-[var(--color-muted)]">
                 Một ngày thật đáng nhớ, một điều đã cùng học được, hay chỉ một câu nói
-                khiến mình muốn giữ lại — tất cả đều có thể bắt đầu từ đây.
+                khiến mình muốn giữ lại. Tất cả đều có thể bắt đầu từ đây.
               </p>
               {actor.canManageCatalogue ? (
                 <a className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full bg-[var(--color-brand)] px-4 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[var(--color-brand-strong)]" href="/admin/hanh-trinh">

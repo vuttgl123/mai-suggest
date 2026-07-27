@@ -15,7 +15,7 @@ export function ThemeMaintenanceScreen({
   return (
     <main className="theme-maintenance-screen diary-shell" role="status">
       <section className="theme-maintenance-card">
-        <p className="diary-kicker">{preset.label}</p>
+        <p className="text-sm font-semibold text-[var(--color-accent)]">{preset.label}</p>
         <h1 className="font-display">Không gian đang thay áo mới</h1>
         <p>
           Chúng mình đang hoàn thiện một chương mới. Trang sẽ trở lại trong giây

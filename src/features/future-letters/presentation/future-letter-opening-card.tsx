@@ -1,5 +1,9 @@
 "use client";
 
+/* Avatar URLs are supplied by Supabase and are intentionally rendered through
+ * a native image boundary instead of a fixed Next Image allow-list. */
+/* eslint-disable @next/next/no-img-element */
+
 import { ChevronsUp, ExternalLink, Heart, MailOpen, Music2, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -28,7 +32,6 @@ export function FutureLetterOpeningCard({
   onClose,
 }: FutureLetterOpeningCardProps) {
   const [phase, setPhase] = useState<OpeningPhase>("sealed");
-  const [hasBeenOpened, setHasBeenOpened] = useState(false);
   const articleRef = useRef<HTMLElement>(null);
   const previewButtonRef = useRef<HTMLButtonElement>(null);
   const phaseTimersRef = useRef<number[]>([]);
@@ -38,11 +41,8 @@ export function FutureLetterOpeningCard({
   }, []);
 
   useEffect(() => {
-    if (isActive) return;
-
-    clearPhaseTimers(phaseTimersRef);
-    setPhase(hasBeenOpened ? "preview" : "sealed");
-  }, [hasBeenOpened, isActive]);
+    if (!isActive) clearPhaseTimers(phaseTimersRef);
+  }, [isActive]);
 
   useEffect(() => {
     if (phase === "opened") articleRef.current?.focus();
@@ -54,7 +54,6 @@ export function FutureLetterOpeningCard({
 
     onActivate();
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setHasBeenOpened(true);
       setPhase("opened");
       return;
     }
@@ -67,7 +66,6 @@ export function FutureLetterOpeningCard({
   function schedulePhase(nextPhase: OpeningPhase, delay: number) {
     phaseTimersRef.current.push(
       window.setTimeout(() => {
-        if (nextPhase === "opened") setHasBeenOpened(true);
         setPhase(nextPhase);
       }, delay),
     );
@@ -84,11 +82,12 @@ export function FutureLetterOpeningCard({
     onClose();
   }
 
-  const isEnvelopeVisible = phase !== "opened";
-  const isPaperVisible = phase === "revealing" || phase === "opened";
+  const renderPhase = !isActive && phase === "opened" ? "preview" : phase;
+  const isEnvelopeVisible = renderPhase !== "opened";
+  const isPaperVisible = renderPhase === "revealing" || renderPhase === "opened";
   const hasImageBackdrop = Boolean(letter.imageUrl && letter.imageAltText);
 
-  if (phase === "preview") {
+  if (renderPhase === "preview") {
     return (
       <article
         aria-label={`Thư đã mở từ ${letter.author.displayName}`}
@@ -127,16 +126,16 @@ export function FutureLetterOpeningCard({
       aria-label={`Thư từ ${letter.author.displayName}`}
       className="future-letter-opening"
       data-active={isActive ? "true" : "false"}
-      data-phase={phase}
+      data-phase={renderPhase}
       ref={articleRef}
       tabIndex={-1}
     >
       <p aria-live="polite" className="sr-only">
-        {phase === "unsealing"
+        {renderPhase === "unsealing"
           ? "Triện sáp đang mở."
-          : phase === "revealing"
+          : renderPhase === "revealing"
             ? "Lá thư đang hiện ra."
-            : phase === "opened"
+            : renderPhase === "opened"
               ? "Lá thư đã mở."
               : ""}
       </p>
@@ -159,7 +158,7 @@ export function FutureLetterOpeningCard({
           <span className="future-letter-sparks" aria-hidden="true">
             {Array.from({ length: 10 }, (_, index) => <i key={index} />)}
           </span>
-          {phase === "sealed" ? (
+          {renderPhase === "sealed" ? (
             <div className="future-letter-open-control">
               <p className="diary-kicker">Đã đến giờ hẹn</p>
               <p className="mt-2 text-sm leading-6 text-[var(--color-muted)]">
@@ -176,7 +175,7 @@ export function FutureLetterOpeningCard({
 
       {isPaperVisible ? (
         <div
-          aria-hidden={phase !== "opened"}
+          aria-hidden={renderPhase !== "opened"}
           className="future-letter-paper"
           id={`future-letter-${letter.id}`}
         >
@@ -195,7 +194,7 @@ export function FutureLetterOpeningCard({
                 </div>
                 <div className="flex items-center gap-2">
                   <Sparkles className="text-[var(--color-accent)]" size={18} strokeWidth={1.35} aria-hidden="true" />
-                  {phase === "opened" ? (
+                    {renderPhase === "opened" ? (
                     <Button
                       className="future-letter-reader-header__action"
                       onClick={collapseLetter}
@@ -241,7 +240,7 @@ export function FutureLetterOpeningCard({
             <p className="mt-5 break-words whitespace-pre-line text-[15px] leading-8 text-[var(--color-ink)]">
               {letter.content}
             </p>
-            {phase === "opened" ? (
+            {renderPhase === "opened" ? (
               <div className="future-letter-reader-closeout">
                 <p>Đã đọc xong lá thư này?</p>
                 <Button

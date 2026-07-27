@@ -39,12 +39,12 @@ export function CatalogueDetail({
 
         <CatalogueKeepsakeCollection keepsakes={keepsakes} />
 
-        <section className="relative isolate overflow-hidden border-b border-[var(--color-border)] bg-[rgb(255_252_248_/_62%)]">
+        <section className="diary-section-tint relative isolate overflow-hidden">
           <span
             className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--color-accent)]/45 to-transparent"
             aria-hidden="true"
           />
-          <div className="relative mx-auto max-w-5xl px-5 py-11 sm:px-8 sm:py-15 lg:px-10">
+          <div className="diary-container diary-section relative">
             <CatalogueEngagementPanel
               actorId={actor.userId}
               canManage={actor.canManageCatalogue}

@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
-import { Heart, ShieldCheck } from "lucide-react";
+import { Heart, Menu, ShieldCheck, X } from "lucide-react";
+import { useState } from "react";
 import type { ActiveActor } from "@/modules/identity/domain/current-actor";
 
 interface AppHeaderProps {
@@ -9,6 +12,19 @@ interface AppHeaderProps {
 
 export function AppHeader({ actor, activeSection = "catalogue" }: AppHeaderProps) {
   const identity = actor.email ?? "Thành viên";
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  function closeMenu() {
+    setIsMenuOpen(false);
+  }
+
+  function linkClassName(section: AppHeaderProps["activeSection"]): string {
+    return `inline-flex min-h-10 items-center border-b-2 px-1 text-sm font-semibold transition duration-[var(--duration-fast)] motion-reduce:transition-none ${
+      activeSection === section
+        ? "border-[var(--color-brand)] text-[var(--color-brand)]"
+        : "border-transparent text-[var(--color-muted)] hover:text-[var(--color-brand-strong)]"
+    }`;
+  }
 
   return (
     <header
@@ -17,71 +33,75 @@ export function AppHeader({ actor, activeSection = "catalogue" }: AppHeaderProps
     >
       <div className="mx-auto flex min-h-[4.5rem] max-w-7xl flex-wrap items-center justify-between gap-x-5 gap-y-2 px-5 py-2.5 sm:px-8 lg:px-10">
         <Link
-          className="group inline-flex items-center gap-2.5 text-[var(--color-brand-strong)]"
+          className="group inline-flex items-center gap-3 text-[var(--color-brand-strong)]"
           href="/"
+          onClick={closeMenu}
         >
           <span
-            className="app-header-mark grid h-9 w-9 place-items-center rounded-full bg-[var(--color-brand)] text-white shadow-[var(--theme-button-shadow)] transition duration-[var(--duration-fast)] group-hover:scale-105"
+            className="app-header-mark grid h-10 w-10 place-items-center rounded-[0.95rem] bg-[var(--color-brand)] text-white shadow-[var(--theme-button-shadow)] transition duration-[var(--duration-fast)] group-hover:-rotate-3 group-hover:scale-105 motion-reduce:transform-none motion-reduce:transition-none"
             aria-hidden="true"
           >
-            <Heart size={16} fill="currentColor" strokeWidth={1.7} />
+            <Heart size={17} fill="currentColor" strokeWidth={1.7} />
           </span>
           <span>
-            <span className="font-display block text-xl font-semibold leading-none tracking-[-0.035em]">
+            <span className="font-display block text-[1.35rem] font-semibold leading-none tracking-[-0.045em]" translate="no">
               Điều Em Yêu
             </span>
-            <span className="mt-0.5 block text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--color-muted)]">
-              A small collection
+            <span className="mt-1 block text-[10px] font-semibold tracking-[0.08em] text-[var(--color-muted)]">
+              một cuốn nhật ký riêng
             </span>
           </span>
         </Link>
 
-        <nav aria-label="Điều hướng chính" className="order-3 flex w-full flex-wrap gap-x-5 sm:order-none sm:w-auto">
+        <button
+          aria-controls="primary-navigation"
+          aria-expanded={isMenuOpen}
+          aria-label={isMenuOpen ? "Đóng điều hướng" : "Mở điều hướng"}
+          className="grid h-11 w-11 place-items-center rounded-full border border-[var(--color-border)] text-[var(--color-brand)] transition hover:border-[var(--color-accent)] hover:bg-[var(--theme-control-hover)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[var(--color-focus)] active:scale-[0.98] lg:hidden motion-reduce:transform-none motion-reduce:transition-none"
+          onClick={() => setIsMenuOpen((current) => !current)}
+          type="button"
+        >
+          {isMenuOpen ? <X aria-hidden="true" size={19} /> : <Menu aria-hidden="true" size={19} />}
+        </button>
+
+        <nav
+          aria-label="Điều hướng chính"
+          className={`${isMenuOpen ? "flex" : "hidden"} order-3 w-full flex-col gap-1 border-t border-[var(--color-border)] pt-2 lg:order-none lg:flex lg:w-auto lg:flex-row lg:items-center lg:gap-x-6 lg:border-t-0 lg:p-0`}
+          id="primary-navigation"
+        >
           <Link
-            className={`inline-flex min-h-10 items-center border-b-2 px-1 text-sm font-semibold transition ${
-              activeSection === "catalogue"
-                ? "border-[var(--color-brand)] text-[var(--color-brand)]"
-                : "border-transparent text-[var(--color-muted)] hover:text-[var(--color-brand-strong)]"
-            }`}
+            className={linkClassName("catalogue")}
             href="/#collection"
+            onClick={closeMenu}
           >
             Bộ sưu tập
           </Link>
           <Link
-            className={`inline-flex min-h-10 items-center border-b-2 px-1 text-sm font-semibold transition ${
-              activeSection === "journey"
-                ? "border-[var(--color-brand)] text-[var(--color-brand)]"
-                : "border-transparent text-[var(--color-muted)] hover:text-[var(--color-brand-strong)]"
-            }`}
+            className={linkClassName("journey")}
             href="/hanh-trinh"
+            onClick={closeMenu}
           >
             Hành trình
           </Link>
           <Link
-            className={`inline-flex min-h-10 items-center border-b-2 px-1 text-sm font-semibold transition ${
-              activeSection === "letters"
-                ? "border-[var(--color-brand)] text-[var(--color-brand)]"
-                : "border-transparent text-[var(--color-muted)] hover:text-[var(--color-brand-strong)]"
-            }`}
+            className={linkClassName("letters")}
             href="/thu-hen-ngay-mo"
+            onClick={closeMenu}
           >
             Thư hẹn ngày mở
           </Link>
           {actor.canManageCatalogue ? (
             <Link
-              className={`inline-flex min-h-10 items-center border-b-2 px-1 text-sm font-semibold transition ${
-                activeSection === "admin"
-                  ? "border-[var(--color-brand)] text-[var(--color-brand)]"
-                  : "border-transparent text-[var(--color-muted)] hover:text-[var(--color-brand-strong)]"
-              }`}
+              className={linkClassName("admin")}
               href="/admin"
+              onClick={closeMenu}
             >
               Quản trị
             </Link>
           ) : null}
         </nav>
 
-        <div className="flex min-w-0 items-center gap-2 text-right">
+        <div className="hidden min-w-0 items-center gap-2 text-right sm:flex">
           {actor.canManageCatalogue ? (
             <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-[var(--theme-badge-border)] bg-[var(--color-brand-soft)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.11em] text-[var(--color-brand)]">
               <ShieldCheck size={13} aria-hidden="true" />

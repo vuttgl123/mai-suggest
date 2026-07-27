@@ -47,7 +47,7 @@ export function AdminWorkspaceSwitcher({ active }: AdminWorkspaceSwitcherProps) 
           return (
             <Link
               aria-current={isActive ? "page" : undefined}
-              className={`inline-flex min-h-11 items-center gap-2 rounded-xl px-3.5 text-sm font-semibold transition ${
+              className={`inline-flex min-h-11 items-center gap-2 rounded-xl px-3.5 text-sm font-semibold transition focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-focus)] ${
                 isActive
                   ? "bg-[var(--color-brand)] text-white shadow-[0_6px_16px_rgb(49_5_12_/_20%)]"
                   : "text-[var(--color-muted)] hover:bg-[var(--color-paper)] hover:text-[var(--color-brand)]"

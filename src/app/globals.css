@@ -64,6 +64,22 @@
   --duration-enter: 180ms;
   --duration-move: 320ms;
 
+  /* Shared visual contract for the Bordeaux editorial surfaces. */
+  --surface-page: var(--color-surface);
+  --surface-paper: var(--color-paper);
+  --surface-elevated: var(--theme-card-surface);
+  --surface-control: var(--theme-control-surface);
+  --text-primary: var(--color-ink);
+  --text-heading: var(--color-brand-strong);
+  --text-muted: var(--color-muted);
+  --line-subtle: var(--color-border);
+  --accent-primary: var(--color-brand);
+  --accent-detail: var(--color-accent);
+  --content-max: 90rem;
+  --section-space: clamp(4.25rem, 8vw, 8rem);
+  --radius-frame: 1.35rem;
+  --radius-control-tight: 0.7rem;
+
   /* Compatibility aliases while feature components migrate to semantic tokens. */
   --wine: var(--color-brand);
   --burgundy: var(--color-brand);
@@ -313,19 +329,23 @@ body[data-theme="anniversary"] {
 }
 
 html {
+  color-scheme: light;
   scroll-behavior: smooth;
-  scroll-padding-top: 5.5rem;
+  scroll-padding-top: 5rem;
 }
 
 body {
   margin: 0;
+  min-height: 100dvh;
   isolation: isolate;
   position: relative;
   overflow-x: clip;
   background: var(--theme-body-background);
   color: var(--ink);
   font-family: var(--font-body), sans-serif;
+  font-synthesis: none;
   text-rendering: optimizeLegibility;
+  text-wrap: pretty;
 }
 
 .theme-atmosphere {
@@ -392,7 +412,7 @@ body {
 .theme-atmosphere__specks {
   inset: 0;
   background-image: var(--theme-specks);
-  opacity: 0.32;
+  opacity: 0.22;
   mix-blend-mode: multiply;
 }
 
@@ -605,7 +625,38 @@ label {
 }
 
 .diary-shell {
-  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.diary-container {
+  width: min(calc(100% - 2rem), var(--content-max));
+  margin-inline: auto;
+}
+
+.diary-section {
+  padding-block: var(--section-space);
+}
+
+.diary-section-tint {
+  border-block: 1px solid var(--line-subtle);
+  background: color-mix(in srgb, var(--surface-paper) 58%, transparent);
+}
+
+.diary-image-frame {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line-subtle);
+  border-radius: var(--radius-frame);
+  background: var(--surface-paper);
+  box-shadow: var(--shadow-card);
+}
+
+.diary-image-frame::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border: 1px solid rgb(255 255 255 / 24%);
+  content: "";
 }
 
 .diary-rule {
@@ -684,7 +735,7 @@ label {
 
 .timeline-filmstrip {
   display: grid;
-  grid-auto-columns: 86vw;
+  grid-auto-columns: min(86vw, 34rem);
   grid-auto-flow: column;
   grid-template-rows: minmax(0, 1fr);
   gap: 1rem;
@@ -692,6 +743,7 @@ label {
   padding: 0;
   list-style: none;
   scroll-snap-type: x mandatory;
+  scroll-padding-inline: 0.5rem;
 }
 
 .timeline-film-frame {
@@ -767,9 +819,8 @@ label {
   color: var(--color-accent);
   font-size: 0.6875rem;
   font-weight: 700;
-  letter-spacing: 0.13em;
+  letter-spacing: 0.04em;
   line-height: 1.35;
-  text-transform: uppercase;
 }
 
 .timeline-film-marker-title {
@@ -1662,7 +1713,7 @@ label {
   }
 
   .timeline-filmstrip {
-    grid-auto-columns: minmax(23rem, 26rem);
+    grid-auto-columns: minmax(24rem, 30rem);
     gap: 1.25rem;
   }
 }
@@ -1690,8 +1741,8 @@ label {
 }
 
 @keyframes fade {
-  from { filter: blur(3px); opacity: 0; }
-  to { filter: blur(0); opacity: 1; }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes slide {
@@ -1761,7 +1812,8 @@ label {
 }
 
 @keyframes via-blur {
-  30% { filter: blur(3px); }
+  from { opacity: 0.94; }
+  to { opacity: 1; }
 }
 
 ::view-transition-group(persistent-nav) {

@@ -44,7 +44,7 @@ export function TimelineFeaturedChapter({
 
         <div className="p-5 sm:p-7 lg:p-8">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--theme-badge-border)] bg-[var(--color-paper)] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--color-brand)]">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--theme-badge-border)] bg-[var(--color-paper)] px-3 py-1.5 text-xs font-semibold text-[var(--color-brand)]">
               <Bookmark size={13} aria-hidden="true" />
               Chương đang mở
             </span>
@@ -58,7 +58,7 @@ export function TimelineFeaturedChapter({
             ) : null}
           </div>
 
-          <p className="diary-kicker mt-5">{entry.dateLabel}</p>
+          <p className="mt-5 text-sm font-semibold text-[var(--color-accent)]">{entry.dateLabel}</p>
           <h3 className="font-display mt-2 text-balance text-3xl font-semibold tracking-[-0.05em] text-[var(--color-brand-strong)] sm:text-4xl">
             {entry.title}
           </h3>

@@ -1,5 +1,9 @@
 "use client";
 
+/* Avatar URLs are supplied by Supabase and are intentionally rendered through
+ * a native image boundary instead of a fixed Next Image allow-list. */
+/* eslint-disable @next/next/no-img-element */
+
 import { Check, MessageCircleHeart, Pencil, Send, Trash2, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
@@ -100,7 +104,7 @@ export function TimelineResponsePanel({
             Những lời giữ lại
           </h4>
         </div>
-        <span className="rounded-full bg-[var(--color-brand-soft)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--color-brand)]">
+        <span className="rounded-full bg-[var(--color-brand-soft)] px-3 py-1 text-xs font-semibold text-[var(--color-brand)]">
           {responses.length} hồi đáp
         </span>
       </div>

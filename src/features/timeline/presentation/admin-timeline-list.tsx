@@ -13,10 +13,10 @@ export function AdminTimelineList({
   selectedEntryId,
 }: AdminTimelineListProps) {
   return (
-    <aside className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[rgb(255_249_243_/_78%)] p-4 shadow-[var(--shadow-soft)] xl:sticky xl:top-5">
+    <aside className="rounded-[var(--radius-frame)] border border-[var(--color-border)] bg-[color-mix(in_srgb,var(--surface-elevated)_82%,transparent)] p-4 shadow-[var(--shadow-soft)] xl:sticky xl:top-5">
       <div className="flex items-end justify-between gap-3">
         <div>
-          <p className="diary-kicker">Các chương</p>
+          <p className="text-sm font-semibold text-[var(--color-accent)]">Các chương</p>
           <h2 className="font-display mt-1 text-2xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]">
             Mốc hành trình
           </h2>
@@ -42,8 +42,8 @@ export function AdminTimelineList({
                 transitionTypes={["admin-select"]}
               >
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <p className="diary-kicker text-[9px]">{entry.dateLabel}</p>
-                  <span className={`shrink-0 rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-[0.1em] ${entry.isPublished ? "bg-[var(--color-positive)]/10 text-[var(--color-positive)]" : "bg-[var(--color-brand-soft)] text-[var(--color-brand)]"}`}>
+                  <p className="text-xs font-semibold text-[var(--color-accent)]">{entry.dateLabel}</p>
+                  <span className={`shrink-0 rounded-full px-2 py-1 text-[10px] font-semibold ${entry.isPublished ? "bg-[var(--color-positive)]/10 text-[var(--color-positive)]" : "bg-[var(--color-brand-soft)] text-[var(--color-brand)]"}`}>
                     {entry.isPublished ? "Live" : "Draft"}
                   </span>
                 </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { Clock3, Pencil, Trash2 } from "lucide-react";
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useState, useSyncExternalStore, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { formatFutureLetterDateTime } from "@/modules/future-letters/domain/future-letter-time";
@@ -13,19 +13,39 @@ interface ScheduledLetterListProps {
   onEdit: (letter: FutureLetterRecord) => void;
 }
 
+let clockSnapshot = 0;
+
+function subscribeToClock(onStoreChange: () => void): () => void {
+  clockSnapshot = Date.now();
+  onStoreChange();
+  const interval = window.setInterval(() => {
+    clockSnapshot = Date.now();
+    onStoreChange();
+  }, 60_000);
+
+  return () => window.clearInterval(interval);
+}
+
+function getClockSnapshot(): number {
+  return clockSnapshot;
+}
+
+function getServerClockSnapshot(): number {
+  return 0;
+}
+
 export function ScheduledLetterList({ letters, onEdit }: ScheduledLetterListProps) {
   const router = useRouter();
-  const [now, setNow] = useState<number | null>(null);
+  const clockTime = useSyncExternalStore(
+    subscribeToClock,
+    getClockSnapshot,
+    getServerClockSnapshot,
+  );
+  const now = clockTime || null;
   const [isPending, startTransition] = useTransition();
   const [confirmingLetterId, setConfirmingLetterId] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<string | null>(null);
   const [featuredLetter, ...sealedLetters] = letters;
-
-  useEffect(() => {
-    setNow(Date.now());
-    const interval = window.setInterval(() => setNow(Date.now()), 60_000);
-    return () => window.clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     const nextOpenAt = Math.min(

@@ -38,7 +38,7 @@ export function AdminCatalogue({
   return (
     <main
       id="admin-content"
-      className="mx-auto max-w-[96rem] px-5 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12"
+      className="diary-container diary-section pt-8 sm:pt-10"
       tabIndex={-1}
     >
       <AdminWorkspaceHeader
@@ -55,10 +55,10 @@ export function AdminCatalogue({
         eyebrow="Quản trị · bộ sưu tập"
         summary={
           <>
-            <span className="rounded-full bg-[var(--color-brand-soft)] px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-[var(--color-brand)]">
+            <span className="rounded-full bg-[var(--color-brand-soft)] px-4 py-2 text-xs font-semibold text-[var(--color-brand)]">
               {categories.length} danh mục
             </span>
-            <span className="rounded-full bg-[rgb(166_91_69_/_12%)] px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-[var(--color-accent)]">
+            <span className="rounded-full bg-[rgb(166_91_69_/_12%)] px-4 py-2 text-xs font-semibold text-[var(--color-accent)]">
               {itemPage.total} item{selectedCategory ? ` · ${selectedCategory.name}` : ""}
             </span>
           </>
@@ -80,7 +80,7 @@ export function AdminCatalogue({
         </p>
       ) : null}
 
-      <section className="mt-5 grid gap-5 xl:grid-cols-[minmax(23rem,0.82fr)_minmax(34rem,1.18fr)] xl:items-start">
+      <section className="mt-7 grid gap-6 xl:grid-cols-[minmax(23rem,0.82fr)_minmax(34rem,1.18fr)] xl:items-start">
         <div className="grid gap-5 lg:grid-cols-[13rem_minmax(0,1fr)] xl:items-start">
           <AdminCatalogueSidebar
             categories={categories}

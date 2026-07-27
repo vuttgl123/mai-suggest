@@ -17,7 +17,7 @@ export function AdminWorkspaceHeader({
   title,
 }: AdminWorkspaceHeaderProps) {
   return (
-    <section className="relative overflow-hidden rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] px-5 py-6 shadow-[var(--shadow-card)] sm:px-7 sm:py-7">
+    <section className="diary-wash relative overflow-hidden rounded-[var(--radius-frame)] border border-[var(--color-border)] px-5 py-7 shadow-[var(--shadow-card)] sm:px-8 sm:py-8">
       <Sparkles
         aria-hidden="true"
         className="absolute right-6 top-6 text-[var(--color-accent)] opacity-65"
@@ -26,8 +26,8 @@ export function AdminWorkspaceHeader({
       />
       <div className="relative flex flex-wrap items-end justify-between gap-5">
         <div className="max-w-3xl">
-          <p className="diary-kicker">{eyebrow}</p>
-          <h1 className="font-display mt-2 text-balance text-4xl font-semibold tracking-[-0.06em] text-[var(--color-brand-strong)] sm:text-5xl">
+          <p className="text-sm font-semibold text-[var(--color-accent)]">{eyebrow}</p>
+          <h1 className="font-display mt-3 text-balance text-4xl font-semibold tracking-[-0.06em] text-[var(--color-brand-strong)] sm:text-5xl">
             {title}
           </h1>
           <p className="mt-3 text-sm leading-6 text-[var(--color-muted)] sm:text-base">

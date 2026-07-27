@@ -75,7 +75,6 @@ export function TimelineFilmControls({ viewportId }: TimelineFilmControlsProps) 
   useEffect(() => {
     const viewport = document.getElementById(viewportId);
     if (!viewport) {
-      updateBounds();
       return;
     }
 

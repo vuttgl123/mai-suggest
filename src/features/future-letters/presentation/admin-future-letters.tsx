@@ -61,7 +61,7 @@ export function AdminFutureLetters({
 
   return (
     <main
-      className="mx-auto max-w-[82rem] px-5 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12"
+      className="diary-container diary-section pt-8 sm:pt-10"
       id="admin-future-letters-content"
       tabIndex={-1}
     >
@@ -96,7 +96,7 @@ export function AdminFutureLetters({
         </p>
       ) : null}
 
-      <div className="mt-5 grid gap-5 xl:grid-cols-2 xl:items-start">
+      <div className="mt-7 grid gap-6 xl:grid-cols-2 xl:items-start">
         <ManagedLetterGroup
           confirmingLetterId={confirmingLetterId}
           emptyCopy="Chưa có lá thư nào đang chờ ngày mở."
@@ -149,11 +149,11 @@ function ManagedLetterGroup({
   return (
     <section
       aria-labelledby={headingId}
-      className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--theme-card-surface)] p-4 shadow-[var(--shadow-soft)] sm:p-5"
+      className="rounded-[var(--radius-frame)] border border-[var(--color-border)] bg-[var(--surface-elevated)] p-4 shadow-[var(--shadow-soft)] sm:p-5"
     >
       <div className="flex flex-wrap items-end justify-between gap-3 border-b border-[var(--color-border)] pb-4">
         <div>
-          <p className="diary-kicker text-[var(--color-accent)]">
+          <p className="text-sm font-semibold text-[var(--color-accent)]">
             {isOpened ? "Lưu trữ chung" : "Bàn niêm phong"}
           </p>
           <h2
@@ -164,7 +164,7 @@ function ManagedLetterGroup({
           </h2>
         </div>
         <span
-          className={`rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.11em] ${
+          className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
             isOpened
               ? "bg-[var(--color-accent)]/10 text-[var(--color-accent)]"
               : "bg-[var(--color-brand-soft)] text-[var(--color-brand)]"

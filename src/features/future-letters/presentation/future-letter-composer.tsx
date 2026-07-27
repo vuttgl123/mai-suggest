@@ -49,14 +49,12 @@ export function FutureLetterComposer({
     if (!dialog) return;
 
     if (isOpen) {
-      setDraft(createDraft(letter));
-      setFeedback(null);
       if (!dialog.open) dialog.showModal();
       return;
     }
 
     if (dialog.open) dialog.close();
-  }, [isOpen, letter]);
+  }, [isOpen]);
 
   function updateDraft(patch: Partial<FutureLetterDraft>) {
     setDraft((current) => ({ ...current, ...patch }));
@@ -109,7 +107,7 @@ export function FutureLetterComposer({
       >
         <header className="future-letter-composer-header">
           <div>
-            <p className="diary-kicker">Một điều để ngày mai mở ra</p>
+            <p className="text-sm font-semibold text-[var(--color-accent)]">Một điều để ngày mai mở ra</p>
             <div className="mt-3 flex items-center gap-2 text-[var(--color-accent)]" aria-hidden="true">
               <span className="diary-rule" />
               <span className="h-1.5 w-1.5 rounded-full bg-current" />
@@ -131,7 +129,7 @@ export function FutureLetterComposer({
 
           <div className="mt-6 grid gap-5 lg:grid-cols-[minmax(0,1.22fr)_minmax(17rem,0.78fr)]">
             <section className="future-letter-composer-writing rounded-[var(--radius-card)] border border-[var(--color-border)] p-4 sm:p-5">
-              <p className="diary-kicker text-[var(--color-accent)]">Phần muốn gửi lại</p>
+              <p className="text-sm font-semibold text-[var(--color-accent)]">Phần muốn gửi lại</p>
               <label className="future-letter-field mt-4">
                 <span>Tiêu đề</span>
                 <input

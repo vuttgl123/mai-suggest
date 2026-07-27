@@ -158,7 +158,7 @@ export function AdminSiteTheme({
 
   return (
     <main
-      className="mx-auto max-w-[88rem] px-5 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12"
+      className="diary-container diary-section pt-8 sm:pt-10"
       id="admin-site-theme-content"
       tabIndex={-1}
     >
@@ -167,7 +167,7 @@ export function AdminSiteTheme({
         eyebrow="Quản trị · không khí"
         summary={
           <div className="min-w-[13rem] rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-control-surface)] px-4 py-3">
-            <p className="text-[10px] font-bold uppercase tracking-[0.13em] text-[var(--color-muted)]">
+            <p className="text-sm font-semibold text-[var(--color-accent)]">
               Đang hiển thị
             </p>
             <p className="font-display mt-1 text-xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]">
@@ -188,12 +188,12 @@ export function AdminSiteTheme({
         </p>
       ) : null}
 
-      <section className="mt-5 grid gap-5 xl:grid-cols-[minmax(19rem,0.72fr)_minmax(0,1.28fr)] xl:items-start">
+      <section className="mt-7 grid gap-6 xl:grid-cols-[minmax(19rem,0.72fr)_minmax(0,1.28fr)] xl:items-start">
         <aside className="space-y-5 xl:sticky xl:top-5">
-          <section className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] p-5 shadow-[var(--shadow-soft)]">
+          <section className="rounded-[var(--radius-frame)] border border-[var(--color-border)] bg-[var(--surface-elevated)] p-5 shadow-[var(--shadow-soft)]">
             <div className="flex items-center gap-2 text-[var(--color-accent)]">
               <Palette size={18} aria-hidden="true" />
-              <p className="diary-kicker">Chọn cho hiện tại</p>
+              <p className="text-sm font-semibold text-[var(--color-accent)]">Chọn cho hiện tại</p>
             </div>
             <h2 className="font-display mt-2 text-2xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
               Tự động hay một lời hẹn riêng?
@@ -216,7 +216,7 @@ export function AdminSiteTheme({
         </aside>
 
         <div className="space-y-5">
-          <section className="flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-paper)] px-4 py-3 shadow-[var(--shadow-soft)]">
+          <section className="flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--surface-elevated)] px-4 py-3 shadow-[var(--shadow-soft)]">
             <div className="flex items-center gap-3">
               <span className="grid h-10 w-10 place-items-center rounded-full bg-[var(--color-brand-soft)] text-[var(--color-brand)]">
                 <CalendarClock size={18} aria-hidden="true" />
@@ -240,6 +240,7 @@ export function AdminSiteTheme({
               onFeedback={setFeedback}
               schedule={editingSchedule}
               schedules={schedules}
+              key={editingSchedule?.id ?? "new"}
             />
           ) : null}
 
