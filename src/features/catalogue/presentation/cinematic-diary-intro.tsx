@@ -169,19 +169,21 @@ export function CinematicDiaryIntro() {
           <span className="cinematic-diary-intro__fallback-cover" />
         </div>
         <canvas aria-hidden="true" className="cinematic-diary-intro__canvas" ref={canvasRef} />
-        <div className="cinematic-diary-intro__copy">
-          <p className="cinematic-diary-intro__kicker">Một chương dành riêng cho hai người</p>
-          <h1 className="font-display" id="cinematic-diary-title">
+        <div className="cinematic-diary-intro__copy relative z-10 flex flex-col items-center text-center px-4">
+          <p className="cinematic-diary-intro__kicker tracking-[0.2em] uppercase text-brand/70 font-semibold text-xs md:text-sm mb-4">
+            Một chương dành riêng cho hai người
+          </p>
+          <h1 className="font-display cinematic-diary-intro__title text-5xl md:text-7xl font-bold bg-gradient-to-r from-brandStrong via-brand to-accent bg-clip-text text-transparent drop-shadow-sm pb-2 pt-4 overflow-visible" id="cinematic-diary-title">
             Những điều làm em mỉm cười.
           </h1>
-          <p className="cinematic-diary-intro__description">
+          <p className="cinematic-diary-intro__description text-lg md:text-xl text-brandStrong/70 mt-6 max-w-xl mx-auto leading-relaxed">
             Một nơi nhỏ để gìn giữ những lựa chọn đẹp đẽ và những ngày thường trở nên đặc biệt.
           </p>
-          <p className="cinematic-diary-intro__reading-line">
+          <p className="cinematic-diary-intro__reading-line italic text-brand/60 mt-8 text-xl">
             Có những điều đẹp nhất cần được mở thật chậm.
           </p>
-          <a className="cinematic-diary-intro__cta" href="#collection">
-            Khám phá chương đầu <span aria-hidden="true">↓</span>
+          <a className="cinematic-diary-intro__cta mt-12 inline-flex items-center gap-2 px-8 py-3 rounded-full border border-accent/40 bg-white/40 hover:bg-white/70 hover:shadow-[0_8px_32px_rgba(216,161,91,0.25)] hover:-translate-y-1 transition-all duration-500 text-brandStrong backdrop-blur-md" href="#collection">
+            Khám phá chương đầu <span aria-hidden="true" className="group-hover:translate-y-1 transition-transform">↓</span>
           </a>
         </div>
       </div>
