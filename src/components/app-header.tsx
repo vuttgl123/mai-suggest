@@ -20,31 +20,31 @@ export function AppHeader({ actor, activeSection = "catalogue" }: AppHeaderProps
 
   function linkClassName(section: AppHeaderProps["activeSection"]): string {
     const isActive = activeSection === section;
-    return `relative inline-flex min-h-10 items-center px-4 py-1.5 text-xs sm:text-sm font-semibold transition-all duration-300 rounded-full ${
+    return `relative inline-flex min-h-[44px] items-center px-5 py-2 text-[13px] sm:text-[14px] font-medium tracking-wide transition-all duration-300 rounded-full ${
       isActive
-        ? "text-[var(--color-brand-strong)] bg-[color-mix(in_srgb,var(--color-brand-soft)_65%,transparent)] shadow-[0_2px_12px_rgba(92,29,36,0.12)] border border-[color-mix(in_srgb,var(--color-accent)_35%,transparent)]"
-        : "text-[var(--color-muted)] hover:text-[var(--color-brand-strong)] hover:bg-[color-mix(in_srgb,var(--color-paper)_50%,transparent)]"
+        ? "text-[var(--color-brand-strong)] bg-[color-mix(in_srgb,var(--color-brand-soft)_80%,transparent)] shadow-[0_2px_12px_rgba(49,5,12,0.08)] border border-[color-mix(in_srgb,var(--color-accent)_20%,transparent)]"
+        : "text-[var(--color-muted)] hover:text-[var(--color-brand-strong)] hover:bg-[color-mix(in_srgb,var(--color-paper)_60%,transparent)] hover:shadow-sm"
     }`;
   }
 
   return (
     <header
-      className="app-header sticky top-4 z-40 mx-auto max-w-5xl px-4 transition-all duration-300 animate-luxury-reveal"
+      className="app-header sticky top-6 z-40 mx-auto max-w-5xl px-4 transition-all duration-500 animate-luxury-reveal"
       style={{ viewTransitionName: "persistent-nav" }}
     >
-      <div className="relative flex min-h-[4.25rem] items-center justify-between gap-x-4 rounded-full glass-dock px-4 py-2 sm:px-6">
+      <div className="relative flex min-h-[4.5rem] items-center justify-between gap-x-4 rounded-full border border-[var(--theme-frame-border)] bg-[var(--theme-header-surface)] px-5 py-2 shadow-[var(--shadow-luxury-card)] backdrop-blur-xl sm:px-8">
         
         {/* Brand Logo & Name */}
         <Link
-          className="group inline-flex items-center gap-3 text-[var(--color-brand-strong)]"
+          className="group inline-flex items-center gap-3 text-[var(--color-brand-strong)] outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--color-surface)] rounded-full"
           href="/"
           onClick={closeMenu}
         >
           <span
-            className="app-header-mark grid h-10 w-10 place-items-center rounded-full bg-[linear-gradient(135deg,var(--color-brand),var(--color-brand-strong))] text-[var(--color-paper)] shadow-[0_4px_16px_rgba(95,16,34,0.35)] transition-all duration-300 group-hover:rotate-6 group-hover:scale-110 group-hover:shadow-[0_6px_20px_rgba(197,160,89,0.4)]"
+            className="app-header-mark grid h-11 w-11 place-items-center rounded-full bg-[linear-gradient(135deg,var(--color-brand),var(--color-brand-strong))] text-[var(--color-paper)] shadow-[var(--shadow-luxury-glow)] transition-all duration-500 group-hover:rotate-12 group-hover:scale-105 group-hover:shadow-[var(--shadow-luxury-glow-strong)]"
             aria-hidden="true"
           >
-            <Heart size={18} fill="currentColor" strokeWidth={1.5} className="transition-transform duration-300 group-hover:scale-110" />
+            <Heart size={20} fill="currentColor" strokeWidth={1.5} className="transition-transform duration-500 group-hover:scale-110" />
           </span>
           <span className="flex flex-col">
             <span className="font-display text-[1.25rem] font-bold leading-none tracking-tight text-[var(--color-brand-strong)]" translate="no">
@@ -61,7 +61,7 @@ export function AppHeader({ actor, activeSection = "catalogue" }: AppHeaderProps
           aria-controls="primary-navigation"
           aria-expanded={isMenuOpen}
           aria-label={isMenuOpen ? "Đóng điều hướng" : "Mở điều hướng"}
-          className="grid h-10 w-10 place-items-center rounded-full border border-[var(--color-border)] text-[var(--color-brand)] transition-all duration-200 hover:border-[var(--color-accent)] hover:bg-[var(--theme-control-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--color-focus)] lg:hidden"
+          className="grid h-11 w-11 place-items-center rounded-full border border-[var(--color-border)] text-[var(--color-brand)] transition-all duration-300 hover:border-[var(--color-accent)] hover:bg-[var(--theme-control-hover)] hover:shadow-sm hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--color-focus)] lg:hidden"
           onClick={() => setIsMenuOpen((current) => !current)}
           type="button"
         >

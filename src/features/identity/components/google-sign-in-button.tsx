@@ -38,13 +38,13 @@ export function GoogleSignInButton({
         whileTap={{ scale: 0.98 }}
         disabled={isPending}
         onClick={signInWithGoogle}
-        className="group relative flex w-full items-center justify-center gap-3 overflow-hidden rounded-full bg-white/10 px-6 py-4 font-semibold text-white shadow-[0_0_40px_rgba(255,255,255,0.1)] transition-colors hover:bg-white/20 hover:shadow-[0_0_60px_rgba(216,161,91,0.3)] disabled:opacity-50"
+        className="group relative flex w-full items-center justify-center gap-3 overflow-hidden rounded-full bg-[color-mix(in_srgb,var(--color-paper)_90%,transparent)] px-6 py-4 font-semibold text-[var(--color-brand-strong)] shadow-[var(--shadow-luxury-glow)] transition-all duration-500 hover:bg-[var(--color-paper)] hover:shadow-[var(--shadow-luxury-glow-strong)] hover:scale-105 disabled:opacity-50 border border-[var(--color-border)]"
       >
         {/* Magical sweeping light effect on hover */}
-        <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full" />
+        <div className="absolute inset-0 -translate-x-full bg-[linear-gradient(90deg,transparent,color-mix(in_srgb,var(--color-brand)_15%,transparent),transparent)] transition-transform duration-700 ease-out group-hover:translate-x-full" />
         
         {/* Subtle inner border glow */}
-        <div className="absolute inset-0 rounded-full border border-white/20 transition-colors group-hover:border-[var(--color-brand)]/50" />
+        <div className="absolute inset-0 rounded-full border border-white/40 transition-colors group-hover:border-[var(--color-accent)]/50" />
         
         {/* Google Icon SVG */}
         <svg className="h-5 w-5" viewBox="0 0 24 24">

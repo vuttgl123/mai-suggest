@@ -64,8 +64,8 @@ export function FutureLettersExperience({
               <MailPlus size={21} strokeWidth={1.35} />
               <span className="h-px w-16 bg-[var(--color-accent)]/55" />
             </div>
-            <p className="mt-5 text-sm font-semibold text-[var(--color-accent)]">Một cuộc hẹn với tương lai</p>
-            <h1 className="font-display display-xl mt-3 max-w-3xl text-balance font-semibold text-[var(--color-brand-strong)]">
+            <p className="mt-5 text-sm font-semibold tracking-widest text-[var(--color-accent)] uppercase">Một cuộc hẹn với tương lai</p>
+            <h1 className="font-display display-xl mt-3 max-w-3xl text-balance font-semibold italic text-[var(--color-brand-strong)] drop-shadow-sm">
               Có những điều chỉ nên mở ra vào đúng một ngày.
             </h1>
             <p className="mt-6 max-w-2xl text-[15px] leading-7 text-[var(--color-muted)] sm:text-base sm:leading-8">
@@ -108,8 +108,8 @@ export function FutureLettersExperience({
         <section className="diary-container diary-section" aria-labelledby="opened-letters-heading">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="text-sm font-semibold text-[var(--color-accent)]">Khoảnh khắc đã đến</p>
-              <h2 id="opened-letters-heading" className="font-display mt-2 text-3xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)] sm:text-4xl">
+              <p className="text-sm font-semibold tracking-widest text-[var(--color-accent)] uppercase">Khoảnh khắc đã đến</p>
+              <h2 id="opened-letters-heading" className="font-display mt-2 text-3xl font-semibold italic tracking-[-0.045em] text-[var(--color-brand-strong)] drop-shadow-sm sm:text-4xl">
                 Những lá thư đã mở.
               </h2>
             </div>

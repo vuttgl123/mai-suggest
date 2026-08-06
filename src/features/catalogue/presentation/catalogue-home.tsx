@@ -160,10 +160,12 @@ export function CatalogueHome({
                         </div>
                         <p className="text-sm text-[var(--color-muted)]">Một gợi ý để bắt đầu chậm rãi.</p>
                       </div>
-                      <CatalogueFeaturedItemCard
-                        categoryName={categoryNames.get(featuredItem.categoryId) ?? null}
-                        item={featuredItem}
-                      />
+                      <div className="animate-luxury-reveal opacity-0 [animation-fill-mode:forwards]" style={{ animationDelay: '100ms' }}>
+                        <CatalogueFeaturedItemCard
+                          categoryName={categoryNames.get(featuredItem.categoryId) ?? null}
+                          item={featuredItem}
+                        />
+                      </div>
                     </section>
                   ) : null}
 
@@ -180,7 +182,11 @@ export function CatalogueHome({
                       </div>
                       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-12 lg:gap-6">
                         {gridItems.map((item, index) => (
-                          <div className={index % 5 === 0 ? "lg:col-span-5" : index % 3 === 0 ? "lg:col-span-4" : "lg:col-span-3"} key={item.id}>
+                          <div 
+                            className={`animate-luxury-reveal opacity-0 [animation-fill-mode:forwards] ${index % 5 === 0 ? "lg:col-span-5" : index % 3 === 0 ? "lg:col-span-4" : "lg:col-span-3"}`} 
+                            style={{ animationDelay: `${(index + 2) * 100}ms` }}
+                            key={item.id}
+                          >
                             <CatalogueItemCard
                               categoryName={categoryNames.get(item.categoryId) ?? null}
                               item={item}

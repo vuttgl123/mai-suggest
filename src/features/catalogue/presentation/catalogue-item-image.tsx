@@ -53,7 +53,7 @@ export function CatalogueItemImage({
     >
       <img
         alt={alt}
-        className={`absolute inset-0 h-full w-full object-cover transition duration-700 ease-out ${
+        className={`absolute inset-0 h-full w-full object-cover transition duration-700 ease-out group-hover:scale-105 ${
           isLoading ? "scale-[1.02] opacity-0" : "scale-100 opacity-100"
         }`}
         decoding="async"

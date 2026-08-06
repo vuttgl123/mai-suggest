@@ -76,8 +76,8 @@ export function ScheduledLetterList({ letters, onEdit }: ScheduledLetterListProp
     <section aria-labelledby="scheduled-letters-heading">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="diary-kicker">Bàn niêm phong</p>
-          <h2 id="scheduled-letters-heading" className="font-display mt-2 text-3xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
+          <p className="diary-kicker tracking-widest uppercase">Bàn niêm phong</p>
+          <h2 id="scheduled-letters-heading" className="font-display mt-2 text-3xl font-semibold italic tracking-[-0.045em] text-[var(--color-brand-strong)] drop-shadow-sm">
             Những lá thư đang hẹn.
           </h2>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--color-muted)]">
@@ -108,7 +108,7 @@ export function ScheduledLetterList({ letters, onEdit }: ScheduledLetterListProp
 
       {sealedLetters.length ? (
         <div className="mt-7 border-t border-[var(--color-border)] pt-6">
-          <p className="diary-kicker">Đang chờ đúng ngày</p>
+          <p className="diary-kicker tracking-widest uppercase">Đang chờ đúng ngày</p>
           <ol className="mt-4 grid gap-3 md:grid-cols-2">
             {sealedLetters.map((letter) => (
               <ScheduledLetterCard
@@ -168,20 +168,20 @@ function ScheduledLetterCard({
     >
       {isFeatured ? (
         <span
-          className="pointer-events-none absolute -right-16 -top-24 h-56 w-56 rounded-full bg-[var(--color-brand-soft)] opacity-60 blur-3xl"
+          className="pointer-events-none absolute -right-16 -top-24 h-64 w-64 animate-pulse-slow rounded-full bg-[radial-gradient(circle_at_center,var(--color-accent),transparent_70%)] opacity-30 blur-2xl"
           aria-hidden="true"
         />
       ) : null}
       <div className={`relative flex items-start justify-between gap-3 ${isFeatured ? "pr-14" : ""}`}>
         <div className="min-w-0">
-          <p className="diary-kicker">
+          <p className="diary-kicker tracking-widest uppercase">
             {isFeatured ? "Sắp đến giờ hẹn" : "Đã niêm phong"}
           </p>
           <h3
             className={
               isFeatured
-                ? "font-display mt-3 break-words text-3xl font-semibold tracking-[-0.05em] text-[var(--color-brand-strong)]"
-                : "mt-2 break-words text-base font-bold text-[var(--color-brand-strong)]"
+                ? "font-display mt-3 break-words text-3xl font-semibold italic tracking-[-0.05em] text-[var(--color-brand-strong)] drop-shadow-sm"
+                : "mt-2 break-words text-base font-bold italic text-[var(--color-brand-strong)]"
             }
           >
             {letter.title}
