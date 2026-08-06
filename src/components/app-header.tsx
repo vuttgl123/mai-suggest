@@ -19,96 +19,90 @@ export function AppHeader({ actor, activeSection = "catalogue" }: AppHeaderProps
   }
 
   function linkClassName(section: AppHeaderProps["activeSection"]): string {
-    return `inline-flex min-h-10 items-center border-b-2 px-1 text-sm font-semibold transition duration-[var(--duration-fast)] motion-reduce:transition-none ${
-      activeSection === section
-        ? "border-[var(--color-brand)] text-[var(--color-brand)]"
-        : "border-transparent text-[var(--color-muted)] hover:text-[var(--color-brand-strong)]"
+    const isActive = activeSection === section;
+    return `relative inline-flex min-h-10 items-center px-4 py-1.5 text-xs sm:text-sm font-semibold transition-all duration-300 rounded-full ${
+      isActive
+        ? "text-[var(--color-brand-strong)] bg-[color-mix(in_srgb,var(--color-brand-soft)_65%,transparent)] shadow-[0_2px_12px_rgba(92,29,36,0.12)] border border-[color-mix(in_srgb,var(--color-accent)_35%,transparent)]"
+        : "text-[var(--color-muted)] hover:text-[var(--color-brand-strong)] hover:bg-[color-mix(in_srgb,var(--color-paper)_50%,transparent)]"
     }`;
   }
 
   return (
     <header
-      className="app-header border-b border-[var(--color-border)] bg-[var(--theme-header-surface)] backdrop-blur-sm"
+      className="app-header sticky top-3 z-40 mx-auto max-w-5xl px-4 transition-all duration-300"
       style={{ viewTransitionName: "persistent-nav" }}
     >
-      <div className="mx-auto flex min-h-[4.5rem] max-w-7xl flex-wrap items-center justify-between gap-x-5 gap-y-2 px-5 py-2.5 sm:px-8 lg:px-10">
+      <div className="relative flex min-h-[4.25rem] items-center justify-between gap-x-4 rounded-full border border-[color-mix(in_srgb,var(--color-accent)_30%,var(--color-border))] bg-[color-mix(in_srgb,var(--color-paper)_85%,transparent)] px-4 py-2 shadow-[0_12px_32px_-8px_rgba(49,5,12,0.14),0_0_0_1px_rgba(255,255,255,0.6)_inset] backdrop-blur-xl sm:px-6">
+        
+        {/* Brand Logo & Name */}
         <Link
           className="group inline-flex items-center gap-3 text-[var(--color-brand-strong)]"
           href="/"
           onClick={closeMenu}
         >
           <span
-            className="app-header-mark grid h-10 w-10 place-items-center rounded-[0.95rem] bg-[var(--color-brand)] text-white shadow-[var(--theme-button-shadow)] transition duration-[var(--duration-fast)] group-hover:-rotate-3 group-hover:scale-105 motion-reduce:transform-none motion-reduce:transition-none"
+            className="app-header-mark grid h-10 w-10 place-items-center rounded-full bg-[linear-gradient(135deg,var(--color-brand),var(--color-brand-strong))] text-[var(--color-paper)] shadow-[0_4px_16px_rgba(95,16,34,0.35)] transition-all duration-300 group-hover:rotate-6 group-hover:scale-110 group-hover:shadow-[0_6px_20px_rgba(197,160,89,0.4)]"
             aria-hidden="true"
           >
-            <Heart size={17} fill="currentColor" strokeWidth={1.7} />
+            <Heart size={18} fill="currentColor" strokeWidth={1.5} className="transition-transform duration-300 group-hover:scale-110" />
           </span>
-          <span>
-            <span className="font-display block text-[1.35rem] font-semibold leading-none tracking-[-0.045em]" translate="no">
+          <span className="flex flex-col">
+            <span className="font-display text-[1.25rem] font-bold leading-none tracking-tight text-[var(--color-brand-strong)]" translate="no">
               Điều Em Yêu
             </span>
-            <span className="mt-1 block text-[10px] font-semibold tracking-[0.08em] text-[var(--color-muted)]">
-              một cuốn nhật ký riêng
+            <span className="mt-0.5 text-[9.5px] font-bold tracking-[0.14em] uppercase text-[var(--color-accent)]">
+              bordeaux diary
             </span>
           </span>
         </Link>
 
+        {/* Mobile Toggle Button */}
         <button
           aria-controls="primary-navigation"
           aria-expanded={isMenuOpen}
           aria-label={isMenuOpen ? "Đóng điều hướng" : "Mở điều hướng"}
-          className="grid h-11 w-11 place-items-center rounded-full border border-[var(--color-border)] text-[var(--color-brand)] transition hover:border-[var(--color-accent)] hover:bg-[var(--theme-control-hover)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[var(--color-focus)] active:scale-[0.98] lg:hidden motion-reduce:transform-none motion-reduce:transition-none"
+          className="grid h-10 w-10 place-items-center rounded-full border border-[var(--color-border)] text-[var(--color-brand)] transition-all duration-200 hover:border-[var(--color-accent)] hover:bg-[var(--theme-control-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--color-focus)] lg:hidden"
           onClick={() => setIsMenuOpen((current) => !current)}
           type="button"
         >
-          {isMenuOpen ? <X aria-hidden="true" size={19} /> : <Menu aria-hidden="true" size={19} />}
+          {isMenuOpen ? <X aria-hidden="true" size={18} /> : <Menu aria-hidden="true" size={18} />}
         </button>
 
+        {/* Desktop & Mobile Navigation Links */}
         <nav
           aria-label="Điều hướng chính"
-          className={`${isMenuOpen ? "flex" : "hidden"} order-3 w-full flex-col gap-1 border-t border-[var(--color-border)] pt-2 lg:order-none lg:flex lg:w-auto lg:flex-row lg:items-center lg:gap-x-6 lg:border-t-0 lg:p-0`}
+          className={`${
+            isMenuOpen
+              ? "absolute left-0 right-0 top-full mt-3 flex flex-col gap-1.5 rounded-2xl border border-[var(--color-border)] bg-[var(--color-paper)] p-4 shadow-[0_16px_40px_rgba(49,5,12,0.2)] backdrop-blur-2xl"
+              : "hidden lg:flex"
+          } items-center gap-x-1 sm:gap-x-2`}
           id="primary-navigation"
         >
-          <Link
-            className={linkClassName("catalogue")}
-            href="/#collection"
-            onClick={closeMenu}
-          >
+          <Link className={linkClassName("catalogue")} href="/#collection" onClick={closeMenu}>
             Bộ sưu tập
           </Link>
-          <Link
-            className={linkClassName("journey")}
-            href="/hanh-trinh"
-            onClick={closeMenu}
-          >
+          <Link className={linkClassName("journey")} href="/hanh-trinh" onClick={closeMenu}>
             Hành trình
           </Link>
-          <Link
-            className={linkClassName("letters")}
-            href="/thu-hen-ngay-mo"
-            onClick={closeMenu}
-          >
+          <Link className={linkClassName("letters")} href="/thu-hen-ngay-mo" onClick={closeMenu}>
             Thư hẹn ngày mở
           </Link>
           {actor.canManageCatalogue ? (
-            <Link
-              className={linkClassName("admin")}
-              href="/admin"
-              onClick={closeMenu}
-            >
+            <Link className={linkClassName("admin")} href="/admin" onClick={closeMenu}>
               Quản trị
             </Link>
           ) : null}
         </nav>
 
-        <div className="hidden min-w-0 items-center gap-2 text-right sm:flex">
+        {/* Actor Info & Owner Badge */}
+        <div className="hidden shrink-0 items-center gap-2 text-right sm:flex">
           {actor.canManageCatalogue ? (
-            <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-[var(--theme-badge-border)] bg-[var(--color-brand-soft)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.11em] text-[var(--color-brand)]">
-              <ShieldCheck size={13} aria-hidden="true" />
+            <span className="inline-flex items-center gap-1 rounded-full border border-[color-mix(in_srgb,var(--color-accent)_40%,transparent)] bg-[linear-gradient(135deg,var(--color-brand-soft),color-mix(in_srgb,var(--color-paper)_80%,transparent))] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--color-brand-strong)] shadow-[0_2px_8px_rgba(197,160,89,0.15)]">
+              <ShieldCheck size={12} className="text-[var(--color-accent)]" aria-hidden="true" />
               Owner
             </span>
           ) : null}
-          <span className="max-w-36 truncate text-xs font-medium text-[var(--color-muted)] sm:max-w-52">
+          <span className="max-w-[10rem] truncate text-xs font-semibold text-[var(--color-muted)] lg:max-w-[14rem]">
             {identity}
           </span>
         </div>
