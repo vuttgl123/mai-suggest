@@ -17,7 +17,7 @@ export function CatalogueFeaturedItemCard({
 
   return (
     <Link
-      className="group relative grid overflow-hidden rounded-[var(--radius-frame)] border border-[color-mix(in_srgb,var(--color-accent)_35%,var(--color-border))] bg-[color-mix(in_srgb,var(--color-paper)_92%,transparent)] shadow-[0_16px_40px_-12px_rgba(49,5,12,0.14)] backdrop-blur-md transition-all duration-500 hover:-translate-y-1.5 hover:border-[var(--color-accent)] hover:shadow-[0_24px_48px_-12px_rgba(92,29,36,0.22),0_0_0_1px_rgba(197,160,89,0.35)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-[var(--color-focus)] md:grid-cols-[minmax(18rem,1fr)_minmax(0,1.1fr)] md:items-stretch"
+      className="group relative grid overflow-hidden rounded-[var(--radius-frame)] border border-[color-mix(in_srgb,var(--color-accent)_35%,var(--color-border))] bg-[color-mix(in_srgb,var(--color-paper)_92%,transparent)] shadow-[0_16px_40px_-12px_rgba(49,5,12,0.14)] backdrop-blur-md transition-all duration-500 hover:border-[var(--color-accent)] hover:shadow-[var(--shadow-luxury-card)] hover:[transform:perspective(1200px)_translateY(-8px)_rotateX(2deg)_rotateY(-2deg)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-[var(--color-focus)] md:grid-cols-[minmax(18rem,1fr)_minmax(0,1.1fr)] md:items-stretch"
       href={`/catalogue/${encodeURIComponent(item.slug)}`}
       transitionTypes={["nav-forward"]}
     >

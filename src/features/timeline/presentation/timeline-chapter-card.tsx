@@ -17,20 +17,20 @@ export function TimelineChapterCard({
   sequence,
 }: TimelineChapterCardProps) {
   return (
-    <article className="timeline-entry-card group relative overflow-hidden">
+    <article className="timeline-entry-card group relative overflow-hidden transition-all duration-500 hover:shadow-[var(--shadow-luxury-card)]">
       <span
         className="absolute inset-x-7 top-0 h-px bg-gradient-to-r from-transparent via-[var(--color-accent)]/65 to-transparent"
         aria-hidden="true"
       />
       <span
-        className="absolute right-5 top-4 font-display text-4xl font-semibold text-[rgb(101_12_28_/_10%)]"
+        className="absolute right-5 top-4 font-display text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-[var(--color-accent)] to-transparent opacity-20 drop-shadow-sm"
         aria-hidden="true"
       >
         {String(sequence).padStart(2, "0")}
       </span>
 
       <div className="flex flex-wrap items-center justify-between gap-3 pr-13">
-        <p className="text-sm font-semibold text-[var(--color-accent)]">{entry.dateLabel}</p>
+        <p className="text-sm font-bold tracking-widest uppercase bg-clip-text text-transparent bg-gradient-to-br from-[var(--color-accent)] to-[var(--color-brand)] drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">{entry.dateLabel}</p>
         {entry.occurredOn ? (
           <time
             className="text-xs font-semibold text-[var(--color-muted)]"

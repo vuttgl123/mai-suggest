@@ -146,8 +146,10 @@ export function TimelineResponsePanel({
             const isEditing = editingResponseId === response.id;
 
             return (
-              <li className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-paper)] p-4" key={response.id}>
-                <div className="flex items-start gap-3">
+              <li className="relative rounded-md border border-[color-mix(in_srgb,var(--color-accent)_40%,var(--color-border))] bg-[#fdfaf5] p-5 shadow-[0_4px_16px_rgba(49,5,12,0.06)]" key={response.id}>
+                {/* Tape detail */}
+                <div className="absolute -top-3 left-1/2 h-6 w-14 -translate-x-1/2 -rotate-2 rounded-sm border border-[rgba(255,255,255,0.4)] bg-[rgba(255,255,255,0.6)] shadow-sm backdrop-blur-md" aria-hidden="true" />
+                <div className="flex items-start gap-4">
                   <Avatar displayName={response.author.displayName} imageUrl={response.author.avatarUrl} />
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
@@ -169,7 +171,7 @@ export function TimelineResponsePanel({
                         </div>
                       </form>
                     ) : (
-                      <p className="mt-2 whitespace-pre-line text-sm leading-7 text-[var(--color-ink)]">{response.content}</p>
+                      <p className="mt-4 whitespace-pre-line font-display text-lg italic leading-relaxed text-[var(--color-brand-strong)]">{response.content}</p>
                     )}
                     {!isEditing && (isAuthor || canDelete) ? (
                       <div className="mt-3 flex flex-wrap gap-2">

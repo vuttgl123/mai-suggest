@@ -29,10 +29,10 @@ export function AppHeader({ actor, activeSection = "catalogue" }: AppHeaderProps
 
   return (
     <header
-      className="app-header sticky top-3 z-40 mx-auto max-w-5xl px-4 transition-all duration-300"
+      className="app-header sticky top-4 z-40 mx-auto max-w-5xl px-4 transition-all duration-300 animate-luxury-reveal"
       style={{ viewTransitionName: "persistent-nav" }}
     >
-      <div className="relative flex min-h-[4.25rem] items-center justify-between gap-x-4 rounded-full border border-[color-mix(in_srgb,var(--color-accent)_30%,var(--color-border))] bg-[color-mix(in_srgb,var(--color-paper)_85%,transparent)] px-4 py-2 shadow-[0_12px_32px_-8px_rgba(49,5,12,0.14),0_0_0_1px_rgba(255,255,255,0.6)_inset] backdrop-blur-xl sm:px-6">
+      <div className="relative flex min-h-[4.25rem] items-center justify-between gap-x-4 rounded-full glass-dock px-4 py-2 sm:px-6">
         
         {/* Brand Logo & Name */}
         <Link

@@ -25,7 +25,7 @@ export interface CinematicDiaryScene {
 }
 
 const MAX_PIXEL_RATIO = 1.5;
-const DUST_COUNT = 42;
+const DUST_COUNT = 150;
 const BOOK_SIZE = 3.42;
 const PAGE_WIDTH = BOOK_SIZE - 0.24;
 const PAGE_DEPTH = BOOK_SIZE - 0.24;
@@ -101,53 +101,56 @@ export function createCinematicDiaryScene(
 
   const leatherMaterial = registerMaterial(
     new THREE.MeshPhysicalMaterial({
-      color: color(palette.brandStrong, "#4a142a"),
-      roughness: 0.5,
-      metalness: 0.02,
-      clearcoat: 0.22,
-      clearcoatRoughness: 0.58,
+      color: color(palette.brandStrong, "#3b0d14"),
+      roughness: 0.65,
+      metalness: 0.1,
+      clearcoat: 0.2,
+      clearcoatRoughness: 0.6,
+      sheen: 0.8,
+      sheenRoughness: 0.5,
+      sheenColor: color(palette.accent, "#c5a059"),
     }),
   );
   const leatherEdgeMaterial = registerMaterial(
     new THREE.MeshPhysicalMaterial({
-      color: color(palette.brand, "#741f43"),
-      roughness: 0.42,
-      metalness: 0.04,
-      clearcoat: 0.28,
-      clearcoatRoughness: 0.5,
+      color: color(palette.brand, "#650c1c"),
+      roughness: 0.38,
+      metalness: 0.08,
+      clearcoat: 0.4,
+      clearcoatRoughness: 0.4,
     }),
   );
   const paperMaterial = registerMaterial(
     new THREE.MeshStandardMaterial({
-      color: color(palette.paper, "#fff8ec"),
-      roughness: 0.86,
+      color: color(palette.paper, "#fff9f3"),
+      roughness: 0.82,
       metalness: 0,
       side: THREE.DoubleSide,
     }),
   );
   const paperEdgeMaterial = registerMaterial(
     new THREE.MeshStandardMaterial({
-      color: color(palette.surface, "#f6e7d8"),
-      roughness: 0.72,
+      color: color(palette.surface, "#f4ece6"),
+      roughness: 0.68,
       metalness: 0,
     }),
   );
   const brassMaterial = registerMaterial(
     new THREE.MeshPhysicalMaterial({
-      color: color(palette.accent, "#e6ad58"),
-      roughness: 0.28,
-      metalness: 0.78,
-      clearcoat: 0.28,
-      clearcoatRoughness: 0.38,
+      color: color(palette.accent, "#c5a059"),
+      roughness: 0.2,
+      metalness: 0.88,
+      clearcoat: 0.5,
+      clearcoatRoughness: 0.25,
     }),
   );
   const heartMaterial = registerMaterial(
     new THREE.MeshPhysicalMaterial({
-      color: color(palette.accent, "#e6ad58"),
-      roughness: 0.38,
-      metalness: 0.62,
-      clearcoat: 0.18,
-      clearcoatRoughness: 0.42,
+      color: color(palette.accent, "#e6c887"),
+      roughness: 0.25,
+      metalness: 0.82,
+      clearcoat: 0.45,
+      clearcoatRoughness: 0.3,
       transparent: true,
       opacity: 0.08,
     }),

@@ -17,7 +17,7 @@ export function CatalogueItemCard({
 
   return (
     <Link
-      className="group relative flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-[color-mix(in_srgb,var(--color-accent)_25%,var(--color-border))] bg-[color-mix(in_srgb,var(--color-paper)_90%,transparent)] shadow-[0_8px_30px_-6px_rgba(49,5,12,0.08)] backdrop-blur-sm transition-all duration-500 hover:-translate-y-1.5 hover:border-[var(--color-accent)] hover:shadow-[0_20px_40px_-10px_rgba(92,29,36,0.18),0_0_0_1px_rgba(197,160,89,0.3)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-[var(--color-focus)]"
+      className="group relative flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-[color-mix(in_srgb,var(--color-accent)_25%,var(--color-border))] bg-[color-mix(in_srgb,var(--color-paper)_90%,transparent)] shadow-[0_8px_30px_-6px_rgba(49,5,12,0.08)] backdrop-blur-sm transition-all duration-500 hover:border-[var(--color-accent)] hover:shadow-[var(--shadow-luxury-card)] hover:[transform:perspective(1000px)_translateY(-6px)_rotateX(2deg)_rotateY(-2deg)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-[var(--color-focus)]"
       href={`/catalogue/${encodeURIComponent(item.slug)}`}
       transitionTypes={["nav-forward"]}
     >

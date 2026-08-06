@@ -13,9 +13,15 @@ export async function GET(request: Request): Promise<NextResponse> {
   const code = requestUrl.searchParams.get("code");
   const nextPath = normalizeAuthNextPath(requestUrl.searchParams.get("next"));
 
+  const forwardedHost = request.headers.get("x-forwarded-host");
+  const host = forwardedHost ?? request.headers.get("host");
+  const protocol = request.headers.get("x-forwarded-proto") ?? (host?.includes("localhost") ? "http" : "https");
+  
+  const origin = host ? `${protocol}://${host}` : requestUrl.origin;
+
   if (!code) {
     return createPrivateRedirect(
-      new URL("/login?error=oauth_callback_failed", requestUrl.origin),
+      new URL("/login?error=oauth_callback_failed", origin),
     );
   }
 
@@ -24,9 +30,10 @@ export async function GET(request: Request): Promise<NextResponse> {
 
   if (error) {
     return createPrivateRedirect(
-      new URL("/login?error=oauth_callback_failed", requestUrl.origin),
+      new URL("/login?error=oauth_callback_failed", origin),
     );
   }
 
-  return createPrivateRedirect(new URL(nextPath, requestUrl.origin));
+  return createPrivateRedirect(new URL(nextPath, origin));
 }
+
