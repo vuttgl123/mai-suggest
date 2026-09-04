@@ -68,7 +68,7 @@ export function AdminFutureLetters({
       <AdminWorkspaceHeader
         actions={
           <Link
-            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-paper)] px-4 text-sm font-semibold text-[var(--color-brand)] transition hover:-translate-y-0.5 hover:border-[var(--color-accent)]"
+            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-paper px-4 text-sm font-semibold text-brand transition hover:-translate-y-0.5 hover:border-accent"
             href="/thu-hen-ngay-mo"
           >
             <MailOpen aria-hidden="true" size={16} />
@@ -90,7 +90,7 @@ export function AdminFutureLetters({
       {feedback ? (
         <p
           aria-live="polite"
-          className="mt-5 rounded-[var(--radius-card)] border border-[var(--color-brand)]/15 bg-[var(--color-brand-soft)]/50 px-4 py-3 text-sm leading-6 text-[var(--color-brand)]"
+          className="mt-5 rounded-[var(--radius-card)] border border-brand/15 bg-brand-soft/50 px-4 py-3 text-sm leading-6 text-brand"
         >
           {feedback}
         </p>
@@ -149,15 +149,15 @@ function ManagedLetterGroup({
   return (
     <section
       aria-labelledby={headingId}
-      className="rounded-[var(--radius-frame)] border border-[var(--color-border)] bg-[var(--surface-elevated)] p-4 shadow-[var(--shadow-soft)] sm:p-5"
+      className="rounded-[var(--radius-frame)] border border-border bg-[var(--surface-elevated)] p-4 shadow-[var(--shadow-soft)] sm:p-5"
     >
-      <div className="flex flex-wrap items-end justify-between gap-3 border-b border-[var(--color-border)] pb-4">
+      <div className="flex flex-wrap items-end justify-between gap-3 border-b border-border pb-4">
         <div>
-          <p className="text-sm font-semibold text-[var(--color-accent)]">
+          <p className="text-sm font-semibold text-accent">
             {isOpened ? "Lưu trữ chung" : "Bàn niêm phong"}
           </p>
           <h2
-            className="font-display mt-1 text-2xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]"
+            className="font-display mt-1 text-2xl font-semibold tracking-[-0.04em] text-brand-strong"
             id={headingId}
           >
             {isOpened ? "Đã mở" : "Đang hẹn"}
@@ -166,8 +166,8 @@ function ManagedLetterGroup({
         <span
           className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
             isOpened
-              ? "bg-[var(--color-accent)]/10 text-[var(--color-accent)]"
-              : "bg-[var(--color-brand-soft)] text-[var(--color-brand)]"
+              ? "bg-accent/10 text-accent"
+              : "bg-brand-soft text-brand"
           }`}
         >
           {letters.length} lá thư
@@ -190,7 +190,7 @@ function ManagedLetterGroup({
           ))}
         </ol>
       ) : (
-        <p className="mt-4 rounded-[var(--radius-card)] border border-dashed border-[var(--color-border)] px-4 py-8 text-center text-sm leading-6 text-[var(--color-muted)]">
+        <p className="mt-4 rounded-[var(--radius-card)] border border-dashed border-border px-4 py-8 text-center text-sm leading-6 text-muted">
           {emptyCopy}
         </p>
       )}
@@ -220,36 +220,36 @@ function ManagedLetterRow({
   const isOpened = status === "opened";
 
   return (
-    <li className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-paper)] p-4 shadow-sm">
+    <li className="rounded-[var(--radius-card)] border border-border bg-paper p-4 shadow-sm">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="diary-kicker text-[var(--color-accent)]">
+          <p className="diary-kicker text-accent">
             {isOpened ? "Đã đến ngày" : "Đang niêm phong"}
           </p>
-          <h3 className="font-display mt-2 break-words text-xl font-semibold tracking-[-0.035em] text-[var(--color-brand-strong)]">
+          <h3 className="font-display mt-2 break-words text-xl font-semibold tracking-[-0.035em] text-brand-strong">
             {letter.title}
           </h3>
         </div>
         <span
           className={`shrink-0 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.1em] ${
             isOpened
-              ? "bg-[var(--color-accent)]/10 text-[var(--color-accent)]"
-              : "bg-[var(--color-brand-soft)] text-[var(--color-brand)]"
+              ? "bg-accent/10 text-accent"
+              : "bg-brand-soft text-brand"
           }`}
         >
           {isOpened ? "Đã mở" : "Đang hẹn"}
         </span>
       </div>
-      <dl className="mt-4 grid gap-2 border-t border-[var(--color-border)] pt-3 text-sm leading-6 sm:grid-cols-2">
+      <dl className="mt-4 grid gap-2 border-t border-border pt-3 text-sm leading-6 sm:grid-cols-2">
         <div>
           <dt className="diary-kicker text-[9px]">Người viết</dt>
-          <dd className="mt-0.5 break-words font-semibold text-[var(--color-brand-strong)]">
+          <dd className="mt-0.5 break-words font-semibold text-brand-strong">
             {letter.author.displayName}
           </dd>
         </div>
         <div>
           <dt className="diary-kicker text-[9px]">Thời điểm mở</dt>
-          <dd className="mt-0.5 font-semibold text-[var(--color-brand-strong)]">
+          <dd className="mt-0.5 font-semibold text-brand-strong">
             {formatFutureLetterDateTime(letter.opensAt)}
           </dd>
         </div>
@@ -267,8 +267,8 @@ function ManagedLetterRow({
         </Button>
       </div>
       {isConfirming ? (
-        <div className="mt-3 rounded-xl border border-[var(--color-danger)]/30 bg-[var(--color-danger)]/10 px-3 py-3">
-          <p className="text-xs leading-5 text-[var(--color-danger)]">
+        <div className="mt-3 rounded-xl border border-danger/30 bg-danger/10 px-3 py-3">
+          <p className="text-xs leading-5 text-danger">
             Gỡ “{letter.title}” khỏi không gian chung? Thao tác này không thể hoàn tác.
           </p>
           <div className="mt-3 flex flex-wrap justify-end gap-2">
@@ -311,8 +311,8 @@ function StatusSummary({
     <span
       className={`rounded-full px-3 py-1.5 text-xs font-bold uppercase tracking-[0.11em] ${
         tone === "opened"
-          ? "bg-[var(--color-accent)]/10 text-[var(--color-accent)]"
-          : "bg-[var(--color-brand-soft)] text-[var(--color-brand)]"
+          ? "bg-accent/10 text-accent"
+          : "bg-brand-soft text-brand"
       }`}
     >
       {count} {label}

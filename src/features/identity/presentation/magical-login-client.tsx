@@ -29,15 +29,15 @@ export function MagicalLoginClient({ nextPath, hasCallbackError }: MagicalLoginC
           className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur-xl sm:p-12"
         >
           {/* Subtle glow behind the card content */}
-          <div className="absolute -left-20 -top-20 h-40 w-40 rounded-full bg-[var(--color-accent)] opacity-20 blur-3xl" />
-          <div className="absolute -bottom-20 -right-20 h-40 w-40 rounded-full bg-[var(--color-brand)] opacity-20 blur-3xl" />
+          <div className="absolute -left-20 -top-20 h-40 w-40 rounded-full bg-accent opacity-20 blur-3xl" />
+          <div className="absolute -bottom-20 -right-20 h-40 w-40 rounded-full bg-brand opacity-20 blur-3xl" />
 
           <div className="relative flex flex-col items-center text-center">
             <motion.span
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.5, type: "spring", stiffness: 200, damping: 20 }}
-              className="grid h-14 w-14 place-items-center rounded-full bg-gradient-to-br from-[var(--color-brand)] to-[var(--color-brand-strong)] text-white shadow-lg"
+              className="grid h-14 w-14 place-items-center rounded-full bg-gradient-to-br from-brand to-brand-strong text-white shadow-lg"
             >
               <Heart size={24} fill="currentColor" strokeWidth={1.5} aria-hidden="true" />
             </motion.span>
@@ -46,7 +46,7 @@ export function MagicalLoginClient({ nextPath, hasCallbackError }: MagicalLoginC
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7, duration: 0.8 }}
-              className="mt-6 text-sm font-semibold tracking-widest text-[var(--color-accent)] uppercase"
+              className="mt-6 text-sm font-semibold tracking-widest text-accent uppercase"
               translate="no"
             >
               Điều Em Yêu

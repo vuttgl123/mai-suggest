@@ -19,42 +19,42 @@ export function TimelineChapterCard({
   return (
     <article className="timeline-entry-card group relative overflow-hidden transition-all duration-500 hover:shadow-[var(--shadow-luxury-card)]">
       <span
-        className="absolute inset-x-7 top-0 h-px bg-gradient-to-r from-transparent via-[var(--color-accent)]/65 to-transparent"
+        className="absolute inset-x-7 top-0 h-px bg-gradient-to-r from-transparent via-accent/65 to-transparent"
         aria-hidden="true"
       />
       <span
-        className="absolute right-5 top-4 font-display text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-[var(--color-accent)] to-transparent opacity-20 drop-shadow-sm"
+        className="absolute right-5 top-4 font-display text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-accent to-transparent opacity-20 drop-shadow-sm"
         aria-hidden="true"
       >
         {String(sequence).padStart(2, "0")}
       </span>
 
       <div className="flex flex-wrap items-center justify-between gap-3 pr-13">
-        <p className="text-sm font-bold tracking-widest uppercase bg-clip-text text-transparent bg-gradient-to-br from-[var(--color-accent)] to-[var(--color-brand)] drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">{entry.dateLabel}</p>
+        <p className="text-sm font-bold tracking-widest uppercase bg-clip-text text-transparent bg-gradient-to-br from-accent to-brand drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">{entry.dateLabel}</p>
         {entry.occurredOn ? (
           <time
-            className="text-xs font-semibold text-[var(--color-muted)]"
+            className="text-xs font-semibold text-muted"
             dateTime={entry.occurredOn}
           >
             {formatTimelineDate(entry.occurredOn)}
           </time>
         ) : null}
       </div>
-      <h3 className="font-display mt-3 max-w-[86%] text-3xl font-semibold tracking-[-0.05em] text-[var(--color-brand-strong)]">
+      <h3 className="font-display mt-3 max-w-[86%] text-3xl font-semibold tracking-[-0.05em] text-brand-strong">
         {entry.title}
       </h3>
       {entry.imageUrl && entry.imageAltText ? (
-        <div className="mt-5 overflow-hidden rounded-[calc(var(--radius-card)_-_0.35rem)] border border-[var(--color-border)] transition duration-500 group-hover:border-[var(--color-accent)]">
+        <div className="mt-5 overflow-hidden rounded-[calc(var(--radius-card)_-_0.35rem)] border border-border transition duration-500 group-hover:border-accent">
           <CatalogueItemImage alt={entry.imageAltText} src={entry.imageUrl} />
         </div>
       ) : null}
-      <p className="mt-5 whitespace-pre-line text-[15px] leading-8 text-[var(--color-ink)]">
+      <p className="mt-5 whitespace-pre-line text-[15px] leading-8 text-ink">
         {entry.story}
       </p>
       {entry.lesson ? (
-        <blockquote className="mt-5 border-l-2 border-[var(--color-accent)] bg-[var(--color-brand-soft)]/45 px-4 py-3 text-sm leading-7 text-[var(--color-brand)]">
+        <blockquote className="mt-5 border-l-2 border-accent bg-brand-soft/45 px-4 py-3 text-sm leading-7 text-brand">
           <Quote
-            className="mb-1 text-[var(--color-accent)]"
+            className="mb-1 text-accent"
             size={16}
             strokeWidth={1.45}
             aria-hidden="true"

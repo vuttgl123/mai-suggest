@@ -62,18 +62,18 @@ export function ItemKeepsakeEditor({
   }
 
   return (
-    <section aria-labelledby="keepsakes-heading" className="mt-8 border-t border-[var(--color-border)] pt-6">
+    <section aria-labelledby="keepsakes-heading" className="mt-8 border-t border-border pt-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="diary-kicker">Nội dung công khai</p>
-          <h3 id="keepsakes-heading" className="font-display mt-1 text-2xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
+          <h3 id="keepsakes-heading" className="font-display mt-1 text-2xl font-semibold tracking-[-0.045em] text-brand-strong">
             Những điều muốn nói
           </h3>
-          <p className="mt-2 max-w-xl text-sm leading-6 text-[var(--color-muted)]">
+          <p className="mt-2 max-w-xl text-sm leading-6 text-muted">
             Chúng sẽ xuất hiện theo thứ tự này trong trang chi tiết của item.
           </p>
         </div>
-        <span className="rounded-full bg-[var(--color-brand-soft)] px-3 py-1.5 text-xs font-bold uppercase tracking-[0.12em] text-[var(--color-brand)]">
+        <span className="rounded-full bg-brand-soft px-3 py-1.5 text-xs font-bold uppercase tracking-[0.12em] text-brand">
           {value.length}/24 mảnh thư
         </span>
       </div>
@@ -110,9 +110,9 @@ export function ItemKeepsakeEditor({
           ))}
         </ol>
       ) : (
-        <div className="mt-5 rounded-[var(--radius-card)] border border-dashed border-[var(--color-border)] bg-[rgb(255_249_243_/_65%)] px-4 py-6 text-center">
-          <Heart className="mx-auto text-[var(--color-accent)]" size={20} aria-hidden="true" />
-          <p className="mt-3 text-sm leading-6 text-[var(--color-muted)]">
+        <div className="mt-5 rounded-[var(--radius-card)] border border-dashed border-border bg-[rgb(255_249_243_/_65%)] px-4 py-6 text-center">
+          <Heart className="mx-auto text-accent" size={20} aria-hidden="true" />
+          <p className="mt-3 text-sm leading-6 text-muted">
             Thêm lời nhắn, thơ hoặc kỷ niệm đầu tiên cho item này.
           </p>
         </div>
@@ -142,7 +142,7 @@ function KeepsakeForm({
   const kindLabel = kinds.find((entry) => entry.kind === keepsake.kind)?.label;
 
   return (
-    <li className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[rgb(255_249_243_/_72%)] p-4 shadow-[var(--shadow-soft)]">
+    <li className="rounded-[var(--radius-card)] border border-border bg-[rgb(255_249_243_/_72%)] p-4 shadow-[var(--shadow-soft)]">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="diary-kicker">{kindLabel} · {String(index + 1).padStart(2, "0")}</p>
         <div className="flex items-center gap-1">
@@ -179,8 +179,8 @@ function KeepsakeForm({
         </div>
       </div>
       <div className="mt-3 grid gap-3">
-        <label className="block text-sm font-semibold text-[var(--color-brand-strong)]">
-          Tiêu đề <span className="font-normal text-[var(--color-muted)]">(không bắt buộc)</span>
+        <label className="block text-sm font-semibold text-brand-strong">
+          Tiêu đề <span className="font-normal text-muted">(không bắt buộc)</span>
           <input
             className={inputClassName}
             disabled={disabled}
@@ -189,7 +189,7 @@ function KeepsakeForm({
             value={keepsake.title ?? ""}
           />
         </label>
-        <label className="block text-sm font-semibold text-[var(--color-brand-strong)]">
+        <label className="block text-sm font-semibold text-brand-strong">
           Nội dung
           <textarea
             className={`${inputClassName} min-h-32 py-3 leading-7`}
@@ -202,8 +202,8 @@ function KeepsakeForm({
         </label>
       </div>
       {confirmRemoval ? (
-        <div className="mt-3 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[var(--color-danger)]/30 bg-[var(--color-danger)]/10 px-4 py-3">
-          <p className="text-sm leading-6 text-[var(--color-danger)]">Xóa mảnh thư này trước khi lưu item?</p>
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3">
+          <p className="text-sm leading-6 text-danger">Xóa mảnh thư này trước khi lưu item?</p>
           <span className="flex gap-2">
             <Button disabled={disabled} onClick={() => setConfirmRemoval(false)} size="compact" type="button" variant="quiet">
               Giữ lại
@@ -229,4 +229,4 @@ function createKeepsakeId(): string {
 }
 
 const inputClassName =
-  "mt-2 min-h-11 w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-paper)] px-3 text-sm text-[var(--color-ink)] shadow-sm outline-none placeholder:text-[var(--color-muted)] focus:border-[var(--color-focus)]";
+  "mt-2 min-h-11 w-full rounded-xl border border-border bg-paper px-3 text-sm text-ink shadow-sm outline-none placeholder:text-muted focus:border-focus";

@@ -42,13 +42,13 @@ export function CatalogueSearch({
   return (
     <section
       aria-labelledby="catalogue-search-heading"
-      className="diary-wash rounded-[var(--radius-card)] border border-[var(--color-border)] p-4 shadow-[var(--shadow-soft)] sm:p-5"
+      className="diary-wash rounded-[var(--radius-card)] border border-border p-4 shadow-[var(--shadow-soft)] sm:p-5"
     >
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="diary-kicker">Tìm trong những điều đã lưu</p>
           <h2
-            className="font-display mt-1 text-2xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]"
+            className="font-display mt-1 text-2xl font-semibold tracking-[-0.04em] text-brand-strong"
             id="catalogue-search-heading"
           >
             Điều em đang tìm
@@ -57,7 +57,7 @@ export function CatalogueSearch({
         <p
           aria-atomic="true"
           aria-live="polite"
-          className="text-sm leading-6 text-[var(--color-muted)]"
+          className="text-sm leading-6 text-muted"
         >
           {query
             ? `${resultCount} điều cho “${query}”`
@@ -75,13 +75,13 @@ export function CatalogueSearch({
         </label>
         <div className="relative min-w-0 flex-1">
           <Search
-            className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[var(--color-muted)]"
+            className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted"
             size={17}
             aria-hidden="true"
           />
           <input
             autoComplete="off"
-            className="min-h-11 w-full rounded-full border border-[var(--color-border)] bg-[var(--color-paper)] py-2 pl-11 pr-4 text-sm text-[var(--color-brand-strong)] outline-none transition placeholder:text-[var(--color-muted)] focus:border-[var(--color-accent)] focus:ring-2 focus:ring-[var(--color-focus)]"
+            className="min-h-11 w-full rounded-full border border-border bg-paper py-2 pl-11 pr-4 text-sm text-brand-strong outline-none transition placeholder:text-muted focus:border-accent focus:ring-2 focus:ring-focus"
             id="catalogue-search-input"
             name="query"
             onChange={(event) => setValue(event.target.value)}
@@ -92,7 +92,7 @@ export function CatalogueSearch({
         </div>
         <div className="flex gap-2">
           <button
-            className="min-h-11 rounded-full bg-[var(--color-brand)] px-5 text-sm font-semibold text-white shadow-[var(--theme-button-shadow)] transition hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[var(--color-focus)] disabled:cursor-wait disabled:opacity-60"
+            className="min-h-11 rounded-full bg-brand px-5 text-sm font-semibold text-white shadow-[var(--theme-button-shadow)] transition hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-focus disabled:cursor-wait disabled:opacity-60"
             disabled={isPending}
             type="submit"
           >
@@ -101,7 +101,7 @@ export function CatalogueSearch({
           {query ? (
             <button
               aria-label="Xóa tìm kiếm"
-              className="inline-flex min-h-11 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-paper)] px-4 text-[var(--color-brand)] transition hover:-translate-y-0.5 hover:border-[var(--color-accent)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[var(--color-focus)] disabled:cursor-wait disabled:opacity-60"
+              className="inline-flex min-h-11 items-center justify-center rounded-full border border-border bg-paper px-4 text-brand transition hover:-translate-y-0.5 hover:border-accent focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-focus disabled:cursor-wait disabled:opacity-60"
               disabled={isPending}
               onClick={handleClear}
               type="button"

@@ -41,24 +41,24 @@ export function ThemeScheduleList({
   }
 
   return (
-    <section className="rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] p-5 shadow-[var(--shadow-soft)] sm:p-6">
+    <section className="rounded-[var(--radius-dialog)] border border-border bg-paper p-5 shadow-[var(--shadow-soft)] sm:p-6">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="diary-kicker">Các khoảng đã hẹn</p>
-          <h2 className="font-display mt-2 text-2xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
+          <h2 className="font-display mt-2 text-2xl font-semibold tracking-[-0.045em] text-brand-strong">
             Lịch không khí
           </h2>
         </div>
-        <span className="rounded-full bg-[var(--color-brand-soft)] px-3 py-1.5 text-xs font-bold uppercase tracking-[0.11em] text-[var(--color-brand)]">
+        <span className="rounded-full bg-brand-soft px-3 py-1.5 text-xs font-bold uppercase tracking-[0.11em] text-brand">
           {schedules.length} lịch
         </span>
       </div>
 
       {schedules.length === 0 ? (
-        <div className="mt-5 rounded-[var(--radius-card)] border border-dashed border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-7 text-center">
-          <Clock3 className="mx-auto text-[var(--color-accent)]" size={22} strokeWidth={1.3} aria-hidden="true" />
-          <p className="mt-3 text-sm font-semibold text-[var(--color-brand-strong)]">Chưa có lịch nào được hẹn.</p>
-          <p className="mt-1 text-xs leading-5 text-[var(--color-muted)]">Bordeaux Diary sẽ là không khí mặc định.</p>
+        <div className="mt-5 rounded-[var(--radius-card)] border border-dashed border-border bg-surface px-4 py-7 text-center">
+          <Clock3 className="mx-auto text-accent" size={22} strokeWidth={1.3} aria-hidden="true" />
+          <p className="mt-3 text-sm font-semibold text-brand-strong">Chưa có lịch nào được hẹn.</p>
+          <p className="mt-1 text-xs leading-5 text-muted">Bordeaux Diary sẽ là không khí mặc định.</p>
         </div>
       ) : (
         <ol className="mt-5 space-y-3">
@@ -68,24 +68,24 @@ export function ThemeScheduleList({
 
             return (
               <li
-                className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-control-surface)] p-4"
+                className="rounded-[var(--radius-card)] border border-border bg-[var(--theme-control-surface)] p-4"
                 key={schedule.id}
               >
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="text-sm font-semibold leading-6 text-[var(--color-brand-strong)]">
+                    <p className="text-sm font-semibold leading-6 text-brand-strong">
                       {formatThemeScheduleDateTime(schedule.startsAt)} → {formatThemeScheduleDateTime(schedule.endsAt)}
                     </p>
                     <div className="mt-2 flex flex-wrap items-center gap-2">
-                      <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-brand)]" aria-hidden="true" />
-                      <p className="font-display text-lg font-semibold tracking-[-0.035em] text-[var(--color-brand-strong)]">
+                      <span className="h-2.5 w-2.5 rounded-full bg-brand" aria-hidden="true" />
+                      <p className="font-display text-lg font-semibold tracking-[-0.035em] text-brand-strong">
                         {preset.label}
                       </p>
-                      <span className={`rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-[0.1em] ${schedule.isEnabled ? "bg-[var(--color-positive)]/10 text-[var(--color-positive)]" : "bg-[var(--color-surface)] text-[var(--color-muted)]"}`}>
+                      <span className={`rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-[0.1em] ${schedule.isEnabled ? "bg-positive/10 text-positive" : "bg-surface text-muted"}`}>
                         {schedule.isEnabled ? "Bật" : "Tắt"}
                       </span>
                     </div>
-                    <p className="mt-1 text-xs font-semibold text-[var(--color-accent)]">
+                    <p className="mt-1 text-xs font-semibold text-accent">
                       Ưu tiên {schedule.priority}
                     </p>
                   </div>
@@ -100,8 +100,8 @@ export function ThemeScheduleList({
                 </div>
 
                 {isConfirming ? (
-                  <div className="mt-4 rounded-xl border border-[var(--color-danger)]/30 bg-[var(--color-danger)]/10 p-3">
-                    <p className="text-sm leading-5 text-[var(--color-danger)]">Xóa hẳn lịch này? Các lịch khác và theme hiện tại sẽ không bị thay đổi.</p>
+                  <div className="mt-4 rounded-xl border border-danger/30 bg-danger/10 p-3">
+                    <p className="text-sm leading-5 text-danger">Xóa hẳn lịch này? Các lịch khác và theme hiện tại sẽ không bị thay đổi.</p>
                     <div className="mt-3 flex flex-wrap gap-2">
                       <Button disabled={isPending} onClick={() => setConfirmingId(null)} size="compact" variant="quiet">
                         Giữ lại

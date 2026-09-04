@@ -21,7 +21,7 @@ export function CataloguePagination({
 
   return (
     <div className="mt-8">
-      <p className="text-center text-sm leading-6 text-[var(--color-muted)]">
+      <p className="text-center text-sm leading-6 text-muted">
         Xem thêm những điều đã lưu
       </p>
       <nav
@@ -30,7 +30,7 @@ export function CataloguePagination({
       >
         {page > 1 ? (
           <Link
-            className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-paper)] px-4 text-sm font-semibold text-[var(--color-brand)] transition hover:-translate-y-0.5 hover:border-[var(--color-accent)]"
+            className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-border bg-paper px-4 text-sm font-semibold text-brand transition hover:-translate-y-0.5 hover:border-accent"
             href={createCataloguePath({ categorySlug, page: page - 1, query })}
             scroll={false}
             transitionTypes={["page-back"]}
@@ -39,7 +39,7 @@ export function CataloguePagination({
             Trước
           </Link>
         ) : (
-          <span className="inline-flex min-h-11 cursor-not-allowed items-center gap-1.5 rounded-full border border-[var(--color-border)] px-4 text-sm font-semibold text-[var(--color-muted)] opacity-45">
+          <span className="inline-flex min-h-11 cursor-not-allowed items-center gap-1.5 rounded-full border border-border px-4 text-sm font-semibold text-muted opacity-45">
             <ChevronLeft size={16} aria-hidden="true" />
             Trước
           </span>
@@ -52,8 +52,8 @@ export function CataloguePagination({
                 aria-current={value === page ? "page" : undefined}
                 className={`grid h-11 min-w-11 place-items-center rounded-full px-3 text-sm font-semibold transition ${
                   value === page
-                    ? "bg-[var(--color-brand)] text-white shadow-[0_8px_18px_rgb(49_5_12_/_22%)]"
-                    : "text-[var(--color-muted)] hover:bg-[var(--color-brand-soft)] hover:text-[var(--color-brand)]"
+                    ? "bg-brand text-white shadow-[0_8px_18px_rgb(49_5_12_/_22%)]"
+                    : "text-muted hover:bg-brand-soft hover:text-brand"
                 }`}
                 href={createCataloguePath({ categorySlug, page: value, query })}
                 key={value}
@@ -63,7 +63,7 @@ export function CataloguePagination({
                 {value}
               </Link>
             ) : (
-              <span className="grid h-11 min-w-7 place-items-center text-sm text-[var(--color-muted)]" key={value}>
+              <span className="grid h-11 min-w-7 place-items-center text-sm text-muted" key={value}>
                 …
               </span>
             ),
@@ -72,7 +72,7 @@ export function CataloguePagination({
 
         {page < pageCount ? (
           <Link
-            className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-paper)] px-4 text-sm font-semibold text-[var(--color-brand)] transition hover:-translate-y-0.5 hover:border-[var(--color-accent)]"
+            className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-border bg-paper px-4 text-sm font-semibold text-brand transition hover:-translate-y-0.5 hover:border-accent"
             href={createCataloguePath({ categorySlug, page: page + 1, query })}
             scroll={false}
             transitionTypes={["page-forward"]}
@@ -81,7 +81,7 @@ export function CataloguePagination({
             <ChevronRight size={16} aria-hidden="true" />
           </Link>
         ) : (
-          <span className="inline-flex min-h-11 cursor-not-allowed items-center gap-1.5 rounded-full border border-[var(--color-border)] px-4 text-sm font-semibold text-[var(--color-muted)] opacity-45">
+          <span className="inline-flex min-h-11 cursor-not-allowed items-center gap-1.5 rounded-full border border-border px-4 text-sm font-semibold text-muted opacity-45">
             Sau
             <ChevronRight size={16} aria-hidden="true" />
           </span>

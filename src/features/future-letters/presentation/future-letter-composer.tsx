@@ -94,7 +94,7 @@ export function FutureLetterComposer({
   return (
     <dialog
       aria-labelledby="future-letter-composer-title"
-      className="future-letter-dialog fixed inset-0 m-auto h-[min(46rem,calc(100dvh_-_1.5rem))] w-[min(100%_-_1.5rem,62rem)] max-w-none overflow-hidden rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] p-0 text-[var(--color-ink)] shadow-[var(--shadow-card)]"
+      className="future-letter-dialog fixed inset-0 m-auto h-[min(46rem,calc(100dvh_-_1.5rem))] w-[min(100%_-_1.5rem,62rem)] max-w-none overflow-hidden rounded-[var(--radius-dialog)] border border-border bg-paper p-0 text-ink shadow-[var(--shadow-card)]"
       onClose={onClose}
       ref={dialogRef}
     >
@@ -107,12 +107,12 @@ export function FutureLetterComposer({
       >
         <header className="future-letter-composer-header">
           <div>
-            <p className="text-sm font-semibold text-[var(--color-accent)]">Một điều để ngày mai mở ra</p>
-            <div className="mt-3 flex items-center gap-2 text-[var(--color-accent)]" aria-hidden="true">
+            <p className="text-sm font-semibold text-accent">Một điều để ngày mai mở ra</p>
+            <div className="mt-3 flex items-center gap-2 text-accent" aria-hidden="true">
               <span className="diary-rule" />
               <span className="h-1.5 w-1.5 rounded-full bg-current" />
             </div>
-            <h2 id="future-letter-composer-title" className="font-display mt-3 text-3xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)] sm:text-4xl">
+            <h2 id="future-letter-composer-title" className="font-display mt-3 text-3xl font-semibold tracking-[-0.045em] text-brand-strong sm:text-4xl">
               {letter ? "Sửa lá thư đang hẹn" : "Hẹn một lá thư"}
             </h2>
           </div>
@@ -128,8 +128,8 @@ export function FutureLetterComposer({
           </p>
 
           <div className="mt-6 grid gap-5 lg:grid-cols-[minmax(0,1.22fr)_minmax(17rem,0.78fr)]">
-            <section className="future-letter-composer-writing rounded-[var(--radius-card)] border border-[var(--color-border)] p-4 sm:p-5">
-              <p className="text-sm font-semibold text-[var(--color-accent)]">Phần muốn gửi lại</p>
+            <section className="future-letter-composer-writing rounded-[var(--radius-card)] border border-border p-4 sm:p-5">
+              <p className="text-sm font-semibold text-accent">Phần muốn gửi lại</p>
               <label className="future-letter-field mt-4">
                 <span>Tiêu đề</span>
                 <input
@@ -164,9 +164,9 @@ export function FutureLetterComposer({
             </section>
 
             <div className="grid content-start gap-5">
-              <fieldset className="future-letter-composer-schedule rounded-[var(--radius-card)] border border-[var(--color-border)] p-4 sm:p-5">
-                <legend className="px-1 text-sm font-semibold text-[var(--color-brand-strong)]">Thời điểm mở thư</legend>
-                <p className="mt-1 flex items-center gap-2 text-xs leading-5 text-[var(--color-muted)]">
+              <fieldset className="future-letter-composer-schedule rounded-[var(--radius-card)] border border-border p-4 sm:p-5">
+                <legend className="px-1 text-sm font-semibold text-brand-strong">Thời điểm mở thư</legend>
+                <p className="mt-1 flex items-center gap-2 text-xs leading-5 text-muted">
                   <Clock3 size={14} aria-hidden="true" />
                   Theo giờ Việt Nam (GMT+7).
                 </p>
@@ -200,9 +200,9 @@ export function FutureLetterComposer({
                 </div>
               </fieldset>
 
-              <fieldset className="future-letter-composer-details rounded-[var(--radius-card)] border border-[var(--color-border)] p-4 sm:p-5">
-                <legend className="px-1 text-sm font-semibold text-[var(--color-brand-strong)]">
-                  Điều đi cùng lá thư <span className="font-normal text-[var(--color-muted)]">(không bắt buộc)</span>
+              <fieldset className="future-letter-composer-details rounded-[var(--radius-card)] border border-border p-4 sm:p-5">
+                <legend className="px-1 text-sm font-semibold text-brand-strong">
+                  Điều đi cùng lá thư <span className="font-normal text-muted">(không bắt buộc)</span>
                 </legend>
                 <div className="mt-3 grid gap-3">
                   <label className="future-letter-field">
@@ -252,7 +252,7 @@ export function FutureLetterComposer({
             </div>
           </div>
 
-          {feedback ? <p aria-live="polite" className="mt-4 text-sm leading-6 text-[var(--color-danger)]">{feedback}</p> : null}
+          {feedback ? <p aria-live="polite" className="mt-4 text-sm leading-6 text-danger">{feedback}</p> : null}
         </div>
 
         <footer className="future-letter-composer-footer">
@@ -294,4 +294,4 @@ function feedbackFor(code: string): string {
 }
 
 const inputClassName =
-  "mt-2 min-h-11 w-full rounded-xl border border-[var(--color-border)] bg-white/70 px-3 text-sm text-[var(--color-ink)] shadow-sm outline-none placeholder:text-[var(--color-muted)] focus:border-[var(--color-focus)] disabled:bg-[var(--color-surface)]";
+  "mt-2 min-h-11 w-full rounded-xl border border-border bg-white/70 px-3 text-sm text-ink shadow-sm outline-none placeholder:text-muted focus:border-focus disabled:bg-surface";

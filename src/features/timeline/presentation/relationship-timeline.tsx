@@ -19,7 +19,7 @@ export function RelationshipTimeline({
   return (
     <div className="diary-shell">
       <a
-        className="sr-only absolute left-5 top-4 z-50 rounded-full bg-[var(--color-brand-strong)] px-4 py-2 text-sm font-semibold text-white focus:not-sr-only"
+        className="sr-only absolute left-5 top-4 z-50 rounded-full bg-brand-strong px-4 py-2 text-sm font-semibold text-white focus:not-sr-only"
         href="#journey-content"
       >
         Đi tới hành trình
@@ -29,24 +29,24 @@ export function RelationshipTimeline({
       <main id="journey-content" tabIndex={-1}>
         <section className="diary-container diary-section grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(17rem,0.46fr)] lg:items-end lg:gap-16">
           <div className="max-w-3xl">
-            <div className="flex items-center gap-3 text-[var(--color-accent)]" aria-hidden="true">
+            <div className="flex items-center gap-3 text-accent" aria-hidden="true">
               <BookHeart size={20} strokeWidth={1.35} />
-              <span className="h-px w-16 bg-[var(--color-accent)]/55" />
+              <span className="h-px w-16 bg-accent/55" />
             </div>
-            <p className="mt-5 text-sm font-semibold text-[var(--color-accent)]">Một cuốn nhật ký chung</p>
-            <h1 className="font-display display-xl mt-3 max-w-3xl text-balance font-semibold text-[var(--color-brand-strong)]">
+            <p className="mt-5 text-sm font-semibold text-accent">Một cuốn nhật ký chung</p>
+            <h1 className="font-display display-xl mt-3 max-w-3xl text-balance font-semibold text-brand-strong">
               Chúng mình đã lớn lên cùng nhau như thế nào.
             </h1>
-            <p className="mt-6 max-w-2xl text-base leading-8 text-[var(--color-muted)]">
+            <p className="mt-6 max-w-2xl text-base leading-8 text-muted">
               Không chỉ là những ngày đã đi qua, mà còn là những điều mình đã cùng học,
               cùng vượt qua và vẫn đang lựa chọn mỗi ngày.
             </p>
           </div>
-          <aside className="diary-wash relative overflow-hidden rounded-[var(--radius-card)] border border-[var(--color-border)] p-5 shadow-[var(--shadow-soft)] sm:p-6">
-            <span className="absolute -right-8 -top-10 h-28 w-28 rounded-full border border-[var(--color-accent)]/35" aria-hidden="true" />
-            <p className="text-sm font-semibold text-[var(--color-accent)]">Các chương đã mở</p>
-            <p className="font-display mt-2 text-5xl font-semibold tracking-[-0.07em] text-[var(--color-brand-strong)]">{entries.length}</p>
-            <p className="mt-2 max-w-xs text-sm leading-6 text-[var(--color-muted)]">Mỗi mốc là một lần mình chọn nhớ về nhau.</p>
+          <aside className="diary-wash relative overflow-hidden rounded-[var(--radius-card)] border border-border p-5 shadow-[var(--shadow-soft)] sm:p-6">
+            <span className="absolute -right-8 -top-10 h-28 w-28 rounded-full border border-accent/35" aria-hidden="true" />
+            <p className="text-sm font-semibold text-accent">Các chương đã mở</p>
+            <p className="font-display mt-2 text-5xl font-semibold tracking-[-0.07em] text-brand-strong">{entries.length}</p>
+            <p className="mt-2 max-w-xs text-sm leading-6 text-muted">Mỗi mốc là một lần mình chọn nhớ về nhau.</p>
           </aside>
         </section>
 
@@ -58,15 +58,15 @@ export function RelationshipTimeline({
             <div className="diary-container diary-section">
               <div className="flex flex-wrap items-end justify-between gap-5">
                 <div>
-                  <p className="text-sm font-semibold text-[var(--color-accent)]">Từng trang mình đã viết</p>
+                  <p className="text-sm font-semibold text-accent">Từng trang mình đã viết</p>
                   <h2
-                    className="font-display mt-2 text-balance text-4xl font-semibold tracking-[-0.055em] text-[var(--color-brand-strong)] sm:text-5xl"
+                    className="font-display mt-2 text-balance text-4xl font-semibold tracking-[-0.055em] text-brand-strong sm:text-5xl"
                     id="timeline-heading"
                   >
                     Hành trình của chúng mình
                   </h2>
                 </div>
-                <p className="max-w-xs text-sm leading-6 text-[var(--color-muted)]">Kéo ngang để lần giở từng chương.</p>
+                <p className="max-w-xs text-sm leading-6 text-muted">Kéo ngang để lần giở từng chương.</p>
               </div>
               <div className="timeline-film-stage mt-9 sm:mt-11">
                 <div
@@ -100,19 +100,19 @@ export function RelationshipTimeline({
           </section>
         ) : (
           <section className="mx-auto max-w-3xl px-5 pb-14 sm:px-8 lg:px-10">
-            <div className="diary-wash rounded-[var(--radius-dialog)] border border-[var(--color-border)] px-6 py-10 text-center shadow-[var(--shadow-soft)] sm:px-10">
-              <span className="mx-auto grid h-11 w-11 place-items-center rounded-full bg-[var(--color-brand-soft)] text-[var(--color-brand)]" aria-hidden="true">
+            <div className="diary-wash rounded-[var(--radius-dialog)] border border-border px-6 py-10 text-center shadow-[var(--shadow-soft)] sm:px-10">
+              <span className="mx-auto grid h-11 w-11 place-items-center rounded-full bg-brand-soft text-brand" aria-hidden="true">
                 <Heart size={19} fill="currentColor" strokeWidth={1.3} />
               </span>
-              <h2 className="font-display mt-4 text-3xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
+              <h2 className="font-display mt-4 text-3xl font-semibold tracking-[-0.045em] text-brand-strong">
                 Hành trình đang chờ trang đầu tiên.
               </h2>
-              <p className="mx-auto mt-3 max-w-lg text-sm leading-7 text-[var(--color-muted)]">
+              <p className="mx-auto mt-3 max-w-lg text-sm leading-7 text-muted">
                 Một ngày thật đáng nhớ, một điều đã cùng học được, hay chỉ một câu nói
                 khiến mình muốn giữ lại. Tất cả đều có thể bắt đầu từ đây.
               </p>
               {actor.canManageCatalogue ? (
-                <a className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full bg-[var(--color-brand)] px-4 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[var(--color-brand-strong)]" href="/admin/hanh-trinh">
+                <a className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full bg-brand px-4 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-brand-strong" href="/admin/hanh-trinh">
                   <Sparkles size={16} aria-hidden="true" />
                   Viết mốc đầu tiên
                 </a>

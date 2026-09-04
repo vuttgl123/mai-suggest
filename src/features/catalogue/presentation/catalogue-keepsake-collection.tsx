@@ -11,24 +11,24 @@ export function CatalogueKeepsakeCollection({
   return (
     <section className="diary-section-tint relative isolate overflow-hidden">
       <span
-        className="pointer-events-none absolute -right-32 -top-20 h-72 w-72 rounded-full bg-[var(--color-brand-soft)] opacity-60 blur-3xl"
+        className="pointer-events-none absolute -right-32 -top-20 h-72 w-72 rounded-full bg-brand-soft opacity-60 blur-3xl"
         aria-hidden="true"
       />
       <span
-        className="pointer-events-none absolute -bottom-24 -left-20 h-60 w-60 rounded-full bg-[var(--color-accent)] opacity-10 blur-3xl"
+        className="pointer-events-none absolute -bottom-24 -left-20 h-60 w-60 rounded-full bg-accent opacity-10 blur-3xl"
         aria-hidden="true"
       />
 
       <div className="diary-container diary-section relative">
         <div className="max-w-2xl">
           <span
-            className="mx-auto grid h-11 w-11 place-items-center rounded-full bg-[var(--color-brand-soft)] text-[var(--color-brand)]"
+            className="mx-auto grid h-11 w-11 place-items-center rounded-full bg-brand-soft text-brand"
             aria-hidden="true"
           >
             <BookHeart size={20} strokeWidth={1.45} />
           </span>
-          <p className="mt-4 text-sm font-semibold text-[var(--color-accent)]">Một góc chỉ dành cho chúng mình</p>
-          <h2 className="font-display mt-2 text-balance text-4xl font-semibold tracking-[-0.055em] text-[var(--color-brand-strong)] sm:text-5xl">
+          <p className="mt-4 text-sm font-semibold text-accent">Một góc chỉ dành cho chúng mình</p>
+          <h2 className="font-display mt-2 text-balance text-4xl font-semibold tracking-[-0.055em] text-brand-strong sm:text-5xl">
             Những điều muốn nói
           </h2>
         </div>
@@ -44,16 +44,16 @@ export function CatalogueKeepsakeCollection({
             ))}
           </div>
         ) : (
-          <div className="diary-wash mt-8 rounded-[var(--radius-card)] border border-[var(--color-border)] px-5 py-8 text-center shadow-[var(--shadow-soft)] sm:px-8">
+          <div className="diary-wash mt-8 rounded-[var(--radius-card)] border border-border px-5 py-8 text-center shadow-[var(--shadow-soft)] sm:px-8">
             <Sparkles
-              className="mx-auto text-[var(--color-accent)]"
+              className="mx-auto text-accent"
               size={21}
               aria-hidden="true"
             />
-            <p className="font-display mt-4 text-2xl font-semibold text-[var(--color-brand-strong)]">
+            <p className="font-display mt-4 text-2xl font-semibold text-brand-strong">
               Chỗ này đang chờ một điều thật riêng.
             </p>
-            <p className="mx-auto mt-2 max-w-md text-sm leading-7 text-[var(--color-muted)]">
+            <p className="mx-auto mt-2 max-w-md text-sm leading-7 text-muted">
               Một lời nhắn nhỏ, một bài thơ hay một kỷ niệm sẽ được lưu lại ở đây.
             </p>
           </div>
@@ -73,9 +73,9 @@ function KeepsakeCard({
   const copy = keepsakeCopy(keepsake.kind);
 
   return (
-    <article className="relative overflow-hidden rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-paper)] p-5 shadow-[var(--shadow-soft)] sm:p-6">
+    <article className="relative overflow-hidden rounded-[var(--radius-card)] border border-border bg-paper p-5 shadow-[var(--shadow-soft)] sm:p-6">
       <span
-        className="absolute inset-x-7 top-0 h-px bg-gradient-to-r from-transparent via-[var(--color-accent)]/65 to-transparent"
+        className="absolute inset-x-7 top-0 h-px bg-gradient-to-r from-transparent via-accent/65 to-transparent"
         aria-hidden="true"
       />
       <span
@@ -84,16 +84,16 @@ function KeepsakeCard({
       >
         {String(sequence).padStart(2, "0")}
       </span>
-      <div className="flex items-center gap-2 text-[var(--color-accent)]">
+      <div className="flex items-center gap-2 text-accent">
         <Quote size={18} strokeWidth={1.45} aria-hidden="true" />
-        <p className="text-sm font-semibold text-[var(--color-accent)]">{copy.label}</p>
+        <p className="text-sm font-semibold text-accent">{copy.label}</p>
       </div>
       {keepsake.title ? (
-        <h3 className="font-display mt-4 max-w-[82%] text-2xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]">
+        <h3 className="font-display mt-4 max-w-[82%] text-2xl font-semibold tracking-[-0.04em] text-brand-strong">
           {keepsake.title}
         </h3>
       ) : null}
-      <p className="mt-3 whitespace-pre-line text-[15px] leading-8 text-[var(--color-ink)]">
+      <p className="mt-3 whitespace-pre-line text-[15px] leading-8 text-ink">
         {keepsake.content}
       </p>
     </article>

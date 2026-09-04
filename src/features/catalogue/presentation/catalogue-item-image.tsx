@@ -26,12 +26,12 @@ export function CatalogueItemImage({
   const [hasError, setHasError] = useState(false);
   const frameClassName =
     variant === "content-fill"
-      ? "relative h-full min-h-64 overflow-hidden bg-[var(--color-skeleton)]"
-      : "relative aspect-[4/5] overflow-hidden bg-[var(--color-skeleton)]";
+      ? "relative h-full min-h-64 overflow-hidden bg-skeleton"
+      : "relative aspect-[4/5] overflow-hidden bg-skeleton";
   const fallbackClassName =
     variant === "content-fill"
-      ? "flex h-full min-h-64 flex-col items-center justify-center gap-2 bg-[var(--color-skeleton)] px-4 text-center text-[var(--color-muted)]"
-      : "flex aspect-[4/5] flex-col items-center justify-center gap-2 bg-[var(--color-skeleton)] px-4 text-center text-[var(--color-muted)]";
+      ? "flex h-full min-h-64 flex-col items-center justify-center gap-2 bg-skeleton px-4 text-center text-muted"
+      : "flex aspect-[4/5] flex-col items-center justify-center gap-2 bg-skeleton px-4 text-center text-muted";
 
   if (hasError) {
     return (
@@ -69,7 +69,7 @@ export function CatalogueItemImage({
       />
       {isLoading ? (
         <div
-          className="absolute inset-0 animate-pulse bg-[var(--color-skeleton)]"
+          className="absolute inset-0 animate-pulse bg-skeleton"
           aria-hidden="true"
         />
       ) : null}

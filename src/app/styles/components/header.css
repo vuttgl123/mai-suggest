@@ -1,0 +1,20 @@
+@layer components {
+  .app-header {
+    position: relative;
+    background-image: var(--theme-header-pattern);
+  }
+
+  .app-header::after {
+    position: absolute;
+    right: 8%;
+    bottom: 0;
+    left: 8%;
+    height: 1px;
+    background: var(--theme-header-pattern);
+    content: "";
+  }
+
+  .app-header-mark {
+    box-shadow: var(--theme-button-shadow-strong);
+  }
+}

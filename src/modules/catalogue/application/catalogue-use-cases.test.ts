@@ -3,21 +3,12 @@ import { success } from "@/core/application/result";
 import type { CatalogueReader } from "@/modules/catalogue/application/catalogue-reader";
 import { GetVisibleItemDetail } from "@/modules/catalogue/application/get-visible-item-detail";
 import { ListVisibleCategories } from "@/modules/catalogue/application/list-visible-categories";
-import { ListVisibleItems } from "@/modules/catalogue/application/list-visible-items";
 
 const anonymousActor = {
   status: "anonymous" as const,
   userId: null,
   email: null,
   role: null,
-  canManageCatalogue: false,
-} as const;
-
-const inactiveActor = {
-  status: "inactive" as const,
-  userId: "member-id",
-  email: "member@example.com",
-  role: "member" as const,
   canManageCatalogue: false,
 } as const;
 
@@ -32,7 +23,6 @@ const activeActor = {
 function createReader(overrides: Partial<CatalogueReader> = {}): CatalogueReader {
   return {
     listCategories: vi.fn(async () => success([])),
-    listItems: vi.fn(async () => success([])),
     listItemPage: vi.fn(async () =>
       success({ items: [], page: 1, pageSize: 6, total: 0, pageCount: 0 }),
     ),
@@ -51,34 +41,6 @@ describe("catalogue use cases", () => {
       error: { code: "UNAUTHENTICATED" },
     });
     expect(reader.listCategories).not.toHaveBeenCalled();
-  });
-
-  it("does not query items for an inactive actor", async () => {
-    const reader = createReader();
-    const useCase = new ListVisibleItems(reader);
-
-    await expect(useCase.execute(inactiveActor, { categorySlug: "travel" })).resolves.toEqual({
-      ok: false,
-      error: { code: "ACCESS_DENIED" },
-    });
-    expect(reader.listItems).not.toHaveBeenCalled();
-  });
-
-  it("returns a visible item list from the reader for an active actor", async () => {
-    const item = {
-      id: "item-id",
-      categoryId: "category-id",
-      slug: "tea-house",
-      kind: "place" as const,
-      title: "Tea house",
-      summary: null,
-      priceLabel: null,
-      primaryImage: null,
-    };
-    const reader = createReader({ listItems: vi.fn(async () => success([item])) });
-    const useCase = new ListVisibleItems(reader);
-
-    await expect(useCase.execute(activeActor, {})).resolves.toEqual(success([item]));
   });
 
   it("returns not found when an active actor requests a non-visible item", async () => {

@@ -96,27 +96,27 @@ export function TimelineResponsePanel({
   }
 
   return (
-    <section className="mt-7 border-t border-[var(--color-border)] pt-5" aria-labelledby={`responses-${entryId}`}>
+    <section className="mt-7 border-t border-border pt-5" aria-labelledby={`responses-${entryId}`}>
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-2 text-[var(--color-brand-strong)]">
-          <MessageCircleHeart className="text-[var(--color-accent)]" size={18} strokeWidth={1.45} aria-hidden="true" />
+        <div className="flex items-center gap-2 text-brand-strong">
+          <MessageCircleHeart className="text-accent" size={18} strokeWidth={1.45} aria-hidden="true" />
           <h4 id={`responses-${entryId}`} className="font-display text-xl font-semibold tracking-[-0.035em]">
             Những lời giữ lại
           </h4>
         </div>
-        <span className="rounded-full bg-[var(--color-brand-soft)] px-3 py-1 text-xs font-semibold text-[var(--color-brand)]">
+        <span className="rounded-full bg-brand-soft px-3 py-1 text-xs font-semibold text-brand">
           {responses.length} hồi đáp
         </span>
       </div>
 
       <form
-        className="mt-4 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[rgb(255_249_243_/_70%)] p-4"
+        className="mt-4 rounded-[var(--radius-card)] border border-border bg-[rgb(255_249_243_/_70%)] p-4"
         onSubmit={(event) => {
           event.preventDefault();
           createResponse();
         }}
       >
-        <label className="block text-sm font-semibold text-[var(--color-brand-strong)]">
+        <label className="block text-sm font-semibold text-brand-strong">
           Viết một điều mình muốn giữ lại
           <textarea
             className={inputClassName}
@@ -128,7 +128,7 @@ export function TimelineResponsePanel({
           />
         </label>
         <div className="mt-3 flex items-center justify-between gap-3">
-          <span className="text-xs text-[var(--color-muted)]">{newContent.length}/2000</span>
+          <span className="text-xs text-muted">{newContent.length}/2000</span>
           <Button disabled={isPending} size="compact" type="submit">
             <Send size={15} aria-hidden="true" />
             {isPending ? "Đang lưu…" : "Lưu hồi đáp"}
@@ -136,7 +136,7 @@ export function TimelineResponsePanel({
         </div>
       </form>
 
-      {feedback ? <p aria-live="polite" className="mt-3 text-sm leading-6 text-[var(--color-brand)]">{feedback}</p> : null}
+      {feedback ? <p aria-live="polite" className="mt-3 text-sm leading-6 text-brand">{feedback}</p> : null}
 
       {responses.length ? (
         <ol className="mt-5 space-y-3">
@@ -153,8 +153,8 @@ export function TimelineResponsePanel({
                   <Avatar displayName={response.author.displayName} imageUrl={response.author.avatarUrl} />
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-                      <p className="text-sm font-bold text-[var(--color-brand-strong)]">{response.author.displayName}</p>
-                      <time className="text-xs text-[var(--color-muted)]" dateTime={response.createdAt}>{formatResponseDate(response.createdAt)}</time>
+                      <p className="text-sm font-bold text-brand-strong">{response.author.displayName}</p>
+                      <time className="text-xs text-muted" dateTime={response.createdAt}>{formatResponseDate(response.createdAt)}</time>
                     </div>
                     {isEditing ? (
                       <form
@@ -171,7 +171,7 @@ export function TimelineResponsePanel({
                         </div>
                       </form>
                     ) : (
-                      <p className="mt-4 whitespace-pre-line font-display text-lg italic leading-relaxed text-[var(--color-brand-strong)]">{response.content}</p>
+                      <p className="mt-4 whitespace-pre-line font-display text-lg italic leading-relaxed text-brand-strong">{response.content}</p>
                     )}
                     {!isEditing && (isAuthor || canDelete) ? (
                       <div className="mt-3 flex flex-wrap gap-2">
@@ -180,8 +180,8 @@ export function TimelineResponsePanel({
                       </div>
                     ) : null}
                     {confirmingResponseId === response.id ? (
-                      <div className="mt-3 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[var(--color-danger)]/30 bg-[var(--color-danger)]/10 px-3 py-2.5">
-                        <p className="text-xs leading-5 text-[var(--color-danger)]">Bạn chắc chắn muốn xóa hồi đáp này?</p>
+                      <div className="mt-3 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-danger/30 bg-danger/10 px-3 py-2.5">
+                        <p className="text-xs leading-5 text-danger">Bạn chắc chắn muốn xóa hồi đáp này?</p>
                         <span className="flex gap-2"><Button disabled={isPending} onClick={() => setConfirmingResponseId(null)} size="compact" type="button" variant="quiet">Hủy</Button><Button disabled={isPending} onClick={() => deleteResponse(response.id)} size="compact" type="button" variant="danger">Xóa</Button></span>
                       </div>
                     ) : null}
@@ -191,17 +191,17 @@ export function TimelineResponsePanel({
             );
           })}
         </ol>
-      ) : <p className="mt-5 text-sm leading-7 text-[var(--color-muted)]">Hãy là người đầu tiên để lại một điều thật riêng.</p>}
+      ) : <p className="mt-5 text-sm leading-7 text-muted">Hãy là người đầu tiên để lại một điều thật riêng.</p>}
     </section>
   );
 }
 
 function Avatar({ displayName, imageUrl }: { displayName: string; imageUrl: string | null }) {
   if (imageUrl) {
-    return <img alt="" className="h-10 w-10 shrink-0 rounded-full border border-[var(--color-border)] object-cover" height={40} src={imageUrl} width={40} />;
+    return <img alt="" className="h-10 w-10 shrink-0 rounded-full border border-border object-cover" height={40} src={imageUrl} width={40} />;
   }
 
-  return <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[var(--color-brand-soft)] text-sm font-bold text-[var(--color-brand)]" aria-hidden="true">{displayName.trim().slice(0, 1).toLocaleUpperCase("vi-VN") || "T"}</span>;
+  return <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand-soft text-sm font-bold text-brand" aria-hidden="true">{displayName.trim().slice(0, 1).toLocaleUpperCase("vi-VN") || "T"}</span>;
 }
 
 function formatResponseDate(value: string): string {
@@ -215,4 +215,4 @@ function feedbackFor(code: string): string {
   return "Không thể lưu thay đổi lúc này. Hãy thử lại sau.";
 }
 
-const inputClassName = "mt-2 min-h-28 w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-paper)] px-3 py-3 text-sm leading-7 text-[var(--color-ink)] shadow-sm outline-none placeholder:text-[var(--color-muted)] focus:border-[var(--color-focus)]";
+const inputClassName = "mt-2 min-h-28 w-full rounded-xl border border-border bg-paper px-3 py-3 text-sm leading-7 text-ink shadow-sm outline-none placeholder:text-muted focus:border-focus";

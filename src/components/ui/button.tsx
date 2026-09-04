@@ -5,13 +5,13 @@ export type ButtonSize = "medium" | "compact" | "icon";
 
 const variantClassNames: Record<ButtonVariant, string> = {
   primary:
-    "border-transparent bg-[var(--color-brand)] text-white shadow-[var(--theme-button-shadow)] hover:-translate-y-0.5 hover:bg-[var(--color-brand-strong)] hover:shadow-[var(--theme-button-shadow-strong)]",
+    "border-transparent bg-brand text-white shadow-[var(--theme-button-shadow)] hover:-translate-y-0.5 hover:bg-brand-strong hover:shadow-[var(--theme-button-shadow-strong)]",
   secondary:
-    "border-[var(--color-border)] bg-[var(--theme-control-surface)] text-[var(--color-brand)] hover:-translate-y-0.5 hover:border-[var(--color-accent)] hover:bg-[var(--theme-control-hover)]",
+    "border-border bg-[var(--theme-control-surface)] text-brand hover:-translate-y-0.5 hover:border-accent hover:bg-[var(--theme-control-hover)]",
   quiet:
-    "border-transparent bg-transparent text-[var(--color-brand)] hover:bg-[var(--color-brand-soft)]",
+    "border-transparent bg-transparent text-brand hover:bg-brand-soft",
   danger:
-    "border-transparent bg-[var(--color-danger)] text-white hover:brightness-90",
+    "border-transparent bg-danger text-white hover:brightness-90",
 };
 
 const sizeClassNames: Record<ButtonSize, string> = {
@@ -30,7 +30,7 @@ export function buttonClassName({
   className?: string;
 } = {}) {
   return [
-    "inline-flex touch-manipulation items-center justify-center gap-2 whitespace-nowrap rounded-[var(--radius-control)] border font-semibold transition duration-[var(--duration-fast)] ease-out active:scale-[0.98] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[var(--color-focus)] disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none",
+    "inline-flex touch-manipulation items-center justify-center gap-2 whitespace-nowrap rounded-[var(--radius-control)] border font-semibold transition duration-[var(--duration-fast)] ease-out active:scale-[0.98] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-focus disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none",
     variantClassNames[variant],
     sizeClassNames[size],
     className,

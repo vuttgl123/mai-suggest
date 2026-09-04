@@ -156,19 +156,19 @@ export function CatalogueEngagementPanel({
     <div>
       <div className="max-w-2xl text-center">
         <span
-          className="mx-auto grid h-11 w-11 place-items-center rounded-full bg-[var(--color-brand-soft)] text-[var(--color-brand)]"
+          className="mx-auto grid h-11 w-11 place-items-center rounded-full bg-brand-soft text-brand"
           aria-hidden="true"
         >
           <Heart size={20} fill="currentColor" strokeWidth={1.35} />
         </span>
-        <p className="mt-4 text-sm font-semibold text-[var(--color-accent)]">Một điều nhỏ để hiểu nhau hơn</p>
+        <p className="mt-4 text-sm font-semibold text-accent">Một điều nhỏ để hiểu nhau hơn</p>
         <h2
-          className="font-display mt-2 text-balance text-3xl font-semibold tracking-[-0.05em] text-[var(--color-brand-strong)] sm:text-4xl"
+          className="font-display mt-2 text-balance text-3xl font-semibold tracking-[-0.05em] text-brand-strong sm:text-4xl"
           id="engagement-heading"
         >
           Góc nhìn của chúng mình
         </h2>
-        <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-[var(--color-muted)]">
+        <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-muted">
           Mỗi người giữ lại một cảm nhận riêng, để những điều nhỏ cũng có chỗ được lắng nghe.
         </p>
       </div>
@@ -186,30 +186,30 @@ export function CatalogueEngagementPanel({
         <RatingList ratings={engagement.ratings} />
       </div>
 
-      <section className="mt-8 border-t border-[var(--color-border)] pt-7" aria-labelledby="comments-heading">
+      <section className="mt-8 border-t border-border pt-7" aria-labelledby="comments-heading">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2 text-[var(--color-brand-strong)]">
-            <MessageCircleHeart className="text-[var(--color-accent)]" size={19} strokeWidth={1.45} aria-hidden="true" />
+          <div className="flex items-center gap-2 text-brand-strong">
+            <MessageCircleHeart className="text-accent" size={19} strokeWidth={1.45} aria-hidden="true" />
             <div>
-              <p className="text-sm font-semibold text-[var(--color-accent)]">Cùng giữ lại</p>
+              <p className="text-sm font-semibold text-accent">Cùng giữ lại</p>
               <h3 className="font-display mt-1 text-2xl font-semibold tracking-[-0.04em]" id="comments-heading">
                 Lời bình của chúng mình
               </h3>
             </div>
           </div>
-          <span className="rounded-full bg-[var(--color-brand-soft)] px-3 py-1 text-xs font-semibold text-[var(--color-brand)]">
+          <span className="rounded-full bg-brand-soft px-3 py-1 text-xs font-semibold text-brand">
             {engagement.comments.length} lời bình
           </span>
         </div>
 
         <form
-          className="mt-5 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-card-surface)] p-4 sm:p-5"
+          className="mt-5 rounded-[var(--radius-card)] border border-border bg-[var(--theme-card-surface)] p-4 sm:p-5"
           onSubmit={(event) => {
             event.preventDefault();
             createComment();
           }}
         >
-          <label className="block text-sm font-semibold text-[var(--color-brand-strong)]">
+          <label className="block text-sm font-semibold text-brand-strong">
             Viết một điều mình muốn giữ lại
             <textarea
               className={inputClassName}
@@ -221,7 +221,7 @@ export function CatalogueEngagementPanel({
             />
           </label>
           <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
-            <span className="text-xs text-[var(--color-muted)]">{newComment.length}/2000</span>
+            <span className="text-xs text-muted">{newComment.length}/2000</span>
             <Button disabled={isPending} size="compact" type="submit">
               <Send size={15} aria-hidden="true" />
               {isPending ? "Đang lưu…" : "Lưu lời bình"}
@@ -230,7 +230,7 @@ export function CatalogueEngagementPanel({
         </form>
 
         {feedback ? (
-          <p aria-live="polite" className="mt-3 text-sm leading-6 text-[var(--color-brand)]">
+          <p aria-live="polite" className="mt-3 text-sm leading-6 text-brand">
             {feedback}
           </p>
         ) : null}
@@ -244,17 +244,17 @@ export function CatalogueEngagementPanel({
 
               return (
                 <li
-                  className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-paper)] p-4 sm:p-5"
+                  className="rounded-[var(--radius-card)] border border-border bg-paper p-4 sm:p-5"
                   key={comment.id}
                 >
                   <div className="flex items-start gap-3">
                     <AuthorAvatar author={comment.author} />
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-                        <p className="text-sm font-bold text-[var(--color-brand-strong)]">
+                        <p className="text-sm font-bold text-brand-strong">
                           {comment.author.displayName}
                         </p>
-                        <time className="text-xs text-[var(--color-muted)]" dateTime={comment.createdAt}>
+                        <time className="text-xs text-muted" dateTime={comment.createdAt}>
                           {formatDate(comment.createdAt)}
                         </time>
                       </div>
@@ -292,7 +292,7 @@ export function CatalogueEngagementPanel({
                           </div>
                         </form>
                       ) : (
-                        <p className="mt-2 whitespace-pre-line text-sm leading-7 text-[var(--color-ink)]">
+                        <p className="mt-2 whitespace-pre-line text-sm leading-7 text-ink">
                           {comment.content}
                         </p>
                       )}
@@ -330,8 +330,8 @@ export function CatalogueEngagementPanel({
                       ) : null}
 
                       {confirmingCommentId === comment.id ? (
-                        <div className="mt-3 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[var(--color-danger)]/30 bg-[var(--color-danger)]/10 px-3 py-2.5">
-                          <p className="text-xs leading-5 text-[var(--color-danger)]">
+                        <div className="mt-3 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-danger/30 bg-danger/10 px-3 py-2.5">
+                          <p className="text-xs leading-5 text-danger">
                             Bạn chắc chắn muốn xóa lời bình này?
                           </p>
                           <span className="flex gap-2">
@@ -363,7 +363,7 @@ export function CatalogueEngagementPanel({
             })}
           </ol>
         ) : (
-          <p className="mt-5 text-sm leading-7 text-[var(--color-muted)]">
+          <p className="mt-5 text-sm leading-7 text-muted">
             Hãy là người đầu tiên để lại một điều thật riêng.
           </p>
         )}
@@ -391,14 +391,14 @@ function RatingForm({
 }) {
   return (
     <section
-      className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-card-surface)] p-5 shadow-[var(--shadow-soft)] sm:p-6"
+      className="rounded-[var(--radius-card)] border border-border bg-[var(--theme-card-surface)] p-5 shadow-[var(--shadow-soft)] sm:p-6"
       aria-labelledby="my-rating-heading"
     >
-      <p className="text-sm font-semibold text-[var(--color-accent)]">Cảm nhận của bạn</p>
-      <h3 className="font-display mt-2 text-2xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]" id="my-rating-heading">
+      <p className="text-sm font-semibold text-accent">Cảm nhận của bạn</p>
+      <h3 className="font-display mt-2 text-2xl font-semibold tracking-[-0.04em] text-brand-strong" id="my-rating-heading">
         Điều này làm bạn thích đến đâu?
       </h3>
-      <p className="mt-2 text-sm leading-7 text-[var(--color-muted)]">
+      <p className="mt-2 text-sm leading-7 text-muted">
         Không cần giống nhau, chỉ cần thật với cảm nhận của mình.
       </p>
 
@@ -417,10 +417,10 @@ function RatingForm({
               <button
                 aria-label={`Chấm ${value} sao`}
                 aria-pressed={score === value}
-                className={`grid h-11 w-11 place-items-center rounded-full transition duration-[var(--duration-fast)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-focus)] ${
+                className={`grid h-11 w-11 place-items-center rounded-full transition duration-[var(--duration-fast)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-focus ${
                   isSelected
-                    ? "bg-[var(--color-brand)] text-white shadow-[var(--theme-button-shadow)]"
-                    : "bg-[var(--color-paper)] text-[var(--color-accent)] hover:bg-[var(--color-brand-soft)]"
+                    ? "bg-brand text-white shadow-[var(--theme-button-shadow)]"
+                    : "bg-paper text-accent hover:bg-brand-soft"
                 }`}
                 disabled={isPending}
                 key={value}
@@ -432,10 +432,10 @@ function RatingForm({
             );
           })}
         </div>
-        <p className="mt-3 text-sm font-semibold text-[var(--color-brand)]" aria-live="polite">
+        <p className="mt-3 text-sm font-semibold text-brand" aria-live="polite">
           {score ? `${score} trên 5 sao` : "Chưa chọn số sao"}
         </p>
-        <label className="mt-4 block text-sm font-semibold text-[var(--color-brand-strong)]">
+        <label className="mt-4 block text-sm font-semibold text-brand-strong">
           Một lời nhắn nhỏ (không bắt buộc)
           <textarea
             className={inputClassName}
@@ -447,7 +447,7 @@ function RatingForm({
           />
         </label>
         <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
-          <span className="text-xs text-[var(--color-muted)]">{note.length}/1000</span>
+          <span className="text-xs text-muted">{note.length}/1000</span>
           <div className="flex flex-wrap gap-2">
             {onDelete ? (
               <Button disabled={isPending} onClick={onDelete} size="compact" type="button" variant="quiet">
@@ -469,17 +469,17 @@ function RatingForm({
 function RatingList({ ratings }: { ratings: ItemEngagementView["ratings"] }) {
   return (
     <section
-      className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-paper)] p-5 shadow-[var(--shadow-soft)] sm:p-6"
+      className="rounded-[var(--radius-card)] border border-border bg-paper p-5 shadow-[var(--shadow-soft)] sm:p-6"
       aria-labelledby="ratings-heading"
     >
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="text-sm font-semibold text-[var(--color-accent)]">Những cảm nhận đã lưu</p>
-          <h3 className="font-display mt-1 text-2xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]" id="ratings-heading">
+          <p className="text-sm font-semibold text-accent">Những cảm nhận đã lưu</p>
+          <h3 className="font-display mt-1 text-2xl font-semibold tracking-[-0.04em] text-brand-strong" id="ratings-heading">
             Mỗi người một góc nhìn
           </h3>
         </div>
-        <span className="rounded-full bg-[var(--color-brand-soft)] px-3 py-1 text-xs font-semibold text-[var(--color-brand)]">
+        <span className="rounded-full bg-brand-soft px-3 py-1 text-xs font-semibold text-brand">
           {ratings.length} cảm nhận
         </span>
       </div>
@@ -487,22 +487,22 @@ function RatingList({ ratings }: { ratings: ItemEngagementView["ratings"] }) {
       {ratings.length ? (
         <ol className="mt-5 space-y-3">
           {ratings.map((rating) => (
-            <li className="rounded-[1.15rem] border border-[var(--color-border)] bg-[var(--theme-control-surface)] p-4" key={rating.id}>
+            <li className="rounded-[1.15rem] border border-border bg-[var(--theme-control-surface)] p-4" key={rating.id}>
               <div className="flex items-start gap-3">
                 <AuthorAvatar author={rating.author} />
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-                    <p className="text-sm font-bold text-[var(--color-brand-strong)]">{rating.author.displayName}</p>
-                    <time className="text-xs text-[var(--color-muted)]" dateTime={rating.updatedAt}>
+                    <p className="text-sm font-bold text-brand-strong">{rating.author.displayName}</p>
+                    <time className="text-xs text-muted" dateTime={rating.updatedAt}>
                       {formatDate(rating.updatedAt)}
                     </time>
                   </div>
-                  <p className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--color-brand)]">
+                  <p className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-brand">
                     <Star fill="currentColor" size={15} strokeWidth={1.55} aria-hidden="true" />
                     {rating.score} trên 5 sao
                   </p>
                   {rating.note ? (
-                    <p className="mt-2 whitespace-pre-line text-sm leading-7 text-[var(--color-ink)]">
+                    <p className="mt-2 whitespace-pre-line text-sm leading-7 text-ink">
                       {rating.note}
                     </p>
                   ) : null}
@@ -512,7 +512,7 @@ function RatingList({ ratings }: { ratings: ItemEngagementView["ratings"] }) {
           ))}
         </ol>
       ) : (
-        <p className="mt-5 text-sm leading-7 text-[var(--color-muted)]">
+        <p className="mt-5 text-sm leading-7 text-muted">
           Chưa có cảm nhận nào. Một ngôi sao đầu tiên cũng là một lời nhắn dịu dàng.
         </p>
       )}
@@ -525,7 +525,7 @@ function AuthorAvatar({ author }: { author: EngagementAuthor }) {
     return (
       <img
         alt=""
-        className="h-10 w-10 shrink-0 rounded-full border border-[var(--color-border)] object-cover"
+        className="h-10 w-10 shrink-0 rounded-full border border-border object-cover"
         height={40}
         src={author.avatarUrl}
         width={40}
@@ -535,7 +535,7 @@ function AuthorAvatar({ author }: { author: EngagementAuthor }) {
 
   return (
     <span
-      className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[var(--color-brand-soft)] text-sm font-bold text-[var(--color-brand)]"
+      className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand-soft text-sm font-bold text-brand"
       aria-hidden="true"
     >
       {author.displayName.trim().slice(0, 1).toLocaleUpperCase("vi-VN") || "T"}
@@ -559,4 +559,4 @@ function feedbackFor(code: string): string {
 }
 
 const inputClassName =
-  "mt-2 min-h-28 w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-paper)] px-3 py-3 text-sm leading-7 text-[var(--color-ink)] shadow-sm outline-none placeholder:text-[var(--color-muted)] focus:border-[var(--color-focus)] focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]/25";
+  "mt-2 min-h-28 w-full rounded-xl border border-border bg-paper px-3 py-3 text-sm leading-7 text-ink shadow-sm outline-none placeholder:text-muted focus:border-focus focus-visible:ring-2 focus-visible:ring-focus/25";

@@ -166,14 +166,14 @@ export function AdminSiteTheme({
         description="Chọn một không khí cho hôm nay hoặc hẹn những khoảng chuyển mình dịu dàng cho các ngày đặc biệt."
         eyebrow="Quản trị · không khí"
         summary={
-          <div className="min-w-[13rem] rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-control-surface)] px-4 py-3">
-            <p className="text-sm font-semibold text-[var(--color-accent)]">
+          <div className="min-w-[13rem] rounded-[var(--radius-card)] border border-border bg-[var(--theme-control-surface)] px-4 py-3">
+            <p className="text-sm font-semibold text-accent">
               Đang hiển thị
             </p>
-            <p className="font-display mt-1 text-xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]">
+            <p className="font-display mt-1 text-xl font-semibold tracking-[-0.04em] text-brand-strong">
               {resolvedPreset.label}
             </p>
-            <p className="mt-1 text-xs leading-5 text-[var(--color-muted)]">
+            <p className="mt-1 text-xs leading-5 text-muted">
               {sourceMessage(resolved)}
             </p>
           </div>
@@ -183,19 +183,19 @@ export function AdminSiteTheme({
       <AdminWorkspaceSwitcher active="theme" />
 
       {feedback ? (
-        <p aria-live="polite" className="mt-5 rounded-[var(--radius-card)] border border-[var(--color-brand)]/20 bg-[var(--color-brand-soft)]/55 px-4 py-3 text-sm leading-6 text-[var(--color-brand)]">
+        <p aria-live="polite" className="mt-5 rounded-[var(--radius-card)] border border-brand/20 bg-brand-soft/55 px-4 py-3 text-sm leading-6 text-brand">
           {feedback}
         </p>
       ) : null}
 
       <section className="mt-7 grid gap-6 xl:grid-cols-[minmax(19rem,0.72fr)_minmax(0,1.28fr)] xl:items-start">
         <aside className="space-y-5 xl:sticky xl:top-5">
-          <section className="rounded-[var(--radius-frame)] border border-[var(--color-border)] bg-[var(--surface-elevated)] p-5 shadow-[var(--shadow-soft)]">
-            <div className="flex items-center gap-2 text-[var(--color-accent)]">
+          <section className="rounded-[var(--radius-frame)] border border-border bg-[var(--surface-elevated)] p-5 shadow-[var(--shadow-soft)]">
+            <div className="flex items-center gap-2 text-accent">
               <Palette size={18} aria-hidden="true" />
-              <p className="text-sm font-semibold text-[var(--color-accent)]">Chọn cho hiện tại</p>
+              <p className="text-sm font-semibold text-accent">Chọn cho hiện tại</p>
             </div>
-            <h2 className="font-display mt-2 text-2xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
+            <h2 className="font-display mt-2 text-2xl font-semibold tracking-[-0.045em] text-brand-strong">
               Tự động hay một lời hẹn riêng?
             </h2>
             <ThemeScenePicker
@@ -216,12 +216,12 @@ export function AdminSiteTheme({
         </aside>
 
         <div className="space-y-5">
-          <section className="flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--surface-elevated)] px-4 py-3 shadow-[var(--shadow-soft)]">
+          <section className="flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-card)] border border-border bg-[var(--surface-elevated)] px-4 py-3 shadow-[var(--shadow-soft)]">
             <div className="flex items-center gap-3">
-              <span className="grid h-10 w-10 place-items-center rounded-full bg-[var(--color-brand-soft)] text-[var(--color-brand)]">
+              <span className="grid h-10 w-10 place-items-center rounded-full bg-brand-soft text-brand">
                 <CalendarClock size={18} aria-hidden="true" />
               </span>
-              <p className="text-sm leading-5 text-[var(--color-muted)]">Các lịch có thể chồng nhau; độ ưu tiên cao hơn sẽ được dùng trước.</p>
+              <p className="text-sm leading-5 text-muted">Các lịch có thể chồng nhau; độ ưu tiên cao hơn sẽ được dùng trước.</p>
             </div>
             {!showComposer ? (
               <Button

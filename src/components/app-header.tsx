@@ -22,8 +22,8 @@ export function AppHeader({ actor, activeSection = "catalogue" }: AppHeaderProps
     const isActive = activeSection === section;
     return `relative inline-flex min-h-[44px] items-center px-5 py-2 text-[13px] sm:text-[14px] font-medium tracking-wide transition-all duration-300 rounded-full ${
       isActive
-        ? "text-[var(--color-brand-strong)] bg-[color-mix(in_srgb,var(--color-brand-soft)_80%,transparent)] shadow-[0_2px_12px_rgba(49,5,12,0.08)] border border-[color-mix(in_srgb,var(--color-accent)_20%,transparent)]"
-        : "text-[var(--color-muted)] hover:text-[var(--color-brand-strong)] hover:bg-[color-mix(in_srgb,var(--color-paper)_60%,transparent)] hover:shadow-sm"
+        ? "text-brand-strong bg-[color-mix(in_srgb,var(--color-brand-soft)_80%,transparent)] shadow-[0_2px_12px_rgba(49,5,12,0.08)] border border-[color-mix(in_srgb,var(--color-accent)_20%,transparent)]"
+        : "text-muted hover:text-brand-strong hover:bg-[color-mix(in_srgb,var(--color-paper)_60%,transparent)] hover:shadow-sm"
     }`;
   }
 
@@ -36,21 +36,21 @@ export function AppHeader({ actor, activeSection = "catalogue" }: AppHeaderProps
         
         {/* Brand Logo & Name */}
         <Link
-          className="group inline-flex items-center gap-3 text-[var(--color-brand-strong)] outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--color-surface)] rounded-full"
+          className="group inline-flex items-center gap-3 text-brand-strong outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--color-surface)] rounded-full"
           href="/"
           onClick={closeMenu}
         >
           <span
-            className="app-header-mark grid h-11 w-11 place-items-center rounded-full bg-[linear-gradient(135deg,var(--color-brand),var(--color-brand-strong))] text-[var(--color-paper)] shadow-[var(--shadow-luxury-glow)] transition-all duration-500 group-hover:rotate-12 group-hover:scale-105 group-hover:shadow-[var(--shadow-luxury-glow-strong)]"
+            className="app-header-mark grid h-11 w-11 place-items-center rounded-full bg-[linear-gradient(135deg,var(--color-brand),var(--color-brand-strong))] text-paper shadow-[var(--shadow-luxury-glow)] transition-all duration-500 group-hover:rotate-12 group-hover:scale-105 group-hover:shadow-[var(--shadow-luxury-glow-strong)]"
             aria-hidden="true"
           >
             <Heart size={20} fill="currentColor" strokeWidth={1.5} className="transition-transform duration-500 group-hover:scale-110" />
           </span>
           <span className="flex flex-col">
-            <span className="font-display text-[1.25rem] font-bold leading-none tracking-tight text-[var(--color-brand-strong)]" translate="no">
+            <span className="font-display text-[1.25rem] font-bold leading-none tracking-tight text-brand-strong" translate="no">
               Điều Em Yêu
             </span>
-            <span className="mt-0.5 text-[9.5px] font-bold tracking-[0.14em] uppercase text-[var(--color-accent)]">
+            <span className="mt-0.5 text-[9.5px] font-bold tracking-[0.14em] uppercase text-accent">
               bordeaux diary
             </span>
           </span>
@@ -61,7 +61,7 @@ export function AppHeader({ actor, activeSection = "catalogue" }: AppHeaderProps
           aria-controls="primary-navigation"
           aria-expanded={isMenuOpen}
           aria-label={isMenuOpen ? "Đóng điều hướng" : "Mở điều hướng"}
-          className="grid h-11 w-11 place-items-center rounded-full border border-[var(--color-border)] text-[var(--color-brand)] transition-all duration-300 hover:border-[var(--color-accent)] hover:bg-[var(--theme-control-hover)] hover:shadow-sm hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--color-focus)] lg:hidden"
+          className="grid h-11 w-11 place-items-center rounded-full border border-border text-brand transition-all duration-300 hover:border-accent hover:bg-[var(--theme-control-hover)] hover:shadow-sm hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-focus lg:hidden"
           onClick={() => setIsMenuOpen((current) => !current)}
           type="button"
         >
@@ -73,7 +73,7 @@ export function AppHeader({ actor, activeSection = "catalogue" }: AppHeaderProps
           aria-label="Điều hướng chính"
           className={`${
             isMenuOpen
-              ? "absolute left-0 right-0 top-full mt-3 flex flex-col gap-1.5 rounded-2xl border border-[var(--color-border)] bg-[var(--color-paper)] p-4 shadow-[0_16px_40px_rgba(49,5,12,0.2)] backdrop-blur-2xl"
+              ? "absolute left-0 right-0 top-full mt-3 flex flex-col gap-1.5 rounded-2xl border border-border bg-paper p-4 shadow-[0_16px_40px_rgba(49,5,12,0.2)] backdrop-blur-2xl"
               : "hidden lg:flex"
           } items-center gap-x-1 sm:gap-x-2`}
           id="primary-navigation"
@@ -97,12 +97,12 @@ export function AppHeader({ actor, activeSection = "catalogue" }: AppHeaderProps
         {/* Actor Info & Owner Badge */}
         <div className="hidden shrink-0 items-center gap-2 text-right sm:flex">
           {actor.canManageCatalogue ? (
-            <span className="inline-flex items-center gap-1 rounded-full border border-[color-mix(in_srgb,var(--color-accent)_40%,transparent)] bg-[linear-gradient(135deg,var(--color-brand-soft),color-mix(in_srgb,var(--color-paper)_80%,transparent))] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--color-brand-strong)] shadow-[0_2px_8px_rgba(197,160,89,0.15)]">
-              <ShieldCheck size={12} className="text-[var(--color-accent)]" aria-hidden="true" />
+            <span className="inline-flex items-center gap-1 rounded-full border border-[color-mix(in_srgb,var(--color-accent)_40%,transparent)] bg-[linear-gradient(135deg,var(--color-brand-soft),color-mix(in_srgb,var(--color-paper)_80%,transparent))] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-brand-strong shadow-[0_2px_8px_rgba(197,160,89,0.15)]">
+              <ShieldCheck size={12} className="text-accent" aria-hidden="true" />
               Owner
             </span>
           ) : null}
-          <span className="max-w-[10rem] truncate text-xs font-semibold text-[var(--color-muted)] lg:max-w-[14rem]">
+          <span className="max-w-[10rem] truncate text-xs font-semibold text-muted lg:max-w-[14rem]">
             {identity}
           </span>
         </div>

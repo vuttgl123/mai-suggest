@@ -38,7 +38,7 @@ export function AdminWorkspaceSwitcher({ active }: AdminWorkspaceSwitcherProps) 
   return (
     <nav
       aria-label="Khu vực quản trị"
-      className="mt-4 overflow-x-auto rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-control-surface)] p-1.5 shadow-[var(--shadow-soft)]"
+      className="mt-4 overflow-x-auto rounded-[var(--radius-card)] border border-border bg-[var(--theme-control-surface)] p-1.5 shadow-[var(--shadow-soft)]"
     >
       <div className="flex min-w-max gap-1">
         {workspaces.map(({ href, icon: Icon, key, label }) => {
@@ -47,10 +47,10 @@ export function AdminWorkspaceSwitcher({ active }: AdminWorkspaceSwitcherProps) 
           return (
             <Link
               aria-current={isActive ? "page" : undefined}
-              className={`inline-flex min-h-11 items-center gap-2 rounded-xl px-3.5 text-sm font-semibold transition focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-focus)] ${
+              className={`inline-flex min-h-11 items-center gap-2 rounded-xl px-3.5 text-sm font-semibold transition focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-focus ${
                 isActive
-                  ? "bg-[var(--color-brand)] text-white shadow-[0_6px_16px_rgb(49_5_12_/_20%)]"
-                  : "text-[var(--color-muted)] hover:bg-[var(--color-paper)] hover:text-[var(--color-brand)]"
+                  ? "bg-brand text-white shadow-[0_6px_16px_rgb(49_5_12_/_20%)]"
+                  : "text-muted hover:bg-paper hover:text-brand"
               }`}
               href={href}
               key={key}

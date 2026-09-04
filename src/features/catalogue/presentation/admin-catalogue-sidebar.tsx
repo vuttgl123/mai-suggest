@@ -98,11 +98,11 @@ export function AdminCatalogueSidebar({
 
   return (
     <>
-    <aside className="rounded-[var(--radius-frame)] border border-[var(--color-border)] bg-[color-mix(in_srgb,var(--surface-elevated)_82%,transparent)] p-3 shadow-[var(--shadow-soft)] xl:sticky xl:top-5">
+    <aside className="rounded-[var(--radius-frame)] border border-border bg-[color-mix(in_srgb,var(--surface-elevated)_82%,transparent)] p-3 shadow-[var(--shadow-soft)] xl:sticky xl:top-5">
       <div className="flex items-center justify-between gap-3">
         <div>
-          <p className="text-sm font-semibold text-[var(--color-accent)]">Bộ sưu tập</p>
-          <h2 className="font-display mt-1 text-lg font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]">
+          <p className="text-sm font-semibold text-accent">Bộ sưu tập</p>
+          <h2 className="font-display mt-1 text-lg font-semibold tracking-[-0.04em] text-brand-strong">
             Danh mục
           </h2>
         </div>
@@ -119,26 +119,26 @@ export function AdminCatalogueSidebar({
       </div>
 
       {showCreateForm ? (
-        <form className="mt-4 rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-paper)] p-3" onSubmit={handleCreate}>
+        <form className="mt-4 rounded-[var(--radius-card)] border border-border bg-paper p-3" onSubmit={handleCreate}>
           <div className="flex items-start gap-2">
-            <FolderPlus className="mt-0.5 text-[var(--color-accent)]" size={18} aria-hidden="true" />
-            <p className="text-sm font-semibold text-[var(--color-brand-strong)]">Danh mục mới</p>
+            <FolderPlus className="mt-0.5 text-accent" size={18} aria-hidden="true" />
+            <p className="text-sm font-semibold text-brand-strong">Danh mục mới</p>
           </div>
-          <label className="mt-3 block text-sm font-semibold text-[var(--color-brand-strong)]">
+          <label className="mt-3 block text-sm font-semibold text-brand-strong">
             Tên danh mục
             <input className={inputClassName} name="name" required />
           </label>
-          <label className="mt-3 block text-sm font-semibold text-[var(--color-brand-strong)]">
-            Slug <span className="font-normal text-[var(--color-muted)]">(tự tạo nếu trống)</span>
+          <label className="mt-3 block text-sm font-semibold text-brand-strong">
+            Slug <span className="font-normal text-muted">(tự tạo nếu trống)</span>
             <input className={inputClassName} name="slug" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" spellCheck={false} />
           </label>
-          <label className="mt-3 block text-sm font-semibold text-[var(--color-brand-strong)]">
-            Mô tả <span className="font-normal text-[var(--color-muted)]">(không bắt buộc)</span>
+          <label className="mt-3 block text-sm font-semibold text-brand-strong">
+            Mô tả <span className="font-normal text-muted">(không bắt buộc)</span>
             <textarea className={`${inputClassName} min-h-20 py-3`} name="description" />
           </label>
           <input name="sortOrder" type="hidden" value={categories.length * 10 + 10} readOnly />
-          <label className="mt-3 flex items-center gap-2 text-sm font-semibold text-[var(--color-brand-strong)]">
-            <input defaultChecked className="h-4 w-4 accent-[var(--color-brand)]" name="isActive" type="checkbox" />
+          <label className="mt-3 flex items-center gap-2 text-sm font-semibold text-brand-strong">
+            <input defaultChecked className="h-4 w-4 accent-brand" name="isActive" type="checkbox" />
             Hiển thị ngay
           </label>
           <div className="mt-4 flex gap-2">
@@ -186,8 +186,8 @@ export function AdminCatalogueSidebar({
               </Button>
             ) : null}
             {confirmingCategoryId === category.id ? (
-              <div className="mt-2 rounded-xl border border-[var(--color-danger)]/30 bg-[var(--color-danger)]/10 p-3">
-                <p className="text-xs leading-5 text-[var(--color-danger)]">Xóa danh mục này nếu nó đã trống?</p>
+              <div className="mt-2 rounded-xl border border-danger/30 bg-danger/10 p-3">
+                <p className="text-xs leading-5 text-danger">Xóa danh mục này nếu nó đã trống?</p>
                 <div className="mt-2 flex gap-2">
                   <Button disabled={isPending} onClick={() => setConfirmingCategoryId(null)} size="compact" type="button" variant="quiet">
                     Hủy
@@ -230,8 +230,8 @@ export function AdminCatalogueSidebar({
 function categoryLinkClassName(active: boolean): string {
   return `flex min-h-11 items-center justify-between gap-3 rounded-xl px-3 text-sm font-semibold transition ${
     active
-      ? "bg-[var(--color-brand)] text-white shadow-[0_7px_17px_rgb(49_5_12_/_20%)]"
-      : "text-[var(--color-muted)] hover:bg-[var(--color-brand-soft)] hover:text-[var(--color-brand)]"
+      ? "bg-brand text-white shadow-[0_7px_17px_rgb(49_5_12_/_20%)]"
+      : "text-muted hover:bg-brand-soft hover:text-brand"
   }`;
 }
 
@@ -257,4 +257,4 @@ function slugify(value: string): string {
 }
 
 const inputClassName =
-  "mt-2 min-h-11 w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-paper)] px-3 text-sm text-[var(--color-ink)] outline-none placeholder:text-[var(--color-muted)] focus:border-[var(--color-focus)]";
+  "mt-2 min-h-11 w-full rounded-xl border border-border bg-paper px-3 text-sm text-ink outline-none placeholder:text-muted focus:border-focus";

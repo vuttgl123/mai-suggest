@@ -5,7 +5,6 @@ import { ManageAllowedUsers } from "@/modules/identity/application/manage-allowe
 import { SupabaseAllowedUserRepository } from "@/modules/identity/infrastructure/supabase-allowed-user-repository";
 import { GetVisibleItemDetail } from "@/modules/catalogue/application/get-visible-item-detail";
 import { ListVisibleCategories } from "@/modules/catalogue/application/list-visible-categories";
-import { ListVisibleItems } from "@/modules/catalogue/application/list-visible-items";
 import { ListVisibleItemPage } from "@/modules/catalogue/application/list-visible-item-page";
 import { SupabaseCatalogueReader } from "@/modules/catalogue/infrastructure/supabase-catalogue-reader";
 import { ManageCatalogue } from "@/modules/catalogue/application/manage-catalogue";
@@ -60,7 +59,6 @@ export function createBackendForClient(client: SupabaseClient<Database>) {
     getCurrentActor: new GetCurrentActor(actorReader),
     manageAllowedUsers: new ManageAllowedUsers(allowedUserRepository),
     listVisibleCategories: new ListVisibleCategories(catalogueReader),
-    listVisibleItems: new ListVisibleItems(catalogueReader),
     listVisibleItemPage: new ListVisibleItemPage(catalogueReader),
     getVisibleItemDetail: new GetVisibleItemDetail(catalogueReader),
     manageCatalogue: new ManageCatalogue(catalogueAdminRepository),

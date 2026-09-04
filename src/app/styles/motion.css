@@ -1,0 +1,253 @@
+@keyframes theme-drift {
+  50% {
+    transform: translate3d(2.5rem, 1.25rem, 0) scale(var(--theme-scene-scale));
+  }
+}
+
+@keyframes theme-shimmer {
+  50% {
+    opacity: 0.35;
+    transform: translate3d(-1.5rem, 1rem, 0) rotate(8deg);
+  }
+}
+
+@keyframes theme-maintenance-pulse {
+  50% {
+    opacity: 0.38;
+    transform: translateY(-0.25rem) scale(1.18);
+  }
+}
+
+@keyframes theme-scene-spinner {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes future-letter-unseal {
+  55% { transform: rotateX(128deg) translateY(-0.2rem); }
+  to { transform: rotateX(178deg) translateY(-0.45rem); }
+}
+
+@keyframes future-letter-seal-break {
+  35% { transform: translate(-50%, -50%) scale(1.12); }
+  to { opacity: 0; transform: translate(-50%, -50%) scale(0.48) rotate(24deg); }
+}
+
+@keyframes future-letter-halo {
+  45% { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(1.24); }
+}
+
+@keyframes future-letter-spark {
+  30% { opacity: 1; }
+  to { opacity: 0; transform: translate(var(--spark-x, 0), -2.5rem) scale(0.3); }
+}
+
+@keyframes future-letter-light-bloom {
+  45% { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(1.32); }
+}
+
+@keyframes future-letter-envelope-recede {
+  to { opacity: 0.48; transform: translateY(0.8rem) scale(0.96); }
+}
+
+@keyframes future-letter-seal-fragment {
+  20% { opacity: 1; }
+  to {
+    opacity: 0;
+    transform: translate(
+      calc(-50% + var(--fragment-x)),
+      calc(-50% + var(--fragment-y))
+    ) rotate(var(--fragment-rotate)) scale(0.58);
+  }
+}
+
+@keyframes future-letter-paper-reveal {
+  from { opacity: 0; transform: translateY(2.4rem) scale(0.965); }
+  72% { opacity: 1; transform: translateY(-0.16rem) scale(1.005); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fade-scale {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slide {
+  from { translate: var(--slide-offset); }
+  to { translate: 0; }
+}
+
+@keyframes slide-y {
+  from { transform: translateY(var(--slide-y-offset, 16px)); }
+  to { transform: translateY(0); }
+}
+
+::view-transition-old(.fade-out) {
+  animation: var(--duration-exit) cubic-bezier(0.4, 0, 1, 1) fade reverse;
+}
+
+::view-transition-new(.fade-in) {
+  animation: var(--duration-enter) cubic-bezier(0, 0, 0.2, 1) var(--duration-exit) both fade-scale;
+}
+
+::view-transition-old(.slide-down) {
+  animation:
+    var(--duration-exit) cubic-bezier(0.4, 0, 1, 1) both fade reverse,
+    var(--duration-exit) cubic-bezier(0.4, 0, 1, 1) both slide-y reverse;
+}
+
+::view-transition-new(.slide-up) {
+  animation:
+    var(--duration-enter) cubic-bezier(0, 0, 0.2, 1) var(--duration-exit) both fade,
+    var(--duration-move) cubic-bezier(0.16, 1, 0.3, 1) both slide-y;
+}
+
+::view-transition-old(.nav-forward) {
+  --slide-offset: -30px;
+  animation:
+    var(--duration-exit) cubic-bezier(0.4, 0, 1, 1) both fade reverse,
+    var(--duration-move) cubic-bezier(0.16, 1, 0.3, 1) both slide reverse;
+}
+
+::view-transition-new(.nav-forward) {
+  --slide-offset: 30px;
+  animation:
+    var(--duration-enter) cubic-bezier(0, 0, 0.2, 1) var(--duration-exit) both fade,
+    var(--duration-move) cubic-bezier(0.16, 1, 0.3, 1) both slide;
+}
+
+::view-transition-old(.nav-back) {
+  --slide-offset: 30px;
+  animation:
+    var(--duration-exit) cubic-bezier(0.4, 0, 1, 1) both fade reverse,
+    var(--duration-move) cubic-bezier(0.16, 1, 0.3, 1) both slide reverse;
+}
+
+::view-transition-new(.nav-back) {
+  --slide-offset: -30px;
+  animation:
+    var(--duration-enter) cubic-bezier(0, 0, 0.2, 1) var(--duration-exit) both fade,
+    var(--duration-move) cubic-bezier(0.16, 1, 0.3, 1) both slide;
+}
+
+::view-transition-group(.morph) {
+  animation-duration: var(--duration-move);
+}
+
+::view-transition-image-pair(.morph) {
+  animation-name: via-blur;
+}
+
+@keyframes via-blur {
+  from { opacity: 0.94; }
+  to { opacity: 1; }
+}
+
+::view-transition-group(persistent-nav) {
+  animation: none;
+  z-index: 100;
+}
+
+::view-transition-old(persistent-nav) {
+  display: none;
+}
+
+::view-transition-new(persistent-nav) {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timeline-film-control,
+  .media-rail-control {
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-diary-intro {
+    min-height: auto;
+  }
+
+  .cinematic-diary-intro__stage {
+    min-height: auto;
+    padding: 3.5rem 0 2.5rem;
+  }
+
+  .cinematic-diary-intro__canvas {
+    display: none;
+  }
+
+  .cinematic-diary-intro__fallback {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: min(20rem, 72vw);
+    margin: 0 auto;
+    opacity: 1;
+    transform: rotateX(52deg) rotateZ(-9deg);
+    transition: none;
+  }
+
+  .cinematic-diary-intro[data-scene-ready="true"] .cinematic-diary-intro__fallback {
+    opacity: 1;
+  }
+
+  .cinematic-diary-intro__fallback-cover {
+    transition: none;
+    transform: none;
+  }
+
+  .cinematic-diary-intro__fallback-mark {
+    transition: none;
+    transform: rotate(-45deg);
+  }
+
+  .cinematic-diary-intro__fallback-note {
+    transition: none;
+  }
+
+  .cinematic-diary-intro__copy {
+    width: min(100% - 2.5rem, 38rem);
+    padding: 2.5rem 0 0;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
+  }
+
+  .theme-atmosphere,
+  .theme-atmosphere *,
+  .theme-maintenance-meter i,
+  .theme-scene-transition__spinner {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .future-letter-opening[data-phase="revealing"] .future-letter-paper {
+    animation: none;
+  }
+}

@@ -115,11 +115,11 @@ export function ThemeScheduleForm({
   const heading = schedule ? "Chỉnh một khoảng không khí" : "Hẹn không khí mới";
 
   return (
-    <section className="rounded-[var(--radius-frame)] border border-[var(--color-border)] bg-[var(--surface-elevated)] p-5 shadow-[var(--shadow-soft)] sm:p-6">
+    <section className="rounded-[var(--radius-frame)] border border-border bg-[var(--surface-elevated)] p-5 shadow-[var(--shadow-soft)] sm:p-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="text-sm font-semibold text-[var(--color-accent)]">Lịch tự động · giờ Việt Nam</p>
-          <h2 className="font-display mt-2 text-2xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
+          <p className="text-sm font-semibold text-accent">Lịch tự động · giờ Việt Nam</p>
+          <h2 className="font-display mt-2 text-2xl font-semibold tracking-[-0.045em] text-brand-strong">
             {heading}
           </h2>
         </div>
@@ -137,7 +137,7 @@ export function ThemeScheduleForm({
           submit();
         }}
       >
-        <label className={`${fieldLabelClassName} rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-control-surface)] p-3`}>
+        <label className={`${fieldLabelClassName} rounded-[var(--radius-card)] border border-border bg-[var(--theme-control-surface)] p-3`}>
           Preset
           <select
             autoComplete="off"
@@ -157,7 +157,7 @@ export function ThemeScheduleForm({
         </label>
 
         <div className="grid gap-3 sm:grid-cols-2">
-          <label className={`${fieldLabelClassName} rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-control-surface)] p-3`}>
+          <label className={`${fieldLabelClassName} rounded-[var(--radius-card)] border border-border bg-[var(--theme-control-surface)] p-3`}>
             Bắt đầu
             <input
               autoComplete="off"
@@ -181,7 +181,7 @@ export function ThemeScheduleForm({
               value={draft.startTime}
             />
           </label>
-          <label className={`${fieldLabelClassName} rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-control-surface)] p-3`}>
+          <label className={`${fieldLabelClassName} rounded-[var(--radius-card)] border border-border bg-[var(--theme-control-surface)] p-3`}>
             Kết thúc
             <input
               autoComplete="off"
@@ -207,7 +207,7 @@ export function ThemeScheduleForm({
         </div>
 
         <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
-          <label className={`${fieldLabelClassName} rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-control-surface)] p-3`}>
+          <label className={`${fieldLabelClassName} rounded-[var(--radius-card)] border border-border bg-[var(--theme-control-surface)] p-3`}>
             Độ ưu tiên
             <input
               autoComplete="off"
@@ -225,10 +225,10 @@ export function ThemeScheduleForm({
             />
             <small>Số cao hơn sẽ được ưu tiên khi lịch chồng lên nhau.</small>
           </label>
-          <label className="flex min-h-11 items-center gap-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] px-3 text-sm font-semibold text-[var(--color-brand-strong)]">
+          <label className="flex min-h-11 items-center gap-2 rounded-xl border border-border bg-surface px-3 text-sm font-semibold text-brand-strong">
             <input
               checked={draft.isEnabled}
-              className="h-4 w-4 accent-[var(--color-brand)]"
+              className="h-4 w-4 accent-brand"
               disabled={isPending}
               name="site-theme-enabled"
               onChange={(event) => updateDraft({ isEnabled: event.target.checked })}
@@ -239,17 +239,17 @@ export function ThemeScheduleForm({
         </div>
 
         {validationMessage ? (
-          <p aria-live="polite" className="text-sm leading-6 text-[var(--color-danger)]">
+          <p aria-live="polite" className="text-sm leading-6 text-danger">
             {validationMessage}
           </p>
         ) : null}
         {hasOverlap ? (
-          <p className="rounded-xl border border-[var(--color-accent)]/25 bg-[var(--color-brand-soft)]/45 px-3 py-2.5 text-xs leading-5 text-[var(--color-brand)]">
+          <p className="rounded-xl border border-accent/25 bg-brand-soft/45 px-3 py-2.5 text-xs leading-5 text-brand">
             Lịch này đang chồng với một lịch bật có ưu tiên bằng hoặc cao hơn; nó có thể không trở thành không khí hiệu lực.
           </p>
         ) : null}
 
-        <div className="flex flex-wrap justify-end gap-2 border-t border-[var(--color-border)] pt-4">
+        <div className="flex flex-wrap justify-end gap-2 border-t border-border pt-4">
           {schedule ? (
             <Button disabled={isPending} onClick={onCancel} variant="quiet">
               Hủy
@@ -300,7 +300,7 @@ function feedbackFor(code: string): string {
 }
 
 const fieldLabelClassName =
-  "block text-sm font-semibold text-[var(--color-brand-strong)]";
+  "block text-sm font-semibold text-brand-strong";
 
 const inputClassName =
-  "mt-2 min-h-11 w-full rounded-xl border border-[var(--color-border)] bg-[var(--theme-control-surface)] px-3 text-sm font-medium text-[var(--color-ink)] transition focus:border-[var(--color-focus)] disabled:cursor-not-allowed disabled:bg-[var(--color-surface)]";
+  "mt-2 min-h-11 w-full rounded-xl border border-border bg-[var(--theme-control-surface)] px-3 text-sm font-medium text-ink transition focus:border-focus disabled:cursor-not-allowed disabled:bg-surface";

@@ -30,7 +30,7 @@ export function AdminTimeline({ entries, selectedEntry }: AdminTimelineProps) {
       <AdminWorkspaceHeader
         actions={
           <Link
-            className="inline-flex min-h-11 items-center rounded-full border border-[var(--color-border)] bg-[var(--color-paper)] px-4 text-sm font-semibold text-[var(--color-brand)] transition hover:-translate-y-0.5 hover:border-[var(--color-accent)]"
+            className="inline-flex min-h-11 items-center rounded-full border border-border bg-paper px-4 text-sm font-semibold text-brand transition hover:-translate-y-0.5 hover:border-accent"
             href="/hanh-trinh"
           >
             Xem hành trình
@@ -39,7 +39,7 @@ export function AdminTimeline({ entries, selectedEntry }: AdminTimelineProps) {
         description="Viết các cột mốc, giữ chúng ở dạng nháp cho đến khi sẵn sàng, và gìn giữ những lời hồi đáp được gửi lại."
         eyebrow="Quản trị · hành trình"
         summary={
-          <span className="rounded-full bg-[var(--color-brand-soft)] px-3 py-1.5 text-xs font-semibold text-[var(--color-brand)]">
+          <span className="rounded-full bg-brand-soft px-3 py-1.5 text-xs font-semibold text-brand">
             {publishedCount}/{entries.length} công khai
           </span>
         }
@@ -47,7 +47,7 @@ export function AdminTimeline({ entries, selectedEntry }: AdminTimelineProps) {
       />
       <AdminWorkspaceSwitcher active="timeline" />
 
-      {feedback ? <p aria-live="polite" className="mt-5 rounded-[var(--radius-card)] border border-[var(--color-brand)]/15 bg-[var(--color-brand-soft)]/50 px-4 py-3 text-sm leading-6 text-[var(--color-brand)]">{feedback}</p> : null}
+      {feedback ? <p aria-live="polite" className="mt-5 rounded-[var(--radius-card)] border border-brand/15 bg-brand-soft/50 px-4 py-3 text-sm leading-6 text-brand">{feedback}</p> : null}
 
       <section className="mt-7 grid gap-6 xl:grid-cols-[20rem_minmax(0,1fr)] xl:items-start">
         <AdminTimelineList entries={entries} selectedEntryId={selectedEntry?.id ?? null} />

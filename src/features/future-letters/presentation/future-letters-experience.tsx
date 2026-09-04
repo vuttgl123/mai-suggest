@@ -50,7 +50,7 @@ export function FutureLettersExperience({
   return (
     <div className="diary-shell">
       <a
-        className="sr-only absolute left-5 top-4 z-50 rounded-full bg-[var(--color-brand-strong)] px-4 py-2 text-sm font-semibold text-white focus:not-sr-only"
+        className="sr-only absolute left-5 top-4 z-50 rounded-full bg-brand-strong px-4 py-2 text-sm font-semibold text-white focus:not-sr-only"
         href="#future-letters-content"
       >
         Đi tới những lá thư
@@ -60,15 +60,15 @@ export function FutureLettersExperience({
       <main id="future-letters-content" tabIndex={-1}>
         <section className="diary-container diary-section grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(19rem,0.62fr)] lg:items-end lg:gap-16">
           <div className="max-w-3xl">
-            <div className="flex items-center gap-3 text-[var(--color-accent)]" aria-hidden="true">
+            <div className="flex items-center gap-3 text-accent" aria-hidden="true">
               <MailPlus size={21} strokeWidth={1.35} />
-              <span className="h-px w-16 bg-[var(--color-accent)]/55" />
+              <span className="h-px w-16 bg-accent/55" />
             </div>
-            <p className="mt-5 text-sm font-semibold tracking-widest text-[var(--color-accent)] uppercase">Một cuộc hẹn với tương lai</p>
-            <h1 className="font-display display-xl mt-3 max-w-3xl text-balance font-semibold italic text-[var(--color-brand-strong)] drop-shadow-sm">
+            <p className="mt-5 text-sm font-semibold tracking-widest text-accent uppercase">Một cuộc hẹn với tương lai</p>
+            <h1 className="font-display display-xl mt-3 max-w-3xl text-balance font-semibold italic text-brand-strong drop-shadow-sm">
               Có những điều chỉ nên mở ra vào đúng một ngày.
             </h1>
-            <p className="mt-6 max-w-2xl text-[15px] leading-7 text-[var(--color-muted)] sm:text-base sm:leading-8">
+            <p className="mt-6 max-w-2xl text-[15px] leading-7 text-muted sm:text-base sm:leading-8">
               Viết cho ngày mai một lời thơ, một lời hứa, hay chỉ một điều mình muốn
               hai đứa cùng nhớ. Đến giờ hẹn, lá thư sẽ tìm được đường để mở ra.
             </p>
@@ -77,17 +77,17 @@ export function FutureLettersExperience({
               Hẹn một lá thư
             </Button>
           </div>
-          <aside className="diary-wash relative overflow-hidden rounded-[var(--radius-card)] border border-[var(--color-border)] p-5 shadow-[var(--shadow-card)] sm:p-6">
-            <span className="absolute -right-12 -top-16 h-40 w-40 rounded-full border border-[var(--color-accent)]/30" aria-hidden="true" />
-            <p className="text-sm font-semibold text-[var(--color-accent)]">Bàn viết hôm nay</p>
-            <div className="mt-5 grid grid-cols-2 gap-4 border-t border-[var(--color-border)] pt-4">
+          <aside className="diary-wash relative overflow-hidden rounded-[var(--radius-card)] border border-border p-5 shadow-[var(--shadow-card)] sm:p-6">
+            <span className="absolute -right-12 -top-16 h-40 w-40 rounded-full border border-accent/30" aria-hidden="true" />
+            <p className="text-sm font-semibold text-accent">Bàn viết hôm nay</p>
+            <div className="mt-5 grid grid-cols-2 gap-4 border-t border-border pt-4">
               <div>
-                <p className="font-display text-4xl font-semibold tracking-[-0.07em] text-[var(--color-brand-strong)]">{scheduledCount}</p>
-                <p className="mt-1 text-xs leading-5 text-[var(--color-muted)]">đang niêm phong</p>
+                <p className="font-display text-4xl font-semibold tracking-[-0.07em] text-brand-strong">{scheduledCount}</p>
+                <p className="mt-1 text-xs leading-5 text-muted">đang niêm phong</p>
               </div>
               <div>
-                <p className="font-display text-4xl font-semibold tracking-[-0.07em] text-[var(--color-brand-strong)]">{openedCount}</p>
-                <p className="mt-1 text-xs leading-5 text-[var(--color-muted)]">đã đến ngày</p>
+                <p className="font-display text-4xl font-semibold tracking-[-0.07em] text-brand-strong">{openedCount}</p>
+                <p className="mt-1 text-xs leading-5 text-muted">đã đến ngày</p>
               </div>
             </div>
           </aside>
@@ -96,7 +96,7 @@ export function FutureLettersExperience({
         {scheduledLetters.length ? (
           <section className="diary-section-tint relative isolate overflow-hidden">
             <span
-              className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--color-accent)]/45 to-transparent"
+              className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/45 to-transparent"
               aria-hidden="true"
             />
             <div className="diary-container diary-section relative">
@@ -108,13 +108,13 @@ export function FutureLettersExperience({
         <section className="diary-container diary-section" aria-labelledby="opened-letters-heading">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="text-sm font-semibold tracking-widest text-[var(--color-accent)] uppercase">Khoảnh khắc đã đến</p>
-              <h2 id="opened-letters-heading" className="font-display mt-2 text-3xl font-semibold italic tracking-[-0.045em] text-[var(--color-brand-strong)] drop-shadow-sm sm:text-4xl">
+              <p className="text-sm font-semibold tracking-widest text-accent uppercase">Khoảnh khắc đã đến</p>
+              <h2 id="opened-letters-heading" className="font-display mt-2 text-3xl font-semibold italic tracking-[-0.045em] text-brand-strong drop-shadow-sm sm:text-4xl">
                 Những lá thư đã mở.
               </h2>
             </div>
             {openedLetters.length ? (
-              <span className="rounded-full border border-[var(--color-border)] bg-[var(--color-paper)] px-3 py-1.5 text-xs font-semibold text-[var(--color-brand)]">
+              <span className="rounded-full border border-border bg-paper px-3 py-1.5 text-xs font-semibold text-brand">
                 {openedLetters.length} lá thư
               </span>
             ) : null}
@@ -137,14 +137,14 @@ export function FutureLettersExperience({
               ))}
             </div>
           ) : (
-            <div className="diary-wash mt-6 rounded-[var(--radius-dialog)] border border-[var(--color-border)] px-6 py-10 text-center shadow-[var(--shadow-soft)] sm:px-10">
-              <span className="mx-auto grid h-11 w-11 place-items-center rounded-full bg-[var(--color-brand-soft)] text-[var(--color-brand)]" aria-hidden="true">
+            <div className="diary-wash mt-6 rounded-[var(--radius-dialog)] border border-border px-6 py-10 text-center shadow-[var(--shadow-soft)] sm:px-10">
+              <span className="mx-auto grid h-11 w-11 place-items-center rounded-full bg-brand-soft text-brand" aria-hidden="true">
                 <Heart size={19} fill="currentColor" strokeWidth={1.3} />
               </span>
-              <h3 className="font-display mt-4 text-3xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
+              <h3 className="font-display mt-4 text-3xl font-semibold tracking-[-0.045em] text-brand-strong">
                 Một phong bì đang chờ ngày đến.
               </h3>
-              <p className="mx-auto mt-3 max-w-lg text-sm leading-7 text-[var(--color-muted)]">
+              <p className="mx-auto mt-3 max-w-lg text-sm leading-7 text-muted">
                 Hãy hẹn lá thư đầu tiên. Khoảnh khắc mở ra sẽ là một mẩu kỷ niệm
                 thật riêng để cùng quay về sau này.
               </p>

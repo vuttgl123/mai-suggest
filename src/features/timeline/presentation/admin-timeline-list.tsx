@@ -13,15 +13,15 @@ export function AdminTimelineList({
   selectedEntryId,
 }: AdminTimelineListProps) {
   return (
-    <aside className="rounded-[var(--radius-frame)] border border-[var(--color-border)] bg-[color-mix(in_srgb,var(--surface-elevated)_82%,transparent)] p-4 shadow-[var(--shadow-soft)] xl:sticky xl:top-5">
+    <aside className="rounded-[var(--radius-frame)] border border-border bg-[color-mix(in_srgb,var(--surface-elevated)_82%,transparent)] p-4 shadow-[var(--shadow-soft)] xl:sticky xl:top-5">
       <div className="flex items-end justify-between gap-3">
         <div>
-          <p className="text-sm font-semibold text-[var(--color-accent)]">Các chương</p>
-          <h2 className="font-display mt-1 text-2xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]">
+          <p className="text-sm font-semibold text-accent">Các chương</p>
+          <h2 className="font-display mt-1 text-2xl font-semibold tracking-[-0.04em] text-brand-strong">
             Mốc hành trình
           </h2>
         </div>
-        <Link className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-[var(--color-brand)] px-3 text-xs font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[var(--color-brand-strong)]" href={createAdminTimelinePath({ entryId: null })}>
+        <Link className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-brand px-3 text-xs font-semibold text-white transition hover:-translate-y-0.5 hover:bg-brand-strong" href={createAdminTimelinePath({ entryId: null })}>
           <Plus size={15} aria-hidden="true" />
           Mốc mới
         </Link>
@@ -35,22 +35,22 @@ export function AdminTimelineList({
                 aria-current={selectedEntryId === entry.id ? "page" : undefined}
                 className={`block rounded-[var(--radius-card)] border p-3 transition ${
                   selectedEntryId === entry.id
-                    ? "border-[var(--color-brand)] bg-[var(--color-brand-soft)] shadow-[var(--shadow-soft)]"
-                    : "border-transparent hover:border-[var(--color-border)] hover:bg-[var(--color-paper)]"
+                    ? "border-brand bg-brand-soft shadow-[var(--shadow-soft)]"
+                    : "border-transparent hover:border-border hover:bg-paper"
                 }`}
                 href={createAdminTimelinePath({ entryId: entry.id })}
                 transitionTypes={["admin-select"]}
               >
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <p className="text-xs font-semibold text-[var(--color-accent)]">{entry.dateLabel}</p>
-                  <span className={`shrink-0 rounded-full px-2 py-1 text-[10px] font-semibold ${entry.isPublished ? "bg-[var(--color-positive)]/10 text-[var(--color-positive)]" : "bg-[var(--color-brand-soft)] text-[var(--color-brand)]"}`}>
+                  <p className="text-xs font-semibold text-accent">{entry.dateLabel}</p>
+                  <span className={`shrink-0 rounded-full px-2 py-1 text-[10px] font-semibold ${entry.isPublished ? "bg-positive/10 text-positive" : "bg-brand-soft text-brand"}`}>
                     {entry.isPublished ? "Live" : "Draft"}
                   </span>
                 </div>
-                <p className="mt-2 text-balance text-sm font-semibold leading-5 text-[var(--color-brand-strong)]">
+                <p className="mt-2 text-balance text-sm font-semibold leading-5 text-brand-strong">
                   {entry.title}
                 </p>
-                <p className="mt-2 flex flex-wrap gap-x-1.5 text-xs leading-5 text-[var(--color-muted)]">
+                <p className="mt-2 flex flex-wrap gap-x-1.5 text-xs leading-5 text-muted">
                   <span>Thứ tự {entry.sortOrder}</span>
                   <span aria-hidden="true">·</span>
                   <span>{entry.responseCount} hồi đáp</span>
@@ -59,7 +59,7 @@ export function AdminTimelineList({
             </li>
           ))}
         </ol>
-      ) : <p className="mt-5 rounded-[var(--radius-card)] border border-dashed border-[var(--color-border)] px-4 py-7 text-center text-sm leading-6 text-[var(--color-muted)]">Chưa có mốc nào. Hãy bắt đầu bằng một trang thật riêng.</p>}
+      ) : <p className="mt-5 rounded-[var(--radius-card)] border border-dashed border-border px-4 py-7 text-center text-sm leading-6 text-muted">Chưa có mốc nào. Hãy bắt đầu bằng một trang thật riêng.</p>}
     </aside>
   );
 }

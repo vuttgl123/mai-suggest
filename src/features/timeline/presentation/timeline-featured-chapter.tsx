@@ -18,11 +18,11 @@ export function TimelineFeaturedChapter({
 
   return (
     <article
-      className="relative overflow-hidden rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--theme-card-surface)] shadow-[var(--shadow-card)]"
+      className="relative overflow-hidden rounded-[var(--radius-dialog)] border border-border bg-[var(--theme-card-surface)] shadow-[var(--shadow-card)]"
       id={`timeline-entry-${entry.id}`}
     >
       <span
-        className="pointer-events-none absolute -right-24 -top-28 h-72 w-72 rounded-full bg-[var(--color-brand-soft)] opacity-60 blur-3xl"
+        className="pointer-events-none absolute -right-24 -top-28 h-72 w-72 rounded-full bg-brand-soft opacity-60 blur-3xl"
         aria-hidden="true"
       />
       <div
@@ -33,7 +33,7 @@ export function TimelineFeaturedChapter({
         }`}
       >
         {entry.imageUrl && entry.imageAltText ? (
-          <div className="overflow-hidden border-b border-[var(--color-border)] lg:border-b-0 lg:border-r">
+          <div className="overflow-hidden border-b border-border lg:border-b-0 lg:border-r">
             <CatalogueItemImage
               alt={entry.imageAltText}
               src={entry.imageUrl}
@@ -44,13 +44,13 @@ export function TimelineFeaturedChapter({
 
         <div className="p-5 sm:p-7 lg:p-8">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--theme-badge-border)] bg-[var(--color-paper)] px-3 py-1.5 text-xs font-semibold text-[var(--color-brand)]">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--theme-badge-border)] bg-paper px-3 py-1.5 text-xs font-semibold text-brand">
               <Bookmark size={13} aria-hidden="true" />
               Chương đang mở
             </span>
             {entry.occurredOn ? (
               <time
-                className="text-xs font-semibold text-[var(--color-muted)]"
+                className="text-xs font-semibold text-muted"
                 dateTime={entry.occurredOn}
               >
                 {formatTimelineDate(entry.occurredOn)}
@@ -58,18 +58,18 @@ export function TimelineFeaturedChapter({
             ) : null}
           </div>
 
-          <p className="mt-5 text-sm font-semibold text-[var(--color-accent)]">{entry.dateLabel}</p>
-          <h3 className="font-display mt-2 text-balance text-3xl font-semibold tracking-[-0.05em] text-[var(--color-brand-strong)] sm:text-4xl">
+          <p className="mt-5 text-sm font-semibold text-accent">{entry.dateLabel}</p>
+          <h3 className="font-display mt-2 text-balance text-3xl font-semibold tracking-[-0.05em] text-brand-strong sm:text-4xl">
             {entry.title}
           </h3>
-          <p className="mt-5 whitespace-pre-line text-[15px] leading-8 text-[var(--color-ink)]">
+          <p className="mt-5 whitespace-pre-line text-[15px] leading-8 text-ink">
             {entry.story}
           </p>
 
           {entry.lesson ? (
-            <blockquote className="mt-6 border-l-2 border-[var(--color-accent)] bg-[var(--color-brand-soft)]/45 px-4 py-3 text-sm leading-7 text-[var(--color-brand)]">
+            <blockquote className="mt-6 border-l-2 border-accent bg-brand-soft/45 px-4 py-3 text-sm leading-7 text-brand">
               <Quote
-                className="mb-1 text-[var(--color-accent)]"
+                className="mb-1 text-accent"
                 size={16}
                 strokeWidth={1.45}
                 aria-hidden="true"

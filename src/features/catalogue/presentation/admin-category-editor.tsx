@@ -103,23 +103,23 @@ export function AdminCategoryEditor({
   return (
     <dialog
       aria-labelledby="admin-category-editor-title"
-      className="admin-category-editor-dialog fixed inset-0 m-auto h-[min(44rem,calc(100dvh_-_1.5rem))] w-[min(100%_-_1.5rem,60rem)] max-w-none overflow-hidden rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--color-paper)] p-0 text-[var(--color-ink)] shadow-[var(--shadow-card)]"
+      className="admin-category-editor-dialog fixed inset-0 m-auto h-[min(44rem,calc(100dvh_-_1.5rem))] w-[min(100%_-_1.5rem,60rem)] max-w-none overflow-hidden rounded-[var(--radius-dialog)] border border-border bg-paper p-0 text-ink shadow-[var(--shadow-card)]"
       onClose={onClose}
       ref={dialogRef}
     >
       <form className="admin-category-editor" onSubmit={submit}>
         <header className="admin-category-editor-header">
           <div>
-            <p className="text-sm font-semibold text-[var(--color-accent)]">Bộ sưu tập · một chương nhỏ</p>
+            <p className="text-sm font-semibold text-accent">Bộ sưu tập · một chương nhỏ</p>
             <div
               aria-hidden="true"
-              className="mt-3 flex items-center gap-2 text-[var(--color-accent)]"
+              className="mt-3 flex items-center gap-2 text-accent"
             >
               <span className="diary-rule" />
               <span className="h-1.5 w-1.5 rounded-full bg-current" />
             </div>
             <h2
-              className="font-display mt-3 text-3xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)] sm:text-4xl"
+              className="font-display mt-3 text-3xl font-semibold tracking-[-0.045em] text-brand-strong sm:text-4xl"
               id="admin-category-editor-title"
             >
               Sửa danh mục
@@ -144,12 +144,12 @@ export function AdminCategoryEditor({
           </p>
 
           <div className="mt-6 grid gap-5 lg:grid-cols-[minmax(0,1.2fr)_minmax(17rem,0.8fr)]">
-            <fieldset className="admin-category-editor-content rounded-[var(--radius-card)] border border-[var(--color-border)] p-4 sm:p-5">
-              <legend className="px-1 text-sm font-semibold text-[var(--color-brand-strong)]">
+            <fieldset className="admin-category-editor-content rounded-[var(--radius-card)] border border-border p-4 sm:p-5">
+              <legend className="px-1 text-sm font-semibold text-brand-strong">
                 Nội dung danh mục
               </legend>
               <div className="mt-4 grid gap-4">
-                <label className="block text-sm font-semibold text-[var(--color-brand-strong)]">
+                <label className="block text-sm font-semibold text-brand-strong">
                   <span>Tên danh mục</span>
                   <input
                     autoComplete="off"
@@ -161,7 +161,7 @@ export function AdminCategoryEditor({
                     value={draft.name}
                   />
                 </label>
-                <label className="block text-sm font-semibold text-[var(--color-brand-strong)]">
+                <label className="block text-sm font-semibold text-brand-strong">
                   <span>Slug</span>
                   <input
                     autoComplete="off"
@@ -176,7 +176,7 @@ export function AdminCategoryEditor({
                   />
                   <small>Chỉ dùng chữ thường, số và dấu gạch ngang.</small>
                 </label>
-                <label className="block text-sm font-semibold text-[var(--color-brand-strong)]">
+                <label className="block text-sm font-semibold text-brand-strong">
                   <span>Mô tả</span>
                   <textarea
                     className={`${inputClassName} min-h-28 py-3 leading-7`}
@@ -191,12 +191,12 @@ export function AdminCategoryEditor({
               </div>
             </fieldset>
 
-            <fieldset className="admin-category-editor-appearance rounded-[var(--radius-card)] border border-[var(--color-border)] p-4 sm:p-5">
-              <legend className="px-1 text-sm font-semibold text-[var(--color-brand-strong)]">
+            <fieldset className="admin-category-editor-appearance rounded-[var(--radius-card)] border border-border p-4 sm:p-5">
+              <legend className="px-1 text-sm font-semibold text-brand-strong">
                 Diện mạo và thứ tự
               </legend>
               <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                <label className="block text-sm font-semibold text-[var(--color-brand-strong)]">
+                <label className="block text-sm font-semibold text-brand-strong">
                   <span>Biểu tượng</span>
                   <input
                     autoComplete="off"
@@ -208,7 +208,7 @@ export function AdminCategoryEditor({
                     value={draft.icon}
                   />
                 </label>
-                <label className="block text-sm font-semibold text-[var(--color-brand-strong)]">
+                <label className="block text-sm font-semibold text-brand-strong">
                   <span>Thứ tự hiển thị</span>
                   <input
                     className={inputClassName}
@@ -225,7 +225,7 @@ export function AdminCategoryEditor({
                   />
                 </label>
               </div>
-              <label className="mt-4 block text-sm font-semibold text-[var(--color-brand-strong)]">
+              <label className="mt-4 block text-sm font-semibold text-brand-strong">
                 <span>URL ảnh bìa</span>
                 <input
                   autoComplete="url"
@@ -241,10 +241,10 @@ export function AdminCategoryEditor({
                   value={draft.coverImageUrl}
                 />
               </label>
-              <label className="mt-4 flex items-center gap-2 text-sm font-semibold text-[var(--color-brand-strong)]">
+              <label className="mt-4 flex items-center gap-2 text-sm font-semibold text-brand-strong">
                 <input
                   checked={draft.isActive}
-                  className="h-4 w-4 accent-[var(--color-brand)]"
+                  className="h-4 w-4 accent-brand"
                   disabled={isPending}
                   name="category-is-active"
                   onChange={(event) => updateDraft({ isActive: event.target.checked })}
@@ -258,7 +258,7 @@ export function AdminCategoryEditor({
           {feedback ? (
             <p
               aria-live="polite"
-              className="mt-4 rounded-[var(--radius-card)] border border-[var(--color-danger)]/30 bg-[var(--color-danger)]/10 px-4 py-3 text-sm leading-6 text-[var(--color-danger)]"
+              className="mt-4 rounded-[var(--radius-card)] border border-danger/30 bg-danger/10 px-4 py-3 text-sm leading-6 text-danger"
             >
               {feedback}
             </p>
@@ -304,4 +304,4 @@ function optionalText(value: string): string | null {
 }
 
 const inputClassName =
-  "mt-2 min-h-11 w-full rounded-xl border border-[var(--color-border)] bg-white/70 px-3 text-sm text-[var(--color-ink)] shadow-sm outline-none placeholder:text-[var(--color-muted)] focus:border-[var(--color-focus)] disabled:bg-[var(--color-surface)]";
+  "mt-2 min-h-11 w-full rounded-xl border border-border bg-white/70 px-3 text-sm text-ink shadow-sm outline-none placeholder:text-muted focus:border-focus disabled:bg-surface";

@@ -5,11 +5,9 @@ import type {
   CatalogueImage,
   CatalogueItemDetail,
   CatalogueItemPage,
-  CatalogueItemSummary,
   CatalogueLink,
 } from "@/modules/catalogue/domain/catalogue-read-models";
 import type {
-  CatalogueItemCriteria,
   CatalogueItemPageCriteria,
   CatalogueReader,
 } from "@/modules/catalogue/application/catalogue-reader";
@@ -45,59 +43,6 @@ export class SupabaseCatalogueReader implements CatalogueReader {
     }
 
     return success((data ?? []).map(toCatalogueCategory));
-  }
-
-  async listItems(
-    criteria: CatalogueItemCriteria,
-  ): Promise<Result<CatalogueItemSummary[]>> {
-    const categoryId = await this.findVisibleCategoryId(criteria.categorySlug);
-    if (!categoryId.ok) {
-      return categoryId;
-    }
-
-    if (criteria.categorySlug && categoryId.value === null) {
-      return success([]);
-    }
-
-    const { data: itemRows, error: itemError } = categoryId.value
-      ? await this.client
-          .from("items")
-          .select(ITEM_SUMMARY_COLUMNS)
-          .eq("category_id", categoryId.value)
-          .order("title")
-      : await this.client.from("items").select(ITEM_SUMMARY_COLUMNS).order("title");
-
-    if (itemError) {
-      return failure("UNEXPECTED_FAILURE");
-    }
-
-    if (!itemRows?.length) {
-      return success([]);
-    }
-
-    const itemIds = itemRows.map((item) => item.id);
-    const { data: imageRows, error: imageError } = await this.client
-      .from("item_images")
-      .select(ITEM_IMAGE_COLUMNS)
-      .in("item_id", itemIds)
-      .order("sort_order");
-
-    if (imageError) {
-      return failure("UNEXPECTED_FAILURE");
-    }
-
-    const primaryImages = new Map<string, CatalogueImage>();
-    for (const imageRow of imageRows ?? []) {
-      if (!primaryImages.has(imageRow.item_id)) {
-        primaryImages.set(imageRow.item_id, toCatalogueImage(imageRow));
-      }
-    }
-
-    return success(
-      itemRows.map((item) =>
-        toCatalogueItemSummary(item, primaryImages.get(item.id) ?? null),
-      ),
-    );
   }
 
   async listItemPage(

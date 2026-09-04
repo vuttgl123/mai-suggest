@@ -77,15 +77,15 @@ export function ScheduledLetterList({ letters, onEdit }: ScheduledLetterListProp
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="diary-kicker tracking-widest uppercase">Bàn niêm phong</p>
-          <h2 id="scheduled-letters-heading" className="font-display mt-2 text-3xl font-semibold italic tracking-[-0.045em] text-[var(--color-brand-strong)] drop-shadow-sm">
+          <h2 id="scheduled-letters-heading" className="font-display mt-2 text-3xl font-semibold italic tracking-[-0.045em] text-brand-strong drop-shadow-sm">
             Những lá thư đang hẹn.
           </h2>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--color-muted)]">
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-muted">
             Bạn vẫn có thể sửa hoặc hủy trước giờ mở. Khi lá thư đã mở, nội dung
             sẽ được giữ nguyên như khoảnh khắc bạn đã gửi đi.
           </p>
         </div>
-        <span className="rounded-full bg-[var(--color-paper)] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--color-brand)] shadow-sm">
+        <span className="rounded-full bg-paper px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-brand shadow-sm">
           {letters.length} đang chờ
         </span>
       </div>
@@ -107,7 +107,7 @@ export function ScheduledLetterList({ letters, onEdit }: ScheduledLetterListProp
       ) : null}
 
       {sealedLetters.length ? (
-        <div className="mt-7 border-t border-[var(--color-border)] pt-6">
+        <div className="mt-7 border-t border-border pt-6">
           <p className="diary-kicker tracking-widest uppercase">Đang chờ đúng ngày</p>
           <ol className="mt-4 grid gap-3 md:grid-cols-2">
             {sealedLetters.map((letter) => (
@@ -128,7 +128,7 @@ export function ScheduledLetterList({ letters, onEdit }: ScheduledLetterListProp
         </div>
       ) : null}
 
-      {feedback ? <p aria-live="polite" className="mt-3 text-sm leading-6 text-[var(--color-brand)]">{feedback}</p> : null}
+      {feedback ? <p aria-live="polite" className="mt-3 text-sm leading-6 text-brand">{feedback}</p> : null}
     </section>
   );
 }
@@ -162,8 +162,8 @@ function ScheduledLetterCard({
     <li
       className={
         isFeatured
-          ? "relative overflow-hidden rounded-[var(--radius-dialog)] border border-[var(--color-border)] bg-[var(--theme-card-surface)] p-5 shadow-[var(--shadow-card)] sm:p-6"
-          : "rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-paper)] p-4 shadow-[var(--shadow-soft)]"
+          ? "relative overflow-hidden rounded-[var(--radius-dialog)] border border-border bg-[var(--theme-card-surface)] p-5 shadow-[var(--shadow-card)] sm:p-6"
+          : "rounded-[var(--radius-card)] border border-border bg-paper p-4 shadow-[var(--shadow-soft)]"
       }
     >
       {isFeatured ? (
@@ -180,8 +180,8 @@ function ScheduledLetterCard({
           <h3
             className={
               isFeatured
-                ? "font-display mt-3 break-words text-3xl font-semibold italic tracking-[-0.05em] text-[var(--color-brand-strong)] drop-shadow-sm"
-                : "mt-2 break-words text-base font-bold italic text-[var(--color-brand-strong)]"
+                ? "font-display mt-3 break-words text-3xl font-semibold italic tracking-[-0.05em] text-brand-strong drop-shadow-sm"
+                : "mt-2 break-words text-base font-bold italic text-brand-strong"
             }
           >
             {letter.title}
@@ -190,8 +190,8 @@ function ScheduledLetterCard({
         <span
           className={
             isFeatured
-              ? "grid h-11 w-11 shrink-0 place-items-center rounded-full border border-[var(--theme-badge-border)] bg-[var(--color-paper)] text-[var(--color-accent)] shadow-[var(--shadow-soft)]"
-              : "text-[var(--color-accent)]"
+              ? "grid h-11 w-11 shrink-0 place-items-center rounded-full border border-[var(--theme-badge-border)] bg-paper text-accent shadow-[var(--shadow-soft)]"
+              : "text-accent"
           }
           aria-hidden="true"
         >
@@ -199,17 +199,17 @@ function ScheduledLetterCard({
         </span>
       </div>
       <time
-        className={`relative mt-4 block font-semibold leading-6 text-[var(--color-brand)] ${
+        className={`relative mt-4 block font-semibold leading-6 text-brand ${
           isFeatured ? "text-base" : "text-sm"
         }`}
         dateTime={letter.opensAt}
       >
         {formatFutureLetterDateTime(letter.opensAt)}
       </time>
-      <p className="relative mt-1 text-xs leading-5 text-[var(--color-muted)]">
+      <p className="relative mt-1 text-xs leading-5 text-muted">
         {formatCountdown(letter.opensAt, now)}
       </p>
-      <div className="relative mt-4 flex flex-wrap gap-2 border-t border-[var(--color-border)] pt-3">
+      <div className="relative mt-4 flex flex-wrap gap-2 border-t border-border pt-3">
         <Button disabled={isPending} onClick={() => onEdit(letter)} size="compact" type="button" variant="quiet">
           <Pencil size={14} aria-hidden="true" />
           Sửa
@@ -220,8 +220,8 @@ function ScheduledLetterCard({
         </Button>
       </div>
       {isConfirming ? (
-        <div className="relative mt-3 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[var(--color-danger)]/30 bg-[var(--color-danger)]/10 px-3 py-2.5">
-          <p className="text-xs leading-5 text-[var(--color-danger)]">Bạn chắc chắn muốn hủy lá thư này?</p>
+        <div className="relative mt-3 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-danger/30 bg-danger/10 px-3 py-2.5">
+          <p className="text-xs leading-5 text-danger">Bạn chắc chắn muốn hủy lá thư này?</p>
           <span className="flex gap-2">
             <Button disabled={isPending} onClick={onCancelDelete} size="compact" type="button" variant="quiet">Giữ lại</Button>
             <Button disabled={isPending} onClick={onDelete} size="compact" type="button" variant="danger">Hủy lá thư</Button>

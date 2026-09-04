@@ -126,18 +126,18 @@ export function AdminItemEditor({
   }
 
   return (
-    <section className="rounded-[var(--radius-frame)] border border-[var(--color-border)] bg-[var(--surface-elevated)] p-4 shadow-[var(--shadow-card)] sm:p-6">
+    <section className="rounded-[var(--radius-frame)] border border-border bg-[var(--surface-elevated)] p-4 shadow-[var(--shadow-card)] sm:p-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="text-sm font-semibold text-[var(--color-accent)]">{isEditing ? "Item đang chọn" : "Bắt đầu một điều mới"}</p>
-          <h2 className="font-display mt-2 text-3xl font-semibold tracking-[-0.055em] text-[var(--color-brand-strong)]">
+          <p className="text-sm font-semibold text-accent">{isEditing ? "Item đang chọn" : "Bắt đầu một điều mới"}</p>
+          <h2 className="font-display mt-2 text-3xl font-semibold tracking-[-0.055em] text-brand-strong">
             {isEditing ? selectedItem.title : "Tạo item"}
           </h2>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--color-muted)]">
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-muted">
             Mỗi item có thể là một món quà, điểm đến hoặc trải nghiệm cùng những điều riêng bạn muốn gửi gắm.
           </p>
         </div>
-        <span className={`rounded-full px-3 py-1.5 text-xs font-semibold ${selectedItem?.isPublished ? "bg-[var(--color-positive)]/10 text-[var(--color-positive)]" : "bg-[var(--color-brand-soft)] text-[var(--color-brand)]"}`}>
+        <span className={`rounded-full px-3 py-1.5 text-xs font-semibold ${selectedItem?.isPublished ? "bg-positive/10 text-positive" : "bg-brand-soft text-brand"}`}>
           {selectedItem?.isPublished ? "Đang hiển thị" : "Bản nháp"}
         </span>
       </div>
@@ -146,11 +146,11 @@ export function AdminItemEditor({
         <form className="mt-6" onSubmit={handleSubmit}>
           <section
             aria-labelledby="item-information-heading"
-            className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--theme-control-surface)] p-4 sm:p-5"
+            className="rounded-[var(--radius-card)] border border-border bg-[var(--theme-control-surface)] p-4 sm:p-5"
           >
             <div className="flex items-center gap-2">
-              <PencilLine className="text-[var(--color-accent)]" size={18} aria-hidden="true" />
-              <h3 id="item-information-heading" className="font-display text-2xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]">
+              <PencilLine className="text-accent" size={18} aria-hidden="true" />
+              <h3 id="item-information-heading" className="font-display text-2xl font-semibold tracking-[-0.04em] text-brand-strong">
                 Thông tin item
               </h3>
             </div>
@@ -174,7 +174,7 @@ export function AdminItemEditor({
                 <input className={inputClassName} defaultValue={selectedItem?.title ?? ""} name="title" required />
               </label>
               <label className={labelClassName}>
-                Slug <span className="font-normal text-[var(--color-muted)]">(tự tạo nếu trống)</span>
+                Slug <span className="font-normal text-muted">(tự tạo nếu trống)</span>
                 <input className={inputClassName} defaultValue={selectedItem?.slug ?? ""} name="slug" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" spellCheck={false} />
               </label>
               <label className={`${labelClassName} sm:col-span-2`}>
@@ -217,8 +217,8 @@ export function AdminItemEditor({
                 Nguồn đánh giá
                 <input className={inputClassName} defaultValue={selectedItem?.externalRatingSource ?? ""} name="externalRatingSource" />
               </label>
-              <label className="flex min-h-11 items-center gap-3 text-sm font-semibold text-[var(--color-brand-strong)] sm:col-span-2">
-                <input defaultChecked={selectedItem?.isPublished ?? true} className="h-4 w-4 accent-[var(--color-brand)]" name="isPublished" type="checkbox" />
+              <label className="flex min-h-11 items-center gap-3 text-sm font-semibold text-brand-strong sm:col-span-2">
+                <input defaultChecked={selectedItem?.isPublished ?? true} className="h-4 w-4 accent-brand" name="isPublished" type="checkbox" />
                 Hiển thị item này trong bộ sưu tập công khai
               </label>
             </div>
@@ -226,7 +226,7 @@ export function AdminItemEditor({
 
           <ItemKeepsakeEditor disabled={isPending} onChange={setKeepsakes} value={keepsakes} />
 
-          <div className="mt-6 flex flex-wrap gap-2 border-t border-[var(--color-border)] pt-4 lg:sticky lg:bottom-4 lg:z-10 lg:rounded-[var(--radius-card)] lg:border lg:bg-[var(--color-paper)]/95 lg:px-4 lg:py-3 lg:shadow-[var(--shadow-soft)] lg:backdrop-blur">
+          <div className="mt-6 flex flex-wrap gap-2 border-t border-border pt-4 lg:sticky lg:bottom-4 lg:z-10 lg:rounded-[var(--radius-card)] lg:border lg:bg-paper/95 lg:px-4 lg:py-3 lg:shadow-[var(--shadow-soft)] lg:backdrop-blur">
             <Button disabled={isPending} type="submit">
               <Save size={16} aria-hidden="true" />
               {isPending ? "Đang lưu…" : isEditing ? "Lưu item" : "Tạo item"}
@@ -234,7 +234,7 @@ export function AdminItemEditor({
           </div>
         </form>
       ) : (
-        <div className="mt-6 rounded-[var(--radius-card)] border border-dashed border-[var(--color-border)] px-4 py-8 text-center text-sm leading-6 text-[var(--color-muted)]">
+        <div className="mt-6 rounded-[var(--radius-card)] border border-dashed border-border px-4 py-8 text-center text-sm leading-6 text-muted">
           Hãy tạo ít nhất một danh mục trước khi thêm item.
         </div>
       )}
@@ -365,21 +365,21 @@ function AttachmentSection({
   }
 
   return (
-    <section className="mt-9 border-t border-[var(--color-border)] pt-6" aria-labelledby="attachments-heading">
+    <section className="mt-9 border-t border-border pt-6" aria-labelledby="attachments-heading">
       <div className="flex items-center gap-2">
-        <Link2 className="text-[var(--color-accent)]" size={18} aria-hidden="true" />
+        <Link2 className="text-accent" size={18} aria-hidden="true" />
         <div>
           <p className="diary-kicker">Tư liệu item</p>
-          <h3 id="attachments-heading" className="font-display mt-1 text-2xl font-semibold tracking-[-0.04em] text-[var(--color-brand-strong)]">Hình và đường dẫn</h3>
+          <h3 id="attachments-heading" className="font-display mt-1 text-2xl font-semibold tracking-[-0.04em] text-brand-strong">Hình và đường dẫn</h3>
         </div>
       </div>
 
       <div className="mt-5 grid gap-4 xl:grid-cols-2">
-        <div className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[rgb(255_249_243_/_62%)] p-3">
-          <div className="flex items-center gap-2 text-[var(--color-brand-strong)]"><ImagePlus size={17} aria-hidden="true" /><h4 className="text-sm font-bold">Hình ảnh</h4></div>
+        <div className="rounded-[var(--radius-card)] border border-border bg-[rgb(255_249_243_/_62%)] p-3">
+          <div className="flex items-center gap-2 text-brand-strong"><ImagePlus size={17} aria-hidden="true" /><h4 className="text-sm font-bold">Hình ảnh</h4></div>
           <div className="mt-4 space-y-3">
             {item.images.map((image) => (
-              <form className="rounded-xl border border-[var(--color-border)] bg-[var(--color-paper)] p-3" key={image.id} onSubmit={(event) => handleUpdateImage(event, image)}>
+              <form className="rounded-xl border border-border bg-paper p-3" key={image.id} onSubmit={(event) => handleUpdateImage(event, image)}>
                 <input className={inputClassName} defaultValue={image.imageUrl} name="imageUrl" required type="url" />
                 <div className="mt-3 grid gap-3 sm:grid-cols-[1fr_6rem]">
                   <input className={inputClassName} defaultValue={image.altText ?? ""} name="altText" placeholder="Mô tả ảnh" />
@@ -393,7 +393,7 @@ function AttachmentSection({
               </form>
             ))}
           </div>
-          <form className="mt-4 border-t border-[var(--color-border)] pt-4" onSubmit={handleCreateImage}>
+          <form className="mt-4 border-t border-border pt-4" onSubmit={handleCreateImage}>
             <input className={inputClassName} name="imageUrl" placeholder="URL hình ảnh https://…" required type="url" />
             <div className="mt-3 grid gap-3 sm:grid-cols-[1fr_6rem]">
               <input className={inputClassName} name="altText" placeholder="Mô tả ảnh" />
@@ -403,11 +403,11 @@ function AttachmentSection({
           </form>
         </div>
 
-        <div className="rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[rgb(255_249_243_/_62%)] p-3">
-          <div className="flex items-center gap-2 text-[var(--color-brand-strong)]"><Link2 size={17} aria-hidden="true" /><h4 className="text-sm font-bold">Đường dẫn</h4></div>
+        <div className="rounded-[var(--radius-card)] border border-border bg-[rgb(255_249_243_/_62%)] p-3">
+          <div className="flex items-center gap-2 text-brand-strong"><Link2 size={17} aria-hidden="true" /><h4 className="text-sm font-bold">Đường dẫn</h4></div>
           <div className="mt-4 space-y-3">
             {item.links.map((link) => (
-              <form className="rounded-xl border border-[var(--color-border)] bg-[var(--color-paper)] p-3" key={link.id} onSubmit={(event) => handleUpdateLink(event, link)}>
+              <form className="rounded-xl border border-border bg-paper p-3" key={link.id} onSubmit={(event) => handleUpdateLink(event, link)}>
                 <div className="grid gap-3 sm:grid-cols-[8rem_1fr]">
                   <select className={inputClassName} defaultValue={link.type} name="type">{linkTypes.map((type) => <option key={type.value} value={type.value}>{type.label}</option>)}</select>
                   <input className={inputClassName} defaultValue={link.title} name="title" required />
@@ -424,7 +424,7 @@ function AttachmentSection({
               </form>
             ))}
           </div>
-          <form className="mt-4 border-t border-[var(--color-border)] pt-4" onSubmit={handleCreateLink}>
+          <form className="mt-4 border-t border-border pt-4" onSubmit={handleCreateLink}>
             <div className="grid gap-3 sm:grid-cols-[8rem_1fr]"><select className={inputClassName} defaultValue="website" name="type">{linkTypes.map((type) => <option key={type.value} value={type.value}>{type.label}</option>)}</select><input className={inputClassName} name="title" placeholder="Tên đường dẫn" required /></div>
             <div className="mt-3 grid gap-3 sm:grid-cols-[1fr_6rem]"><input className={inputClassName} name="url" placeholder="https://…" required type="url" /><input className={inputClassName} defaultValue={item.links.length * 10 + 10} min="0" name="sortOrder" type="number" /></div>
             <Button className="mt-3" disabled={isPending} size="compact" type="submit" variant="secondary"><Link2 size={15} aria-hidden="true" />Thêm link</Button>
@@ -495,5 +495,5 @@ function slugify(value: string): string {
 }
 
 const inputClassName =
-  "mt-2 min-h-11 w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-paper)] px-3 text-sm text-[var(--color-ink)] shadow-sm outline-none placeholder:text-[var(--color-muted)] focus:border-[var(--color-focus)]";
-const labelClassName = "block text-sm font-semibold text-[var(--color-brand-strong)]";
+  "mt-2 min-h-11 w-full rounded-xl border border-border bg-paper px-3 text-sm text-ink shadow-sm outline-none placeholder:text-muted focus:border-focus";
+const labelClassName = "block text-sm font-semibold text-brand-strong";

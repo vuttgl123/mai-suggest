@@ -20,20 +20,20 @@ export function CatalogueChapterRail({
     <section aria-labelledby="chapters-heading" className="diary-container diary-section">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-sm font-semibold text-[var(--color-accent)]">Khám phá theo tâm trạng</p>
-          <h2 className="font-display mt-2 text-3xl font-semibold tracking-[-0.05em] text-[var(--color-brand-strong)]" id="chapters-heading">
+          <p className="text-sm font-semibold text-accent">Khám phá theo tâm trạng</p>
+          <h2 className="font-display mt-2 text-3xl font-semibold tracking-[-0.05em] text-brand-strong" id="chapters-heading">
             Chọn một chương hôm nay
           </h2>
-          <p className="mt-2 max-w-xl text-sm leading-7 text-[var(--color-muted)]">
+          <p className="mt-2 max-w-xl text-sm leading-7 text-muted">
             Mỗi chương là một cách khác để tìm lại điều làm ngày thường trở nên đặc biệt.
           </p>
         </div>
         <Link
           aria-current={selectedCategorySlug === null ? "page" : undefined}
-          className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition duration-[var(--duration-fast)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[var(--color-focus)] ${
+          className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition duration-[var(--duration-fast)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-focus ${
             selectedCategorySlug === null
-              ? "border-[var(--color-brand)] bg-[var(--color-brand)] text-white shadow-[var(--theme-button-shadow)]"
-              : "border-[var(--color-border)] bg-[var(--theme-control-surface)] text-[var(--color-brand)] hover:-translate-y-0.5 hover:border-[var(--color-accent)]"
+              ? "border-brand bg-brand text-white shadow-[var(--theme-button-shadow)]"
+              : "border-border bg-[var(--theme-control-surface)] text-brand hover:-translate-y-0.5 hover:border-accent"
           }`}
           href={createCataloguePath({ categorySlug: null, page: 1, query })}
           scroll={false}
@@ -52,10 +52,10 @@ export function CatalogueChapterRail({
             return (
               <Link
                 aria-current={isActive ? "page" : undefined}
-                className={`group relative isolate min-h-40 overflow-hidden rounded-[var(--radius-card)] border p-5 shadow-[var(--shadow-soft)] transition duration-300 hover:-translate-y-1 focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[var(--color-focus)] ${
+                className={`group relative isolate min-h-40 overflow-hidden rounded-[var(--radius-card)] border p-5 shadow-[var(--shadow-soft)] transition duration-300 hover:-translate-y-1 focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-focus ${
                   isActive
-                    ? "border-[var(--color-brand)] bg-[var(--color-brand)] text-white shadow-[var(--theme-button-shadow)]"
-                    : "border-[var(--color-border)] bg-[var(--theme-card-surface)] text-[var(--color-brand-strong)] hover:border-[var(--color-accent)] hover:shadow-[var(--shadow-card)]"
+                    ? "border-brand bg-brand text-white shadow-[var(--theme-button-shadow)]"
+                    : "border-border bg-[var(--theme-card-surface)] text-brand-strong hover:border-accent hover:shadow-[var(--shadow-card)]"
                 }`}
                 href={createCataloguePath({
                   categorySlug: category.slug,
@@ -89,7 +89,7 @@ export function CatalogueChapterRail({
                   className={`inline-grid h-9 w-9 place-items-center rounded-full border ${
                     isActive
                       ? "border-white/35 bg-white/15 text-white"
-                      : "border-[var(--theme-badge-border)] bg-[var(--color-brand-soft)] text-[var(--color-brand)]"
+                      : "border-[var(--theme-badge-border)] bg-brand-soft text-brand"
                   }`}
                   aria-hidden="true"
                 >
@@ -98,11 +98,11 @@ export function CatalogueChapterRail({
                 <div className="mt-3 pr-6">
                   <p className="font-display text-2xl font-semibold tracking-[-0.045em]">{category.name}</p>
                   {category.description ? (
-                    <p className={`mt-1.5 line-clamp-2 text-sm leading-6 ${isActive ? "text-white/84" : "text-[var(--color-muted)]"}`}>
+                    <p className={`mt-1.5 line-clamp-2 text-sm leading-6 ${isActive ? "text-white/84" : "text-muted"}`}>
                       {category.description}
                     </p>
                   ) : (
-                    <p className={`mt-1.5 text-sm font-semibold ${isActive ? "text-white/84" : "text-[var(--color-muted)]"}`}>
+                    <p className={`mt-1.5 text-sm font-semibold ${isActive ? "text-white/84" : "text-muted"}`}>
                       Mở chương này
                     </p>
                   )}

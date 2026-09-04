@@ -3,7 +3,6 @@ import type {
   CatalogueCategory,
   CatalogueItemDetail,
   CatalogueItemPage,
-  CatalogueItemSummary,
 } from "@/modules/catalogue/domain/catalogue-read-models";
 
 export interface CatalogueItemCriteria {
@@ -18,7 +17,6 @@ export interface CatalogueItemPageCriteria extends CatalogueItemCriteria {
 
 export interface CatalogueReader {
   listCategories(): Promise<Result<CatalogueCategory[]>>;
-  listItems(criteria: CatalogueItemCriteria): Promise<Result<CatalogueItemSummary[]>>;
   listItemPage(
     criteria: CatalogueItemPageCriteria,
   ): Promise<Result<CatalogueItemPage>>;

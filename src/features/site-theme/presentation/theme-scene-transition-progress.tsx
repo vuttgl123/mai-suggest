@@ -30,12 +30,12 @@ export function ThemeSceneTransitionProgress({
   return (
     <section
       aria-live="polite"
-      className="theme-scene-transition rounded-[var(--radius-dialog)] border border-[var(--color-accent)]/30 bg-[var(--color-paper)] p-5 shadow-[var(--shadow-card)]"
+      className="theme-scene-transition rounded-[var(--radius-dialog)] border border-accent/30 bg-paper p-5 shadow-[var(--shadow-card)]"
     >
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="diary-kicker">Đang chuyển scene · {preset.label}</p>
-          <h2 className="font-display mt-2 text-2xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
+          <h2 className="font-display mt-2 text-2xl font-semibold tracking-[-0.045em] text-brand-strong">
             Không khí mới đang thành hình.
           </h2>
         </div>

@@ -98,10 +98,10 @@ export function FutureLetterOpeningCard({
         <div className="future-letter-preview">
           <div>
             <p className="diary-kicker">Đã mở</p>
-            <h3 className="font-display mt-2 break-words text-2xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
+            <h3 className="font-display mt-2 break-words text-2xl font-semibold tracking-[-0.045em] text-brand-strong">
               {letter.title}
             </h3>
-            <p className="mt-2 text-sm text-[var(--color-muted)]">
+            <p className="mt-2 text-sm text-muted">
               {letter.author.displayName} · {formatFutureLetterDateTime(letter.opensAt)}
             </p>
           </div>
@@ -161,7 +161,7 @@ export function FutureLetterOpeningCard({
           {renderPhase === "sealed" ? (
             <div className="future-letter-open-control">
               <p className="diary-kicker">Đã đến giờ hẹn</p>
-              <p className="mt-2 text-sm leading-6 text-[var(--color-muted)]">
+              <p className="mt-2 text-sm leading-6 text-muted">
                 {letter.author.displayName} có một điều muốn gửi đến hôm nay.
               </p>
               <Button className="mt-4" onClick={openLetter} type="button">
@@ -186,14 +186,14 @@ export function FutureLetterOpeningCard({
           ) : null}
           {hasImageBackdrop ? <span aria-hidden="true" className="future-letter-paper-scrim" /> : null}
           <div className="future-letter-paper-content">
-            <div className="future-letter-reader-header border-b border-[var(--color-border)] pb-4">
+            <div className="future-letter-reader-header border-b border-border pb-4">
               <div className="flex flex-wrap items-center justify-between gap-3">
-                <div className="flex items-center gap-2 text-[var(--color-accent)]">
+                <div className="flex items-center gap-2 text-accent">
                   <span className="diary-rule" aria-hidden="true" />
-                  <p className="diary-kicker text-[var(--color-accent)]">Gửi lại đúng ngày hẹn</p>
+                  <p className="diary-kicker text-accent">Gửi lại đúng ngày hẹn</p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Sparkles className="text-[var(--color-accent)]" size={18} strokeWidth={1.35} aria-hidden="true" />
+                  <Sparkles className="text-accent" size={18} strokeWidth={1.35} aria-hidden="true" />
                     {renderPhase === "opened" ? (
                     <Button
                       className="future-letter-reader-header__action"
@@ -211,8 +211,8 @@ export function FutureLetterOpeningCard({
               <div className="mt-4 flex min-w-0 items-center gap-3">
                 <Avatar displayName={letter.author.displayName} imageUrl={letter.author.avatarUrl} />
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-bold text-[var(--color-brand-strong)]">{letter.author.displayName}</p>
-                  <time className="mt-0.5 block text-xs text-[var(--color-muted)]" dateTime={letter.opensAt}>
+                  <p className="truncate text-sm font-bold text-brand-strong">{letter.author.displayName}</p>
+                  <time className="mt-0.5 block text-xs text-muted" dateTime={letter.opensAt}>
                     Hẹn mở {formatFutureLetterDateTime(letter.opensAt)}
                   </time>
                 </div>
@@ -220,7 +220,7 @@ export function FutureLetterOpeningCard({
             </div>
             <p className="diary-kicker mt-5">Đã mở ra</p>
             <div className="future-letter-title-row">
-              <h3 className="font-display min-w-0 break-words text-3xl font-semibold tracking-[-0.045em] text-[var(--color-brand-strong)]">
+              <h3 className="font-display min-w-0 break-words text-3xl font-semibold tracking-[-0.045em] text-brand-strong">
                 {letter.title}
               </h3>
               {letter.musicUrl ? (
@@ -237,7 +237,7 @@ export function FutureLetterOpeningCard({
                 </a>
               ) : null}
             </div>
-            <p className="mt-5 break-words whitespace-pre-line text-[15px] leading-8 text-[var(--color-ink)]">
+            <p className="mt-5 break-words whitespace-pre-line text-[15px] leading-8 text-ink">
               {letter.content}
             </p>
             {renderPhase === "opened" ? (
@@ -264,8 +264,8 @@ export function FutureLetterOpeningCard({
 
 function Avatar({ displayName, imageUrl }: { displayName: string; imageUrl: string | null }) {
   if (imageUrl) {
-    return <img alt="" className="h-10 w-10 shrink-0 rounded-full border border-[var(--color-border)] object-cover" decoding="async" height={40} loading="lazy" src={imageUrl} width={40} />;
+    return <img alt="" className="h-10 w-10 shrink-0 rounded-full border border-border object-cover" decoding="async" height={40} loading="lazy" src={imageUrl} width={40} />;
   }
 
-  return <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[var(--color-brand-soft)] text-sm font-bold text-[var(--color-brand)]" aria-hidden="true">{displayName.trim().slice(0, 1).toLocaleUpperCase("vi-VN") || "T"}</span>;
+  return <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand-soft text-sm font-bold text-brand" aria-hidden="true">{displayName.trim().slice(0, 1).toLocaleUpperCase("vi-VN") || "T"}</span>;
 }

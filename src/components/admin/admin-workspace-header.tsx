@@ -17,20 +17,20 @@ export function AdminWorkspaceHeader({
   title,
 }: AdminWorkspaceHeaderProps) {
   return (
-    <section className="diary-wash relative overflow-hidden rounded-[var(--radius-frame)] border border-[var(--color-border)] px-5 py-7 shadow-[var(--shadow-card)] sm:px-8 sm:py-8">
+    <section className="diary-wash relative overflow-hidden rounded-[var(--radius-frame)] border border-border px-5 py-7 shadow-[var(--shadow-card)] sm:px-8 sm:py-8">
       <Sparkles
         aria-hidden="true"
-        className="absolute right-6 top-6 text-[var(--color-accent)] opacity-65"
+        className="absolute right-6 top-6 text-accent opacity-65"
         size={22}
         strokeWidth={1.2}
       />
       <div className="relative flex flex-wrap items-end justify-between gap-5">
         <div className="max-w-3xl">
-          <p className="text-sm font-semibold text-[var(--color-accent)]">{eyebrow}</p>
-          <h1 className="font-display mt-3 text-balance text-4xl font-semibold tracking-[-0.06em] text-[var(--color-brand-strong)] sm:text-5xl">
+          <p className="text-sm font-semibold text-accent">{eyebrow}</p>
+          <h1 className="font-display mt-3 text-balance text-4xl font-semibold tracking-[-0.06em] text-brand-strong sm:text-5xl">
             {title}
           </h1>
-          <p className="mt-3 text-sm leading-6 text-[var(--color-muted)] sm:text-base">
+          <p className="mt-3 text-sm leading-6 text-muted sm:text-base">
             {description}
           </p>
         </div>

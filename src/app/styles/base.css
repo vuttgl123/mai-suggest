@@ -1,0 +1,49 @@
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    color-scheme: light;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    isolation: isolate;
+    position: relative;
+    overflow-x: clip;
+    background: var(--theme-body-background);
+    color: var(--color-ink);
+    font-family: var(--font-body), sans-serif;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    text-wrap: pretty;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  button,
+  a,
+  label {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  ::selection {
+    background: var(--soft-rose);
+    color: var(--color-brand-strong);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 3px;
+  }
+}

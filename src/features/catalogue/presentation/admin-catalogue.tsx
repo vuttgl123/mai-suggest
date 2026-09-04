@@ -44,7 +44,7 @@ export function AdminCatalogue({
       <AdminWorkspaceHeader
         actions={
           <Link
-            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-paper)] px-4 text-sm font-semibold text-[var(--color-brand)] transition hover:-translate-y-0.5 hover:border-[var(--color-accent)]"
+            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-paper px-4 text-sm font-semibold text-brand transition hover:-translate-y-0.5 hover:border-accent"
             href="/"
           >
             Xem bộ sưu tập
@@ -55,10 +55,10 @@ export function AdminCatalogue({
         eyebrow="Quản trị · bộ sưu tập"
         summary={
           <>
-            <span className="rounded-full bg-[var(--color-brand-soft)] px-4 py-2 text-xs font-semibold text-[var(--color-brand)]">
+            <span className="rounded-full bg-brand-soft px-4 py-2 text-xs font-semibold text-brand">
               {categories.length} danh mục
             </span>
-            <span className="rounded-full bg-[rgb(166_91_69_/_12%)] px-4 py-2 text-xs font-semibold text-[var(--color-accent)]">
+            <span className="rounded-full bg-[rgb(166_91_69_/_12%)] px-4 py-2 text-xs font-semibold text-accent">
               {itemPage.total} item{selectedCategory ? ` · ${selectedCategory.name}` : ""}
             </span>
           </>
@@ -72,8 +72,8 @@ export function AdminCatalogue({
           aria-live="polite"
           className={`mt-5 rounded-[var(--radius-card)] border px-4 py-3 text-sm leading-6 ${
             feedback.tone === "success"
-              ? "border-[var(--color-positive)]/25 bg-[var(--color-positive)]/10 text-[var(--color-positive)]"
-              : "border-[var(--color-danger)]/30 bg-[var(--color-danger)]/10 text-[var(--color-danger)]"
+              ? "border-positive/25 bg-positive/10 text-positive"
+              : "border-danger/30 bg-danger/10 text-danger"
           }`}
         >
           {feedback.message}
