@@ -45,6 +45,11 @@ export class SupabaseCatalogueReader implements CatalogueReader {
     return success((data ?? []).map(toCatalogueCategory));
   }
 
+  async listChapterPreviews(): Promise<Result<any[]>> {
+    // Stub implementation to satisfy interface
+    return failure("UNEXPECTED_FAILURE");
+  }
+
   async listItemPage(
     criteria: CatalogueItemPageCriteria,
   ): Promise<Result<CatalogueItemPage>> {

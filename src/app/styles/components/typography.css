@@ -46,9 +46,7 @@
     font-size: var(--type-kicker-size);
     font-weight: 700;
     line-height: var(--type-kicker-leading);
-    letter-spacing: var(--type-kicker-tracking);
-    text-transform: uppercase;
-  }
+          }
 
   @media (min-width: 640px) {
     .display-xl,

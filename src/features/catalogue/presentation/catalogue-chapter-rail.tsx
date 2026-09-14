@@ -11,112 +11,68 @@ interface CatalogueChapterRailProps {
   selectedCategorySlug: string | null;
 }
 
+
 export function CatalogueChapterRail({
   categories,
   query,
   selectedCategorySlug,
 }: CatalogueChapterRailProps) {
   return (
-    <section aria-labelledby="chapters-heading" className="diary-container diary-section">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="text-sm font-semibold text-accent">Khám phá theo tâm trạng</p>
-          <h2 className="font-display mt-2 text-3xl font-semibold tracking-[-0.05em] text-brand-strong" id="chapters-heading">
-            Chọn một chương hôm nay
-          </h2>
-          <p className="mt-2 max-w-xl text-sm leading-7 text-muted">
-            Mỗi chương là một cách khác để tìm lại điều làm ngày thường trở nên đặc biệt.
-          </p>
-        </div>
-        <Link
-          aria-current={selectedCategorySlug === null ? "page" : undefined}
-          className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm font-semibold transition duration-[var(--duration-fast)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-focus ${
-            selectedCategorySlug === null
-              ? "border-brand bg-brand text-white shadow-[var(--theme-button-shadow)]"
-              : "border-border bg-[var(--theme-control-surface)] text-brand hover:-translate-y-0.5 hover:border-accent"
-          }`}
-          href={createCataloguePath({ categorySlug: null, page: 1, query })}
-          scroll={false}
-          transitionTypes={["collection-change"]}
-        >
-          Xem tất cả
-          <ArrowRight size={16} aria-hidden="true" />
-        </Link>
-      </div>
-
-      {categories.length ? (
-        <nav aria-label="Chọn chương bộ sưu tập" className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {categories.map((category) => {
-            const isActive = category.slug === selectedCategorySlug;
-
-            return (
+    <section aria-labelledby="chapters-heading" className="w-full">
+      <div className="flex flex-col items-center justify-center space-y-6">
+        <h2 className="font-display text-2xl font-medium tracking-tight text-brand-strong sm:text-3xl" id="chapters-heading">
+          Khám phá bộ sưu tập
+        </h2>
+        
+        {/* SaaS Segmented Tabs - Centered & Scrollable */}
+        <div className="relative w-full max-w-4xl">
+          <div className="flex items-center justify-start sm:justify-center overflow-x-auto no-scrollbar py-1">
+            <div className="inline-flex flex-nowrap items-center gap-1.5 rounded-2xl bg-[var(--surface-elevated)]/60 p-1.5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.02)] border border-border/40 backdrop-blur-md">
               <Link
-                aria-current={isActive ? "page" : undefined}
-                className={`group relative isolate min-h-40 overflow-hidden rounded-[var(--radius-card)] border p-5 shadow-[var(--shadow-soft)] transition duration-300 hover:-translate-y-1 focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-focus ${
-                  isActive
-                    ? "border-brand bg-brand text-white shadow-[var(--theme-button-shadow)]"
-                    : "border-border bg-[var(--theme-card-surface)] text-brand-strong hover:border-accent hover:shadow-[var(--shadow-card)]"
+                aria-current={selectedCategorySlug === null ? "page" : undefined}
+                className={`relative shrink-0 px-5 py-2.5 text-[14px] font-medium transition-all duration-300 rounded-xl ${
+                  selectedCategorySlug === null
+                    ? "text-brand-strong bg-white shadow-sm ring-1 ring-border/50"
+                    : "text-muted hover:text-brand-strong hover:bg-black/5"
                 }`}
-                href={createCataloguePath({
-                  categorySlug: category.slug,
-                  page: 1,
-                  query,
-                })}
-                key={category.id}
+                href={createCataloguePath({ categorySlug: null, page: 1, query })}
                 scroll={false}
                 transitionTypes={["collection-change"]}
               >
-                {category.coverImageUrl ? (
-                  <>
-                    <img
-                      alt=""
-                      className="absolute inset-0 -z-20 h-full w-full object-cover opacity-28 transition duration-700 group-hover:scale-105"
-                      decoding="async"
-                      height={360}
-                      loading="lazy"
-                      src={category.coverImageUrl}
-                      width={520}
-                    />
-                    <span
-                      className={`absolute inset-0 -z-10 bg-[linear-gradient(110deg,_var(--color-paper),rgb(255_249_243_/_58%))] ${
-                        isActive ? "opacity-75 mix-blend-screen" : ""
-                      }`}
-                      aria-hidden="true"
-                    />
-                  </>
-                ) : null}
-                <span
-                  className={`inline-grid h-9 w-9 place-items-center rounded-full border ${
-                    isActive
-                      ? "border-white/35 bg-white/15 text-white"
-                      : "border-[var(--theme-badge-border)] bg-brand-soft text-brand"
-                  }`}
-                  aria-hidden="true"
-                >
-                  <BookOpen size={16} strokeWidth={1.45} />
-                </span>
-                <div className="mt-3 pr-6">
-                  <p className="font-display text-2xl font-semibold tracking-[-0.045em]">{category.name}</p>
-                  {category.description ? (
-                    <p className={`mt-1.5 line-clamp-2 text-sm leading-6 ${isActive ? "text-white/84" : "text-muted"}`}>
-                      {category.description}
-                    </p>
-                  ) : (
-                    <p className={`mt-1.5 text-sm font-semibold ${isActive ? "text-white/84" : "text-muted"}`}>
-                      Mở chương này
-                    </p>
-                  )}
-                </div>
-                <ArrowRight
-                  className="absolute bottom-4 right-4 transition duration-[var(--duration-fast)] group-hover:translate-x-0.5"
-                  size={18}
-                  aria-hidden="true"
-                />
+                Tất cả
               </Link>
-            );
-          })}
-        </nav>
-      ) : null}
+              
+              {categories.map((category) => {
+                const isActive = category.slug === selectedCategorySlug;
+                return (
+                  <Link
+                    key={category.id}
+                    aria-current={isActive ? "page" : undefined}
+                    className={`relative shrink-0 px-5 py-2.5 text-[14px] font-medium transition-all duration-300 rounded-xl ${
+                      isActive
+                        ? "text-brand-strong bg-white shadow-sm ring-1 ring-border/50"
+                        : "text-muted hover:text-brand-strong hover:bg-black/5"
+                    }`}
+                    href={createCataloguePath({
+                      categorySlug: category.slug,
+                      page: 1,
+                      query,
+                    })}
+                    scroll={false}
+                    transitionTypes={["collection-change"]}
+                  >
+                    {category.name}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+          
+          {/* Fading edges for scroll indication on mobile */}
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[var(--color-paper)] to-transparent sm:hidden" aria-hidden="true" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[var(--color-paper)] to-transparent sm:hidden" aria-hidden="true" />
+        </div>
+      </div>
     </section>
   );
 }

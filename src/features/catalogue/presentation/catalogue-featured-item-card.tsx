@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { ViewTransition } from "react";
 import { ArrowRight, Heart, Sparkles } from "lucide-react";
 import { CatalogueItemImage } from "@/features/catalogue/presentation/catalogue-item-image";
 import type { CatalogueItemSummary } from "@/modules/catalogue/domain/catalogue-read-models";
+import { Card } from "@/components/ui/card";
 
 interface CatalogueFeaturedItemCardProps {
   item: CatalogueItemSummary;
@@ -16,15 +16,16 @@ export function CatalogueFeaturedItemCard({
   const image = item.primaryImage;
 
   return (
-    <Link
-      className="group relative grid overflow-hidden rounded-[var(--radius-frame)] border border-[color-mix(in_srgb,var(--color-accent)_35%,var(--color-border))] bg-[color-mix(in_srgb,var(--color-paper)_92%,transparent)] shadow-[0_16px_40px_-12px_rgba(49,5,12,0.14)] backdrop-blur-md transition-all duration-500 hover:border-accent hover:shadow-[var(--shadow-luxury-card)] hover:[transform:perspective(1200px)_translateY(-8px)_rotateX(2deg)_rotateY(-2deg)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-focus md:grid-cols-[minmax(18rem,1fr)_minmax(0,1.1fr)] md:items-stretch"
+    <Card
+      className="group grid md:grid-cols-[minmax(18rem,1fr)_minmax(0,1.2fr)] md:items-stretch"
       href={`/catalogue/${encodeURIComponent(item.slug)}`}
+      interactive={true}
       transitionTypes={["nav-forward"]}
     >
       <div className="relative overflow-hidden">
         {image ? (
           <ViewTransition default="none" name={`item-image-${item.id}`} share="morph">
-            <div className="h-full overflow-hidden">
+            <div className="h-full overflow-hidden bg-black/5">
               <CatalogueItemImage
                 alt={image.altText ?? item.title}
                 src={image.url}
@@ -33,48 +34,47 @@ export function CatalogueFeaturedItemCard({
             </div>
           </ViewTransition>
         ) : (
-          <div className="relative flex aspect-[4/5] items-center justify-center overflow-hidden bg-[linear-gradient(135deg,var(--color-brand-soft),var(--color-paper)_65%,color-mix(in_srgb,var(--color-accent)_20%,transparent))] md:h-full">
-            <span className="absolute h-40 w-40 rounded-full border border-[color-mix(in_srgb,var(--color-brand)_18%,transparent)]" aria-hidden="true" />
+          <div className="relative flex aspect-[4/5] items-center justify-center overflow-hidden bg-black/5 md:h-full">
             <Heart
-              className="relative text-brand transition-transform duration-500 group-hover:scale-110"
+              className="text-muted/30 transition-transform duration-[var(--motion-base)] group-hover:scale-110"
               fill="currentColor"
-              size={34}
-              strokeWidth={1.2}
+              size={36}
+              strokeWidth={1.5}
               aria-hidden="true"
             />
           </div>
         )}
-        <span className="absolute left-4 top-4 z-10 inline-flex items-center gap-1.5 rounded-full border border-[color-mix(in_srgb,var(--color-accent)_40%,transparent)] bg-[color-mix(in_srgb,var(--color-brand-strong)_85%,transparent)] px-3.5 py-1.5 text-xs font-bold text-paper shadow-[0_4px_16px_rgba(0,0,0,0.25)] backdrop-blur-md">
-          <Sparkles size={13} className="text-accent" aria-hidden="true" />
-          Mở ra trước
+        <span className="absolute left-4 top-4 z-10 inline-flex items-center gap-1.5 rounded-full bg-brand-strong px-3 py-1.5 text-[11px] font-medium tracking-wide text-white shadow-md ring-1 ring-white/10">
+          <Sparkles size={12} className="text-accent" aria-hidden="true" />
+          Nổi bật
         </span>
       </div>
 
-      <div className="flex flex-col justify-between p-6 sm:p-8 lg:p-10">
+      <div className="flex flex-col justify-between p-6 sm:p-8 lg:p-12">
         <div>
-          <p className="text-xs font-bold tracking-wider uppercase text-accent">{categoryName ?? "Điều được chọn"}</p>
-          <h3 className="font-display mt-3 text-balance text-2xl font-bold tracking-tight text-brand-strong transition-colors duration-300 group-hover:text-brand sm:text-3xl lg:text-4xl">
+          <p className="diary-kicker text-accent">{categoryName ?? "Điều được chọn"}</p>
+          <h3 className="font-display display-lg mt-3 text-balance font-medium text-brand-strong transition-colors group-hover:text-brand">
             {item.title}
           </h3>
           {item.summary ? (
-            <p className="mt-4 text-sm leading-relaxed text-muted sm:text-base sm:leading-8">
+            <p className="body-text mt-4 text-muted">
               {item.summary}
             </p>
           ) : null}
         </div>
 
-        <div className="mt-8 flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-[color-mix(in_srgb,var(--color-border)_40%,transparent)]">
+        <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-border/40 pt-6">
           {item.priceLabel ? (
-            <p className="text-xs font-bold uppercase tracking-wider text-brand">{item.priceLabel}</p>
+            <p className="diary-kicker text-muted">{item.priceLabel}</p>
           ) : (
             <span />
           )}
-          <span className="inline-flex min-h-11 items-center gap-2 rounded-full border border-[color-mix(in_srgb,var(--color-accent)_35%,transparent)] bg-[linear-gradient(135deg,var(--color-paper),color-mix(in_srgb,var(--color-brand-soft)_50%,transparent))] px-5 text-sm font-bold text-brand-strong shadow-[0_4px_12px_rgba(0,0,0,0.06)] transition-all duration-300 group-hover:border-accent group-hover:bg-paper group-hover:shadow-[0_6px_16px_rgba(197,160,89,0.25)]">
+          <span className="inline-flex h-10 items-center gap-2 rounded-xl bg-surface px-4 text-sm font-medium text-brand-strong shadow-sm ring-1 ring-border/50 transition-colors duration-[var(--motion-base)] group-hover:bg-brand-strong group-hover:text-white group-hover:ring-brand-strong">
             Mở câu chuyện
-            <ArrowRight size={16} aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1" />
+            <ArrowRight size={16} aria-hidden="true" className="transition-transform duration-[var(--motion-base)] group-hover:translate-x-1" />
           </span>
         </div>
       </div>
-    </Link>
+    </Card>
   );
 }

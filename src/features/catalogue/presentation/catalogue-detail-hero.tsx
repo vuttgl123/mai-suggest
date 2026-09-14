@@ -20,66 +20,74 @@ export function CatalogueDetailHero({
   item,
 }: CatalogueDetailHeroProps) {
   return (
-    <section className="diary-container diary-section pt-8 sm:pt-10">
+    <section className="mx-auto max-w-7xl px-4 pt-24 sm:px-6 lg:px-8">
+      {/* SaaS Back Button */}
       <Link
-        className="inline-flex min-h-11 items-center gap-2 rounded-full px-1 text-sm font-semibold text-brand transition duration-[var(--duration-fast)] hover:text-brand-strong focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-focus motion-reduce:transition-none"
-        href="/"
+        className="inline-flex h-9 items-center gap-1.5 rounded-full border border-border/50 bg-[var(--surface-elevated)]/70 px-4 text-[13px] font-medium text-brand-strong shadow-sm backdrop-blur-xl transition-all hover:bg-black/5 hover:text-brand"
+        href="/#collection"
         transitionTypes={["nav-back"]}
       >
-        <ArrowLeft size={17} aria-hidden="true" />
+        <ArrowLeft size={16} strokeWidth={2} aria-hidden="true" />
         Trở lại bộ sưu tập
       </Link>
 
-      <div className="mt-8 grid gap-10 lg:mt-12 lg:grid-cols-[minmax(19rem,0.82fr)_minmax(0,1.18fr)] lg:items-start lg:gap-16">
-        <div className="diary-image-frame rotate-[-1.25deg] p-3 transition duration-500 hover:rotate-0 lg:sticky lg:top-24">
+      <div className="mt-8 grid gap-10 lg:mt-12 lg:grid-cols-[5fr_7fr] lg:items-start lg:gap-16">
+        {/* Sleek SaaS Image Container (Sticky on Desktop) */}
+        <div className="group relative overflow-hidden rounded-[2.5rem] border border-border/60 bg-[var(--surface-elevated)] shadow-sm lg:sticky lg:top-28">
           {item.primaryImage ? (
             <ViewTransition
               default="none"
               name={`item-image-${item.id}`}
               share="morph"
             >
+              <div className="aspect-[4/5] w-full">
                 <CatalogueItemImage
                   alt={item.primaryImage.altText ?? item.title}
                   src={item.primaryImage.url}
                 />
+              </div>
             </ViewTransition>
           ) : (
-            <div className="relative flex aspect-[4/5] items-center justify-center overflow-hidden rounded-[calc(var(--radius-frame)-0.35rem)] bg-[linear-gradient(145deg,_var(--color-brand-soft),_var(--color-paper)_65%,_rgb(166_91_69_/_18%))]">
-              <span
-                className="absolute h-48 w-48 rounded-full border border-border"
-                aria-hidden="true"
-              />
-              <Heart
-                className="relative text-brand"
-                fill="currentColor"
-                size={34}
-                strokeWidth={1.1}
-                aria-hidden="true"
-              />
+            <div className="relative flex aspect-[4/5] w-full items-center justify-center bg-[linear-gradient(145deg,_var(--color-brand-soft),_var(--color-paper)_65%)]">
+              <span className="absolute h-48 w-48 rounded-full border border-border/50" aria-hidden="true" />
+              <Heart className="relative text-brand/50" fill="currentColor" size={40} strokeWidth={1} aria-hidden="true" />
             </div>
           )}
+          {/* Inner gradient overlay for depth */}
+          <div className="pointer-events-none absolute inset-0 rounded-[2.5rem] ring-1 ring-inset ring-black/10" aria-hidden="true" />
         </div>
 
-        <div className="max-w-3xl py-1 lg:py-8">
-          <p className="text-sm font-semibold text-accent">
-            {categoryName ?? "Một điều được lưu lại"}
-          </p>
-          <h1 className="font-display display-xl mt-4 max-w-4xl text-balance font-semibold text-brand-strong">
+        {/* Content Side */}
+        <div className="flex flex-col py-2 lg:py-6">
+          <div className="inline-flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
+            <p className="text-[13px] font-medium uppercase tracking-wider text-accent">
+              {categoryName ?? "Một điều được lưu lại"}
+            </p>
+          </div>
+          
+          <h1 className="font-display mt-4 text-4xl font-semibold tracking-tight text-brand-strong sm:text-5xl lg:text-6xl lg:leading-[1.1]">
             {item.title}
           </h1>
 
           {item.summary ? (
-            <p className="mt-5 max-w-xl text-lg leading-8 text-muted">
+            <p className="mt-6 text-lg leading-relaxed text-muted sm:text-xl">
               {item.summary}
             </p>
           ) : null}
 
-          {item.priceLabel || item.address ? (
-            <div className="mt-7 flex flex-wrap gap-2 border-y border-border py-4 text-sm font-semibold text-brand">
-              {item.priceLabel ? <span>{item.priceLabel}</span> : null}
+          {/* Bento-style Info Tags */}
+          {(item.priceLabel || item.address) ? (
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              {item.priceLabel ? (
+                <span className="inline-flex h-10 items-center rounded-full bg-brand-strong px-5 text-[14px] font-medium text-white shadow-sm">
+                  {item.priceLabel}
+                </span>
+              ) : null}
+              
               {item.address ? (
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-3 py-1.5">
-                  <MapPin size={16} aria-hidden="true" />
+                <span className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 bg-[var(--surface-elevated)] px-4 text-[14px] font-medium text-brand-strong shadow-sm">
+                  <MapPin size={16} className="text-accent" aria-hidden="true" />
                   {item.address}
                 </span>
               ) : null}
@@ -87,32 +95,31 @@ export function CatalogueDetailHero({
           ) : null}
 
           {item.description ? (
-            <div className="mt-7">
+            <div className="mt-12 rounded-[2rem] border border-border/60 bg-[var(--color-surface)]/80 p-8 shadow-sm backdrop-blur-xl sm:p-10">
               <div className="flex items-center gap-2 text-accent">
-                <span className="diary-rule" aria-hidden="true" />
-                <Quote size={17} strokeWidth={1.45} aria-hidden="true" />
-                <p className="text-sm font-semibold text-accent">
-                  Câu chuyện
-                </p>
+                <Quote size={20} strokeWidth={1.5} aria-hidden="true" />
+                <h3 className="text-sm font-semibold uppercase tracking-widest text-accent">Câu chuyện</h3>
               </div>
-              <p className="mt-3 whitespace-pre-line text-base leading-8 text-ink">
-                {item.description}
-              </p>
+              <div className="prose prose-brand mt-6 max-w-none text-[15px] leading-loose text-ink sm:text-base">
+                {item.description.split('\n').map((paragraph, index) => (
+                  paragraph.trim() ? <p key={index}>{paragraph}</p> : <br key={index} />
+                ))}
+              </div>
             </div>
           ) : null}
 
           {item.links.length ? (
-            <div className="mt-7 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap gap-3">
               {item.links.map((link) => (
                 <a
-                  className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-paper px-4 text-sm font-semibold text-brand transition duration-[var(--duration-fast)] hover:-translate-y-0.5 hover:border-accent hover:bg-[var(--theme-control-hover)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-focus motion-reduce:transform-none motion-reduce:transition-none"
+                  className="inline-flex h-12 items-center gap-2 rounded-full border border-border/60 bg-white px-6 text-[14px] font-semibold text-brand-strong shadow-sm transition hover:bg-black/5"
                   href={link.url}
                   key={link.id}
                   rel="noreferrer"
                   target="_blank"
                 >
                   {link.title}
-                  <ExternalLink size={15} aria-hidden="true" />
+                  <ExternalLink size={16} className="text-muted" aria-hidden="true" />
                 </a>
               ))}
             </div>

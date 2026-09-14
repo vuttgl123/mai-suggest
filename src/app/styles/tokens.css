@@ -114,3 +114,7 @@
   --motion-base: 320ms;
   --motion-ease: cubic-bezier(0.2, 0, 0, 1);
 }
+
+.home-layout {
+  --content-max: 75rem;
+}

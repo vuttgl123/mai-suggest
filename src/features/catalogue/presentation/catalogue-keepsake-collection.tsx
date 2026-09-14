@@ -9,32 +9,25 @@ export function CatalogueKeepsakeCollection({
   keepsakes,
 }: CatalogueKeepsakeCollectionProps) {
   return (
-    <section className="diary-section-tint relative isolate overflow-hidden">
-      <span
-        className="pointer-events-none absolute -right-32 -top-20 h-72 w-72 rounded-full bg-brand-soft opacity-60 blur-3xl"
-        aria-hidden="true"
-      />
-      <span
-        className="pointer-events-none absolute -bottom-24 -left-20 h-60 w-60 rounded-full bg-accent opacity-10 blur-3xl"
-        aria-hidden="true"
-      />
-
-      <div className="diary-container diary-section relative">
+    <section className="relative isolate overflow-hidden bg-gradient-to-b from-transparent to-brand-soft/20 py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl">
           <span
-            className="mx-auto grid h-11 w-11 place-items-center rounded-full bg-brand-soft text-brand"
+            className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--surface-elevated)] text-brand shadow-sm ring-1 ring-border/50"
             aria-hidden="true"
           >
-            <BookHeart size={20} strokeWidth={1.45} />
+            <BookHeart size={20} strokeWidth={1.5} />
           </span>
-          <p className="mt-4 text-sm font-semibold text-accent">Một góc chỉ dành cho chúng mình</p>
-          <h2 className="font-display mt-2 text-balance text-4xl font-semibold tracking-[-0.055em] text-brand-strong sm:text-5xl">
+          <h2 className="font-display mt-6 text-3xl font-semibold tracking-tight text-brand-strong sm:text-4xl">
             Những điều muốn nói
           </h2>
+          <p className="mt-3 text-lg text-muted">
+            Một góc chỉ dành cho chúng mình.
+          </p>
         </div>
 
         {keepsakes.length ? (
-          <div className="mt-10 grid gap-5 md:grid-cols-2 md:gap-6">
+          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:gap-8">
             {keepsakes.map((keepsake, index) => (
               <KeepsakeCard
                 keepsake={keepsake}
@@ -44,16 +37,16 @@ export function CatalogueKeepsakeCollection({
             ))}
           </div>
         ) : (
-          <div className="diary-wash mt-8 rounded-[var(--radius-card)] border border-border px-5 py-8 text-center shadow-[var(--shadow-soft)] sm:px-8">
+          <div className="mt-10 rounded-[2rem] border border-border/60 bg-[var(--surface-elevated)] p-12 text-center shadow-sm backdrop-blur-xl">
             <Sparkles
               className="mx-auto text-accent"
-              size={21}
+              size={24}
               aria-hidden="true"
             />
-            <p className="font-display mt-4 text-2xl font-semibold text-brand-strong">
+            <p className="font-display mt-4 text-xl font-semibold text-brand-strong">
               Chỗ này đang chờ một điều thật riêng.
             </p>
-            <p className="mx-auto mt-2 max-w-md text-sm leading-7 text-muted">
+            <p className="mx-auto mt-2 max-w-md text-[15px] leading-relaxed text-muted">
               Một lời nhắn nhỏ, một bài thơ hay một kỷ niệm sẽ được lưu lại ở đây.
             </p>
           </div>
@@ -73,27 +66,23 @@ function KeepsakeCard({
   const copy = keepsakeCopy(keepsake.kind);
 
   return (
-    <article className="relative overflow-hidden rounded-[var(--radius-card)] border border-border bg-paper p-5 shadow-[var(--shadow-soft)] sm:p-6">
+    <article className="group relative overflow-hidden rounded-[2rem] border border-border/60 bg-[var(--color-surface)]/80 p-8 shadow-sm backdrop-blur-xl transition hover:border-brand-soft sm:p-10">
       <span
-        className="absolute inset-x-7 top-0 h-px bg-gradient-to-r from-transparent via-accent/65 to-transparent"
-        aria-hidden="true"
-      />
-      <span
-        className="absolute right-5 top-5 font-display text-4xl font-semibold text-[rgb(101_12_28_/_10%)]"
+        className="absolute right-6 top-6 font-display text-5xl font-semibold text-brand-soft/50 transition-colors group-hover:text-brand-soft"
         aria-hidden="true"
       >
         {String(sequence).padStart(2, "0")}
       </span>
-      <div className="flex items-center gap-2 text-accent">
-        <Quote size={18} strokeWidth={1.45} aria-hidden="true" />
-        <p className="text-sm font-semibold text-accent">{copy.label}</p>
+      <div className="inline-flex items-center gap-2 rounded-full border border-border/50 bg-[var(--surface-elevated)] px-4 py-1.5 shadow-sm">
+        <Quote size={14} className="text-accent" aria-hidden="true" />
+        <p className="text-[13px] font-semibold text-accent">{copy.label}</p>
       </div>
       {keepsake.title ? (
-        <h3 className="font-display mt-4 max-w-[82%] text-2xl font-semibold tracking-[-0.04em] text-brand-strong">
+        <h3 className="font-display mt-6 max-w-[85%] text-2xl font-semibold tracking-tight text-brand-strong">
           {keepsake.title}
         </h3>
       ) : null}
-      <p className="mt-3 whitespace-pre-line text-[15px] leading-8 text-ink">
+      <p className="mt-4 whitespace-pre-line text-[15px] leading-relaxed text-ink">
         {keepsake.content}
       </p>
     </article>

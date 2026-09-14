@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { ViewTransition } from "react";
-import { ArrowUpRight, Heart, Sparkles } from "lucide-react";
+import { ArrowUpRight, Heart } from "lucide-react";
 import { CatalogueItemImage } from "@/features/catalogue/presentation/catalogue-item-image";
 import type { CatalogueItemSummary } from "@/modules/catalogue/domain/catalogue-read-models";
+import { Card } from "@/components/ui/card";
 
 interface CatalogueItemCardProps {
   item: CatalogueItemSummary;
@@ -16,9 +16,10 @@ export function CatalogueItemCard({
   const image = item.primaryImage;
 
   return (
-    <Link
-      className="group relative flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-[color-mix(in_srgb,var(--color-accent)_25%,var(--color-border))] bg-[color-mix(in_srgb,var(--color-paper)_90%,transparent)] shadow-[0_8px_30px_-6px_rgba(49,5,12,0.08)] backdrop-blur-sm transition-all duration-500 hover:border-accent hover:shadow-[var(--shadow-luxury-card)] hover:[transform:perspective(1000px)_translateY(-6px)_rotateX(2deg)_rotateY(-2deg)] focus-visible:outline focus-visible:outline-3 focus-visible:outline-focus"
+    <Card
+      className="group h-full flex-col justify-between"
       href={`/catalogue/${encodeURIComponent(item.slug)}`}
+      interactive={true}
       transitionTypes={["nav-forward"]}
     >
       <div className="relative overflow-hidden">
@@ -28,7 +29,7 @@ export function CatalogueItemCard({
             name={`item-image-${item.id}`}
             share="morph"
           >
-            <div className="overflow-hidden">
+            <div className="overflow-hidden bg-black/5">
               <CatalogueItemImage
                 alt={image.altText ?? item.title}
                 src={image.url}
@@ -36,55 +37,51 @@ export function CatalogueItemCard({
             </div>
           </ViewTransition>
         ) : (
-          <div className="relative flex aspect-[4/5] items-center justify-center overflow-hidden bg-[linear-gradient(135deg,var(--color-brand-soft),var(--color-paper)_65%,color-mix(in_srgb,var(--color-accent)_20%,transparent))]">
-            <span className="absolute h-36 w-36 rounded-full border border-[color-mix(in_srgb,var(--color-brand)_15%,transparent)]" aria-hidden="true" />
+          <div className="relative flex aspect-[4/5] items-center justify-center overflow-hidden bg-black/5">
             <Heart
-              className="relative text-brand transition-transform duration-500 group-hover:scale-110"
+              className="text-muted/30 transition-transform duration-[var(--motion-base)] group-hover:scale-110"
               fill="currentColor"
-              size={30}
-              strokeWidth={1.2}
+              size={32}
+              strokeWidth={1.5}
               aria-hidden="true"
             />
-            <span className="sr-only">Chưa có hình ảnh cho {item.title}</span>
           </div>
         )}
 
-        {/* Category Gold Badge */}
+        {/* Category Badge */}
         {categoryName ? (
           <div className="absolute left-3 top-3 z-10">
-            <span className="inline-flex items-center gap-1 rounded-full border border-[color-mix(in_srgb,var(--color-accent)_40%,transparent)] bg-[color-mix(in_srgb,var(--color-paper)_88%,transparent)] px-3 py-1 text-[11px] font-bold tracking-wider text-brand-strong shadow-[0_4px_12px_rgba(0,0,0,0.08)] backdrop-blur-md">
-              <Sparkles size={11} className="text-accent" />
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-surface px-2.5 py-1 text-[10px] font-medium tracking-wide text-brand-strong ring-1 ring-border/50">
               {categoryName}
             </span>
           </div>
         ) : null}
       </div>
 
-      <div className="flex flex-1 flex-col justify-between space-y-3 p-5 sm:p-6">
+      <div className="flex flex-1 flex-col justify-between p-5">
         <div>
-          <h2 className="font-display text-xl font-bold leading-snug tracking-tight text-brand-strong transition-colors duration-300 group-hover:text-brand">
+          <h2 className="title-text text-brand-strong transition-colors group-hover:text-accent">
             {item.title}
           </h2>
           {item.summary ? (
-            <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-muted sm:text-sm">
+            <p className="body-text-sm mt-2 line-clamp-2 text-muted">
               {item.summary}
             </p>
           ) : null}
         </div>
 
-        <div className="flex items-center justify-between pt-2 border-t border-[color-mix(in_srgb,var(--color-border)_40%,transparent)]">
+        <div className="mt-6 flex items-center justify-between border-t border-border/40 pt-4">
           {item.priceLabel ? (
-            <p className="text-xs font-bold text-brand uppercase tracking-wider">
+            <p className="diary-kicker text-muted">
               {item.priceLabel}
             </p>
           ) : <span />}
           
-          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-brand transition-all duration-300 group-hover:translate-x-1 group-hover:text-accent">
-            Mở câu chuyện
-            <ArrowUpRight size={14} aria-hidden="true" className="transition-transform duration-300 group-hover:rotate-12" />
-          </span>
+          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-soft/50 text-accent transition-colors duration-[var(--motion-base)] group-hover:bg-accent group-hover:text-white">
+            <ArrowUpRight size={14} strokeWidth={1.5} aria-hidden="true" />
+          </div>
         </div>
       </div>
-    </Link>
+    </Card>
   );
 }

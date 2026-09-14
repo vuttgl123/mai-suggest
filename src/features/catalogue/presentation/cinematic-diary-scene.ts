@@ -25,7 +25,7 @@ export interface CinematicDiaryScene {
 }
 
 const MAX_PIXEL_RATIO = 1.5;
-const DUST_COUNT = 300;
+const DUST_COUNT = 1000;
 const BOOK_SIZE = 3.42;
 const PAGE_WIDTH = BOOK_SIZE - 0.24;
 const PAGE_DEPTH = BOOK_SIZE - 0.24;
@@ -176,49 +176,49 @@ export function createCinematicDiaryScene(
 
   const leatherMaterial = registerMaterial(
     new THREE.MeshPhysicalMaterial({
-      color: color(palette.brandStrong, "#3b0d14"),
-      roughness: 0.7,
-      metalness: 0.1,
-      clearcoat: 0.1,
-      clearcoatRoughness: 0.8,
+      color: color(palette.brandStrong, "#240a15"),
+      roughness: 0.5,
+      metalness: 0.2,
+      clearcoat: 0.2,
+      clearcoatRoughness: 0.7,
       sheen: 1.0,
-      sheenRoughness: 0.4,
+      sheenRoughness: 0.3,
       sheenColor: color(palette.accent, "#c5a059"),
       bumpMap: noiseTexture,
-      bumpScale: 0.002,
+      bumpScale: 0.003, // Tăng độ nổi bật của da
     }),
   );
   
   const leatherEdgeMaterial = registerMaterial(
     new THREE.MeshPhysicalMaterial({
       color: color(palette.brand, "#650c1c"),
-      roughness: 0.4,
-      metalness: 0.1,
-      clearcoat: 0.4,
-      clearcoatRoughness: 0.4,
+      roughness: 0.6,
+      metalness: 0.2,
+      clearcoat: 0.5,
+      clearcoatRoughness: 0.5,
       bumpMap: noiseTexture,
-      bumpScale: 0.001,
+      bumpScale: 0.0015,
     }),
   );
   
   const paperMaterial = registerMaterial(
     new THREE.MeshStandardMaterial({
       color: color(palette.paper, "#fff9f3"),
-      roughness: 0.9,
-      metalness: 0,
+      roughness: 0.95,
+      metalness: 0.02,
       side: THREE.DoubleSide,
     }),
   );
 
-  // Striped texture for realistic page edges
+  // Striped texture for realistic page edges with subtle gold foil effect
   const edgeCanvas = document.createElement("canvas");
   edgeCanvas.width = 16;
   edgeCanvas.height = 128;
   const edgeCtx = edgeCanvas.getContext("2d");
   if (edgeCtx) {
-    edgeCtx.fillStyle = "#fcf6f0";
+    edgeCtx.fillStyle = "#e3c28b"; // Gold base
     edgeCtx.fillRect(0, 0, 16, 128);
-    edgeCtx.fillStyle = "rgba(0,0,0,0.12)";
+    edgeCtx.fillStyle = "rgba(0,0,0,0.08)"; // Subtle shadows for pages
     for (let i = 0; i < 128; i += 3) {
       edgeCtx.fillRect(0, i, 16, 1.5);
     }
@@ -230,9 +230,9 @@ export function createCinematicDiaryScene(
 
   const paperEdgeMaterial = registerMaterial(
     new THREE.MeshStandardMaterial({
-      color: color(palette.surface, "#f4ece6"),
-      roughness: 0.85,
-      metalness: 0.05,
+      color: color(palette.accent, "#d8a15b"), // Gold foil edge
+      roughness: 0.4,
+      metalness: 0.6,
       map: edgeTexture,
     }),
   );
@@ -240,20 +240,20 @@ export function createCinematicDiaryScene(
   const brassMaterial = registerMaterial(
     new THREE.MeshPhysicalMaterial({
       color: color(palette.accent, "#c5a059"),
-      roughness: 0.2,
-      metalness: 0.95,
-      clearcoat: 0.6,
-      clearcoatRoughness: 0.1,
+      roughness: 0.25,
+      metalness: 1.0,
+      clearcoat: 0.8,
+      clearcoatRoughness: 0.15,
     }),
   );
   
   const heartMaterial = registerMaterial(
     new THREE.MeshPhysicalMaterial({
       color: color(palette.accent, "#e6c887"),
-      roughness: 0.25,
-      metalness: 0.9,
-      clearcoat: 0.45,
-      clearcoatRoughness: 0.3,
+      roughness: 0.3,
+      metalness: 0.95,
+      clearcoat: 0.6,
+      clearcoatRoughness: 0.2,
       transparent: true,
       opacity: 0.08,
     }),
@@ -262,10 +262,10 @@ export function createCinematicDiaryScene(
   const ribbonMaterial = registerMaterial(
     new THREE.MeshPhysicalMaterial({
       color: color(palette.brand, "#741f43"),
-      roughness: 0.4,
-      metalness: 0.1,
+      roughness: 0.35,
+      metalness: 0.15,
       sheen: 1.0,
-      sheenRoughness: 0.2,
+      sheenRoughness: 0.15,
       sheenColor: color(palette.brandStrong, "#4a142a"),
       side: THREE.DoubleSide,
     })
@@ -294,40 +294,51 @@ export function createCinematicDiaryScene(
   const drawLettering = (fillColor: string) => {
     if (!leftLetterContext || !rightLetterContext) return;
 
+    const styles = window.getComputedStyle(document.body);
+    const displayFont = styles.getPropertyValue('--font-display') || 'Georgia';
+    const serifStack = `${displayFont}, serif`;
+
     // Left Page
     leftLetterContext.clearRect(0, 0, leftLetterCanvas.width, leftLetterCanvas.height);
     leftLetterContext.fillStyle = fillColor;
-    leftLetterContext.textAlign = "center";
+    
+    // Soft shadow for physical ink/emboss effect
+    leftLetterContext.shadowColor = "rgba(0, 0, 0, 0.15)";
+    leftLetterContext.shadowBlur = 6;
+    leftLetterContext.shadowOffsetY = 1;
+    
+    // Asymmetric elegant layout
+    leftLetterContext.textAlign = "left";
     leftLetterContext.textBaseline = "middle";
-    // Soft shadow for physical ink effect
-    leftLetterContext.shadowColor = "rgba(0, 0, 0, 0.2)";
-    leftLetterContext.shadowBlur = 8;
-    leftLetterContext.shadowOffsetY = 2;
     
-    leftLetterContext.font = "bold italic 160px Georgia, Times New Roman, serif";
-    leftLetterContext.fillText("Tháng Năm Của Chúng Ta", leftLetterCanvas.width / 2, leftLetterCanvas.height / 2 - 200);
-    
-    leftLetterContext.font = "bold italic 120px Georgia, Times New Roman, serif";
-    leftLetterContext.fillText("Chương 1", leftLetterCanvas.width / 2, leftLetterCanvas.height / 2 + 100);
+    leftLetterContext.font = `italic 90px ${serifStack}`;
+    leftLetterContext.fillText("Thế giới ngoài kia...", 300, 1300);
 
     leftLetterTexture.needsUpdate = true;
 
     // Right Page
     rightLetterContext.clearRect(0, 0, rightLetterCanvas.width, rightLetterCanvas.height);
     rightLetterContext.fillStyle = fillColor;
-    rightLetterContext.textAlign = "center";
-    rightLetterContext.textBaseline = "middle";
-    rightLetterContext.shadowColor = "rgba(0, 0, 0, 0.2)";
-    rightLetterContext.shadowBlur = 8;
-    rightLetterContext.shadowOffsetY = 2;
+    rightLetterContext.shadowColor = "rgba(0, 0, 0, 0.15)";
+    rightLetterContext.shadowBlur = 6;
+    rightLetterContext.shadowOffsetY = 1;
 
-    rightLetterContext.font = "bold italic 140px Georgia, Times New Roman, serif";
-    rightLetterContext.fillText("Mỗi khoảnh khắc bên em", rightLetterCanvas.width / 2, rightLetterCanvas.height / 2 - 150);
-    rightLetterContext.fillText("đều là một trang nhật ký", rightLetterCanvas.width / 2, rightLetterCanvas.height / 2 + 50);
-    rightLetterContext.fillText("tuyệt đẹp.", rightLetterCanvas.width / 2, rightLetterCanvas.height / 2 + 250);
+    rightLetterContext.textAlign = "right";
+    rightLetterContext.textBaseline = "middle";
+
+    rightLetterContext.font = `italic 140px ${serifStack}`;
+    rightLetterContext.fillText("...quá ồn ào.", 1748, 700);
     
-    rightLetterContext.font = "bold italic 90px Georgia, Times New Roman, serif";
-    rightLetterContext.fillText("- Gửi em, tình yêu của anh.", rightLetterCanvas.width / 2, rightLetterCanvas.height / 2 + 550);
+    rightLetterContext.font = `italic 90px ${serifStack}`;
+    rightLetterContext.fillText("Ở đây chỉ cất giữ", 1748, 1050);
+    rightLetterContext.fillText("những điều làm em", 1748, 1200);
+    rightLetterContext.fillText("mỉm cười.", 1748, 1350);
+    
+    // Decorative rule
+    rightLetterContext.fillRect(1448, 1350, 300, 3);
+    
+    rightLetterContext.font = `italic 70px ${serifStack}`;
+    rightLetterContext.fillText("- Tình yêu của anh", 1748, 1500);
 
     rightLetterTexture.needsUpdate = true;
   };
@@ -446,7 +457,7 @@ export function createCinematicDiaryScene(
       }),
     );
     const page = new THREE.Mesh(geometry, paperMaterial);
-    page.position.set(1.68 - BOOK_SIZE / 2 + 0.12, pageStackY + index * 0.014, 0);
+    page.position.set(-1.56, pageStackY + index * 0.014, 0);
     page.castShadow = true;
     page.receiveShadow = true;
     journal.add(page);
@@ -519,7 +530,7 @@ export function createCinematicDiaryScene(
     new THREE.PointsMaterial({
       color: color(palette.accent, "#e6ad58"),
       depthWrite: false,
-      opacity: 0.4,
+      opacity: 0.15,
       size: 0.08,
       sizeAttenuation: true,
       transparent: true,
@@ -530,23 +541,23 @@ export function createCinematicDiaryScene(
   const dust = new THREE.Points(dustGeometry, dustMaterial);
   scene.add(dust);
 
-  // Cinematic Lighting
-  const ambientLight = new THREE.AmbientLight(color(palette.paper, "#fff8ec"), 2.0);
+  // Cinematic Lighting (Chiaroscuro)
+  const ambientLight = new THREE.AmbientLight(color(palette.paper, "#fff8ec"), 0.6); // Vừa đủ để thấy chất liệu
   scene.add(ambientLight);
 
-  const keyLight = new THREE.DirectionalLight(color(palette.paper, "#ffffff"), 4.0);
+  const keyLight = new THREE.DirectionalLight(color(palette.paper, "#ffffff"), 2.5); // Đủ sáng để tạo bóng đổ đẹp
   keyLight.position.set(-4, 6, 5);
   keyLight.castShadow = true;
-  keyLight.shadow.mapSize.width = 1024;
-  keyLight.shadow.mapSize.height = 1024;
-  keyLight.shadow.bias = -0.001;
+  keyLight.shadow.mapSize.width = 2048;
+  keyLight.shadow.mapSize.height = 2048;
+  keyLight.shadow.bias = -0.0005;
   scene.add(keyLight);
 
-  const warmLight = new THREE.PointLight(color(palette.accent, "#e6ad58"), 20, 15, 2);
-  warmLight.position.set(3, 4, 3);
-  scene.add(warmLight);
+  const innerLight = new THREE.PointLight(color(palette.accent, "#e6ad58"), 0, 10, 2); 
+  innerLight.position.set(0.5, 0.5, 0); // Đặt ở giữa sách
+  scene.add(innerLight);
 
-  const rimLight = new THREE.PointLight(color(palette.brand, "#741f43"), 10, 10, 2);
+  const rimLight = new THREE.PointLight(color(palette.brand, "#741f43"), 5, 10, 2); // Tăng rim để tách khối
   rimLight.position.set(-3, -2, -4);
   scene.add(rimLight);
 
@@ -576,6 +587,10 @@ export function createCinematicDiaryScene(
     const idle = 1 - coverProgress;
     const time = timestamp * 0.001;
 
+    // Choreograph Lighting
+    ambientLight.intensity = THREE.MathUtils.lerp(0.6, 0.9, coverProgress);
+    keyLight.intensity = THREE.MathUtils.lerp(2.5, 4.0, coverProgress);
+
     frontHinge.rotation.z = THREE.MathUtils.lerp(0.015, Math.PI * 0.92, coverProgress);
     frontHinge.position.y = frontCoverY + Math.sin(coverProgress * Math.PI) * 0.012;
 
@@ -587,9 +602,14 @@ export function createCinematicDiaryScene(
       );
       updateBendablePageGeometry(geometry, staggeredProgress, {
         width: PAGE_WIDTH,
-        maxAngle: Math.PI * (0.82 + index * 0.05),
+        maxAngle: Math.PI * (0.25 + index * 0.05),
       });
       mesh.position.y = pageStackY + index * 0.014 + Math.sin(time * 1.15 + index) * 0.002 * idle;
+
+      // Emissive effect when book opens
+      if (mesh.material instanceof THREE.MeshPhysicalMaterial) {
+         mesh.material.emissiveIntensity = THREE.MathUtils.lerp(0, 0.15, coverProgress);
+      }
     });
 
     heartMaterial.opacity = 0.08 + pageRevealProgress * 0.82;
@@ -601,27 +621,40 @@ export function createCinematicDiaryScene(
 
     // Subtle parallax and breathing animation
     journal.rotation.x =
-      -0.46 + renderedPointerY * 0.06 + Math.sin(time * 0.8) * 0.015 * idle;
-    journal.rotation.y = -0.12 + renderedPointerX * 0.15;
+      -0.46 + renderedPointerY * 0.12 - coverProgress * 0.15 + Math.sin(time * 0.5) * 0.02;
+    journal.rotation.y = -0.12 + renderedPointerX * 0.15 + Math.cos(time * 0.4) * 0.01;
     journal.rotation.z = 0.12 + renderedPointerX * 0.04;
     journal.position.y =
-      Math.sin(time * 1.1) * 0.06 * idle + coverProgress * 0.06 + readingProgress * 0.02;
+      Math.sin(time * 1.1) * 0.06 * idle + coverProgress * 0.06 + readingProgress * 0.02 + Math.sin(time * 0.8) * 0.02;
     
     shadow.scale.x = 1.04 - coverProgress * 0.13;
     shadowMaterial.opacity = 0.25 - coverProgress * 0.08;
 
     // Animate Magical Dust
+    innerLight.position.x = THREE.MathUtils.lerp(0.5, 1.2, pageRevealProgress);
     dust.rotation.y = time * 0.05;
     const positions = dustGeometry.attributes.position.array as Float32Array;
     const phases = dustGeometry.attributes.phase.array as Float32Array;
     for (let i = 0; i < DUST_COUNT; i++) {
       const i3 = i * 3;
-      positions[i3 + 1] += Math.sin(time + phases[i]) * 0.002; // Float up and down
+      const phase = phases[i];
+      // Hút bụi về phía sách (ánh sáng) khi cuộn
+      const targetX = Math.sin(time * 0.3 + phase) * 2.5 + innerLight.position.x;
+      const targetY = Math.cos(time * 0.4 + phase) * 2.0 + innerLight.position.y + 1.0;
+      const targetZ = Math.sin(time * 0.2 + phase) * 2.5;
+
+      const idleX = positions[i3] + Math.sin(time * 0.5 + phase) * 0.005;
+      const idleY = positions[i3 + 1] + Math.cos(time * 0.3 + phase) * 0.005;
+      const idleZ = positions[i3 + 2] + Math.sin(time * 0.4 + phase) * 0.005;
+
+      positions[i3] = THREE.MathUtils.lerp(idleX, targetX, coverProgress * 0.02);
+      positions[i3 + 1] = THREE.MathUtils.lerp(idleY, targetY, coverProgress * 0.02);
+      positions[i3 + 2] = THREE.MathUtils.lerp(idleZ, targetZ, coverProgress * 0.02);
     }
     dustGeometry.attributes.position.needsUpdate = true;
-    dustMaterial.opacity = 0.2 + pageRevealProgress * 0.6 - readingProgress * 0.2;
+    dustMaterial.opacity = 0.05 + pageRevealProgress * 0.6 - readingProgress * 0.2;
 
-    warmLight.intensity = 20 + pageRevealProgress * 10 + readingProgress * 5;
+    innerLight.intensity = 0 + coverProgress * 25 + readingProgress * 15;
 
     const closedPosition = isNarrowViewport ? closedCameraPositionNarrow : closedCameraPosition;
     const openPosition = isNarrowViewport ? openCameraPositionNarrow : openCameraPosition;
@@ -670,7 +703,7 @@ export function createCinematicDiaryScene(
     dustMaterial.color.set(nextPalette.accent || "#e6ad58");
     ambientLight.color.set(nextPalette.paper || "#fff8ec");
     keyLight.color.set(nextPalette.paper || "#ffffff");
-    warmLight.color.set(nextPalette.accent || "#e6ad58");
+    innerLight.color.set(nextPalette.accent || "#e6ad58");
     rimLight.color.set(nextPalette.brand || "#741f43");
   };
 

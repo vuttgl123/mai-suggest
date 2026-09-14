@@ -20,93 +20,111 @@ export function AppHeader({ actor, activeSection = "catalogue" }: AppHeaderProps
 
   function linkClassName(section: AppHeaderProps["activeSection"]): string {
     const isActive = activeSection === section;
-    return `relative inline-flex min-h-[44px] items-center px-5 py-2 text-[13px] sm:text-[14px] font-medium tracking-wide transition-all duration-300 rounded-full ${
+    return `relative inline-flex h-10 items-center px-2 text-[13px] sm:text-[14px] font-medium tracking-wide transition-colors duration-300 ${
       isActive
-        ? "text-brand-strong bg-[color-mix(in_srgb,var(--color-brand-soft)_80%,transparent)] shadow-[0_2px_12px_rgba(49,5,12,0.08)] border border-[color-mix(in_srgb,var(--color-accent)_20%,transparent)]"
-        : "text-muted hover:text-brand-strong hover:bg-[color-mix(in_srgb,var(--color-paper)_60%,transparent)] hover:shadow-sm"
+        ? "text-brand-strong"
+        : "text-muted hover:text-brand-strong"
     }`;
   }
 
   return (
     <header
-      className="app-header sticky top-6 z-40 mx-auto max-w-5xl px-4 transition-all duration-500 animate-luxury-reveal"
+      className="app-header sticky top-4 z-40 w-full transition-all duration-500 animate-luxury-reveal px-4 sm:px-6"
       style={{ viewTransitionName: "persistent-nav" }}
     >
-      <div className="relative flex min-h-[4.5rem] items-center justify-between gap-x-4 rounded-full border border-[var(--theme-frame-border)] bg-[var(--theme-header-surface)] px-5 py-2 shadow-[var(--shadow-luxury-card)] backdrop-blur-xl sm:px-8">
+      <div className="mx-auto flex h-14 max-w-[var(--content-max)] items-center justify-between rounded-full border border-border/40 bg-[var(--surface-elevated)]/70 px-4 pr-1.5 shadow-md backdrop-blur-xl ring-1 ring-black/5">
         
         {/* Brand Logo & Name */}
         <Link
-          className="group inline-flex items-center gap-3 text-brand-strong outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--color-surface)] rounded-full"
+          className="group inline-flex items-center gap-2 outline-none pl-2"
           href="/"
           onClick={closeMenu}
         >
           <span
-            className="app-header-mark grid h-11 w-11 place-items-center rounded-full bg-[linear-gradient(135deg,var(--color-brand),var(--color-brand-strong))] text-paper shadow-[var(--shadow-luxury-glow)] transition-all duration-500 group-hover:rotate-12 group-hover:scale-105 group-hover:shadow-[var(--shadow-luxury-glow-strong)]"
+            className="app-header-mark grid h-7 w-7 place-items-center rounded-full bg-brand-soft/80 text-brand transition-transform duration-500 group-hover:scale-105"
             aria-hidden="true"
           >
-            <Heart size={20} fill="currentColor" strokeWidth={1.5} className="transition-transform duration-500 group-hover:scale-110" />
+            <Heart size={14} fill="currentColor" strokeWidth={1.5} />
           </span>
-          <span className="flex flex-col">
-            <span className="font-display text-[1.25rem] font-bold leading-none tracking-tight text-brand-strong" translate="no">
-              Điều Em Yêu
-            </span>
-            <span className="mt-0.5 text-[9.5px] font-bold tracking-[0.14em] uppercase text-accent">
-              bordeaux diary
-            </span>
+          <span className="font-display text-[15px] font-medium tracking-tight text-brand-strong" translate="no">
+            Điều Em Yêu
           </span>
         </Link>
 
-        {/* Mobile Toggle Button */}
-        <button
-          aria-controls="primary-navigation"
-          aria-expanded={isMenuOpen}
-          aria-label={isMenuOpen ? "Đóng điều hướng" : "Mở điều hướng"}
-          className="grid h-11 w-11 place-items-center rounded-full border border-border text-brand transition-all duration-300 hover:border-accent hover:bg-[var(--theme-control-hover)] hover:shadow-sm hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-focus lg:hidden"
-          onClick={() => setIsMenuOpen((current) => !current)}
-          type="button"
-        >
-          {isMenuOpen ? <X aria-hidden="true" size={18} /> : <Menu aria-hidden="true" size={18} />}
-        </button>
-
-        {/* Desktop & Mobile Navigation Links */}
+        {/* Desktop Navigation Links */}
         <nav
           aria-label="Điều hướng chính"
-          className={`${
-            isMenuOpen
-              ? "absolute left-0 right-0 top-full mt-3 flex flex-col gap-1.5 rounded-2xl border border-border bg-paper p-4 shadow-[0_16px_40px_rgba(49,5,12,0.2)] backdrop-blur-2xl"
-              : "hidden lg:flex"
-          } items-center gap-x-1 sm:gap-x-2`}
+          className="hidden md:flex items-center gap-x-1 absolute left-1/2 -translate-x-1/2"
           id="primary-navigation"
         >
           <Link className={linkClassName("catalogue")} href="/#collection" onClick={closeMenu}>
             Bộ sưu tập
+            {activeSection === "catalogue" && (
+              <span className="absolute -bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-brand" aria-hidden="true" />
+            )}
           </Link>
           <Link className={linkClassName("journey")} href="/hanh-trinh" onClick={closeMenu}>
             Hành trình
+            {activeSection === "journey" && (
+              <span className="absolute -bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-brand" aria-hidden="true" />
+            )}
           </Link>
           <Link className={linkClassName("letters")} href="/thu-hen-ngay-mo" onClick={closeMenu}>
-            Thư hẹn ngày mở
+            Hộp thư
+            {activeSection === "letters" && (
+              <span className="absolute -bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-brand" aria-hidden="true" />
+            )}
           </Link>
+        </nav>
+
+        {/* Actor Info, Admin & Mobile Toggle */}
+        <div className="flex shrink-0 items-center gap-1.5">
           {actor.canManageCatalogue ? (
-            <Link className={linkClassName("admin")} href="/admin" onClick={closeMenu}>
+            <Link 
+              className="hidden sm:inline-flex h-9 items-center gap-1.5 rounded-full px-3 text-[12px] font-medium text-brand hover:bg-brand-soft/50 transition-colors"
+              href="/admin" 
+              onClick={closeMenu}
+            >
+              <ShieldCheck size={14} aria-hidden="true" />
               Quản trị
             </Link>
           ) : null}
-        </nav>
 
-        {/* Actor Info & Owner Badge */}
-        <div className="hidden shrink-0 items-center gap-2 text-right sm:flex">
-          {actor.canManageCatalogue ? (
-            <span className="inline-flex items-center gap-1 rounded-full border border-[color-mix(in_srgb,var(--color-accent)_40%,transparent)] bg-[linear-gradient(135deg,var(--color-brand-soft),color-mix(in_srgb,var(--color-paper)_80%,transparent))] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-brand-strong shadow-[0_2px_8px_rgba(197,160,89,0.15)]">
-              <ShieldCheck size={12} className="text-accent" aria-hidden="true" />
-              Owner
+          <div className="hidden h-9 items-center rounded-full bg-[var(--color-surface)] px-3 sm:flex border border-border/50">
+            <span className="max-w-[10rem] truncate text-[12px] font-medium text-muted">
+              {identity.split('@')[0]}
             </span>
-          ) : null}
-          <span className="max-w-[10rem] truncate text-xs font-semibold text-muted lg:max-w-[14rem]">
-            {identity}
-          </span>
+          </div>
+
+          {/* Mobile Toggle Button */}
+          <button
+            aria-controls="mobile-navigation"
+            aria-expanded={isMenuOpen}
+            aria-label={isMenuOpen ? "Đóng điều hướng" : "Mở điều hướng"}
+            className="grid h-11 w-11 place-items-center rounded-full text-brand transition-colors hover:bg-black/5 md:hidden"
+            onClick={() => setIsMenuOpen((current) => !current)}
+            type="button"
+          >
+            {isMenuOpen ? <X aria-hidden="true" size={18} /> : <Menu aria-hidden="true" size={18} />}
+          </button>
         </div>
       </div>
+
+      {/* Mobile Menu Dropdown */}
+      {isMenuOpen && (
+        <nav
+          aria-label="Điều hướng di động"
+          className="absolute left-4 right-4 top-full mt-3 flex flex-col gap-1 rounded-2xl border border-border/50 bg-[var(--surface-elevated)] p-3 shadow-lg backdrop-blur-xl md:hidden"
+          id="mobile-navigation"
+        >
+          <Link className="rounded-xl px-4 py-3 text-sm font-medium text-brand-strong hover:bg-black/5" href="/#collection" onClick={closeMenu}>Bộ sưu tập</Link>
+          <Link className="rounded-xl px-4 py-3 text-sm font-medium text-brand-strong hover:bg-black/5" href="/hanh-trinh" onClick={closeMenu}>Hành trình</Link>
+          <Link className="rounded-xl px-4 py-3 text-sm font-medium text-brand-strong hover:bg-black/5" href="/thu-hen-ngay-mo" onClick={closeMenu}>Hộp thư</Link>
+          {actor.canManageCatalogue && (
+            <Link className="rounded-xl px-4 py-3 text-sm font-medium text-brand hover:bg-black/5" href="/admin" onClick={closeMenu}>Quản trị</Link>
+          )}
+        </nav>
+      )}
     </header>
   );
 }

@@ -73,3 +73,9 @@ export interface CatalogueItemDetail extends CatalogueItemSummary {
   images: CatalogueImage[];
   links: CatalogueLink[];
 }
+
+export interface CatalogueChapterPreview {
+  category: CatalogueCategory;
+  items: CatalogueItemSummary[];
+  totalItems: number;
+}

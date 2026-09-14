@@ -51,85 +51,29 @@ export function CatalogueHome({
       >
         Đi tới nội dung chính
       </a>
-      <CinematicDiaryIntro />
       <AppHeader activeSection="catalogue" actor={actor} />
+      <CinematicDiaryIntro />
 
       <main id="main-content" tabIndex={-1}>
-        <section className="diary-container diary-section grid gap-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(19rem,0.92fr)] lg:items-center lg:gap-16">
-          <div className="max-w-3xl">
-            <div className="flex items-center gap-3 text-accent" aria-hidden="true">
-              <span className="diary-rule" />
-              <Heart size={15} fill="currentColor" strokeWidth={1.4} />
-              <span className="diary-rule max-w-12" />
-            </div>
-            <p className="mt-5 font-display text-lg italic text-brand">
-              Dành riêng cho những điều dịu dàng
-            </p>
-            <h1 className="font-display display-xl mt-3 max-w-3xl text-balance font-semibold text-brand-strong">
-              Những điều làm em mỉm cười.
-            </h1>
-            <p className="mt-6 max-w-xl text-[15px] leading-7 text-muted sm:text-base sm:leading-8">
-              Một nơi nhỏ để gìn giữ những lựa chọn đẹp đẽ, những điểm đến đáng nhớ
-              và mọi điều khiến ngày thường trở nên đặc biệt hơn.
-            </p>
-            <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-muted">
-              <span className="inline-flex items-center gap-2 font-semibold text-brand">
-                <Sparkles size={15} aria-hidden="true" />
-                {itemPage.total} điều đang được lưu lại
-              </span>
-              <span className="h-px w-10 bg-border" aria-hidden="true" />
-              <span>mở từng chương theo nhịp riêng</span>
-            </div>
-          </div>
+        {/* Hero Section removed as the Cinematic 3D Diary Intro serves this purpose */}
 
-          <aside className="relative lg:pl-5">
-            <div className="absolute -left-1 top-8 hidden h-32 w-px bg-accent/45 lg:block" aria-hidden="true" />
-            <div className="diary-image-frame rotate-[1.5deg] p-2 transition duration-500 hover:rotate-0">
-              {featuredItem?.primaryImage ? (
-                <img
-                  alt=""
-                  className="aspect-[5/4] w-full rounded-[calc(var(--radius-frame)-0.35rem)] object-cover"
-                  decoding="async"
-                  fetchPriority="high"
-                  height={760}
-                  loading="eager"
-                  src={featuredItem.primaryImage.url}
-                  width={960}
-                />
-              ) : (
-                <div className="grid aspect-[5/4] place-items-center rounded-[calc(var(--radius-frame)-0.35rem)] bg-[linear-gradient(145deg,_var(--color-brand-soft),_var(--color-paper)_62%,_rgb(169_104_82_/_18%))] text-brand">
-                  <Heart size={32} fill="currentColor" strokeWidth={1.15} aria-hidden="true" />
-                  <span className="sr-only">Chưa có hình ảnh cho bộ sưu tập</span>
-                </div>
-              )}
-            </div>
-            <div className="relative -mt-5 ml-auto w-[min(87%,18rem)] rounded-[1rem] border border-border bg-[var(--surface-elevated)] p-4 shadow-[var(--shadow-card)] sm:p-5">
-              <p className="font-display text-xl font-semibold tracking-[-0.035em] text-brand-strong">
-                {featuredItem?.title ?? "Một trang giấy còn bỏ ngỏ"}
-              </p>
-              <p className="mt-2 text-sm leading-6 text-muted">
-                {featuredItem?.summary ?? "Chọn một chương để bắt đầu viết tiếp."}
-              </p>
-            </div>
-          </aside>
-        </section>
-
-        <div id="collection" className="diary-section-tint">
+        <section id="collection" className="diary-container pt-16 lg:pt-24">
           <CatalogueChapterRail
             categories={categories}
             query={searchQuery}
             selectedCategorySlug={selectedCategorySlug}
           />
-        </div>
-
-        <section className="diary-container diary-section">
-          <CatalogueSearch
-            categorySlug={selectedCategorySlug}
-            query={searchQuery}
-            resultCount={itemPage.total}
-            key={`${selectedCategorySlug ?? "all"}:${searchQuery ?? ""}`}
-          />
-          <div className="mt-12">
+          
+          <div className="mt-8">
+            <CatalogueSearch
+              categorySlug={selectedCategorySlug}
+              query={searchQuery}
+              resultCount={itemPage.total}
+              key={`${selectedCategorySlug ?? "all"}:${searchQuery ?? ""}`}
+            />
+          </div>
+          
+          <div className="mt-16">
             {itemPage.items.length ? (
               <>
               <ViewTransition
@@ -153,12 +97,12 @@ export function CatalogueHome({
                     <section aria-labelledby="featured-item-heading">
                       <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
                         <div>
-                          <p className="text-sm font-semibold text-accent">Điều muốn mở ra trước</p>
-                          <h2 className="font-display mt-1 text-3xl font-semibold tracking-[-0.05em] text-brand-strong" id="featured-item-heading">
+                          <p className="diary-kicker text-muted">Điều muốn mở ra trước</p>
+                          <h2 className="font-display display-md mt-2 font-semibold text-brand-strong" id="featured-item-heading">
                             {visibleCollectionTitle}
                           </h2>
                         </div>
-                        <p className="text-sm text-muted">Một gợi ý để bắt đầu chậm rãi.</p>
+                        <p className="body-text-sm text-muted">Một gợi ý để bắt đầu chậm rãi.</p>
                       </div>
                       <div className="animate-luxury-reveal opacity-0 [animation-fill-mode:forwards]" style={{ animationDelay: '100ms' }}>
                         <CatalogueFeaturedItemCard
@@ -170,21 +114,21 @@ export function CatalogueHome({
                   ) : null}
 
                   {gridItems.length ? (
-                    <section className={featuredItem ? "mt-8" : ""} aria-labelledby="saved-things-heading">
+                    <section className={featuredItem ? "mt-12" : ""} aria-labelledby="saved-things-heading">
                       <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
                         <div>
-                          <p className="text-sm font-semibold text-accent">Những điều đã lưu</p>
-                          <h2 className="font-display mt-1 text-3xl font-semibold tracking-[-0.05em] text-brand-strong" id="saved-things-heading">
+                          <p className="diary-kicker text-muted">Những điều đã lưu</p>
+                          <h2 className="font-display display-md mt-2 font-semibold text-brand-strong" id="saved-things-heading">
                             {featuredItem ? "Còn rất nhiều điều để khám phá" : visibleCollectionTitle}
                           </h2>
                         </div>
-                        <p className="text-sm text-muted">{itemPage.total} điều đang được gìn giữ</p>
+                        <p className="body-text-sm text-muted">{itemPage.total} điều đang được gìn giữ</p>
                       </div>
-                      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-12 lg:gap-6">
+                      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
                         {gridItems.map((item, index) => (
                           <div 
-                            className={`animate-luxury-reveal opacity-0 [animation-fill-mode:forwards] ${index % 5 === 0 ? "lg:col-span-5" : index % 3 === 0 ? "lg:col-span-4" : "lg:col-span-3"}`} 
-                            style={{ animationDelay: `${(index + 2) * 100}ms` }}
+                            className="animate-luxury-reveal opacity-0 [animation-fill-mode:forwards]" 
+                            style={{ animationDelay: `${Math.min(index + 2, 5) * 100}ms` }}
                             key={item.id}
                           >
                             <CatalogueItemCard
