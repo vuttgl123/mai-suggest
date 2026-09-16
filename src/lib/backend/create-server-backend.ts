@@ -6,6 +6,7 @@ import { SupabaseAllowedUserRepository } from "@/modules/identity/infrastructure
 import { GetVisibleItemDetail } from "@/modules/catalogue/application/get-visible-item-detail";
 import { ListVisibleCategories } from "@/modules/catalogue/application/list-visible-categories";
 import { ListVisibleItemPage } from "@/modules/catalogue/application/list-visible-item-page";
+import { ListVisibleChapterPreviews } from "@/modules/catalogue/application/list-visible-chapter-previews";
 import { SupabaseCatalogueReader } from "@/modules/catalogue/infrastructure/supabase-catalogue-reader";
 import { ManageCatalogue } from "@/modules/catalogue/application/manage-catalogue";
 import { SupabaseCatalogueAdminRepository } from "@/modules/catalogue/infrastructure/supabase-catalogue-admin-repository";
@@ -19,6 +20,8 @@ import { GetItemEngagementView } from "@/modules/engagement/application/get-item
 import { SupabaseEngagementRepository } from "@/modules/engagement/infrastructure/supabase-engagement-repository";
 import { SupabaseItemEngagementReader } from "@/modules/engagement/infrastructure/supabase-item-engagement-reader";
 import { ListVisibleTimeline } from "@/modules/timeline/application/list-visible-timeline";
+import { ListVisibleTimelineChapters } from "@/modules/timeline/application/list-visible-timeline-chapters";
+import { GetVisibleTimelineChapter } from "@/modules/timeline/application/get-visible-timeline-chapter";
 import { ListManagedTimeline } from "@/modules/timeline/application/list-managed-timeline";
 import { GetManagedTimelineEntry } from "@/modules/timeline/application/get-managed-timeline-entry";
 import { ManageTimeline } from "@/modules/timeline/application/manage-timeline";
@@ -29,6 +32,9 @@ import { ListOpenedFutureLetters } from "@/modules/future-letters/application/li
 import { ListManagedFutureLetters } from "@/modules/future-letters/application/list-managed-future-letters";
 import { ListOwnScheduledFutureLetters } from "@/modules/future-letters/application/list-own-scheduled-future-letters";
 import { ManageFutureLetters } from "@/modules/future-letters/application/manage-future-letters";
+import { ListFutureMailbox } from "@/modules/future-letters/application/list-future-mailbox";
+import { GetOpenedFutureLetter } from "@/modules/future-letters/application/get-opened-future-letter";
+import { GetOwnScheduledFutureLetter } from "@/modules/future-letters/application/get-own-scheduled-future-letter";
 import { SupabaseFutureLetterReader } from "@/modules/future-letters/infrastructure/supabase-future-letter-reader";
 import { SupabaseFutureLetterRepository } from "@/modules/future-letters/infrastructure/supabase-future-letter-repository";
 import { ResolveSiteTheme } from "@/modules/site-theme/application/resolve-site-theme";
@@ -60,6 +66,7 @@ export function createBackendForClient(client: SupabaseClient<Database>) {
     manageAllowedUsers: new ManageAllowedUsers(allowedUserRepository),
     listVisibleCategories: new ListVisibleCategories(catalogueReader),
     listVisibleItemPage: new ListVisibleItemPage(catalogueReader),
+    listVisibleChapterPreviews: new ListVisibleChapterPreviews(catalogueReader),
     getVisibleItemDetail: new GetVisibleItemDetail(catalogueReader),
     manageCatalogue: new ManageCatalogue(catalogueAdminRepository),
     listManagedCategories: new ListManagedCategories(catalogueAdminReader),
@@ -69,6 +76,8 @@ export function createBackendForClient(client: SupabaseClient<Database>) {
     manageItemEngagement: new ManageItemEngagement(engagementRepository),
     getItemEngagementView: new GetItemEngagementView(itemEngagementReader),
     listVisibleTimeline: new ListVisibleTimeline(timelineReader),
+    listVisibleTimelineChapters: new ListVisibleTimelineChapters(timelineReader),
+    getVisibleTimelineChapter: new GetVisibleTimelineChapter(timelineReader),
     listManagedTimeline: new ListManagedTimeline(timelineAdminReader),
     getManagedTimelineEntry: new GetManagedTimelineEntry(timelineAdminReader),
     manageTimeline: new ManageTimeline(timelineRepository),
@@ -78,6 +87,9 @@ export function createBackendForClient(client: SupabaseClient<Database>) {
       futureLetterReader,
     ),
     manageFutureLetters: new ManageFutureLetters(futureLetterRepository),
+    listFutureMailbox: new ListFutureMailbox(futureLetterReader),
+    getOpenedFutureLetter: new GetOpenedFutureLetter(futureLetterReader),
+    getOwnScheduledFutureLetter: new GetOwnScheduledFutureLetter(futureLetterReader),
     resolveSiteTheme: new ResolveSiteTheme(siteThemeReader),
     getManagedSiteTheme: new GetManagedSiteTheme(siteThemeReader),
     manageSiteTheme: new ManageSiteTheme(siteThemeRepository),

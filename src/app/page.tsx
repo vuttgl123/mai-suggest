@@ -27,9 +27,11 @@ export default async function Home({ searchParams }: HomePageProps) {
   const searchQuery = parseCatalogueSearchQuery(params.q);
   const requestedPage = parsePositivePage(params.page);
 
-  const [categoriesResult, itemsResult] = await Promise.all([
+  const isOverview = !categorySlug && !searchQuery;
+
+  const [categoriesResult, itemsResult, chapterPreviewsResult] = await Promise.all([
     backend.listVisibleCategories.execute(actor),
-    backend.listVisibleItemPage.execute(
+    isOverview ? Promise.resolve(null) : backend.listVisibleItemPage.execute(
       actor,
       {
         categorySlug: categorySlug ?? undefined,
@@ -38,24 +40,28 @@ export default async function Home({ searchParams }: HomePageProps) {
         query: searchQuery ?? undefined,
       },
     ),
+    isOverview ? backend.listVisibleChapterPreviews.execute(actor, { itemsPerChapter: 6 }) : Promise.resolve(null),
   ]);
 
-  if (!categoriesResult.ok || !itemsResult.ok) {
+  if (!categoriesResult.ok || (itemsResult && !itemsResult.ok) || (chapterPreviewsResult && !chapterPreviewsResult.ok)) {
     throw new Error("Unable to load catalogue.");
   }
 
-  const itemPage =
-    itemsResult.value.pageCount > 0 && requestedPage > itemsResult.value.pageCount
-      ? await backend.listVisibleItemPage.execute(actor, {
-          categorySlug: categorySlug ?? undefined,
-          page: itemsResult.value.pageCount,
-          pageSize: PUBLIC_PAGE_SIZE,
-          query: searchQuery ?? undefined,
-        })
-      : itemsResult;
+  let itemPage: import("@/core/application/result").Result<import("@/modules/catalogue/domain/catalogue-read-models").CatalogueItemPage> | null = itemsResult;
 
-  if (!itemPage.ok) {
-    throw new Error("Unable to load catalogue.");
+  if (itemsResult?.ok) {
+    if (itemsResult.value.pageCount > 0 && requestedPage > itemsResult.value.pageCount) {
+      itemPage = await backend.listVisibleItemPage.execute(actor, {
+        categorySlug: categorySlug ?? undefined,
+        page: itemsResult.value.pageCount,
+        pageSize: PUBLIC_PAGE_SIZE,
+        query: searchQuery ?? undefined,
+      });
+
+      if (!itemPage.ok) {
+        throw new Error("Unable to load catalogue.");
+      }
+    }
   }
 
   return (
@@ -63,7 +69,8 @@ export default async function Home({ searchParams }: HomePageProps) {
       <CatalogueHome
         actor={actor}
         categories={categoriesResult.value}
-        itemPage={itemPage.value}
+        chapterPreviews={chapterPreviewsResult && chapterPreviewsResult.ok ? chapterPreviewsResult.value : undefined}
+        itemPage={itemPage && itemPage.ok ? itemPage.value : undefined}
         searchQuery={searchQuery}
         selectedCategorySlug={categorySlug}
       />

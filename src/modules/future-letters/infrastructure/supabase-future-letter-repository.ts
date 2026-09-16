@@ -53,6 +53,7 @@ export class SupabaseFutureLetterRepository implements FutureLetterRepository {
       })
       .eq("id", letterId)
       .eq("author_id", authorId)
+      .gt("opens_at", new Date().toISOString())
       .select(FUTURE_LETTER_COLUMNS)
       .maybeSingle();
 
@@ -69,6 +70,7 @@ export class SupabaseFutureLetterRepository implements FutureLetterRepository {
       .delete()
       .eq("id", letterId)
       .eq("author_id", authorId)
+      .gt("opens_at", new Date().toISOString())
       .select("id")
       .maybeSingle();
 

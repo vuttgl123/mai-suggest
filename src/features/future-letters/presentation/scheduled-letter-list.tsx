@@ -4,6 +4,7 @@ import { Clock3, Pencil, Trash2 } from "lucide-react";
 import { useEffect, useState, useSyncExternalStore, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { FutureLetterRefresh } from "./future-letter-refresh";
 import { formatFutureLetterDateTime } from "@/modules/future-letters/domain/future-letter-time";
 import type { FutureLetterRecord } from "@/modules/future-letters/domain/future-letter-models";
 import { deleteFutureLetterAction } from "@/modules/future-letters/presentation/future-letter-actions";
@@ -47,17 +48,6 @@ export function ScheduledLetterList({ letters, onEdit }: ScheduledLetterListProp
   const [feedback, setFeedback] = useState<string | null>(null);
   const [featuredLetter, ...sealedLetters] = letters;
 
-  useEffect(() => {
-    const nextOpenAt = Math.min(
-      ...letters.map((letter) => new Date(letter.opensAt).getTime()),
-    );
-    if (!Number.isFinite(nextOpenAt)) return;
-
-    const delay = Math.max(nextOpenAt - Date.now() + 100, 0);
-    const timeout = window.setTimeout(() => router.refresh(), delay);
-    return () => window.clearTimeout(timeout);
-  }, [letters, router]);
-
   function deleteLetter(letterId: string) {
     startTransition(async () => {
       const result = await deleteFutureLetterAction(letterId);
@@ -74,10 +64,11 @@ export function ScheduledLetterList({ letters, onEdit }: ScheduledLetterListProp
 
   return (
     <section aria-labelledby="scheduled-letters-heading">
+      <FutureLetterRefresh letters={letters} />
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="diary-kicker tracking-widest uppercase">Bàn niêm phong</p>
-          <h2 id="scheduled-letters-heading" className="font-display mt-2 text-3xl font-semibold italic tracking-[-0.045em] text-brand-strong drop-shadow-sm">
+          <p className="diary-kicker text-muted">Bản niêm phong</p>
+          <h2 id="scheduled-letters-heading" className="font-display mt-2 text-3xl font-semibold tracking-[-0.045em] text-brand-strong">
             Những lá thư đang hẹn.
           </h2>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-muted">
@@ -85,7 +76,7 @@ export function ScheduledLetterList({ letters, onEdit }: ScheduledLetterListProp
             sẽ được giữ nguyên như khoảnh khắc bạn đã gửi đi.
           </p>
         </div>
-        <span className="rounded-full bg-paper px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-brand shadow-sm">
+        <span className="rounded-full bg-paper px-3 py-1.5 text-xs font-semibold text-brand">
           {letters.length} đang chờ
         </span>
       </div>
@@ -108,7 +99,7 @@ export function ScheduledLetterList({ letters, onEdit }: ScheduledLetterListProp
 
       {sealedLetters.length ? (
         <div className="mt-7 border-t border-border pt-6">
-          <p className="diary-kicker tracking-widest uppercase">Đang chờ đúng ngày</p>
+          <p className="diary-kicker text-muted">Đang chờ đúng ngày</p>
           <ol className="mt-4 grid gap-3 md:grid-cols-2">
             {sealedLetters.map((letter) => (
               <ScheduledLetterCard
@@ -162,26 +153,20 @@ function ScheduledLetterCard({
     <li
       className={
         isFeatured
-          ? "relative overflow-hidden rounded-[var(--radius-dialog)] border border-border bg-[var(--theme-card-surface)] p-5 shadow-[var(--shadow-card)] sm:p-6"
-          : "rounded-[var(--radius-card)] border border-border bg-paper p-4 shadow-[var(--shadow-soft)]"
+          ? "relative overflow-hidden rounded-[var(--radius-dialog)] border border-border bg-[var(--theme-card-surface)] p-5 sm:p-6"
+          : "rounded-[var(--radius-card)] border border-border bg-paper p-4"
       }
     >
-      {isFeatured ? (
-        <span
-          className="pointer-events-none absolute -right-16 -top-24 h-64 w-64 animate-pulse-slow rounded-full bg-[radial-gradient(circle_at_center,var(--color-accent),transparent_70%)] opacity-30 blur-2xl"
-          aria-hidden="true"
-        />
-      ) : null}
       <div className={`relative flex items-start justify-between gap-3 ${isFeatured ? "pr-14" : ""}`}>
         <div className="min-w-0">
-          <p className="diary-kicker tracking-widest uppercase">
+          <p className="diary-kicker text-brand">
             {isFeatured ? "Sắp đến giờ hẹn" : "Đã niêm phong"}
           </p>
           <h3
             className={
               isFeatured
-                ? "font-display mt-3 break-words text-3xl font-semibold italic tracking-[-0.05em] text-brand-strong drop-shadow-sm"
-                : "mt-2 break-words text-base font-bold italic text-brand-strong"
+                ? "font-display mt-3 break-words text-3xl font-semibold tracking-[-0.05em] text-brand-strong"
+                : "mt-2 break-words text-base font-bold text-brand-strong"
             }
           >
             {letter.title}
@@ -190,7 +175,7 @@ function ScheduledLetterCard({
         <span
           className={
             isFeatured
-              ? "grid h-11 w-11 shrink-0 place-items-center rounded-full border border-[var(--theme-badge-border)] bg-paper text-accent shadow-[var(--shadow-soft)]"
+              ? "grid h-11 w-11 shrink-0 place-items-center rounded-full border border-[var(--theme-badge-border)] bg-paper text-accent"
               : "text-accent"
           }
           aria-hidden="true"

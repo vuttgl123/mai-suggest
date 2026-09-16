@@ -40,3 +40,19 @@ export async function deleteManagedFutureLetterAction(letterId: string) {
 
   return revalidateAfterMutation(result);
 }
+
+export async function getOpenedFutureLetterAction(letterId: string) {
+  const result = await runServerAction((backend, actor) =>
+    backend.getOpenedFutureLetter.execute(actor, letterId),
+  );
+  if (!result.ok) throw new Error(result.error.code);
+  return result.value;
+}
+
+export async function getOwnScheduledFutureLetterAction(letterId: string) {
+  const result = await runServerAction((backend, actor) =>
+    backend.getOwnScheduledFutureLetter.execute(actor, letterId),
+  );
+  if (!result.ok) throw new Error(result.error.code);
+  return result.value;
+}

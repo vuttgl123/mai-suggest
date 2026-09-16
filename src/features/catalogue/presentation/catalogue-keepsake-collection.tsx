@@ -9,7 +9,7 @@ export function CatalogueKeepsakeCollection({
   keepsakes,
 }: CatalogueKeepsakeCollectionProps) {
   return (
-    <section className="relative isolate overflow-hidden bg-gradient-to-b from-transparent to-brand-soft/20 py-24 sm:py-32">
+    <section className="relative isolate overflow-hidden py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl">
           <span

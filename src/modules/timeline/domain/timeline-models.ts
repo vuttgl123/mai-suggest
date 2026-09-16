@@ -29,6 +29,11 @@ export interface TimelineEntryRecord {
   updatedAt: string;
 }
 
+export type TimelineChapterPreview = Pick<
+  TimelineEntryRecord,
+  "id" | "dateLabel" | "title" | "imageUrl" | "imageAltText" | "sortOrder"
+>;
+
 export interface TimelineEntry extends TimelineEntryRecord {
   responses: TimelineResponse[];
 }

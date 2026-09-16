@@ -4,15 +4,23 @@ import { requireActivePageAccess } from "@/lib/backend/require-page-access";
 
 export const dynamic = "force-dynamic";
 
-export default async function ScheduledFutureLettersPage() {
+export default async function ScheduledFutureLettersPage(props: {
+  searchParams?: Promise<{ page?: string; q?: string }>;
+}) {
   const { actor, backend } = await requireActivePageAccess();
 
-  const [openedResult, scheduledResult] = await Promise.all([
-    backend.listOpenedFutureLetters.execute(actor),
+  const searchParams = await props.searchParams;
+  const query = {
+    page: searchParams?.page ? parseInt(searchParams.page, 10) : 1,
+    query: searchParams?.q || "",
+  };
+
+  const [mailboxResult, scheduledResult] = await Promise.all([
+    backend.listFutureMailbox.execute(actor, query),
     backend.listOwnScheduledFutureLetters.execute(actor),
   ]);
 
-  if (!openedResult.ok || !scheduledResult.ok) {
+  if (!mailboxResult.ok || !scheduledResult.ok) {
     throw new Error("Unable to load scheduled future letters.");
   }
 
@@ -20,8 +28,10 @@ export default async function ScheduledFutureLettersPage() {
     <PageTransition>
       <FutureLettersExperience
         actor={actor}
-        openedLetters={openedResult.value}
+        mailbox={mailboxResult.value}
         scheduledLetters={scheduledResult.value}
+        searchQuery={query.query}
+        currentPage={query.page}
       />
     </PageTransition>
   );

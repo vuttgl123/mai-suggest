@@ -2,53 +2,48 @@ import { Quote } from "lucide-react";
 import { CatalogueItemImage } from "@/features/catalogue/presentation/catalogue-item-image";
 import { TimelineResponsePanel } from "@/features/timeline/presentation/timeline-response-panel";
 import type { TimelineEntry } from "@/modules/timeline/domain/timeline-models";
+import { Card } from "@/components/ui/card";
 
-interface TimelineChapterCardProps {
+interface TimelineChapterReaderProps {
   actorId: string;
   canManage: boolean;
   entry: TimelineEntry;
   sequence: number;
 }
 
-export function TimelineChapterCard({
+export function TimelineChapterReader({
   actorId,
   canManage,
   entry,
   sequence,
-}: TimelineChapterCardProps) {
+}: TimelineChapterReaderProps) {
   return (
-    <article className="timeline-entry-card group relative overflow-hidden transition-all duration-500 hover:shadow-[var(--shadow-luxury-card)]">
-      <span
-        className="absolute inset-x-7 top-0 h-px bg-gradient-to-r from-transparent via-accent/65 to-transparent"
-        aria-hidden="true"
-      />
-      <span
-        className="absolute right-5 top-4 font-display text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-accent to-transparent opacity-20 drop-shadow-sm"
-        aria-hidden="true"
-      >
-        {String(sequence).padStart(2, "0")}
-      </span>
-
-      <div className="flex flex-wrap items-center justify-between gap-3 pr-13">
-        <p className="text-sm font-bold tracking-widest uppercase bg-clip-text text-transparent bg-gradient-to-br from-accent to-brand drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">{entry.dateLabel}</p>
+    <Card className="group relative h-fit overflow-hidden p-6 sm:p-8 lg:p-10">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-brand-soft font-display text-sm font-bold text-brand">
+            {String(sequence).padStart(2, "0")}
+          </span>
+          <p className="diary-kicker text-brand">{entry.dateLabel}</p>
+        </div>
         {entry.occurredOn ? (
           <time
-            className="text-xs font-semibold text-muted"
+            className="body-text-sm text-muted"
             dateTime={entry.occurredOn}
           >
             {formatTimelineDate(entry.occurredOn)}
           </time>
         ) : null}
       </div>
-      <h3 className="font-display mt-3 max-w-[86%] text-3xl font-semibold tracking-[-0.05em] text-brand-strong">
+      <h3 className="font-display display-md mt-6 text-brand-strong">
         {entry.title}
       </h3>
       {entry.imageUrl && entry.imageAltText ? (
-        <div className="mt-5 overflow-hidden rounded-[calc(var(--radius-card)_-_0.35rem)] border border-border transition duration-500 group-hover:border-accent">
+        <div className="mt-5 overflow-hidden rounded-[calc(var(--radius-card)_-_0.35rem)] border border-border">
           <CatalogueItemImage alt={entry.imageAltText} src={entry.imageUrl} />
         </div>
       ) : null}
-      <p className="mt-5 whitespace-pre-line text-[15px] leading-8 text-ink">
+      <p className="body-text mt-5 whitespace-pre-line text-ink">
         {entry.story}
       </p>
       {entry.lesson ? (
@@ -68,7 +63,7 @@ export function TimelineChapterCard({
         entryId={entry.id}
         responses={entry.responses}
       />
-    </article>
+    </Card>
   );
 }
 

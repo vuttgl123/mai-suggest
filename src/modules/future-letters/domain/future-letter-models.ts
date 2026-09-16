@@ -28,3 +28,14 @@ export interface FutureLetterInput {
   imageAltText: string | null;
   musicUrl: string | null;
 }
+
+export type FutureLetterSummary = Omit<
+  FutureLetter,
+  "content" | "imageUrl" | "imageAltText" | "musicUrl"
+>;
+
+export interface FutureMailboxPage {
+  items: FutureLetterSummary[];
+  totalCount: number;
+  hasMore: boolean;
+}

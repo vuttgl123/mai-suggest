@@ -1,23 +1,28 @@
 import { BookHeart, Heart, Sparkles } from "lucide-react";
 import { AppHeader } from "@/components/app-header";
-import { TimelineChapterCard } from "@/features/timeline/presentation/timeline-chapter-card";
+import { TimelineChapterPreview } from "@/features/timeline/presentation/timeline-chapter-preview";
+import { TimelineChapterReader } from "@/features/timeline/presentation/timeline-chapter-reader";
 import { TimelineFilmControls } from "@/features/timeline/presentation/timeline-film-controls";
-import type { TimelineEntry } from "@/modules/timeline/domain/timeline-models";
+import type { TimelineEntry, TimelineChapterPreview as TimelineChapterPreviewModel } from "@/modules/timeline/domain/timeline-models";
 import type { ActiveActor } from "@/modules/identity/domain/current-actor";
 
 const TIMELINE_FILM_VIEWPORT_ID = "timeline-film-viewport";
 
 interface RelationshipTimelineProps {
   actor: ActiveActor;
-  entries: TimelineEntry[];
+  previews: TimelineChapterPreviewModel[];
+  activeChapter: TimelineEntry | null;
 }
 
 export function RelationshipTimeline({
   actor,
-  entries,
+  previews,
+  activeChapter,
 }: RelationshipTimelineProps) {
+  const activeChapterIndex = previews.findIndex((p) => p.id === activeChapter?.id);
+
   return (
-    <div className="diary-shell">
+    <div className="journey-layout">
       <a
         className="sr-only absolute left-5 top-4 z-50 rounded-full bg-brand-strong px-4 py-2 text-sm font-semibold text-white focus:not-sr-only"
         href="#journey-content"
@@ -27,75 +32,80 @@ export function RelationshipTimeline({
       <AppHeader activeSection="journey" actor={actor} />
 
       <main id="journey-content" tabIndex={-1}>
-        <section className="diary-container diary-section grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(17rem,0.46fr)] lg:items-end lg:gap-16">
+        <section className="diary-container diary-section pt-16 lg:pt-24">
           <div className="max-w-3xl">
             <div className="flex items-center gap-3 text-accent" aria-hidden="true">
               <BookHeart size={20} strokeWidth={1.35} />
               <span className="h-px w-16 bg-accent/55" />
             </div>
-            <p className="mt-5 text-sm font-semibold text-accent">Một cuốn nhật ký chung</p>
+            <p className="diary-kicker mt-5 text-muted">Hành trình của chúng mình</p>
             <h1 className="font-display display-xl mt-3 max-w-3xl text-balance font-semibold text-brand-strong">
               Chúng mình đã lớn lên cùng nhau như thế nào.
             </h1>
-            <p className="mt-6 max-w-2xl text-base leading-8 text-muted">
+            <p className="body-text mt-6 max-w-2xl text-muted">
               Không chỉ là những ngày đã đi qua, mà còn là những điều mình đã cùng học,
               cùng vượt qua và vẫn đang lựa chọn mỗi ngày.
             </p>
           </div>
-          <aside className="diary-wash relative overflow-hidden rounded-[var(--radius-card)] border border-border p-5 shadow-[var(--shadow-soft)] sm:p-6">
-            <span className="absolute -right-8 -top-10 h-28 w-28 rounded-full border border-accent/35" aria-hidden="true" />
-            <p className="text-sm font-semibold text-accent">Các chương đã mở</p>
-            <p className="font-display mt-2 text-5xl font-semibold tracking-[-0.07em] text-brand-strong">{entries.length}</p>
-            <p className="mt-2 max-w-xs text-sm leading-6 text-muted">Mỗi mốc là một lần mình chọn nhớ về nhau.</p>
-          </aside>
         </section>
 
-        {entries.length ? (
+        {previews.length > 0 ? (
           <section
             aria-labelledby="timeline-heading"
-            className="diary-section-tint"
+            className="mt-8 pb-20"
           >
-            <div className="diary-container diary-section">
-              <div className="flex flex-wrap items-end justify-between gap-5">
+            <div className="diary-container">
+              <div className="flex flex-wrap items-end justify-between gap-5 border-t border-border pt-8">
                 <div>
-                  <p className="text-sm font-semibold text-accent">Từng trang mình đã viết</p>
                   <h2
-                    className="font-display mt-2 text-balance text-4xl font-semibold tracking-[-0.055em] text-brand-strong sm:text-5xl"
+                    className="font-display text-balance text-2xl font-semibold text-brand-strong"
                     id="timeline-heading"
                   >
-                    Hành trình của chúng mình
+                    Từng trang mình đã viết
                   </h2>
                 </div>
-                <p className="max-w-xs text-sm leading-6 text-muted">Kéo ngang để lần giở từng chương.</p>
+                <p className="body-text-sm max-w-xs text-muted">{previews.length} trang đang được gìn giữ</p>
               </div>
               <div className="timeline-film-stage mt-9 sm:mt-11">
                 <div
-                  aria-label="Cuộn phim các chương trong hành trình"
+                  aria-label="Cuộn phim các chặng trong hành trình"
                   className="timeline-film-viewport"
                   id={TIMELINE_FILM_VIEWPORT_ID}
                   role="region"
                   tabIndex={0}
                 >
-                  <ol className="timeline-filmstrip">
-                    {entries.map((entry, index) => (
-                      <li
-                        className="timeline-film-frame"
-                        id={`timeline-entry-${entry.id}`}
-                        key={entry.id}
-                      >
-                        <TimelineChapterCard
-                          actorId={actor.userId}
-                          canManage={actor.canManageCatalogue}
-                          entry={entry}
-                          sequence={index + 1}
-                        />
-                        <TimelineFilmMarker entry={entry} />
-                      </li>
-                    ))}
+                  <ol className="flex w-max gap-4 pb-4 px-1" style={{ scrollSnapType: "x mandatory" }}>
+                    {previews.map((preview, index) => {
+                      const isActive = preview.id === activeChapter?.id;
+                      return (
+                        <li
+                          className="timeline-film-frame snap-start"
+                          id={`timeline-entry-${preview.id}`}
+                          key={preview.id}
+                        >
+                          <TimelineChapterPreview
+                            chapter={preview}
+                            isActive={isActive}
+                            sequence={index + 1}
+                          />
+                        </li>
+                      );
+                    })}
                   </ol>
                 </div>
-                {entries.length > 1 ? <TimelineFilmControls viewportId={TIMELINE_FILM_VIEWPORT_ID} /> : null}
+                {previews.length > 1 ? <TimelineFilmControls viewportId={TIMELINE_FILM_VIEWPORT_ID} /> : null}
               </div>
+
+              {activeChapter ? (
+                <div className="mt-12">
+                  <TimelineChapterReader
+                    actorId={actor.userId}
+                    canManage={actor.canManageCatalogue}
+                    entry={activeChapter}
+                    sequence={activeChapterIndex >= 0 ? activeChapterIndex + 1 : 1}
+                  />
+                </div>
+              ) : null}
             </div>
           </section>
         ) : (
@@ -114,31 +124,13 @@ export function RelationshipTimeline({
               {actor.canManageCatalogue ? (
                 <a className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full bg-brand px-4 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-brand-strong" href="/admin/hanh-trinh">
                   <Sparkles size={16} aria-hidden="true" />
-                  Viết mốc đầu tiên
+                  Viết mục đầu tiên
                 </a>
               ) : null}
             </div>
           </section>
         )}
       </main>
-    </div>
-  );
-}
-
-function TimelineFilmMarker({ entry }: { entry: TimelineEntry }) {
-  const dateLabel = entry.occurredOn ? (
-    <time className="timeline-film-marker-date" dateTime={entry.occurredOn}>
-      {entry.dateLabel}
-    </time>
-  ) : (
-    <p className="timeline-film-marker-date">{entry.dateLabel}</p>
-  );
-
-  return (
-    <div className="timeline-film-marker">
-      <span className="timeline-film-marker-dot" aria-hidden="true" />
-      {dateLabel}
-      <p className="timeline-film-marker-title">{entry.title}</p>
     </div>
   );
 }

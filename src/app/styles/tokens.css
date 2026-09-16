@@ -115,6 +115,11 @@
   --motion-ease: cubic-bezier(0.2, 0, 0, 1);
 }
 
+.home-layout,
+.journey-layout {
+  --content-max: 75rem;
+}
+
 .home-layout {
   --content-max: 75rem;
 }

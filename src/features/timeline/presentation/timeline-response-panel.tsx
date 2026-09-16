@@ -110,7 +110,7 @@ export function TimelineResponsePanel({
       </div>
 
       <form
-        className="mt-4 rounded-[var(--radius-card)] border border-border bg-[rgb(255_249_243_/_70%)] p-4"
+        className="mt-4 rounded-[var(--radius-card)] border border-border bg-surface p-4"
         onSubmit={(event) => {
           event.preventDefault();
           createResponse();
@@ -146,7 +146,7 @@ export function TimelineResponsePanel({
             const isEditing = editingResponseId === response.id;
 
             return (
-              <li className="relative rounded-md border border-[color-mix(in_srgb,var(--color-accent)_40%,var(--color-border))] bg-[#fdfaf5] p-5 shadow-[0_4px_16px_rgba(49,5,12,0.06)]" key={response.id}>
+              <li className="relative rounded-md border border-border bg-surface p-5 shadow-sm" key={response.id}>
                 {/* Tape detail */}
                 <div className="absolute -top-3 left-1/2 h-6 w-14 -translate-x-1/2 -rotate-2 rounded-sm border border-[rgba(255,255,255,0.4)] bg-[rgba(255,255,255,0.6)] shadow-sm backdrop-blur-md" aria-hidden="true" />
                 <div className="flex items-start gap-4">
@@ -164,14 +164,17 @@ export function TimelineResponsePanel({
                           updateResponse(response.id);
                         }}
                       >
-                        <textarea className={inputClassName} disabled={isPending} maxLength={2000} onChange={(event) => setEditingContent(event.target.value)} value={editingContent} />
+                        <label className="sr-only" htmlFor={`edit-response-${response.id}`}>
+                          Sửa lời hồi đáp
+                        </label>
+                        <textarea id={`edit-response-${response.id}`} className={inputClassName} disabled={isPending} maxLength={2000} onChange={(event) => setEditingContent(event.target.value)} value={editingContent} />
                         <div className="mt-3 flex flex-wrap gap-2">
                           <Button disabled={isPending} size="compact" type="submit"><Check size={15} aria-hidden="true" />Lưu</Button>
                           <Button disabled={isPending} onClick={() => setEditingResponseId(null)} size="compact" type="button" variant="quiet"><X size={15} aria-hidden="true" />Hủy</Button>
                         </div>
                       </form>
                     ) : (
-                      <p className="mt-4 whitespace-pre-line font-display text-lg italic leading-relaxed text-brand-strong">{response.content}</p>
+                      <p className="body-text mt-4 whitespace-pre-line text-ink">{response.content}</p>
                     )}
                     {!isEditing && (isAuthor || canDelete) ? (
                       <div className="mt-3 flex flex-wrap gap-2">
@@ -215,4 +218,4 @@ function feedbackFor(code: string): string {
   return "Không thể lưu thay đổi lúc này. Hãy thử lại sau.";
 }
 
-const inputClassName = "mt-2 min-h-28 w-full rounded-xl border border-border bg-paper px-3 py-3 text-sm leading-7 text-ink shadow-sm outline-none placeholder:text-muted focus:border-focus";
+const inputClassName = "mt-2 min-h-28 w-full rounded-xl border border-border bg-paper px-3 py-3 text-sm leading-7 text-ink shadow-sm outline-none placeholder:text-muted focus:border-focus focus-visible:outline focus-visible:outline-2 focus-visible:outline-focus focus-visible:outline-offset-2";

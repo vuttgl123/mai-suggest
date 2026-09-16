@@ -25,7 +25,7 @@ export function CatalogueDetail({
   const keepsakes = readItemKeepsakes(item.metadata);
 
   return (
-    <div className="diary-shell">
+    <div className="journey-layout">
       <a
         className="sr-only absolute left-5 top-4 z-50 rounded-full bg-brand-strong px-4 py-2 text-sm font-semibold text-white focus:not-sr-only"
         href="#item-content"
@@ -39,11 +39,7 @@ export function CatalogueDetail({
 
         <CatalogueKeepsakeCollection keepsakes={keepsakes} />
 
-        <section className="diary-section-tint relative isolate overflow-hidden">
-          <span
-            className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/45 to-transparent"
-            aria-hidden="true"
-          />
+        <section className="relative isolate overflow-hidden">
           <div className="diary-container diary-section relative">
             <CatalogueEngagementPanel
               actorId={actor.userId}

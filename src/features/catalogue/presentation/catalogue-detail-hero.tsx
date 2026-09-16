@@ -48,7 +48,7 @@ export function CatalogueDetailHero({
               </div>
             </ViewTransition>
           ) : (
-            <div className="relative flex aspect-[4/5] w-full items-center justify-center bg-[linear-gradient(145deg,_var(--color-brand-soft),_var(--color-paper)_65%)]">
+            <div className="relative flex aspect-[4/5] w-full items-center justify-center bg-[var(--surface-elevated)]">
               <span className="absolute h-48 w-48 rounded-full border border-border/50" aria-hidden="true" />
               <Heart className="relative text-brand/50" fill="currentColor" size={40} strokeWidth={1} aria-hidden="true" />
             </div>
@@ -61,7 +61,7 @@ export function CatalogueDetailHero({
         <div className="flex flex-col py-2 lg:py-6">
           <div className="inline-flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
-            <p className="text-[13px] font-medium uppercase tracking-wider text-accent">
+            <p className="text-sm font-semibold text-accent">
               {categoryName ?? "Một điều được lưu lại"}
             </p>
           </div>
@@ -98,7 +98,7 @@ export function CatalogueDetailHero({
             <div className="mt-12 rounded-[2rem] border border-border/60 bg-[var(--color-surface)]/80 p-8 shadow-sm backdrop-blur-xl sm:p-10">
               <div className="flex items-center gap-2 text-accent">
                 <Quote size={20} strokeWidth={1.5} aria-hidden="true" />
-                <h3 className="text-sm font-semibold uppercase tracking-widest text-accent">Câu chuyện</h3>
+                <h3 className="text-sm font-semibold text-accent">Câu chuyện</h3>
               </div>
               <div className="prose prose-brand mt-6 max-w-none text-[15px] leading-loose text-ink sm:text-base">
                 {item.description.split('\n').map((paragraph, index) => (

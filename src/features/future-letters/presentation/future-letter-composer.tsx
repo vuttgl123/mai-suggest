@@ -41,7 +41,7 @@ export function FutureLetterComposer({
   const dialogRef = useRef<HTMLDialogElement>(null);
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [draft, setDraft] = useState<FutureLetterDraft>(() => createDraft(null));
+  const [draft, setDraft] = useState<FutureLetterDraft>(() => createDraft(letter));
   const [feedback, setFeedback] = useState<string | null>(null);
 
   useEffect(() => {
@@ -49,12 +49,24 @@ export function FutureLetterComposer({
     if (!dialog) return;
 
     if (isOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setDraft(createDraft(letter));
+      setFeedback(null);
       if (!dialog.open) dialog.showModal();
       return;
     }
 
     if (dialog.open) dialog.close();
-  }, [isOpen]);
+  }, [isOpen, letter]);
+
+  function handleCancel(event: React.SyntheticEvent) {
+    const isDirty = JSON.stringify(draft) !== JSON.stringify(createDraft(letter));
+    if (isDirty && !window.confirm('Bạn có thay đổi chưa lưu. Bạn có chắc chắn muốn thoát?')) {
+      event.preventDefault();
+      return;
+    }
+    onClose();
+  }
 
   function updateDraft(patch: Partial<FutureLetterDraft>) {
     setDraft((current) => ({ ...current, ...patch }));
@@ -93,8 +105,9 @@ export function FutureLetterComposer({
 
   return (
     <dialog
+      onCancel={handleCancel}
       aria-labelledby="future-letter-composer-title"
-      className="future-letter-dialog fixed inset-0 m-auto h-[min(46rem,calc(100dvh_-_1.5rem))] w-[min(100%_-_1.5rem,62rem)] max-w-none overflow-hidden rounded-[var(--radius-dialog)] border border-border bg-paper p-0 text-ink shadow-[var(--shadow-card)]"
+      className="future-letter-dialog fixed inset-0 m-auto h-[min(46rem,calc(100dvh_-_1.5rem))] w-[min(100%_-_1.5rem,62rem)] max-w-none overflow-hidden rounded-[var(--radius-dialog)] border border-border bg-paper p-0 text-ink"
       onClose={onClose}
       ref={dialogRef}
     >
@@ -116,7 +129,7 @@ export function FutureLetterComposer({
               {letter ? "Sửa lá thư đang hẹn" : "Hẹn một lá thư"}
             </h2>
           </div>
-          <Button aria-label="Đóng" disabled={isPending} onClick={() => dialogRef.current?.close()} size="icon" type="button" variant="quiet">
+          <Button aria-label="Đóng" disabled={isPending} onClick={handleCancel} size="icon" type="button" variant="quiet">
             <X size={18} aria-hidden="true" />
           </Button>
         </header>
@@ -257,7 +270,7 @@ export function FutureLetterComposer({
 
         <footer className="future-letter-composer-footer">
           <div className="flex flex-wrap items-center justify-end gap-2">
-            <Button disabled={isPending} onClick={() => dialogRef.current?.close()} type="button" variant="quiet">
+            <Button disabled={isPending} onClick={handleCancel} type="button" variant="quiet">
               Hủy
             </Button>
             <Button disabled={isPending} type="submit">

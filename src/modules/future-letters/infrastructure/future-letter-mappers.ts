@@ -3,6 +3,7 @@ import type {
   FutureLetter,
   FutureLetterAuthor,
   FutureLetterRecord,
+  FutureLetterSummary,
 } from "@/modules/future-letters/domain/future-letter-models";
 
 export type FutureLetterRow =
@@ -57,3 +58,18 @@ export const fallbackFutureLetterAuthor: FutureLetterAuthor = {
   displayName: "Thành viên",
   avatarUrl: null,
 };
+
+export function toFutureLetterSummary(
+  row: Partial<FutureLetterRow> & Pick<FutureLetterRow, 'id' | 'author_id' | 'title' | 'opens_at' | 'created_at' | 'updated_at'>,
+  author: FutureLetterAuthor,
+): FutureLetterSummary {
+  return {
+    id: row.id,
+    authorId: row.author_id,
+    title: row.title,
+    opensAt: row.opens_at,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+    author,
+  };
+}

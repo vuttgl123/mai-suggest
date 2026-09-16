@@ -46,6 +46,46 @@ export class SupabaseTimelineReader implements TimelineReader {
     );
   }
 
+  async listVisibleChapterPreviews(): Promise<Result<import("@/modules/timeline/domain/timeline-models").TimelineChapterPreview[]>> {
+    const { data: rows, error } = await this.client
+      .from("timeline_entries")
+      .select("id,date_label,title,image_url,image_alt_text,sort_order")
+      .order("sort_order")
+      .order("occurred_on");
+
+    if (error) return failure("UNEXPECTED_FAILURE");
+    
+    return success(
+      (rows ?? []).map((row) => ({
+        id: row.id,
+        dateLabel: row.date_label,
+        title: row.title,
+        imageUrl: row.image_url,
+        imageAltText: row.image_alt_text,
+        sortOrder: row.sort_order,
+      })),
+    );
+  }
+
+  async getVisibleChapterDetail(chapterId: string): Promise<Result<TimelineEntry | null>> {
+    const { data: entryRow, error: entryError } = await this.client
+      .from("timeline_entries")
+      .select(ENTRY_COLUMNS)
+      .eq("id", chapterId)
+      .single();
+
+    if (entryError) {
+      if (entryError.code === "PGRST116") return success(null); // Not found
+      return failure("UNEXPECTED_FAILURE");
+    }
+    if (!entryRow) return success(null);
+
+    const responses = await this.loadDecoratedResponses([entryRow.id]);
+    if (!responses.ok) return responses;
+
+    return success(toTimelineEntry(entryRow, responses.value.get(entryRow.id) ?? []));
+  }
+
   private async loadDecoratedResponses(
     entryIds: string[],
   ): Promise<Result<Map<string, TimelineResponse[]>>> {

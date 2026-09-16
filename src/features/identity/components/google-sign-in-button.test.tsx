@@ -23,7 +23,7 @@ describe("GoogleSignInButton", () => {
     render(<GoogleSignInButton nextPath="/catalogue?tag=gift ideas" />);
 
     await user.click(
-      screen.getByRole("button", { name: "Đăng nhập với Google" }),
+      screen.getByRole("button", { name: "Bước vào bằng Google" }),
     );
 
     const redirectTo = new URL("/auth/callback", window.location.origin);

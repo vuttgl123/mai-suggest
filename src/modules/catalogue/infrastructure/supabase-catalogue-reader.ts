@@ -45,9 +45,56 @@ export class SupabaseCatalogueReader implements CatalogueReader {
     return success((data ?? []).map(toCatalogueCategory));
   }
 
-  async listChapterPreviews(): Promise<Result<any[]>> {
-    // Stub implementation to satisfy interface
-    return failure("UNEXPECTED_FAILURE");
+  async listChapterPreviews(
+    criteria: import("@/modules/catalogue/application/catalogue-reader").CatalogueChapterPreviewCriteria,
+  ): Promise<Result<import("@/modules/catalogue/domain/catalogue-read-models").CatalogueChapterPreview[]>> {
+    const categoriesResult = await this.listCategories();
+    if (!categoriesResult.ok) return categoriesResult;
+
+    const previews: import("@/modules/catalogue/domain/catalogue-read-models").CatalogueChapterPreview[] = [];
+
+    for (const category of categoriesResult.value) {
+      const { data: itemRows, error: itemError, count } = await this.client
+        .from("items")
+        .select(ITEM_SUMMARY_COLUMNS, { count: "exact" })
+        .eq("category_id", category.id)
+        .order("title")
+        .limit(criteria.itemsPerChapter);
+
+      if (itemError) return failure("UNEXPECTED_FAILURE");
+
+      const totalItems = count ?? 0;
+      if (totalItems === 0) continue;
+
+      const itemIds = (itemRows ?? []).map((item) => item.id);
+      const primaryImages = new Map<string, CatalogueImage>();
+
+      if (itemIds.length > 0) {
+        const { data: imageRows, error: imageError } = await this.client
+          .from("item_images")
+          .select(ITEM_IMAGE_COLUMNS)
+          .in("item_id", itemIds)
+          .order("sort_order");
+
+        if (!imageError && imageRows) {
+          for (const imageRow of imageRows) {
+            if (!primaryImages.has(imageRow.item_id)) {
+              primaryImages.set(imageRow.item_id, toCatalogueImage(imageRow));
+            }
+          }
+        }
+      }
+
+      previews.push({
+        category,
+        items: (itemRows ?? []).map((item) =>
+          toCatalogueItemSummary(item, primaryImages.get(item.id) ?? null),
+        ),
+        totalItems,
+      });
+    }
+
+    return success(previews);
   }
 
   async listItemPage(
