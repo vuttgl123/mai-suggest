@@ -69,7 +69,7 @@ export function CatalogueFeaturedItemCard({
           ) : (
             <span />
           )}
-          <span className="inline-flex h-10 items-center gap-2 rounded-xl bg-surface px-4 text-sm font-medium text-brand-strong shadow-sm ring-1 ring-border/50 transition-colors duration-[var(--motion-base)] group-hover:bg-brand-strong group-hover:text-white group-hover:ring-brand-strong">
+          <span className="inline-flex h-10 items-center gap-2 rounded-xl bg-surface px-4 text-sm font-medium text-brand-strong  ring-1 ring-border/50 transition-colors duration-[var(--motion-base)] group-hover:bg-brand-strong group-hover:text-white group-hover:ring-brand-strong">
             Mở câu chuyện
             <ArrowRight size={16} aria-hidden="true" className="transition-transform duration-[var(--motion-base)] group-hover:translate-x-1" />
           </span>

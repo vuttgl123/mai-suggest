@@ -228,12 +228,12 @@ function CommentList({ actorId, canManage, engagement, itemId }: { actorId: stri
 
   return (
     <section
-      className="rounded-[2rem] border border-border/60 bg-[var(--color-surface)]/80 p-8 shadow-sm backdrop-blur-xl sm:p-10"
+      className="rounded-[2rem] border border-border/60 bg-[var(--color-surface)]/80 p-8  backdrop-blur-xl sm:p-10"
       aria-labelledby="comments-heading"
     >
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 rounded-full border border-border/50 bg-[var(--surface-elevated)] px-4 py-1.5 shadow-sm">
+          <div className="inline-flex items-center gap-2 rounded-full border border-border/50 bg-[var(--surface-elevated)] px-4 py-1.5 ">
             <MessageSquare size={14} className="text-accent" aria-hidden="true" />
             <p className="text-[13px] font-semibold text-accent">Lời bình</p>
           </div>
@@ -266,7 +266,7 @@ function CommentList({ actorId, canManage, engagement, itemId }: { actorId: stri
         </label>
         <div className="mt-5 flex flex-wrap items-center justify-between gap-4">
           <span className="text-[13px] font-medium text-muted/80">{newComment.length}/2000</span>
-          <Button disabled={isPending || !newComment.trim()} className="h-11 rounded-full px-6 font-semibold shadow-sm" type="submit">
+          <Button disabled={isPending || !newComment.trim()} className="h-11 rounded-full px-6 font-semibold " type="submit">
             <Send size={16} className="mr-2" aria-hidden="true" />
             {isPending ? "Đang lưu…" : "Lưu lời bình"}
           </Button>
@@ -288,7 +288,7 @@ function CommentList({ actorId, canManage, engagement, itemId }: { actorId: stri
 
             return (
               <li
-                className="rounded-3xl border border-border/50 bg-[var(--surface-elevated)] p-6 transition-all hover:shadow-sm sm:p-8"
+                className="rounded-3xl border border-border/50 bg-[var(--surface-elevated)] p-6 transition-all hover: sm:p-8"
                 key={comment.id}
               >
                 <div className="flex items-start gap-4">
@@ -436,10 +436,10 @@ function RatingForm({
 }) {
   return (
     <section
-      className="rounded-[2rem] border border-border/60 bg-[var(--surface-elevated)] p-8 shadow-sm backdrop-blur-xl sm:p-10"
+      className="rounded-[2rem] border border-border/60 bg-[var(--surface-elevated)] p-8  backdrop-blur-xl sm:p-10"
       aria-labelledby="my-rating-heading"
     >
-      <div className="inline-flex items-center gap-2 rounded-full border border-border/50 bg-[var(--color-surface)] px-4 py-1.5 shadow-sm">
+      <div className="inline-flex items-center gap-2 rounded-full border border-border/50 bg-[var(--color-surface)] px-4 py-1.5 ">
         <Star size={14} className="text-accent" aria-hidden="true" />
         <p className="text-[13px] font-semibold text-accent">Cảm nhận của bạn</p>
       </div>
@@ -505,7 +505,7 @@ function RatingForm({
                 Xóa đánh giá
               </Button>
             ) : null}
-            <Button disabled={isPending || !score} type="submit" className="h-11 rounded-full px-6 font-semibold shadow-sm">
+            <Button disabled={isPending || !score} type="submit" className="h-11 rounded-full px-6 font-semibold ">
               <Check size={16} className="mr-2" aria-hidden="true" />
               {isPending ? "Đang lưu…" : "Lưu cảm nhận"}
             </Button>
@@ -519,12 +519,12 @@ function RatingForm({
 function RatingList({ ratings }: { ratings: ItemEngagementView["ratings"] }) {
   return (
     <section
-      className="rounded-[2rem] border border-border/60 bg-[var(--color-surface)]/80 p-8 shadow-sm backdrop-blur-xl sm:p-10"
+      className="rounded-[2rem] border border-border/60 bg-[var(--color-surface)]/80 p-8  backdrop-blur-xl sm:p-10"
       aria-labelledby="ratings-heading"
     >
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 rounded-full border border-border/50 bg-[var(--surface-elevated)] px-4 py-1.5 shadow-sm">
+          <div className="inline-flex items-center gap-2 rounded-full border border-border/50 bg-[var(--surface-elevated)] px-4 py-1.5 ">
             <Star size={14} className="text-accent" aria-hidden="true" />
             <p className="text-[13px] font-semibold text-accent">Cộng đồng</p>
           </div>
@@ -540,7 +540,7 @@ function RatingList({ ratings }: { ratings: ItemEngagementView["ratings"] }) {
       {ratings.length ? (
         <ol className="mt-8 space-y-4">
           {ratings.map((rating) => (
-            <li className="rounded-3xl border border-border/50 bg-[var(--surface-elevated)] p-6 transition-all hover:shadow-sm" key={rating.id}>
+            <li className="rounded-3xl border border-border/50 bg-[var(--surface-elevated)] p-6 transition-all hover:" key={rating.id}>
               <div className="flex items-start gap-4">
                 <AuthorAvatar author={rating.author} />
                 <div className="min-w-0 flex-1">
@@ -580,7 +580,7 @@ function AuthorAvatar({ author }: { author: EngagementAuthor }) {
     return (
       <img
         alt=""
-        className="h-12 w-12 shrink-0 rounded-full border border-border/50 object-cover shadow-sm"
+        className="h-12 w-12 shrink-0 rounded-full border border-border/50 object-cover "
         height={48}
         src={author.avatarUrl}
         width={48}
@@ -590,7 +590,7 @@ function AuthorAvatar({ author }: { author: EngagementAuthor }) {
 
   return (
     <span
-      className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-brand-strong text-[15px] font-bold text-white shadow-sm"
+      className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-brand-strong text-[15px] font-bold text-white "
       aria-hidden="true"
     >
       {author.displayName.trim().slice(0, 1).toLocaleUpperCase("vi-VN") || "T"}
@@ -614,4 +614,4 @@ function feedbackFor(code: string): string {
 }
 
 const inputClassName =
-  "mt-2 min-h-28 w-full rounded-xl border border-border bg-paper px-3 py-3 text-sm leading-7 text-ink shadow-sm outline-none placeholder:text-muted focus:border-focus focus-visible:ring-2 focus-visible:ring-focus/25";
+  "mt-2 min-h-28 w-full rounded-xl border border-border bg-paper px-3 py-3 text-sm leading-7 text-ink  outline-none placeholder:text-muted focus:border-focus focus-visible:ring-2 focus-visible:ring-focus/25";

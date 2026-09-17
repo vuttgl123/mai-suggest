@@ -5,7 +5,7 @@ import { MailOpen, Trash2 } from "lucide-react";
 import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { AdminWorkspaceHeader } from "@/components/admin/admin-workspace-header";
-import { AdminWorkspaceSwitcher } from "@/components/admin/admin-workspace-switcher";
+
 import { Button } from "@/components/ui/button";
 import { formatFutureLetterDateTime } from "@/modules/future-letters/domain/future-letter-time";
 import type { FutureLetter } from "@/modules/future-letters/domain/future-letter-models";
@@ -85,7 +85,7 @@ export function AdminFutureLetters({
         }
         title="Giữ gìn những điều đã được gửi đi."
       />
-      <AdminWorkspaceSwitcher active="letters" />
+
 
       {feedback ? (
         <p
@@ -149,7 +149,7 @@ function ManagedLetterGroup({
   return (
     <section
       aria-labelledby={headingId}
-      className="rounded-[var(--radius-frame)] border border-border bg-[var(--surface-elevated)] p-4 shadow-[var(--shadow-soft)] sm:p-5"
+      className="rounded-[var(--radius-frame)] border border-border bg-[var(--surface-elevated)] p-4  sm:p-5"
     >
       <div className="flex flex-wrap items-end justify-between gap-3 border-b border-border pb-4">
         <div>
@@ -220,7 +220,7 @@ function ManagedLetterRow({
   const isOpened = status === "opened";
 
   return (
-    <li className="rounded-[var(--radius-card)] border border-border bg-paper p-4 shadow-sm">
+    <li className="rounded-[var(--radius-card)] border border-border bg-paper p-4 ">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="diary-kicker text-accent">
@@ -231,7 +231,7 @@ function ManagedLetterRow({
           </h3>
         </div>
         <span
-          className={`shrink-0 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.1em] ${
+          className={`shrink-0 rounded-full px-2.5 py-1 text-[10px] font-bold font-semibold text-xs tracking-wide tracking-[0.1em] ${
             isOpened
               ? "bg-accent/10 text-accent"
               : "bg-brand-soft text-brand"
@@ -256,6 +256,7 @@ function ManagedLetterRow({
       </dl>
       <div className="mt-4 flex flex-wrap justify-end gap-2">
         <Button
+          className="text-danger hover:bg-danger/10 hover:text-danger-strong"
           disabled={isPending}
           onClick={onRequestDelete}
           size="compact"
@@ -267,7 +268,7 @@ function ManagedLetterRow({
         </Button>
       </div>
       {isConfirming ? (
-        <div className="mt-3 rounded-xl border border-danger/30 bg-danger/10 px-3 py-3">
+        <div className="mt-3 rounded-xl border border-danger/30 bg-danger/5 px-3 py-3">
           <p className="text-xs leading-5 text-danger">
             Gỡ “{letter.title}” khỏi không gian chung? Thao tác này không thể hoàn tác.
           </p>
@@ -309,7 +310,7 @@ function StatusSummary({
 }) {
   return (
     <span
-      className={`rounded-full px-3 py-1.5 text-xs font-bold uppercase tracking-[0.11em] ${
+      className={`rounded-full px-3 py-1.5 text-xs font-bold font-semibold text-xs tracking-wide tracking-[0.11em] ${
         tone === "opened"
           ? "bg-accent/10 text-accent"
           : "bg-brand-soft text-brand"

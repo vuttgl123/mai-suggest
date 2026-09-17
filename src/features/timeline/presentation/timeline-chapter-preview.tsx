@@ -13,10 +13,10 @@ export function TimelineChapterPreview({
   isActive,
   sequence,
 }: TimelineChapterPreviewProps) {
-  const baseClasses = "group flex w-60 shrink-0 cursor-pointer flex-col gap-3 rounded-[var(--radius-card)] border bg-white p-3 shadow-sm transition-all hover:border-brand-soft";
+  const baseClasses = "group flex w-60 shrink-0 cursor-pointer flex-col gap-3 rounded-[var(--radius-card)] border bg-white p-3  transition-all hover:border-brand-soft";
   const activeClasses = isActive
     ? "border-brand-soft ring-1 ring-brand-soft"
-    : "border-border hover:shadow-[var(--shadow-soft)]";
+    : "border-border hover:";
 
   return (
     <Link

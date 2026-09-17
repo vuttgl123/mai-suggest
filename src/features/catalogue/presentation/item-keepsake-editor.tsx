@@ -73,7 +73,7 @@ export function ItemKeepsakeEditor({
             Chúng sẽ xuất hiện theo thứ tự này trong trang chi tiết của item.
           </p>
         </div>
-        <span className="rounded-full bg-brand-soft px-3 py-1.5 text-xs font-bold uppercase tracking-[0.12em] text-brand">
+        <span className="rounded-full bg-brand-soft px-3 py-1.5 text-xs font-bold font-semibold text-xs tracking-wide tracking-[0.12em] text-brand">
           {value.length}/24 mảnh thư
         </span>
       </div>
@@ -142,7 +142,7 @@ function KeepsakeForm({
   const kindLabel = kinds.find((entry) => entry.kind === keepsake.kind)?.label;
 
   return (
-    <li className="rounded-[var(--radius-card)] border border-border bg-[rgb(255_249_243_/_72%)] p-4 shadow-[var(--shadow-soft)]">
+    <li className="rounded-[var(--radius-card)] border border-border bg-[rgb(255_249_243_/_72%)] p-4 ">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="diary-kicker">{kindLabel} · {String(index + 1).padStart(2, "0")}</p>
         <div className="flex items-center gap-1">
@@ -229,4 +229,4 @@ function createKeepsakeId(): string {
 }
 
 const inputClassName =
-  "mt-2 min-h-11 w-full rounded-xl border border-border bg-paper px-3 text-sm text-ink shadow-sm outline-none placeholder:text-muted focus:border-focus";
+  "mt-2 min-h-11 w-full rounded-xl border border-border bg-paper px-3 text-sm text-ink  outline-none placeholder:text-muted focus:border-focus";

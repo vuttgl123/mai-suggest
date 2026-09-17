@@ -1,18 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { Be_Vietnam_Pro, Playfair_Display } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { ThemeAtmosphere } from "@/components/theme/theme-atmosphere";
 import { ThemeMaintenanceScreen } from "@/components/theme/theme-maintenance-screen";
 import { createServerBackend } from "@/lib/backend/create-server-backend";
 import "./globals.css";
 
-const displayFont = Playfair_Display({
+const displayFont = Plus_Jakarta_Sans({
   variable: "--font-display",
   subsets: ["latin", "vietnamese"],
   display: "swap",
   weight: ["500", "600", "700"],
 });
 
-const bodyFont = Be_Vietnam_Pro({
+const bodyFont = Inter({
   variable: "--font-body",
   subsets: ["latin", "vietnamese"],
   display: "swap",

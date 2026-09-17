@@ -51,7 +51,7 @@ export function AdminItemList({
   }
 
   return (
-    <section className="rounded-[var(--radius-frame)] border border-border bg-[var(--surface-elevated)] p-4 shadow-[var(--shadow-soft)] sm:p-5">
+    <section className="rounded-[var(--radius-frame)] border border-border bg-[var(--surface-elevated)] p-4 sm:p-5">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-sm font-semibold text-accent">Nội dung</p>
@@ -60,7 +60,7 @@ export function AdminItemList({
           </h2>
         </div>
         <Link
-          className="inline-flex min-h-11 items-center gap-2 rounded-full bg-brand px-4 text-sm font-semibold text-white shadow-[0_8px_18px_rgb(49_5_12_/_22%)] transition hover:-translate-y-0.5 hover:bg-brand-strong"
+          className="inline-flex min-h-11 items-center gap-2 rounded-full bg-brand px-4 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-brand-strong"
           href={selectPath(null, 1)}
         >
           <Plus size={16} aria-hidden="true" />
@@ -76,7 +76,7 @@ export function AdminItemList({
                 aria-current={item.id === selectedItemId ? "page" : undefined}
                 className={`block rounded-[var(--radius-card)] border p-3 transition ${
                   item.id === selectedItemId
-                    ? "border-brand bg-brand-soft shadow-[var(--shadow-soft)]"
+                    ? "border-brand bg-brand-soft"
                     : "border-transparent hover:border-border hover:bg-[rgb(255_249_243_/_72%)]"
                 }`}
                 href={selectPath(item.id)}
@@ -97,7 +97,7 @@ export function AdminItemList({
                 </div>
               </Link>
               {confirmingItemId === item.id ? (
-                <div className="mt-2 rounded-xl border border-danger/30 bg-danger/10 p-3">
+                <div className="mt-2 rounded-xl border border-danger/30 bg-danger/5 p-3">
                   <p className="text-xs leading-5 text-danger">Xóa “{item.title}”? Thao tác này không thể hoàn tác.</p>
                   <div className="mt-2 flex gap-2">
                     <Button disabled={isPending} onClick={() => setConfirmingItemId(null)} size="compact" type="button" variant="quiet">

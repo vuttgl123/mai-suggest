@@ -146,9 +146,9 @@ export function TimelineResponsePanel({
             const isEditing = editingResponseId === response.id;
 
             return (
-              <li className="relative rounded-md border border-border bg-surface p-5 shadow-sm" key={response.id}>
+              <li className="relative rounded-md border border-border bg-surface p-5 " key={response.id}>
                 {/* Tape detail */}
-                <div className="absolute -top-3 left-1/2 h-6 w-14 -translate-x-1/2 -rotate-2 rounded-sm border border-[rgba(255,255,255,0.4)] bg-[rgba(255,255,255,0.6)] shadow-sm backdrop-blur-md" aria-hidden="true" />
+                <div className="absolute -top-3 left-1/2 h-6 w-14 -translate-x-1/2 -rotate-2 rounded-sm border border-[rgba(255,255,255,0.4)] bg-[rgba(255,255,255,0.6)]  backdrop-blur-md" aria-hidden="true" />
                 <div className="flex items-start gap-4">
                   <Avatar displayName={response.author.displayName} imageUrl={response.author.avatarUrl} />
                   <div className="min-w-0 flex-1">
@@ -218,4 +218,4 @@ function feedbackFor(code: string): string {
   return "Không thể lưu thay đổi lúc này. Hãy thử lại sau.";
 }
 
-const inputClassName = "mt-2 min-h-28 w-full rounded-xl border border-border bg-paper px-3 py-3 text-sm leading-7 text-ink shadow-sm outline-none placeholder:text-muted focus:border-focus focus-visible:outline focus-visible:outline-2 focus-visible:outline-focus focus-visible:outline-offset-2";
+const inputClassName = "mt-2 min-h-28 w-full rounded-xl border border-border bg-paper px-3 py-3 text-sm leading-7 text-ink  outline-none placeholder:text-muted focus:border-focus focus-visible:outline focus-visible:outline-2 focus-visible:outline-focus focus-visible:outline-offset-2";

@@ -98,7 +98,7 @@ export function AdminCatalogueSidebar({
 
   return (
     <>
-    <aside className="rounded-[var(--radius-frame)] border border-border bg-[color-mix(in_srgb,var(--surface-elevated)_82%,transparent)] p-3 shadow-[var(--shadow-soft)] xl:sticky xl:top-5">
+    <aside className="rounded-[var(--radius-frame)] border border-border bg-[color-mix(in_srgb,var(--surface-elevated)_82%,transparent)] p-3 xl:sticky xl:top-5">
       <div className="flex items-center justify-between gap-3">
         <div>
           <p className="text-sm font-semibold text-accent">Bộ sưu tập</p>
@@ -186,7 +186,7 @@ export function AdminCatalogueSidebar({
               </Button>
             ) : null}
             {confirmingCategoryId === category.id ? (
-              <div className="mt-2 rounded-xl border border-danger/30 bg-danger/10 p-3">
+              <div className="mt-2 rounded-xl border border-danger/30 bg-danger/5 p-3">
                 <p className="text-xs leading-5 text-danger">Xóa danh mục này nếu nó đã trống?</p>
                 <div className="mt-2 flex gap-2">
                   <Button disabled={isPending} onClick={() => setConfirmingCategoryId(null)} size="compact" type="button" variant="quiet">
@@ -230,7 +230,7 @@ export function AdminCatalogueSidebar({
 function categoryLinkClassName(active: boolean): string {
   return `flex min-h-11 items-center justify-between gap-3 rounded-xl px-3 text-sm font-semibold transition ${
     active
-      ? "bg-brand text-white shadow-[0_7px_17px_rgb(49_5_12_/_20%)]"
+      ? "bg-brand/10 text-brand ring-1 ring-brand/20"
       : "text-muted hover:bg-brand-soft hover:text-brand"
   }`;
 }

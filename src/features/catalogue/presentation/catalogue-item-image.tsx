@@ -69,7 +69,7 @@ export function CatalogueItemImage({
       />
       {isLoading ? (
         <div
-          className="absolute inset-0 animate-pulse bg-skeleton"
+          className="absolute inset-0  bg-skeleton"
           aria-hidden="true"
         />
       ) : null}

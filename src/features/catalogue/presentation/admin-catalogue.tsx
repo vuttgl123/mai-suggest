@@ -5,7 +5,7 @@ import { ExternalLink } from "lucide-react";
 import { useState } from "react";
 import { ViewTransition } from "react";
 import { AdminWorkspaceHeader } from "@/components/admin/admin-workspace-header";
-import { AdminWorkspaceSwitcher } from "@/components/admin/admin-workspace-switcher";
+
 import { AdminCatalogueSidebar } from "@/features/catalogue/presentation/admin-catalogue-sidebar";
 import type { AdminFeedback } from "@/features/catalogue/presentation/admin-catalogue-feedback";
 import { AdminItemEditor } from "@/features/catalogue/presentation/admin-item-editor";
@@ -65,7 +65,7 @@ export function AdminCatalogue({
         }
         title="Những điều đẹp đẽ được chăm chút ở đây."
       />
-      <AdminWorkspaceSwitcher active="catalogue" />
+
 
       {feedback ? (
         <p

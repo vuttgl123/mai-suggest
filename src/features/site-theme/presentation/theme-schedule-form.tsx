@@ -115,7 +115,7 @@ export function ThemeScheduleForm({
   const heading = schedule ? "Chỉnh một khoảng không khí" : "Hẹn không khí mới";
 
   return (
-    <section className="rounded-[var(--radius-frame)] border border-border bg-[var(--surface-elevated)] p-5 shadow-[var(--shadow-soft)] sm:p-6">
+    <section className="rounded-[var(--radius-frame)] border border-border bg-[var(--surface-elevated)] p-5  sm:p-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-sm font-semibold text-accent">Lịch tự động · giờ Việt Nam</p>
@@ -137,7 +137,7 @@ export function ThemeScheduleForm({
           submit();
         }}
       >
-        <label className={`${fieldLabelClassName} rounded-[var(--radius-card)] border border-border bg-[var(--theme-control-surface)] p-3`}>
+        <label className={`${fieldLabelClassName} rounded-[var(--radius-card)] border border-border bg-paper p-3`}>
           Preset
           <select
             autoComplete="off"
@@ -157,7 +157,7 @@ export function ThemeScheduleForm({
         </label>
 
         <div className="grid gap-3 sm:grid-cols-2">
-          <label className={`${fieldLabelClassName} rounded-[var(--radius-card)] border border-border bg-[var(--theme-control-surface)] p-3`}>
+          <label className={`${fieldLabelClassName} rounded-[var(--radius-card)] border border-border bg-paper p-3`}>
             Bắt đầu
             <input
               autoComplete="off"
@@ -181,7 +181,7 @@ export function ThemeScheduleForm({
               value={draft.startTime}
             />
           </label>
-          <label className={`${fieldLabelClassName} rounded-[var(--radius-card)] border border-border bg-[var(--theme-control-surface)] p-3`}>
+          <label className={`${fieldLabelClassName} rounded-[var(--radius-card)] border border-border bg-paper p-3`}>
             Kết thúc
             <input
               autoComplete="off"
@@ -207,7 +207,7 @@ export function ThemeScheduleForm({
         </div>
 
         <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
-          <label className={`${fieldLabelClassName} rounded-[var(--radius-card)] border border-border bg-[var(--theme-control-surface)] p-3`}>
+          <label className={`${fieldLabelClassName} rounded-[var(--radius-card)] border border-border bg-paper p-3`}>
             Độ ưu tiên
             <input
               autoComplete="off"
@@ -303,4 +303,4 @@ const fieldLabelClassName =
   "block text-sm font-semibold text-brand-strong";
 
 const inputClassName =
-  "mt-2 min-h-11 w-full rounded-xl border border-border bg-[var(--theme-control-surface)] px-3 text-sm font-medium text-ink transition focus:border-focus disabled:cursor-not-allowed disabled:bg-surface";
+  "mt-2 min-h-11 w-full rounded-xl border border-border bg-paper px-3 text-sm font-medium text-ink transition focus:border-focus disabled:cursor-not-allowed disabled:bg-surface";

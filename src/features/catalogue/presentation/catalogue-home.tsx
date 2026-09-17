@@ -191,7 +191,7 @@ function EmptyCollection({
   searchQuery: string | null;
 }) {
   return (
-    <div className="diary-wash mx-auto max-w-2xl rounded-[var(--radius-dialog)] border border-border px-6 py-10 text-center shadow-[var(--shadow-soft)] sm:px-10 sm:py-12">
+    <div className="diary-wash mx-auto max-w-2xl rounded-[var(--radius-dialog)] border border-border px-6 py-10 text-center  sm:px-10 sm:py-12">
       <span
         className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-brand-soft text-brand"
         aria-hidden="true"

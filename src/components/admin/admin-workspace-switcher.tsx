@@ -1,59 +1,54 @@
+"use client";
+
 import { BookHeart, MailOpen, Palette, Shapes, type LucideIcon } from "lucide-react";
 import Link from "next/link";
-
-export type AdminWorkspace = "catalogue" | "timeline" | "theme" | "letters";
-
-interface AdminWorkspaceSwitcherProps {
-  active: AdminWorkspace;
-}
+import { usePathname } from "next/navigation";
 
 const workspaces: Array<{
   href: string;
   icon: LucideIcon;
-  key: AdminWorkspace;
   label: string;
 }> = [
-  { href: "/admin", icon: Shapes, key: "catalogue", label: "Bộ sưu tập" },
+  { href: "/admin", icon: Shapes, label: "Bộ sưu tập" },
   {
     href: "/admin/hanh-trinh",
     icon: BookHeart,
-    key: "timeline",
     label: "Hành trình",
   },
   {
     href: "/admin/khong-khi",
     icon: Palette,
-    key: "theme",
     label: "Không khí",
   },
   {
     href: "/admin/thu-hen-ngay-mo",
     icon: MailOpen,
-    key: "letters",
     label: "Thư hẹn",
   },
 ];
 
-export function AdminWorkspaceSwitcher({ active }: AdminWorkspaceSwitcherProps) {
+export function AdminWorkspaceSwitcher() {
+  const pathname = usePathname();
+
   return (
     <nav
       aria-label="Khu vực quản trị"
-      className="mt-4 overflow-x-auto rounded-[var(--radius-card)] border border-border bg-[var(--theme-control-surface)] p-1.5 shadow-[var(--shadow-soft)]"
+      className="mt-4 overflow-x-auto rounded-[var(--radius-card)] border border-border bg-paper/60 backdrop-blur-md p-1.5"
     >
       <div className="flex min-w-max gap-1">
-        {workspaces.map(({ href, icon: Icon, key, label }) => {
-          const isActive = key === active;
+        {workspaces.map(({ href, icon: Icon, label }) => {
+          const isActive = pathname === href;
 
           return (
             <Link
               aria-current={isActive ? "page" : undefined}
               className={`inline-flex min-h-11 items-center gap-2 rounded-xl px-3.5 text-sm font-semibold transition focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-focus ${
                 isActive
-                  ? "bg-brand text-white shadow-[0_6px_16px_rgb(49_5_12_/_20%)]"
+                  ? "bg-accent/10 text-accent"
                   : "text-muted hover:bg-paper hover:text-brand"
               }`}
               href={href}
-              key={key}
+              key={href}
             >
               <Icon aria-hidden="true" size={16} />
               {label}

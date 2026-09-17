@@ -126,7 +126,7 @@ export function AdminItemEditor({
   }
 
   return (
-    <section className="rounded-[var(--radius-frame)] border border-border bg-[var(--surface-elevated)] p-4 shadow-[var(--shadow-card)] sm:p-6">
+    <section className="rounded-[var(--radius-frame)] border border-border bg-[var(--surface-elevated)] p-4  sm:p-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-sm font-semibold text-accent">{isEditing ? "Item đang chọn" : "Bắt đầu một điều mới"}</p>
@@ -226,7 +226,7 @@ export function AdminItemEditor({
 
           <ItemKeepsakeEditor disabled={isPending} onChange={setKeepsakes} value={keepsakes} />
 
-          <div className="mt-6 flex flex-wrap gap-2 border-t border-border pt-4 lg:sticky lg:bottom-4 lg:z-10 lg:rounded-[var(--radius-card)] lg:border lg:bg-paper/95 lg:px-4 lg:py-3 lg:shadow-[var(--shadow-soft)] lg:backdrop-blur">
+          <div className="mt-6 flex flex-wrap gap-2 border-t border-border pt-4 lg:sticky lg:bottom-4 lg:z-10 lg:rounded-[var(--radius-card)] lg:border lg:bg-paper/95 lg:px-4 lg:py-3 lg: lg:backdrop-blur">
             <Button disabled={isPending} type="submit">
               <Save size={16} aria-hidden="true" />
               {isPending ? "Đang lưu…" : isEditing ? "Lưu item" : "Tạo item"}
@@ -495,5 +495,5 @@ function slugify(value: string): string {
 }
 
 const inputClassName =
-  "mt-2 min-h-11 w-full rounded-xl border border-border bg-paper px-3 text-sm text-ink shadow-sm outline-none placeholder:text-muted focus:border-focus";
+  "mt-2 min-h-11 w-full rounded-xl border border-border bg-paper px-3 text-sm text-ink  outline-none placeholder:text-muted focus:border-focus";
 const labelClassName = "block text-sm font-semibold text-brand-strong";

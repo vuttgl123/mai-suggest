@@ -41,7 +41,7 @@ export function ThemeScheduleList({
   }
 
   return (
-    <section className="rounded-[var(--radius-dialog)] border border-border bg-paper p-5 shadow-[var(--shadow-soft)] sm:p-6">
+    <section className="rounded-[var(--radius-dialog)] border border-border bg-paper p-5  sm:p-6">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="diary-kicker">Các khoảng đã hẹn</p>
@@ -49,7 +49,7 @@ export function ThemeScheduleList({
             Lịch không khí
           </h2>
         </div>
-        <span className="rounded-full bg-brand-soft px-3 py-1.5 text-xs font-bold uppercase tracking-[0.11em] text-brand">
+        <span className="rounded-full bg-brand-soft px-3 py-1.5 text-xs font-bold font-semibold text-xs tracking-wide tracking-[0.11em] text-brand">
           {schedules.length} lịch
         </span>
       </div>
@@ -81,7 +81,7 @@ export function ThemeScheduleList({
                       <p className="font-display text-lg font-semibold tracking-[-0.035em] text-brand-strong">
                         {preset.label}
                       </p>
-                      <span className={`rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-[0.1em] ${schedule.isEnabled ? "bg-positive/10 text-positive" : "bg-surface text-muted"}`}>
+                      <span className={`rounded-full px-2 py-1 text-[10px] font-bold font-semibold text-xs tracking-wide tracking-[0.1em] ${schedule.isEnabled ? "bg-positive/10 text-positive" : "bg-surface text-muted"}`}>
                         {schedule.isEnabled ? "Bật" : "Tắt"}
                       </span>
                     </div>

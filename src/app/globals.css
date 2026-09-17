@@ -39,7 +39,7 @@
 
   --animate-luxury-reveal: luxury-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   --animate-luxury-float: luxury-float 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  --animate-pulse-slow: pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  ---slow: pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   --animate-float-subtle: float-subtle 4s ease-in-out infinite;
   --animate-shimmer: shimmer 2.5s linear infinite;
 

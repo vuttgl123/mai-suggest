@@ -110,7 +110,7 @@ export function RelationshipTimeline({
           </section>
         ) : (
           <section className="mx-auto max-w-3xl px-5 pb-14 sm:px-8 lg:px-10">
-            <div className="diary-wash rounded-[var(--radius-dialog)] border border-border px-6 py-10 text-center shadow-[var(--shadow-soft)] sm:px-10">
+            <div className="diary-wash rounded-[var(--radius-dialog)] border border-border px-6 py-10 text-center  sm:px-10">
               <span className="mx-auto grid h-11 w-11 place-items-center rounded-full bg-brand-soft text-brand" aria-hidden="true">
                 <Heart size={19} fill="currentColor" strokeWidth={1.3} />
               </span>

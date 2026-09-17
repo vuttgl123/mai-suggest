@@ -18,7 +18,7 @@ export function TimelineFeaturedChapter({
 
   return (
     <article
-      className="relative overflow-hidden rounded-[var(--radius-dialog)] border border-border bg-[var(--theme-card-surface)] shadow-[var(--shadow-card)]"
+      className="relative overflow-hidden rounded-[var(--radius-dialog)] border border-border bg-[var(--theme-card-surface)] "
       id={`timeline-entry-${entry.id}`}
     >
       <span

@@ -4,7 +4,7 @@ import { CalendarClock, Palette } from "lucide-react";
 import { useEffect, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { AdminWorkspaceHeader } from "@/components/admin/admin-workspace-header";
-import { AdminWorkspaceSwitcher } from "@/components/admin/admin-workspace-switcher";
+
 import { Button } from "@/components/ui/button";
 import { ThemeScheduleForm } from "@/features/site-theme/presentation/theme-schedule-form";
 import { ThemeScheduleList } from "@/features/site-theme/presentation/theme-schedule-list";
@@ -180,7 +180,7 @@ export function AdminSiteTheme({
         }
         title="Để mỗi mùa kể lại một chương thật riêng."
       />
-      <AdminWorkspaceSwitcher active="theme" />
+
 
       {feedback ? (
         <p aria-live="polite" className="mt-5 rounded-[var(--radius-card)] border border-brand/20 bg-brand-soft/55 px-4 py-3 text-sm leading-6 text-brand">
@@ -190,7 +190,7 @@ export function AdminSiteTheme({
 
       <section className="mt-7 grid gap-6 xl:grid-cols-[minmax(19rem,0.72fr)_minmax(0,1.28fr)] xl:items-start">
         <aside className="space-y-5 xl:sticky xl:top-5">
-          <section className="rounded-[var(--radius-frame)] border border-border bg-[var(--surface-elevated)] p-5 shadow-[var(--shadow-soft)]">
+          <section className="rounded-[var(--radius-frame)] border border-border bg-[var(--surface-elevated)] p-5 ">
             <div className="flex items-center gap-2 text-accent">
               <Palette size={18} aria-hidden="true" />
               <p className="text-sm font-semibold text-accent">Chọn cho hiện tại</p>
@@ -216,7 +216,7 @@ export function AdminSiteTheme({
         </aside>
 
         <div className="space-y-5">
-          <section className="flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-card)] border border-border bg-[var(--surface-elevated)] px-4 py-3 shadow-[var(--shadow-soft)]">
+          <section className="flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-card)] border border-border bg-[var(--surface-elevated)] px-4 py-3 ">
             <div className="flex items-center gap-3">
               <span className="grid h-10 w-10 place-items-center rounded-full bg-brand-soft text-brand">
                 <CalendarClock size={18} aria-hidden="true" />

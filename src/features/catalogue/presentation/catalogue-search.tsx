@@ -45,7 +45,7 @@ export function CatalogueSearch({
       className="mx-auto mt-8 max-w-2xl"
     >
       <form
-        className="group relative flex items-center rounded-2xl border border-border/50 bg-[var(--surface-elevated)] p-2 shadow-sm transition-all focus-within:border-accent/40 focus-within:ring-4 focus-within:ring-accent/10"
+        className="group relative flex items-center rounded-2xl border border-border/50 bg-[var(--surface-elevated)] p-2  transition-all focus-within:border-accent/40 focus-within:ring-4 focus-within:ring-accent/10"
         onSubmit={handleSubmit}
         role="search"
       >
@@ -87,7 +87,7 @@ export function CatalogueSearch({
           )}
           
           <button
-            className="hidden h-8 rounded-lg bg-brand-strong px-4 text-xs font-medium text-white shadow-sm transition hover:bg-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus disabled:cursor-wait disabled:opacity-60 sm:block"
+            className="hidden h-8 rounded-lg bg-brand-strong px-4 text-xs font-medium text-white  transition hover:bg-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus disabled:cursor-wait disabled:opacity-60 sm:block"
             disabled={isPending}
             type="submit"
           >

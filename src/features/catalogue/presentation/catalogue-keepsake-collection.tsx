@@ -13,7 +13,7 @@ export function CatalogueKeepsakeCollection({
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl">
           <span
-            className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--surface-elevated)] text-brand shadow-sm ring-1 ring-border/50"
+            className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--surface-elevated)] text-brand  ring-1 ring-border/50"
             aria-hidden="true"
           >
             <BookHeart size={20} strokeWidth={1.5} />
@@ -37,7 +37,7 @@ export function CatalogueKeepsakeCollection({
             ))}
           </div>
         ) : (
-          <div className="mt-10 rounded-[2rem] border border-border/60 bg-[var(--surface-elevated)] p-12 text-center shadow-sm backdrop-blur-xl">
+          <div className="mt-10 rounded-[2rem] border border-border/60 bg-[var(--surface-elevated)] p-12 text-center  backdrop-blur-xl">
             <Sparkles
               className="mx-auto text-accent"
               size={24}
@@ -66,14 +66,14 @@ function KeepsakeCard({
   const copy = keepsakeCopy(keepsake.kind);
 
   return (
-    <article className="group relative overflow-hidden rounded-[2rem] border border-border/60 bg-[var(--color-surface)]/80 p-8 shadow-sm backdrop-blur-xl transition hover:border-brand-soft sm:p-10">
+    <article className="group relative overflow-hidden rounded-[2rem] border border-border/60 bg-[var(--color-surface)]/80 p-8  backdrop-blur-xl transition hover:border-brand-soft sm:p-10">
       <span
         className="absolute right-6 top-6 font-display text-5xl font-semibold text-brand-soft/50 transition-colors group-hover:text-brand-soft"
         aria-hidden="true"
       >
         {String(sequence).padStart(2, "0")}
       </span>
-      <div className="inline-flex items-center gap-2 rounded-full border border-border/50 bg-[var(--surface-elevated)] px-4 py-1.5 shadow-sm">
+      <div className="inline-flex items-center gap-2 rounded-full border border-border/50 bg-[var(--surface-elevated)] px-4 py-1.5 ">
         <Quote size={14} className="text-accent" aria-hidden="true" />
         <p className="text-[13px] font-semibold text-accent">{copy.label}</p>
       </div>

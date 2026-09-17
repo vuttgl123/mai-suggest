@@ -23,7 +23,7 @@ export function CatalogueDetailHero({
     <section className="mx-auto max-w-7xl px-4 pt-24 sm:px-6 lg:px-8">
       {/* SaaS Back Button */}
       <Link
-        className="inline-flex h-9 items-center gap-1.5 rounded-full border border-border/50 bg-[var(--surface-elevated)]/70 px-4 text-[13px] font-medium text-brand-strong shadow-sm backdrop-blur-xl transition-all hover:bg-black/5 hover:text-brand"
+        className="inline-flex h-9 items-center gap-1.5 rounded-full border border-border/50 bg-[var(--surface-elevated)]/70 px-4 text-[13px] font-medium text-brand-strong  backdrop-blur-xl transition-all hover:bg-black/5 hover:text-brand"
         href="/#collection"
         transitionTypes={["nav-back"]}
       >
@@ -33,7 +33,7 @@ export function CatalogueDetailHero({
 
       <div className="mt-8 grid gap-10 lg:mt-12 lg:grid-cols-[5fr_7fr] lg:items-start lg:gap-16">
         {/* Sleek SaaS Image Container (Sticky on Desktop) */}
-        <div className="group relative overflow-hidden rounded-[2.5rem] border border-border/60 bg-[var(--surface-elevated)] shadow-sm lg:sticky lg:top-28">
+        <div className="group relative overflow-hidden rounded-[2.5rem] border border-border/60 bg-[var(--surface-elevated)]  lg:sticky lg:top-28">
           {item.primaryImage ? (
             <ViewTransition
               default="none"
@@ -80,13 +80,13 @@ export function CatalogueDetailHero({
           {(item.priceLabel || item.address) ? (
             <div className="mt-8 flex flex-wrap items-center gap-3">
               {item.priceLabel ? (
-                <span className="inline-flex h-10 items-center rounded-full bg-brand-strong px-5 text-[14px] font-medium text-white shadow-sm">
+                <span className="inline-flex h-10 items-center rounded-full bg-brand-strong px-5 text-[14px] font-medium text-white ">
                   {item.priceLabel}
                 </span>
               ) : null}
               
               {item.address ? (
-                <span className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 bg-[var(--surface-elevated)] px-4 text-[14px] font-medium text-brand-strong shadow-sm">
+                <span className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 bg-[var(--surface-elevated)] px-4 text-[14px] font-medium text-brand-strong ">
                   <MapPin size={16} className="text-accent" aria-hidden="true" />
                   {item.address}
                 </span>
@@ -95,7 +95,7 @@ export function CatalogueDetailHero({
           ) : null}
 
           {item.description ? (
-            <div className="mt-12 rounded-[2rem] border border-border/60 bg-[var(--color-surface)]/80 p-8 shadow-sm backdrop-blur-xl sm:p-10">
+            <div className="mt-12 rounded-[2rem] border border-border/60 bg-[var(--color-surface)]/80 p-8  backdrop-blur-xl sm:p-10">
               <div className="flex items-center gap-2 text-accent">
                 <Quote size={20} strokeWidth={1.5} aria-hidden="true" />
                 <h3 className="text-sm font-semibold text-accent">Câu chuyện</h3>
@@ -112,7 +112,7 @@ export function CatalogueDetailHero({
             <div className="mt-8 flex flex-wrap gap-3">
               {item.links.map((link) => (
                 <a
-                  className="inline-flex h-12 items-center gap-2 rounded-full border border-border/60 bg-white px-6 text-[14px] font-semibold text-brand-strong shadow-sm transition hover:bg-black/5"
+                  className="inline-flex h-12 items-center gap-2 rounded-full border border-border/60 bg-white px-6 text-[14px] font-semibold text-brand-strong  transition hover:bg-black/5"
                   href={link.url}
                   key={link.id}
                   rel="noreferrer"

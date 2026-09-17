@@ -21,12 +21,12 @@ export function CataloguePagination({
 
   return (
     <div className="mt-16 flex flex-col items-center">
-      <p className="text-center text-xs font-medium tracking-wide uppercase text-muted">
+      <p className="text-center text-xs font-medium tracking-wide font-semibold text-xs tracking-wide text-muted">
         Trang {page} / {pageCount}
       </p>
       <nav
         aria-label="Phân trang bộ sưu tập"
-        className="mt-4 inline-flex items-center gap-1 rounded-full border border-border/60 bg-[var(--surface-elevated)] p-1.5 shadow-sm backdrop-blur-xl"
+        className="mt-4 inline-flex items-center gap-1 rounded-full border border-border/60 bg-[var(--surface-elevated)] p-1.5  backdrop-blur-xl"
       >
         {page > 1 ? (
           <Link
@@ -52,7 +52,7 @@ export function CataloguePagination({
                 aria-current={value === page ? "page" : undefined}
                 className={`grid h-8 min-w-[2rem] place-items-center rounded-full text-[13px] font-medium transition-all ${
                   value === page
-                    ? "bg-brand-strong text-white shadow-sm"
+                    ? "bg-brand-strong text-white "
                     : "text-muted hover:bg-black/5 hover:text-brand-strong"
                 }`}
                 href={createCataloguePath({ categorySlug, page: value, query })}

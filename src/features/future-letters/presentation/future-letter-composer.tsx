@@ -307,4 +307,4 @@ function feedbackFor(code: string): string {
 }
 
 const inputClassName =
-  "mt-2 min-h-11 w-full rounded-xl border border-border bg-white/70 px-3 text-sm text-ink shadow-sm outline-none placeholder:text-muted focus:border-focus disabled:bg-surface";
+  "mt-2 min-h-11 w-full rounded-xl border border-border bg-white/70 px-3 text-sm text-ink  outline-none placeholder:text-muted focus:border-focus disabled:bg-surface";

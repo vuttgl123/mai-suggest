@@ -37,7 +37,7 @@ export function MagicalLoginClient({ nextPath, hasCallbackError }: MagicalLoginC
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.5, type: "spring", stiffness: 200, damping: 20 }}
-              className="grid h-14 w-14 place-items-center rounded-full bg-gradient-to-br from-brand to-brand-strong text-white shadow-lg"
+              className="grid h-14 w-14 place-items-center rounded-full    text-white shadow-lg"
             >
               <Heart size={24} fill="currentColor" strokeWidth={1.5} aria-hidden="true" />
             </motion.span>
@@ -46,7 +46,7 @@ export function MagicalLoginClient({ nextPath, hasCallbackError }: MagicalLoginC
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7, duration: 0.8 }}
-              className="mt-6 text-sm font-semibold tracking-widest text-accent uppercase"
+              className="mt-6 text-sm font-semibold tracking-wide text-accent font-semibold text-xs tracking-wide"
               translate="no"
             >
               Điều Em Yêu

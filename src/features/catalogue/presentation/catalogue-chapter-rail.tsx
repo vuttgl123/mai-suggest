@@ -32,7 +32,7 @@ export function CatalogueChapterRail({
                 aria-current={selectedCategorySlug === null ? "page" : undefined}
                 className={`relative shrink-0 px-5 py-2.5 text-[14px] font-medium transition-all duration-300 rounded-xl ${
                   selectedCategorySlug === null
-                    ? "text-brand-strong bg-white shadow-sm ring-1 ring-border/50"
+                    ? "text-brand-strong bg-white  ring-1 ring-border/50"
                     : "text-muted hover:text-brand-strong hover:bg-black/5"
                 }`}
                 href={createCataloguePath({ categorySlug: null, page: 1, query })}
@@ -50,7 +50,7 @@ export function CatalogueChapterRail({
                     aria-current={isActive ? "page" : undefined}
                     className={`relative shrink-0 px-5 py-2.5 text-[14px] font-medium transition-all duration-300 rounded-xl ${
                       isActive
-                        ? "text-brand-strong bg-white shadow-sm ring-1 ring-border/50"
+                        ? "text-brand-strong bg-white  ring-1 ring-border/50"
                         : "text-muted hover:text-brand-strong hover:bg-black/5"
                     }`}
                     href={createCataloguePath({
@@ -69,8 +69,8 @@ export function CatalogueChapterRail({
           </div>
           
           {/* Fading edges for scroll indication on mobile */}
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[var(--color-paper)] to-transparent sm:hidden" aria-hidden="true" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[var(--color-paper)] to-transparent sm:hidden" aria-hidden="true" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-8    sm:hidden" aria-hidden="true" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-8    sm:hidden" aria-hidden="true" />
         </div>
       </div>
     </section>

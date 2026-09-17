@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { ViewTransition } from "react";
 import { AdminWorkspaceHeader } from "@/components/admin/admin-workspace-header";
-import { AdminWorkspaceSwitcher } from "@/components/admin/admin-workspace-switcher";
+
 import { AdminTimelineEditor } from "@/features/timeline/presentation/admin-timeline-editor";
 import { AdminTimelineList } from "@/features/timeline/presentation/admin-timeline-list";
 import type {
@@ -45,7 +45,7 @@ export function AdminTimeline({ entries, selectedEntry }: AdminTimelineProps) {
         }
         title="Chăm chút những chương mình đã cùng đi qua."
       />
-      <AdminWorkspaceSwitcher active="timeline" />
+
 
       {feedback ? <p aria-live="polite" className="mt-5 rounded-[var(--radius-card)] border border-brand/15 bg-brand-soft/50 px-4 py-3 text-sm leading-6 text-brand">{feedback}</p> : null}
 

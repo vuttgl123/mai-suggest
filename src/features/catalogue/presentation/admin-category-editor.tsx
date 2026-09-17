@@ -103,7 +103,7 @@ export function AdminCategoryEditor({
   return (
     <dialog
       aria-labelledby="admin-category-editor-title"
-      className="admin-category-editor-dialog fixed inset-0 m-auto h-[min(44rem,calc(100dvh_-_1.5rem))] w-[min(100%_-_1.5rem,60rem)] max-w-none overflow-hidden rounded-[var(--radius-dialog)] border border-border bg-paper p-0 text-ink shadow-[var(--shadow-card)]"
+      className="admin-category-editor-dialog fixed inset-0 m-auto h-[min(44rem,calc(100dvh_-_1.5rem))] w-[min(100%_-_1.5rem,60rem)] max-w-none overflow-hidden rounded-[var(--radius-dialog)] border border-border bg-paper p-0 text-ink "
       onClose={onClose}
       ref={dialogRef}
     >
@@ -304,4 +304,4 @@ function optionalText(value: string): string | null {
 }
 
 const inputClassName =
-  "mt-2 min-h-11 w-full rounded-xl border border-border bg-white/70 px-3 text-sm text-ink shadow-sm outline-none placeholder:text-muted focus:border-focus disabled:bg-surface";
+  "mt-2 min-h-11 w-full rounded-xl border border-border bg-white/70 px-3 text-sm text-ink  outline-none placeholder:text-muted focus:border-focus disabled:bg-surface";

@@ -13,7 +13,7 @@ export function AdminTimelineList({
   selectedEntryId,
 }: AdminTimelineListProps) {
   return (
-    <aside className="rounded-[var(--radius-frame)] border border-border bg-[color-mix(in_srgb,var(--surface-elevated)_82%,transparent)] p-4 shadow-[var(--shadow-soft)] xl:sticky xl:top-5">
+    <aside className="rounded-[var(--radius-frame)] border border-border bg-[color-mix(in_srgb,var(--surface-elevated)_82%,transparent)] p-4 xl:sticky xl:top-5">
       <div className="flex items-end justify-between gap-3">
         <div>
           <p className="text-sm font-semibold text-accent">Các chương</p>
@@ -35,7 +35,7 @@ export function AdminTimelineList({
                 aria-current={selectedEntryId === entry.id ? "page" : undefined}
                 className={`block rounded-[var(--radius-card)] border p-3 transition ${
                   selectedEntryId === entry.id
-                    ? "border-brand bg-brand-soft shadow-[var(--shadow-soft)]"
+                    ? "border-brand bg-brand-soft"
                     : "border-transparent hover:border-border hover:bg-paper"
                 }`}
                 href={createAdminTimelinePath({ entryId: entry.id })}

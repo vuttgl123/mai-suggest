@@ -86,7 +86,7 @@ export function AdminTimelineEditor({
   }
 
   return (
-    <section className="rounded-[var(--radius-frame)] border border-border bg-[var(--surface-elevated)] p-4 shadow-[var(--shadow-card)] sm:p-6">
+    <section className="rounded-[var(--radius-frame)] border border-border bg-[var(--surface-elevated)] p-4  sm:p-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-sm font-semibold text-accent">{isEditing ? "Mốc đang chọn" : "Một chương mới"}</p>
@@ -130,7 +130,7 @@ export function AdminTimelineEditor({
           </div>
         </section>
 
-        <div className="mt-6 flex flex-wrap gap-2 border-t border-border pt-4 lg:sticky lg:bottom-4 lg:z-10 lg:rounded-[var(--radius-card)] lg:border lg:bg-paper/95 lg:px-4 lg:py-3 lg:shadow-[var(--shadow-soft)] lg:backdrop-blur">
+        <div className="mt-6 flex flex-wrap gap-2 border-t border-border pt-4 lg:sticky lg:bottom-4 lg:z-10 lg:rounded-[var(--radius-card)] lg:border lg:bg-paper/95 lg:px-4 lg:py-3 lg: lg:backdrop-blur">
           <Button disabled={isPending} type="submit"><Save size={16} aria-hidden="true" />{isPending ? "Đang lưu…" : isEditing ? "Lưu mốc" : "Tạo mốc"}</Button>
           {selectedEntry ? <Button disabled={isPending} onClick={() => setConfirmingDelete(true)} type="button" variant="quiet"><Trash2 size={15} aria-hidden="true" />Xóa mốc</Button> : null}
         </div>
@@ -172,5 +172,5 @@ function feedbackFor(code: string): string {
   return "Không thể lưu thay đổi lúc này. Hãy thử lại sau.";
 }
 
-const inputClassName = "mt-2 min-h-11 w-full rounded-xl border border-border bg-paper px-3 py-2 text-sm leading-7 text-ink shadow-sm outline-none placeholder:text-muted focus:border-focus";
+const inputClassName = "mt-2 min-h-11 w-full rounded-xl border border-border bg-paper px-3 py-2 text-sm leading-7 text-ink  outline-none placeholder:text-muted focus:border-focus";
 const labelClassName = "block text-sm font-semibold text-brand-strong";
