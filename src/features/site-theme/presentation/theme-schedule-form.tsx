@@ -115,11 +115,11 @@ export function ThemeScheduleForm({
   const heading = schedule ? "Chỉnh một khoảng không khí" : "Hẹn không khí mới";
 
   return (
-    <section className="rounded-[var(--radius-frame)] border border-border bg-[var(--surface-elevated)] p-5  sm:p-6">
+    <section className="rounded-[var(--radius-card)] border border-border bg-[var(--surface-elevated)] p-5  sm:p-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-sm font-semibold text-accent">Lịch tự động · giờ Việt Nam</p>
-          <h2 className="font-display mt-2 text-2xl font-semibold tracking-[-0.045em] text-brand-strong">
+          <h2 className="font-display mt-2 text-2xl font-medium text-brand-strong">
             {heading}
           </h2>
         </div>
@@ -225,7 +225,7 @@ export function ThemeScheduleForm({
             />
             <small>Số cao hơn sẽ được ưu tiên khi lịch chồng lên nhau.</small>
           </label>
-          <label className="flex min-h-11 items-center gap-2 rounded-xl border border-border bg-surface px-3 text-sm font-semibold text-brand-strong">
+          <label className="flex min-h-11 items-center gap-2 rounded-[var(--radius-card)] border border-border bg-surface px-3 text-sm font-semibold text-brand-strong">
             <input
               checked={draft.isEnabled}
               className="h-4 w-4 accent-brand"
@@ -244,7 +244,7 @@ export function ThemeScheduleForm({
           </p>
         ) : null}
         {hasOverlap ? (
-          <p className="rounded-xl border border-accent/25 bg-brand-soft/45 px-3 py-2.5 text-xs leading-5 text-brand">
+          <p className="rounded-[var(--radius-card)] border border-accent/25 bg-brand-soft/45 px-3 py-2.5 text-xs leading-5 text-brand">
             Lịch này đang chồng với một lịch bật có ưu tiên bằng hoặc cao hơn; nó có thể không trở thành không khí hiệu lực.
           </p>
         ) : null}
@@ -303,4 +303,4 @@ const fieldLabelClassName =
   "block text-sm font-semibold text-brand-strong";
 
 const inputClassName =
-  "mt-2 min-h-11 w-full rounded-xl border border-border bg-paper px-3 text-sm font-medium text-ink transition focus:border-focus disabled:cursor-not-allowed disabled:bg-surface";
+  "mt-2 min-h-11 w-full rounded-[var(--radius-card)] border border-border-input bg-paper px-3 text-sm font-medium text-ink transition focus:border-focus disabled:cursor-not-allowed disabled:bg-surface";

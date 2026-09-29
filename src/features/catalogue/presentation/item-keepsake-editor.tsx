@@ -66,14 +66,14 @@ export function ItemKeepsakeEditor({
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="diary-kicker">Nội dung công khai</p>
-          <h3 id="keepsakes-heading" className="font-display mt-1 text-2xl font-semibold tracking-[-0.045em] text-brand-strong">
+          <h3 id="keepsakes-heading" className="font-display mt-1 text-2xl font-medium text-brand-strong">
             Những điều muốn nói
           </h3>
           <p className="mt-2 max-w-xl text-sm leading-6 text-muted">
             Chúng sẽ xuất hiện theo thứ tự này trong trang chi tiết của item.
           </p>
         </div>
-        <span className="rounded-full bg-brand-soft px-3 py-1.5 text-xs font-bold font-semibold text-xs tracking-wide tracking-[0.12em] text-brand">
+        <span className="rounded-full bg-brand-soft px-3 py-1.5 text-[0.8125rem] font-semibold">
           {value.length}/24 mảnh thư
         </span>
       </div>
@@ -110,7 +110,7 @@ export function ItemKeepsakeEditor({
           ))}
         </ol>
       ) : (
-        <div className="mt-5 rounded-[var(--radius-card)] border border-dashed border-border bg-[rgb(255_249_243_/_65%)] px-4 py-6 text-center">
+        <div className="mt-5 rounded-[var(--radius-card)] border border-dashed border-border bg-paper px-4 py-6 text-center">
           <Heart className="mx-auto text-accent" size={20} aria-hidden="true" />
           <p className="mt-3 text-sm leading-6 text-muted">
             Thêm lời nhắn, thơ hoặc kỷ niệm đầu tiên cho item này.
@@ -142,7 +142,7 @@ function KeepsakeForm({
   const kindLabel = kinds.find((entry) => entry.kind === keepsake.kind)?.label;
 
   return (
-    <li className="rounded-[var(--radius-card)] border border-border bg-[rgb(255_249_243_/_72%)] p-4 ">
+    <li className="rounded-[var(--radius-card)] border border-border bg-paper p-4 ">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="diary-kicker">{kindLabel} · {String(index + 1).padStart(2, "0")}</p>
         <div className="flex items-center gap-1">
@@ -202,7 +202,7 @@ function KeepsakeForm({
         </label>
       </div>
       {confirmRemoval ? (
-        <div className="mt-3 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-danger/30 bg-danger/10 px-4 py-3">
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-card)] border border-danger/30 bg-danger/10 px-4 py-3">
           <p className="text-sm leading-6 text-danger">Xóa mảnh thư này trước khi lưu item?</p>
           <span className="flex gap-2">
             <Button disabled={disabled} onClick={() => setConfirmRemoval(false)} size="compact" type="button" variant="quiet">
@@ -229,4 +229,4 @@ function createKeepsakeId(): string {
 }
 
 const inputClassName =
-  "mt-2 min-h-11 w-full rounded-xl border border-border bg-paper px-3 text-sm text-ink  outline-none placeholder:text-muted focus:border-focus";
+  "mt-2 min-h-11 w-full rounded-[var(--radius-card)] border border-border-input bg-paper px-3 text-sm text-ink  outline-none placeholder:text-muted focus:border-focus";

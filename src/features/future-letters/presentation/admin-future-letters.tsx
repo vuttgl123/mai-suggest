@@ -1,48 +1,25 @@
 "use client";
 
 import Link from "next/link";
-import { MailOpen, Trash2 } from "lucide-react";
-import { useEffect, useState, useTransition } from "react";
+import { Trash2 } from "lucide-react";
+import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { AdminWorkspaceHeader } from "@/components/admin/admin-workspace-header";
-
 import { Button } from "@/components/ui/button";
-import { formatFutureLetterDateTime } from "@/modules/future-letters/domain/future-letter-time";
+import { formatFutureLetterOpening } from "@/modules/future-letters/domain/future-letter-time";
 import type { FutureLetter } from "@/modules/future-letters/domain/future-letter-models";
 import { deleteManagedFutureLetterAction } from "@/modules/future-letters/presentation/future-letter-actions";
 
 interface AdminFutureLettersProps {
+  /** Opened letters only. Sealed letters belong to their authors until they open. */
   letters: FutureLetter[];
-  serverNow: string;
 }
 
-type LetterStatus = "opened" | "scheduled";
-const MAX_TIMEOUT_DELAY = 2_147_483_647;
-
-export function AdminFutureLetters({
-  letters,
-  serverNow,
-}: AdminFutureLettersProps) {
+export function AdminFutureLetters({ letters }: AdminFutureLettersProps) {
   const router = useRouter();
-  const [confirmingLetterId, setConfirmingLetterId] = useState<string | null>(
-    null,
-  );
+  const [confirmingLetterId, setConfirmingLetterId] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
-  const serverNowTime = new Date(serverNow).getTime();
-  const [openedLetters, scheduledLetters] = splitLetters(letters, serverNowTime);
-  const nextOpeningTime = getNextOpeningTime(scheduledLetters);
-
-  useEffect(() => {
-    if (!Number.isFinite(nextOpeningTime)) return;
-
-    const delay = Math.min(
-      Math.max(nextOpeningTime - Date.now() + 100, 0),
-      MAX_TIMEOUT_DELAY,
-    );
-    const timer = window.setTimeout(() => router.refresh(), delay);
-    return () => window.clearTimeout(timer);
-  }, [nextOpeningTime, router]);
 
   function deleteLetter(letterId: string) {
     startTransition(async () => {
@@ -54,311 +31,80 @@ export function AdminFutureLetters({
       }
 
       setConfirmingLetterId(null);
-      setFeedback("Đã gỡ lá thư khỏi không gian chung.");
+      setFeedback("Đã gỡ lá thư khỏi hòm thư chung.");
       router.refresh();
     });
   }
 
   return (
-    <main
-      className="diary-container diary-section pt-8 sm:pt-10"
-      id="admin-future-letters-content"
-      tabIndex={-1}
-    >
+    <main className="diary-container pb-20 pt-8 sm:pt-10" id="admin-future-letters-content" tabIndex={-1}>
       <AdminWorkspaceHeader
         actions={
-          <Link
-            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-paper px-4 text-sm font-semibold text-brand transition hover:-translate-y-0.5 hover:border-accent"
-            href="/thu-hen-ngay-mo"
-          >
-            <MailOpen aria-hidden="true" size={16} />
-            Xem trang thư
+          <Link className="text-link" href="/thu-hen-ngay-mo">
+            Xem hộp thư
           </Link>
         }
-        description="Rà soát những lá thư đang niêm phong và gìn giữ không gian chung sau khi thư đã mở."
-        eyebrow="Quản trị · thư hẹn"
-        summary={
-          <div className="flex flex-wrap justify-end gap-2">
-            <StatusSummary count={scheduledLetters.length} label="đang hẹn" />
-            <StatusSummary count={openedLetters.length} label="đã mở" tone="opened" />
-          </div>
-        }
-        title="Giữ gìn những điều đã được gửi đi."
+        description="Gỡ một lá thư đã mở khỏi hòm thư chung khi cần. Thư chưa đến giờ mở chỉ tác giả nhìn thấy, nên không xuất hiện ở đây."
+        summary={<span className="tabular text-sm text-muted">{letters.length} lá thư đã mở</span>}
+        title="Thư hẹn ngày mở"
       />
 
-
       {feedback ? (
-        <p
-          aria-live="polite"
-          className="mt-5 rounded-[var(--radius-card)] border border-brand/15 bg-brand-soft/50 px-4 py-3 text-sm leading-6 text-brand"
-        >
+        <p aria-live="polite" className="mt-5 text-sm text-brand">
           {feedback}
         </p>
       ) : null}
 
-      <div className="mt-7 grid gap-6 xl:grid-cols-2 xl:items-start">
-        <ManagedLetterGroup
-          confirmingLetterId={confirmingLetterId}
-          emptyCopy="Chưa có lá thư nào đang chờ ngày mở."
-          isPending={isPending}
-          letters={scheduledLetters}
-          onCancelDelete={() => setConfirmingLetterId(null)}
-          onDelete={deleteLetter}
-          onRequestDelete={setConfirmingLetterId}
-          status="scheduled"
-        />
-        <ManagedLetterGroup
-          confirmingLetterId={confirmingLetterId}
-          emptyCopy="Chưa có lá thư nào đã đến ngày mở."
-          isPending={isPending}
-          letters={openedLetters}
-          onCancelDelete={() => setConfirmingLetterId(null)}
-          onDelete={deleteLetter}
-          onRequestDelete={setConfirmingLetterId}
-          status="opened"
-        />
-      </div>
+      {letters.length ? (
+        <ol className="mt-8 border-t border-border">
+          {letters.map((letter) => (
+            <li className="grid gap-3 border-b border-border py-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center" key={letter.id}>
+              <div className="min-w-0">
+                <h2 className="font-display break-words text-lg font-medium text-brand-strong">{letter.title}</h2>
+                <p className="tabular mt-0.5 text-sm text-muted">
+                  Từ {letter.author.displayName}. {formatFutureLetterOpening(letter.opensAt)}.
+                </p>
+              </div>
+              <Button
+                className="text-danger hover:bg-danger/10"
+                disabled={isPending}
+                onClick={() => setConfirmingLetterId(letter.id)}
+                size="compact"
+                type="button"
+                variant="quiet"
+              >
+                <Trash2 aria-hidden="true" size={14} />
+                Gỡ thư
+              </Button>
+              {confirmingLetterId === letter.id ? (
+                <div className="flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-card)] border border-danger/40 px-3 py-2 sm:col-span-2">
+                  <p className="text-sm text-danger">
+                    Gỡ “{letter.title}” khỏi hòm thư chung? Thao tác này không thể hoàn tác.
+                  </p>
+                  <span className="flex gap-2">
+                    <Button disabled={isPending} onClick={() => setConfirmingLetterId(null)} size="compact" type="button" variant="quiet">
+                      Giữ lại
+                    </Button>
+                    <Button disabled={isPending} onClick={() => deleteLetter(letter.id)} size="compact" type="button" variant="danger">
+                      <Trash2 aria-hidden="true" size={14} />
+                      Gỡ lá thư
+                    </Button>
+                  </span>
+                </div>
+              ) : null}
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <p className="mt-8 border-t border-border pt-6 text-muted">Chưa có lá thư nào đến ngày mở.</p>
+      )}
     </main>
   );
 }
 
-interface ManagedLetterGroupProps {
-  confirmingLetterId: string | null;
-  emptyCopy: string;
-  isPending: boolean;
-  letters: FutureLetter[];
-  onCancelDelete: () => void;
-  onDelete: (letterId: string) => void;
-  onRequestDelete: (letterId: string) => void;
-  status: LetterStatus;
-}
-
-function ManagedLetterGroup({
-  confirmingLetterId,
-  emptyCopy,
-  isPending,
-  letters,
-  onCancelDelete,
-  onDelete,
-  onRequestDelete,
-  status,
-}: ManagedLetterGroupProps) {
-  const isOpened = status === "opened";
-  const headingId = `managed-future-letters-${status}`;
-
-  return (
-    <section
-      aria-labelledby={headingId}
-      className="rounded-[var(--radius-frame)] border border-border bg-[var(--surface-elevated)] p-4  sm:p-5"
-    >
-      <div className="flex flex-wrap items-end justify-between gap-3 border-b border-border pb-4">
-        <div>
-          <p className="text-sm font-semibold text-accent">
-            {isOpened ? "Lưu trữ chung" : "Bàn niêm phong"}
-          </p>
-          <h2
-            className="font-display mt-1 text-2xl font-semibold tracking-[-0.04em] text-brand-strong"
-            id={headingId}
-          >
-            {isOpened ? "Đã mở" : "Đang hẹn"}
-          </h2>
-        </div>
-        <span
-          className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
-            isOpened
-              ? "bg-accent/10 text-accent"
-              : "bg-brand-soft text-brand"
-          }`}
-        >
-          {letters.length} lá thư
-        </span>
-      </div>
-
-      {letters.length ? (
-        <ol className="mt-4 space-y-3">
-          {letters.map((letter) => (
-            <ManagedLetterRow
-              isConfirming={confirmingLetterId === letter.id}
-              isPending={isPending}
-              key={letter.id}
-              letter={letter}
-              onCancelDelete={onCancelDelete}
-              onDelete={() => onDelete(letter.id)}
-              onRequestDelete={() => onRequestDelete(letter.id)}
-              status={status}
-            />
-          ))}
-        </ol>
-      ) : (
-        <p className="mt-4 rounded-[var(--radius-card)] border border-dashed border-border px-4 py-8 text-center text-sm leading-6 text-muted">
-          {emptyCopy}
-        </p>
-      )}
-    </section>
-  );
-}
-
-interface ManagedLetterRowProps {
-  isConfirming: boolean;
-  isPending: boolean;
-  letter: FutureLetter;
-  onCancelDelete: () => void;
-  onDelete: () => void;
-  onRequestDelete: () => void;
-  status: LetterStatus;
-}
-
-function ManagedLetterRow({
-  isConfirming,
-  isPending,
-  letter,
-  onCancelDelete,
-  onDelete,
-  onRequestDelete,
-  status,
-}: ManagedLetterRowProps) {
-  const isOpened = status === "opened";
-
-  return (
-    <li className="rounded-[var(--radius-card)] border border-border bg-paper p-4 ">
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
-          <p className="diary-kicker text-accent">
-            {isOpened ? "Đã đến ngày" : "Đang niêm phong"}
-          </p>
-          <h3 className="font-display mt-2 break-words text-xl font-semibold tracking-[-0.035em] text-brand-strong">
-            {letter.title}
-          </h3>
-        </div>
-        <span
-          className={`shrink-0 rounded-full px-2.5 py-1 text-[10px] font-bold font-semibold text-xs tracking-wide tracking-[0.1em] ${
-            isOpened
-              ? "bg-accent/10 text-accent"
-              : "bg-brand-soft text-brand"
-          }`}
-        >
-          {isOpened ? "Đã mở" : "Đang hẹn"}
-        </span>
-      </div>
-      <dl className="mt-4 grid gap-2 border-t border-border pt-3 text-sm leading-6 sm:grid-cols-2">
-        <div>
-          <dt className="diary-kicker text-[9px]">Người viết</dt>
-          <dd className="mt-0.5 break-words font-semibold text-brand-strong">
-            {letter.author.displayName}
-          </dd>
-        </div>
-        <div>
-          <dt className="diary-kicker text-[9px]">Thời điểm mở</dt>
-          <dd className="mt-0.5 font-semibold text-brand-strong">
-            {formatFutureLetterDateTime(letter.opensAt)}
-          </dd>
-        </div>
-      </dl>
-      <div className="mt-4 flex flex-wrap justify-end gap-2">
-        <Button
-          className="text-danger hover:bg-danger/10 hover:text-danger-strong"
-          disabled={isPending}
-          onClick={onRequestDelete}
-          size="compact"
-          type="button"
-          variant="quiet"
-        >
-          <Trash2 aria-hidden="true" size={14} />
-          Gỡ thư
-        </Button>
-      </div>
-      {isConfirming ? (
-        <div className="mt-3 rounded-xl border border-danger/30 bg-danger/5 px-3 py-3">
-          <p className="text-xs leading-5 text-danger">
-            Gỡ “{letter.title}” khỏi không gian chung? Thao tác này không thể hoàn tác.
-          </p>
-          <div className="mt-3 flex flex-wrap justify-end gap-2">
-            <Button
-              disabled={isPending}
-              onClick={onCancelDelete}
-              size="compact"
-              type="button"
-              variant="quiet"
-            >
-              Giữ lại
-            </Button>
-            <Button
-              disabled={isPending}
-              onClick={onDelete}
-              size="compact"
-              type="button"
-              variant="danger"
-            >
-              <Trash2 aria-hidden="true" size={14} />
-              Gỡ lá thư
-            </Button>
-          </div>
-        </div>
-      ) : null}
-    </li>
-  );
-}
-
-function StatusSummary({
-  count,
-  label,
-  tone = "scheduled",
-}: {
-  count: number;
-  label: string;
-  tone?: LetterStatus;
-}) {
-  return (
-    <span
-      className={`rounded-full px-3 py-1.5 text-xs font-bold font-semibold text-xs tracking-wide tracking-[0.11em] ${
-        tone === "opened"
-          ? "bg-accent/10 text-accent"
-          : "bg-brand-soft text-brand"
-      }`}
-    >
-      {count} {label}
-    </span>
-  );
-}
-
-function splitLetters(letters: FutureLetter[], serverNowTime: number) {
-  const openedLetters: FutureLetter[] = [];
-  const scheduledLetters: FutureLetter[] = [];
-
-  for (const letter of letters) {
-    if (new Date(letter.opensAt).getTime() <= serverNowTime) {
-      openedLetters.push(letter);
-    } else {
-      scheduledLetters.push(letter);
-    }
-  }
-
-  return [openedLetters, scheduledLetters] as const;
-}
-
-function getNextOpeningTime(letters: FutureLetter[]): number {
-  let nextOpeningTime = Number.POSITIVE_INFINITY;
-
-  for (const letter of letters) {
-    nextOpeningTime = Math.min(
-      nextOpeningTime,
-      new Date(letter.opensAt).getTime(),
-    );
-  }
-
-  return nextOpeningTime;
-}
-
 function feedbackFor(code: string): string {
-  if (code === "UNAUTHENTICATED") {
-    return "Phiên đăng nhập đã hết. Hãy đăng nhập lại.";
-  }
-  if (code === "ACCESS_DENIED") {
-    return "Chỉ Owner mới có thể gỡ lá thư này.";
-  }
-  if (code === "NOT_FOUND") {
-    return "Lá thư không còn tồn tại hoặc đã được gỡ.";
-  }
-
+  if (code === "UNAUTHENTICATED") return "Phiên đăng nhập đã hết. Hãy đăng nhập lại.";
+  if (code === "ACCESS_DENIED") return "Chỉ Owner mới có thể gỡ lá thư.";
+  if (code === "NOT_FOUND") return "Lá thư không còn tồn tại, đã được gỡ hoặc chưa đến giờ mở.";
   return "Chưa thể gỡ lá thư lúc này. Hãy thử lại sau.";
 }

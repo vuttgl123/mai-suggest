@@ -13,7 +13,7 @@ export default async function AdminLayout({
     <div className="diary-shell">
       <AppHeader activeSection="admin" actor={actor} />
       
-      <div className="diary-container diary-section pt-8 sm:pt-10 pb-0 sm:pb-0">
+      <div className="diary-container pt-8 sm:pt-10">
         <AdminWorkspaceSwitcher />
       </div>
       

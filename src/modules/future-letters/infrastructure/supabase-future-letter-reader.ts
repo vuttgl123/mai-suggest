@@ -49,10 +49,11 @@ export class SupabaseFutureLetterReader implements FutureLetterReader {
     );
   }
 
-  async listManaged(): Promise<Result<FutureLetter[]>> {
+  async listManaged(serverNow: string): Promise<Result<FutureLetter[]>> {
     const { data, error } = await this.client
       .from("future_letters")
       .select(FUTURE_LETTER_COLUMNS)
+      .lte("opens_at", serverNow)
       .order("opens_at", { ascending: false });
 
     if (error) return failure("UNEXPECTED_FAILURE");
@@ -113,12 +114,12 @@ export class SupabaseFutureLetterReader implements FutureLetterReader {
       return success({ items: [], totalCount, hasMore: false });
     }
 
-    const authors = await this.loadAuthors(data as FutureLetterRow[]);
+    const authors = await this.loadAuthorIds(data.map((row) => row.author_id));
     if (!authors.ok) return authors;
 
     const items = data.map((row) =>
       toFutureLetterSummary(
-        row as any,
+        row,
         authors.value.get(row.author_id) ?? fallbackFutureLetterAuthor,
       ),
     );
@@ -185,7 +186,13 @@ export class SupabaseFutureLetterReader implements FutureLetterReader {
   private async loadAuthors(
     letterRows: FutureLetterRow[],
   ): Promise<Result<Map<string, FutureLetter["author"]>>> {
-    const authorIds = [...new Set(letterRows.map((letter) => letter.author_id))];
+    return this.loadAuthorIds(letterRows.map((letter) => letter.author_id));
+  }
+
+  private async loadAuthorIds(
+    ids: string[],
+  ): Promise<Result<Map<string, FutureLetter["author"]>>> {
+    const authorIds = [...new Set(ids)];
     const { data, error } = await this.client
       .from("profiles")
       .select(PROFILE_COLUMNS)

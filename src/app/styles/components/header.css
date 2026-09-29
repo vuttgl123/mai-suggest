@@ -1,20 +1,79 @@
 @layer components {
   .app-header {
-    position: relative;
-    background-image: var(--theme-header-pattern);
+    position: sticky;
+    top: calc(0.75rem + env(safe-area-inset-top));
+    z-index: 40;
+    padding-inline: max(var(--page-edge), env(safe-area-inset-left));
   }
 
-  .app-header::after {
+  .app-header__capsule {
+    display: flex;
+    height: 3.5rem;
+    max-width: var(--content-max);
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-inline: auto;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    padding: 0 0.375rem 0 1rem;
+    background: var(--theme-header-surface);
+    box-shadow: var(--elevation-floating);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .app-header__nav-link {
+    position: relative;
+    display: inline-flex;
+    height: 44px;
+    align-items: center;
+    padding-inline: 0.875rem;
+    color: var(--color-muted);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color var(--motion-micro) var(--ease-standard);
+  }
+
+  .app-header__nav-link:hover {
+    color: var(--color-ink);
+  }
+
+  .app-header__nav-link[aria-current="page"] {
+    color: var(--color-brand);
+    font-weight: 600;
+  }
+
+  .app-header__nav-link[aria-current="page"]::after {
     position: absolute;
-    right: 8%;
-    bottom: 0;
-    left: 8%;
-    height: 1px;
-    background: var(--theme-header-pattern);
+    right: 0.875rem;
+    bottom: 0.5rem;
+    left: 0.875rem;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--color-rose);
     content: "";
   }
 
-  .app-header-mark {
-    box-shadow: var(--theme-button-shadow-strong);
+  .app-header__mobile-link {
+    display: flex;
+    min-height: 48px;
+    align-items: center;
+    border-radius: var(--radius-card);
+    padding-inline: 1rem;
+    color: var(--color-ink);
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .app-header__mobile-link:hover {
+    background: var(--color-brand-soft);
+  }
+
+  .app-header__mobile-link[aria-current="page"] {
+    color: var(--color-brand);
+    font-weight: 600;
+    background: var(--color-brand-soft);
   }
 }

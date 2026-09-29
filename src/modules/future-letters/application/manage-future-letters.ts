@@ -71,6 +71,6 @@ export class ManageFutureLetters {
     if (!owner.ok) return owner;
     if (!hasFutureLetterId(letterId)) return failure("VALIDATION_FAILED");
 
-    return this.repository.deleteManaged(letterId.trim());
+    return this.repository.deleteManaged(letterId.trim(), new Date().toISOString());
   }
 }

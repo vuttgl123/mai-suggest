@@ -5,18 +5,18 @@ export type ButtonSize = "medium" | "compact" | "icon";
 
 const variantClassNames: Record<ButtonVariant, string> = {
   primary:
-    "border-transparent bg-brand text-white shadow-[var(--theme-button-shadow)] hover:-translate-y-0.5 hover:bg-brand-strong hover:shadow-[var(--theme-button-shadow-strong)]",
+    "border-transparent bg-brand text-on-brand hover:bg-brand-strong",
   secondary:
-    "border-border bg-[var(--theme-control-surface)] text-brand hover:-translate-y-0.5 hover:border-accent hover:bg-[var(--theme-control-hover)]",
+    "border-border-strong bg-paper text-brand hover:border-brand hover:bg-brand-soft",
   quiet:
     "border-transparent bg-transparent text-brand hover:bg-brand-soft",
   danger:
-    "border-transparent bg-danger text-white hover:brightness-90",
+    "border-transparent bg-danger text-on-brand hover:brightness-95",
 };
 
 const sizeClassNames: Record<ButtonSize, string> = {
-  medium: "min-h-11 px-4 py-2.5 text-sm",
-  compact: "min-h-11 px-3 py-2 text-xs",
+  medium: "min-h-11 px-5 py-2.5 text-[0.9375rem]",
+  compact: "min-h-11 px-4 py-2 text-sm",
   icon: "h-11 w-11 shrink-0 p-0",
 };
 
@@ -30,7 +30,7 @@ export function buttonClassName({
   className?: string;
 } = {}) {
   return [
-    "inline-flex touch-manipulation items-center justify-center gap-2 whitespace-nowrap rounded-[var(--radius-control)] border font-semibold transition duration-[var(--duration-fast)] ease-out active:scale-[0.98] focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-focus disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0 motion-reduce:transform-none motion-reduce:transition-none",
+    "press inline-flex touch-manipulation items-center justify-center gap-2 whitespace-nowrap rounded-full border font-semibold transition-colors duration-[var(--motion-micro)] ease-[var(--ease-standard)] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-focus disabled:cursor-not-allowed disabled:opacity-50 motion-reduce:transition-none",
     variantClassNames[variant],
     sizeClassNames[size],
     className,

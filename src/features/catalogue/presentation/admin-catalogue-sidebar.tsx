@@ -1,5 +1,6 @@
 "use client";
 
+import { StatusBadge } from "@/components/ui/status-badge";
 import Link from "next/link";
 import { FolderPlus, Pencil, Plus, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -98,11 +99,11 @@ export function AdminCatalogueSidebar({
 
   return (
     <>
-    <aside className="rounded-[var(--radius-frame)] border border-border bg-[color-mix(in_srgb,var(--surface-elevated)_82%,transparent)] p-3 xl:sticky xl:top-5">
+    <aside className="rounded-[var(--radius-card)] border border-border bg-[color-mix(in_srgb,var(--surface-elevated)_82%,transparent)] p-3 xl:sticky xl:top-5">
       <div className="flex items-center justify-between gap-3">
         <div>
           <p className="text-sm font-semibold text-accent">Bộ sưu tập</p>
-          <h2 className="font-display mt-1 text-lg font-semibold tracking-[-0.04em] text-brand-strong">
+          <h2 className="font-display mt-1 text-lg font-medium text-brand-strong">
             Danh mục
           </h2>
         </div>
@@ -168,9 +169,7 @@ export function AdminCatalogueSidebar({
               href={createAdminCataloguePath({ categoryId: category.id, itemId: null, page: 1 })}
             >
               <span className="min-w-0 truncate">{category.name}</span>
-            <span className="shrink-0 text-[10px] font-semibold opacity-70">
-                {category.isActive ? "Live" : "Ẩn"}
-              </span>
+            <StatusBadge active={category.isActive} activeLabel="Hiện" inactiveLabel="Ẩn" />
             </Link>
             {selectedCategoryId === category.id ? (
               <Button
@@ -186,7 +185,7 @@ export function AdminCatalogueSidebar({
               </Button>
             ) : null}
             {confirmingCategoryId === category.id ? (
-              <div className="mt-2 rounded-xl border border-danger/30 bg-danger/5 p-3">
+              <div className="mt-2 rounded-[var(--radius-card)] border border-danger/30 bg-danger/5 p-3">
                 <p className="text-xs leading-5 text-danger">Xóa danh mục này nếu nó đã trống?</p>
                 <div className="mt-2 flex gap-2">
                   <Button disabled={isPending} onClick={() => setConfirmingCategoryId(null)} size="compact" type="button" variant="quiet">
@@ -228,7 +227,7 @@ export function AdminCatalogueSidebar({
 }
 
 function categoryLinkClassName(active: boolean): string {
-  return `flex min-h-11 items-center justify-between gap-3 rounded-xl px-3 text-sm font-semibold transition ${
+  return `flex min-h-11 items-center justify-between gap-3 rounded-[var(--radius-card)] px-3 text-sm font-semibold transition ${
     active
       ? "bg-brand/10 text-brand ring-1 ring-brand/20"
       : "text-muted hover:bg-brand-soft hover:text-brand"
@@ -257,4 +256,4 @@ function slugify(value: string): string {
 }
 
 const inputClassName =
-  "mt-2 min-h-11 w-full rounded-xl border border-border bg-paper px-3 text-sm text-ink outline-none placeholder:text-muted focus:border-focus";
+  "mt-2 min-h-11 w-full rounded-[var(--radius-card)] border border-border-input bg-paper px-3 text-sm text-ink outline-none placeholder:text-muted focus:border-focus";

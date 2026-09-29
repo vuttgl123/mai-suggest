@@ -1,63 +1,137 @@
-:root {
-  --color-brand: #0f172a;
-  --color-brand-strong: #020617;
-  --color-brand-soft: #f1f5f9;
-  --color-accent: #3b82f6;
-  --color-positive: #10b981;
-  --color-danger: #ef4444;
-  --color-paper: #ffffff;
-  --color-surface: #f8fafc;
-  --color-ink: #334155;
-  --color-muted: #64748b;
-  --color-border: #e2e8f0;
-  --color-focus: #3b82f6;
-  --color-skeleton: #cbd5e1;
-  --color-skeleton-highlight: #f1f5f9;
+/*
+ * Living Archive tokens. Values are the default "bordeaux" preset; the other
+ * presets in themes.css override colour and light only, never layout, radius
+ * or type. Contrast ratios are measured against --color-surface.
+ *
+ * Declared on body as well as :root so that aliases such as
+ * --theme-body-background resolve against the preset colours that
+ * body[data-theme] sets, instead of being frozen at :root.
+ */
+:root,
+body {
+  /* Colour: roles, not hues */
+  --color-surface: #F5F1EA; /* giấy ngà: page background */
+  --color-paper: #FBF9F5; /* vellum: raised paper, dialogs, mats */
+  --color-paper-deep: #ECE5DA; /* empty image frames, skeleton base */
+  --color-ink: #282522; /* body text, 13.5:1 */
+  --color-muted: #5A534C; /* secondary text, 6.7:1 */
+  --color-brand: #6D2936; /* actions, links, focus, 9.2:1 */
+  --color-brand-strong: #4A1D26; /* headings, 12.5:1 */
+  --color-brand-soft: #EFE3DF; /* selected surfaces */
+  --color-on-brand: #FBF9F5; /* text on --color-brand */
+  --color-accent: #8C4F49; /* small accent text, 5.6:1 */
+  --color-rose: #C18C86; /* decoration only: thread, seal ring (2.5:1) */
+  --color-olive: #707566; /* status icons only (4.2:1) */
+  --color-positive: #5C6152; /* positive status text, 5.7:1 */
+  --color-danger: #9B2C1F; /* destructive, always with icon + text, 6.7:1 */
+  --color-border: rgb(40 37 34 / 14%);
+  --color-border-strong: rgb(40 37 34 / 24%);
+  --color-border-input: #857A6C; /* form control edge, >= 3:1 */
+  --color-focus: #6D2936;
+  --color-night: #1B2130; /* letter reading room */
+  --color-night-soft: #262E40;
+  --color-gold: #E0B872; /* warm light on night */
+  --color-skeleton: #E4DCD0;
+  --color-skeleton-highlight: #EFE9E0;
+
+  /* Type families: next/font sets --font-serif and --font-body on body. */
+  --font-display: var(--font-serif), Georgia, serif;
+  --font-prose: var(--font-serif), Georgia, serif;
+
+  /* Type */
+  --type-cover-size: clamp(2.75rem, 5.6vw, 5rem);
+  --type-cover-leading: 1.06;
+  --type-cover-tracking: -0.02em;
+  --type-display-xl-size: clamp(2.375rem, 4.2vw, 4rem);
+  --type-display-xl-leading: 1.08;
+  --type-display-xl-tracking: -0.015em;
+  --type-display-lg-size: clamp(2.125rem, 3.4vw, 3.25rem);
+  --type-display-lg-leading: 1.1;
+  --type-display-lg-tracking: -0.012em;
+  --type-display-md-size: clamp(1.875rem, 2.6vw, 2.5rem);
+  --type-display-md-leading: 1.14;
+  --type-display-md-tracking: -0.01em;
+  --type-heading-size: 1.625rem;
+  --type-heading-leading: 1.22;
+  --type-heading-tracking: -0.005em;
+  --type-title-size: 1.375rem;
+  --type-title-leading: 1.28;
+  --type-title-tracking: 0;
+  --type-lead-size: 1.375rem;
+  --type-lead-leading: 1.5;
+  --type-prose-size: 1.1875rem;
+  --type-prose-leading: 1.72;
+  --type-body-size: 1rem;
+  --type-body-leading: 1.6;
+  --type-body-sm-size: 0.875rem;
+  --type-body-sm-leading: 1.5;
+  --type-label-size: 0.8125rem;
+  --type-label-leading: 1.4;
+  --type-kicker-size: 0.8125rem;
+  --type-kicker-leading: 1.4;
+  --type-kicker-tracking: 0.01em;
+
+  /* Shape: objects are crisp, paper is soft, controls are round */
+  --radius-object: 2px;
+  --radius-frame: 2px;
+  --radius-card: 0.375rem;
+  --radius-dialog: 0.5rem;
   --radius-control: 999px;
-  --radius-card: 1rem;
-  --radius-dialog: 1.25rem;
+  --radius-control-tight: 0.375rem;
   --control-height: 44px;
-  
-  /* Extremely subtle SaaS shadows */
-  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.03);
-  --shadow-soft: 0 2px 10px rgba(0, 0, 0, 0.02);
-  
-  /* Glassmorphism surfaces */
-  --theme-header-surface: rgba(255, 255, 255, 0.7);
-  --theme-control-surface: rgba(248, 250, 252, 0.5);
-  --theme-control-hover: #ffffff;
-  --theme-card-surface: rgba(255, 255, 255, 0.95);
-  --theme-badge-border: rgba(15, 23, 42, 0.1);
-  --theme-button-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  --theme-button-shadow-strong: 0 4px 12px rgba(0, 0, 0, 0.08);
-  
-  /* Flatter themes, no giant gradients */
+
+  /* Elevation, tinted toward Bordeaux */
+  --elevation-flat: none;
+  --elevation-resting: 0 1px 1px rgb(40 37 34 / 6%), 0 10px 24px -14px rgb(74 29 38 / 22%);
+  --elevation-floating: 0 1px 2px rgb(40 37 34 / 6%), 0 18px 40px -18px rgb(74 29 38 / 30%);
+  --elevation-raised: var(--elevation-resting);
+  --elevation-lifted: var(--elevation-floating);
+  --shadow-card: var(--elevation-resting);
+  --shadow-soft: 0 1px 1px rgb(40 37 34 / 5%);
+
+  /* Surfaces used by existing components */
+  --theme-header-surface: rgb(251 249 245 / 78%);
+  --theme-control-surface: var(--color-paper);
+  --theme-control-hover: #FFFDF9;
+  --theme-card-surface: var(--color-paper);
+  --theme-badge-border: var(--color-border);
+  --theme-button-shadow: none;
+  --theme-button-shadow-strong: none;
   --theme-body-background: var(--color-surface);
-  --theme-atmosphere: transparent;
-  --theme-grain: transparent;
-  --theme-wash: var(--color-surface);
-  --theme-timeline-rail: linear-gradient(180deg, transparent, #e2e8f0 8%, #e2e8f0 92%, transparent);
-  --theme-entry-shadow: 0 0 0 1px #e2e8f0;
-  --theme-frame-border: #e2e8f0;
-  --theme-frame-inset: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
-  --theme-header-pattern: transparent;
-  --theme-card-highlight: transparent;
-  --theme-ornament-one: transparent;
-  --theme-ornament-two: transparent;
-  --theme-specks: transparent;
-  
-  --theme-scene-motion: 18s;
+  --theme-wash: var(--color-paper);
+  --theme-light: radial-gradient(60rem 40rem at 88% -8%, rgb(193 140 134 / 12%), transparent 70%);
+  --theme-grain-opacity: 0.045;
+  --theme-timeline-rail: var(--color-rose);
+  --theme-entry-shadow: 0 0 0 1px var(--color-border);
+  --theme-frame-border: var(--color-border);
+  --theme-frame-inset: none;
+  --theme-header-pattern: none;
+  --theme-card-highlight: none;
+  --theme-ornament-one: none;
+  --theme-ornament-two: none;
+  --theme-specks: none;
+  --theme-scene-motion: 0s;
   --theme-scene-scale: 1;
-  
-  --duration-fast: 150ms;
-  --duration-base: 250ms;
+
+  /* Motion */
+  --motion-micro: 160ms;
+  --motion-component: 280ms;
+  --motion-scene: 640ms;
+  --motion-quick: var(--motion-micro);
+  --motion-base: var(--motion-component);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-ease: var(--ease-out);
+  --duration-fast: var(--motion-micro);
+  --duration-base: var(--motion-component);
   --duration-exit: 150ms;
   --duration-enter: 200ms;
-  --duration-move: 300ms;
+  --duration-move: var(--motion-component);
 
+  /* Aliases kept for existing call sites */
   --surface-page: var(--color-surface);
   --surface-paper: var(--color-paper);
-  --surface-elevated: var(--theme-card-surface);
+  --surface-elevated: var(--color-paper);
   --surface-control: var(--theme-control-surface);
   --text-primary: var(--color-ink);
   --text-heading: var(--color-brand-strong);
@@ -65,45 +139,27 @@
   --line-subtle: var(--color-border);
   --accent-primary: var(--color-brand);
   --accent-detail: var(--color-accent);
-  --content-max: 90rem;
-  --section-space: clamp(4.25rem, 8vw, 8rem);
-  --radius-frame: 1rem;
-  --radius-control-tight: 0.5rem;
-
-  --soft-rose: var(--color-surface);
+  --soft-rose: var(--color-brand-soft);
   --hairline: var(--color-border);
 
-  /* Type scale */
-  --type-display-xl-size: clamp(2.5rem, 5vw, 4rem);
-  --type-display-xl-leading: 1.1;
-  --type-display-xl-tracking: -0.02em;
-  --type-display-lg-size: clamp(2rem, 4vw, 3rem);
-  --type-display-lg-leading: 1.15;
-  --type-display-lg-tracking: -0.015em;
-  --type-display-md-size: clamp(1.5rem, 2.5vw, 2rem);
-  --type-display-md-leading: 1.2;
-  --type-display-md-tracking: -0.01em;
-  --type-title-size: 1.125rem;
-  --type-title-leading: 1.4;
-  --type-title-tracking: 0;
-  --type-body-size: 0.9375rem;
-  --type-body-leading: 1.6;
-  --type-body-sm-size: 0.8125rem;
-  --type-body-sm-leading: 1.5;
-  --type-kicker-size: 0.75rem;
-  --type-kicker-leading: 1.4;
-  --type-kicker-tracking: 0.05em;
-
-  --elevation-flat: none;
-  --elevation-raised: 0 1px 2px rgba(0,0,0,0.02), 0 4px 12px rgba(0,0,0,0.03);
-  --elevation-lifted: 0 2px 4px rgba(0,0,0,0.03), 0 8px 24px rgba(0,0,0,0.04);
-
-  --motion-quick: 150ms;
-  --motion-base: 250ms;
-  --motion-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  /* Layout: full-bleed. Content spans the viewport minus the page edge;
+   * long reading keeps its own measure. */
+  --content-max: 1000rem;
+  --page-edge: 1rem;
+  --section-space: clamp(4rem, 8vw, 8rem);
+  --reading-measure: 66ch;
 }
 
-.home-layout,
-.journey-layout {
-  --content-max: 75rem;
+@media (min-width: 768px) {
+  :root,
+  body {
+    --page-edge: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root,
+  body {
+    --page-edge: clamp(2.5rem, 4vw, 5rem);
+  }
 }

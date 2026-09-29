@@ -1,18 +1,22 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import { Be_Vietnam_Pro, Newsreader } from "next/font/google";
 import { ThemeAtmosphere } from "@/components/theme/theme-atmosphere";
 import { ThemeMaintenanceScreen } from "@/components/theme/theme-maintenance-screen";
 import { createServerBackend } from "@/lib/backend/create-server-backend";
 import "./globals.css";
 
-const displayFont = Plus_Jakarta_Sans({
-  variable: "--font-display",
+/* Two families. Newsreader (with optical sizes) sets headings and every word
+ * written by members; Be Vietnam Pro, drawn for Vietnamese, sets the
+ * interface. Both carry full Vietnamese diacritics. */
+const serifFont = Newsreader({
+  variable: "--font-serif",
   subsets: ["latin", "vietnamese"],
   display: "swap",
-  weight: ["500", "600", "700"],
+  axes: ["opsz"],
+  style: ["normal", "italic"],
 });
 
-const bodyFont = Inter({
+const bodyFont = Be_Vietnam_Pro({
   variable: "--font-body",
   subsets: ["latin", "vietnamese"],
   display: "swap",
@@ -30,7 +34,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#5A0D18",
+  themeColor: "#F5F1EA",
   width: "device-width",
   initialScale: 1,
 };
@@ -45,7 +49,7 @@ export default async function RootLayout({
   return (
     <html lang="vi">
       <body
-        className={`${displayFont.variable} ${bodyFont.variable}`}
+        className={`${serifFont.variable} ${bodyFont.variable}`}
         data-theme={activeThemeKey}
       >
         <ThemeAtmosphere theme={activeThemeKey} />

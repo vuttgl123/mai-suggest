@@ -78,11 +78,12 @@ export class SupabaseFutureLetterRepository implements FutureLetterRepository {
     return data ? success(undefined) : failure("NOT_FOUND");
   }
 
-  async deleteManaged(letterId: string): Promise<Result<void>> {
+  async deleteManaged(letterId: string, serverNow: string): Promise<Result<void>> {
     const { data, error } = await this.client
       .from("future_letters")
       .delete()
       .eq("id", letterId)
+      .lte("opens_at", serverNow)
       .select("id")
       .maybeSingle();
 

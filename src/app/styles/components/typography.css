@@ -1,34 +1,75 @@
 @layer components {
+  /* Two families, three voices: headings and members' words in Newsreader
+   * (optical sizes keep both crisp), the interface in Be Vietnam Pro. */
   .font-display {
-    font-family: var(--font-display), serif;
+    font-family: var(--font-display);
+  }
+
+  .font-prose {
+    font-family: var(--font-prose);
   }
 
   .text-balance {
     text-wrap: balance;
   }
 
+  .cover-text {
+    font-family: var(--font-display);
+    font-size: var(--type-cover-size);
+    font-weight: 500;
+    line-height: var(--type-cover-leading);
+    letter-spacing: var(--type-cover-tracking);
+    text-wrap: balance;
+  }
+
   .display-xl {
+    font-weight: 500;
     font-size: var(--type-display-xl-size);
     line-height: var(--type-display-xl-leading);
     letter-spacing: var(--type-display-xl-tracking);
+    text-wrap: balance;
   }
 
   .display-lg {
+    font-weight: 500;
     font-size: var(--type-display-lg-size);
     line-height: var(--type-display-lg-leading);
     letter-spacing: var(--type-display-lg-tracking);
+    text-wrap: balance;
   }
 
   .display-md {
+    font-weight: 500;
     font-size: var(--type-display-md-size);
     line-height: var(--type-display-md-leading);
     letter-spacing: var(--type-display-md-tracking);
+    text-wrap: balance;
+  }
+
+  .heading-text {
+    font-weight: 500;
+    font-size: var(--type-heading-size);
+    line-height: var(--type-heading-leading);
+    letter-spacing: var(--type-heading-tracking);
   }
 
   .title-text {
     font-size: var(--type-title-size);
     line-height: var(--type-title-leading);
     letter-spacing: var(--type-title-tracking);
+  }
+
+  .lead-text {
+    font-family: var(--font-prose);
+    font-size: var(--type-lead-size);
+    line-height: var(--type-lead-leading);
+  }
+
+  .prose-text {
+    max-width: var(--reading-measure);
+    font-family: var(--font-prose);
+    font-size: var(--type-prose-size);
+    line-height: var(--type-prose-leading);
   }
 
   .body-text {
@@ -41,17 +82,36 @@
     line-height: var(--type-body-sm-leading);
   }
 
-  .diary-kicker {
-    color: var(--color-accent);
-    font-size: var(--type-kicker-size);
-    font-weight: 700;
-    line-height: var(--type-kicker-leading);
-          }
+  .label-text {
+    font-size: var(--type-label-size);
+    font-weight: 500;
+    line-height: var(--type-label-leading);
+    letter-spacing: 0.01em;
+  }
 
-  @media (min-width: 640px) {
-    .display-xl,
-    .display-lg {
-      text-wrap: balance;
-    }
+  /* Legacy name: a small sentence-case label, never uppercase. */
+  .diary-kicker {
+    color: var(--color-muted);
+    font-size: var(--type-kicker-size);
+    font-weight: 500;
+    line-height: var(--type-kicker-leading);
+    letter-spacing: var(--type-kicker-tracking);
+  }
+
+  .text-link {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-brand);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 5px;
+    transition: text-decoration-thickness var(--motion-micro) var(--ease-standard);
+  }
+
+  .text-link:hover {
+    text-decoration-thickness: 2px;
   }
 }

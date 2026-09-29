@@ -1,27 +1,24 @@
 import Link from "next/link";
-import { LockKeyhole } from "lucide-react";
 
+/* Polite and specific, without revealing any content or who the members are. */
 export default function AccessDeniedPage() {
   return (
-    <main className="diary-shell grid min-h-[100dvh] place-items-center px-5 py-8">
-      <section className="diary-wash w-full max-w-lg rounded-[var(--radius-frame)] border border-border p-7 text-center shadow-[var(--shadow-card)] sm:p-10">
-        <span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-brand-soft text-brand" aria-hidden="true"><LockKeyhole size={20} strokeWidth={1.4} /></span>
-        <p className="mt-5 text-sm font-semibold text-accent">
-          Chưa có quyền truy cập
-        </p>
-        <h1 className="font-display mt-4 text-4xl font-semibold text-brand-strong">
-          Tài khoản này chưa được kích hoạt
+    <main className="diary-container grid min-h-[100dvh] content-center py-16">
+      <div className="max-w-xl">
+        <h1 className="font-display display-lg text-brand-strong">
+          Tài khoản này chưa được mời vào không gian.
         </h1>
-        <p className="mt-4 text-sm leading-7 text-muted">
-          Hãy liên hệ chủ sở hữu không gian này để được cấp quyền sử dụng.
+        <p className="mt-5 text-ink">
+          Bạn đã đăng nhập bằng Google, nhưng tài khoản này chưa có trong danh sách được phép.
+          Nếu bạn nghĩ đây là nhầm lẫn, hãy nhắn cho người đã mời bạn.
         </p>
         <Link
+          className="mt-8 inline-flex min-h-11 items-center rounded-full bg-brand px-5 text-[0.9375rem] font-semibold text-on-brand transition-colors hover:bg-brand-strong"
           href="/login"
-          className="mt-7 inline-flex min-h-11 items-center rounded-full bg-brand px-5 text-sm font-semibold text-white transition hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-focus"
         >
-          Dùng tài khoản Google khác
+          Đăng nhập bằng tài khoản Google khác
         </Link>
-      </section>
+      </div>
     </main>
   );
 }

@@ -6,7 +6,7 @@
   html {
     color-scheme: light;
     scroll-behavior: smooth;
-    scroll-padding-top: 5rem;
+    scroll-padding-top: 6rem;
   }
 
   body {
@@ -17,10 +17,13 @@
     overflow-x: clip;
     background: var(--theme-body-background);
     color: var(--color-ink);
-    font-family: var(--font-body), sans-serif;
+    font-family: var(--font-body), system-ui, sans-serif;
+    font-size: var(--type-body-size);
+    line-height: var(--type-body-leading);
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     text-wrap: pretty;
+    -webkit-font-smoothing: antialiased;
   }
 
   button,
@@ -32,18 +35,30 @@
 
   button,
   a,
-  label {
+  label,
+  summary {
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
   }
 
   ::selection {
-    background: var(--soft-rose);
+    background: var(--color-brand-soft);
     color: var(--color-brand-strong);
   }
 
   :focus-visible {
-    outline: 3px solid var(--color-focus);
+    outline: 2px solid var(--color-focus);
     outline-offset: 3px;
+  }
+
+  time,
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 }

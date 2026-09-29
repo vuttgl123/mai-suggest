@@ -31,31 +31,25 @@ export function AdminWorkspaceSwitcher() {
   const pathname = usePathname();
 
   return (
-    <nav
-      aria-label="Khu vực quản trị"
-      className="mt-4 overflow-x-auto rounded-[var(--radius-card)] border border-border bg-paper/60 backdrop-blur-md p-1.5"
-    >
-      <div className="flex min-w-max gap-1">
+    <nav aria-label="Khu vực quản trị" className="-mx-[var(--page-edge)] overflow-x-auto border-b border-border px-[var(--page-edge)] [scrollbar-width:none]">
+      <ul className="flex min-w-max gap-6">
         {workspaces.map(({ href, icon: Icon, label }) => {
           const isActive = pathname === href;
 
           return (
-            <Link
-              aria-current={isActive ? "page" : undefined}
-              className={`inline-flex min-h-11 items-center gap-2 rounded-xl px-3.5 text-sm font-semibold transition focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-focus ${
-                isActive
-                  ? "bg-accent/10 text-accent"
-                  : "text-muted hover:bg-paper hover:text-brand"
-              }`}
-              href={href}
-              key={href}
-            >
-              <Icon aria-hidden="true" size={16} />
-              {label}
-            </Link>
+            <li key={href}>
+              <Link
+                aria-current={isActive ? "page" : undefined}
+                className="mailbox-tab gap-2"
+                href={href}
+              >
+                <Icon aria-hidden="true" size={16} strokeWidth={1.5} />
+                {label}
+              </Link>
+            </li>
           );
         })}
-      </div>
+      </ul>
     </nav>
   );
 }

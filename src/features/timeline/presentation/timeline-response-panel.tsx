@@ -4,7 +4,7 @@
  * a native image boundary instead of a fixed Next Image allow-list. */
 /* eslint-disable @next/next/no-img-element */
 
-import { Check, MessageCircleHeart, Pencil, Send, Trash2, X } from "lucide-react";
+import { Check, Pencil, Trash2, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
@@ -43,7 +43,7 @@ export function TimelineResponsePanel({
   function createResponse() {
     const content = newContent.trim();
     if (!content) {
-      setFeedback("Hãy viết một điều bạn muốn giữ lại.");
+      setFeedback("Hãy viết vài chữ trước khi gửi.");
       return;
     }
 
@@ -55,7 +55,7 @@ export function TimelineResponsePanel({
       }
 
       setNewContent("");
-      setFeedback("Lời hồi đáp đã được lưu.");
+      setFeedback("Đã gửi hồi đáp.");
       router.refresh();
     });
   }
@@ -96,115 +96,109 @@ export function TimelineResponsePanel({
   }
 
   return (
-    <section className="mt-7 border-t border-border pt-5" aria-labelledby={`responses-${entryId}`}>
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-2 text-brand-strong">
-          <MessageCircleHeart className="text-accent" size={18} strokeWidth={1.45} aria-hidden="true" />
-          <h4 id={`responses-${entryId}`} className="font-display text-xl font-semibold tracking-[-0.035em]">
-            Những lời giữ lại
-          </h4>
-        </div>
-        <span className="rounded-full bg-brand-soft px-3 py-1 text-xs font-semibold text-brand">
-          {responses.length} hồi đáp
-        </span>
+    <section className="mt-16 border-t border-border pt-8" aria-labelledby={`responses-${entryId}`}>
+      <div className="flex flex-wrap items-baseline justify-between gap-3">
+        <h3 id={`responses-${entryId}`} className="font-display text-xl font-medium text-brand-strong">
+          Hồi đáp
+        </h3>
+        <span className="tabular text-sm text-muted">{responses.length} lời</span>
       </div>
 
-      <form
-        className="mt-4 rounded-[var(--radius-card)] border border-border bg-surface p-4"
-        onSubmit={(event) => {
-          event.preventDefault();
-          createResponse();
-        }}
-      >
-        <label className="block text-sm font-semibold text-brand-strong">
-          Viết một điều mình muốn giữ lại
-          <textarea
-            className={inputClassName}
-            disabled={isPending}
-            maxLength={2000}
-            onChange={(event) => setNewContent(event.target.value)}
-            placeholder="Một cảm xúc, một kỷ niệm, hoặc một lời nhắn nhỏ…"
-            value={newContent}
-          />
-        </label>
-        <div className="mt-3 flex items-center justify-between gap-3">
-          <span className="text-xs text-muted">{newContent.length}/2000</span>
-          <Button disabled={isPending} size="compact" type="submit">
-            <Send size={15} aria-hidden="true" />
-            {isPending ? "Đang lưu…" : "Lưu hồi đáp"}
-          </Button>
-        </div>
-      </form>
-
-      {feedback ? <p aria-live="polite" className="mt-3 text-sm leading-6 text-brand">{feedback}</p> : null}
-
       {responses.length ? (
-        <ol className="mt-5 space-y-3">
+        <ol className="mt-6 grid gap-6">
           {responses.map((response) => {
             const isAuthor = response.userId === actorId;
             const canDelete = isAuthor || canManage;
             const isEditing = editingResponseId === response.id;
 
             return (
-              <li className="relative rounded-md border border-border bg-surface p-5 " key={response.id}>
-                {/* Tape detail */}
-                <div className="absolute -top-3 left-1/2 h-6 w-14 -translate-x-1/2 -rotate-2 rounded-sm border border-[rgba(255,255,255,0.4)] bg-[rgba(255,255,255,0.6)]  backdrop-blur-md" aria-hidden="true" />
-                <div className="flex items-start gap-4">
-                  <Avatar displayName={response.author.displayName} imageUrl={response.author.avatarUrl} />
-                  <div className="min-w-0 flex-1">
-                    <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-                      <p className="text-sm font-bold text-brand-strong">{response.author.displayName}</p>
-                      <time className="text-xs text-muted" dateTime={response.createdAt}>{formatResponseDate(response.createdAt)}</time>
+              <li className="grid grid-cols-[2rem_minmax(0,1fr)] gap-3" key={response.id}>
+                <Avatar displayName={response.author.displayName} imageUrl={response.author.avatarUrl} />
+                <div className="min-w-0">
+                  <p className="flex flex-wrap items-baseline gap-x-2 text-sm">
+                    <span className="max-w-full truncate font-semibold text-ink" title={response.author.displayName}>
+                      {response.author.displayName}
+                    </span>
+                    <time className="text-muted" dateTime={response.createdAt}>{formatResponseDate(response.createdAt)}</time>
+                  </p>
+                  {isEditing ? (
+                    <form
+                      className="mt-2"
+                      onSubmit={(event) => {
+                        event.preventDefault();
+                        updateResponse(response.id);
+                      }}
+                    >
+                      <label className="sr-only" htmlFor={`edit-response-${response.id}`}>
+                        Sửa lời hồi đáp
+                      </label>
+                      <textarea id={`edit-response-${response.id}`} className={inputClassName} disabled={isPending} maxLength={2000} onChange={(event) => setEditingContent(event.target.value)} value={editingContent} />
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        <Button disabled={isPending} size="compact" type="submit"><Check size={15} aria-hidden="true" />Lưu</Button>
+                        <Button disabled={isPending} onClick={() => setEditingResponseId(null)} size="compact" type="button" variant="quiet"><X size={15} aria-hidden="true" />Hủy</Button>
+                      </div>
+                    </form>
+                  ) : (
+                    <p className="font-prose mt-1 whitespace-pre-line text-base leading-[1.7] text-ink">{response.content}</p>
+                  )}
+                  {!isEditing && canDelete ? (
+                    <div className="mt-1 flex flex-wrap gap-1">
+                      {isAuthor ? <Button disabled={isPending} onClick={() => { setEditingResponseId(response.id); setEditingContent(response.content); }} size="compact" type="button" variant="quiet"><Pencil size={14} aria-hidden="true" />Sửa</Button> : null}
+                      <Button disabled={isPending} onClick={() => setConfirmingResponseId(response.id)} size="compact" type="button" variant="quiet"><Trash2 size={14} aria-hidden="true" />{isAuthor ? "Xóa" : "Gỡ"}</Button>
                     </div>
-                    {isEditing ? (
-                      <form
-                        className="mt-3"
-                        onSubmit={(event) => {
-                          event.preventDefault();
-                          updateResponse(response.id);
-                        }}
-                      >
-                        <label className="sr-only" htmlFor={`edit-response-${response.id}`}>
-                          Sửa lời hồi đáp
-                        </label>
-                        <textarea id={`edit-response-${response.id}`} className={inputClassName} disabled={isPending} maxLength={2000} onChange={(event) => setEditingContent(event.target.value)} value={editingContent} />
-                        <div className="mt-3 flex flex-wrap gap-2">
-                          <Button disabled={isPending} size="compact" type="submit"><Check size={15} aria-hidden="true" />Lưu</Button>
-                          <Button disabled={isPending} onClick={() => setEditingResponseId(null)} size="compact" type="button" variant="quiet"><X size={15} aria-hidden="true" />Hủy</Button>
-                        </div>
-                      </form>
-                    ) : (
-                      <p className="body-text mt-4 whitespace-pre-line text-ink">{response.content}</p>
-                    )}
-                    {!isEditing && (isAuthor || canDelete) ? (
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        {isAuthor ? <Button disabled={isPending} onClick={() => { setEditingResponseId(response.id); setEditingContent(response.content); }} size="compact" type="button" variant="quiet"><Pencil size={14} aria-hidden="true" />Sửa</Button> : null}
-                        {canDelete ? <Button disabled={isPending} onClick={() => setConfirmingResponseId(response.id)} size="compact" type="button" variant="quiet"><Trash2 size={14} aria-hidden="true" />{isAuthor ? "Xóa" : "Gỡ hồi đáp"}</Button> : null}
-                      </div>
-                    ) : null}
-                    {confirmingResponseId === response.id ? (
-                      <div className="mt-3 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-danger/30 bg-danger/10 px-3 py-2.5">
-                        <p className="text-xs leading-5 text-danger">Bạn chắc chắn muốn xóa hồi đáp này?</p>
-                        <span className="flex gap-2"><Button disabled={isPending} onClick={() => setConfirmingResponseId(null)} size="compact" type="button" variant="quiet">Hủy</Button><Button disabled={isPending} onClick={() => deleteResponse(response.id)} size="compact" type="button" variant="danger">Xóa</Button></span>
-                      </div>
-                    ) : null}
-                  </div>
+                  ) : null}
+                  {confirmingResponseId === response.id ? (
+                    <div className="mt-2 flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-card)] border border-danger/40 px-3 py-2">
+                      <p className="text-sm text-danger">Xóa lời hồi đáp này? Thao tác không thể hoàn tác.</p>
+                      <span className="flex gap-2"><Button disabled={isPending} onClick={() => setConfirmingResponseId(null)} size="compact" type="button" variant="quiet">Giữ lại</Button><Button disabled={isPending} onClick={() => deleteResponse(response.id)} size="compact" type="button" variant="danger"><Trash2 size={14} aria-hidden="true" />Xóa</Button></span>
+                    </div>
+                  ) : null}
                 </div>
               </li>
             );
           })}
         </ol>
-      ) : <p className="mt-5 text-sm leading-7 text-muted">Hãy là người đầu tiên để lại một điều thật riêng.</p>}
+      ) : (
+        <p className="mt-4 text-muted">Chưa có hồi đáp nào cho chương này.</p>
+      )}
+
+      <form
+        className="mt-8"
+        onSubmit={(event) => {
+          event.preventDefault();
+          createResponse();
+        }}
+      >
+        <label className="block text-sm font-medium text-ink" htmlFor={`new-response-${entryId}`}>
+          Viết hồi đáp
+        </label>
+        <textarea
+          className={inputClassName}
+          disabled={isPending}
+          id={`new-response-${entryId}`}
+          maxLength={2000}
+          onChange={(event) => setNewContent(event.target.value)}
+          placeholder="Một điều bạn còn nhớ về hôm ấy"
+          value={newContent}
+        />
+        <div className="mt-3 flex items-center justify-between gap-3">
+          <span className="tabular text-sm text-muted">{newContent.length}/2000</span>
+          <Button disabled={isPending} type="submit">
+            {isPending ? "Đang gửi…" : "Gửi hồi đáp"}
+          </Button>
+        </div>
+        {feedback ? <p aria-live="polite" className="mt-3 text-sm text-brand">{feedback}</p> : null}
+      </form>
     </section>
   );
 }
 
 function Avatar({ displayName, imageUrl }: { displayName: string; imageUrl: string | null }) {
   if (imageUrl) {
-    return <img alt="" className="h-10 w-10 shrink-0 rounded-full border border-border object-cover" height={40} src={imageUrl} width={40} />;
+    return <img alt="" className="h-8 w-8 shrink-0 rounded-full border border-border object-cover" height={32} src={imageUrl} width={32} />;
   }
 
-  return <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand-soft text-sm font-bold text-brand" aria-hidden="true">{displayName.trim().slice(0, 1).toLocaleUpperCase("vi-VN") || "T"}</span>;
+  return <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-border bg-paper-deep font-display text-[0.8125rem] font-medium text-brand-strong" aria-hidden="true">{displayName.trim().slice(0, 1).toLocaleUpperCase("vi-VN") || "T"}</span>;
 }
 
 function formatResponseDate(value: string): string {
@@ -218,4 +212,4 @@ function feedbackFor(code: string): string {
   return "Không thể lưu thay đổi lúc này. Hãy thử lại sau.";
 }
 
-const inputClassName = "mt-2 min-h-28 w-full rounded-xl border border-border bg-paper px-3 py-3 text-sm leading-7 text-ink  outline-none placeholder:text-muted focus:border-focus focus-visible:outline focus-visible:outline-2 focus-visible:outline-focus focus-visible:outline-offset-2";
+const inputClassName = "font-prose mt-2 min-h-28 w-full rounded-[var(--radius-card)] border border-border-input bg-paper px-3.5 py-3 text-base leading-[1.7] text-ink outline-none placeholder:text-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";

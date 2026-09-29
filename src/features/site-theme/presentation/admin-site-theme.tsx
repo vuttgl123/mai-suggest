@@ -170,7 +170,7 @@ export function AdminSiteTheme({
             <p className="text-sm font-semibold text-accent">
               Đang hiển thị
             </p>
-            <p className="font-display mt-1 text-xl font-semibold tracking-[-0.04em] text-brand-strong">
+            <p className="font-display mt-1 text-xl font-medium text-brand-strong">
               {resolvedPreset.label}
             </p>
             <p className="mt-1 text-xs leading-5 text-muted">
@@ -190,12 +190,12 @@ export function AdminSiteTheme({
 
       <section className="mt-7 grid gap-6 xl:grid-cols-[minmax(19rem,0.72fr)_minmax(0,1.28fr)] xl:items-start">
         <aside className="space-y-5 xl:sticky xl:top-5">
-          <section className="rounded-[var(--radius-frame)] border border-border bg-[var(--surface-elevated)] p-5 ">
+          <section className="rounded-[var(--radius-card)] border border-border bg-[var(--surface-elevated)] p-5 ">
             <div className="flex items-center gap-2 text-accent">
               <Palette size={18} aria-hidden="true" />
               <p className="text-sm font-semibold text-accent">Chọn cho hiện tại</p>
             </div>
-            <h2 className="font-display mt-2 text-2xl font-semibold tracking-[-0.045em] text-brand-strong">
+            <h2 className="font-display mt-2 text-2xl font-medium text-brand-strong">
               Tự động hay một lời hẹn riêng?
             </h2>
             <ThemeScenePicker

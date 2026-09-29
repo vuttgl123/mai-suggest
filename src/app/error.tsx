@@ -1,7 +1,7 @@
 "use client";
 
-import { RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { RouteErrorState } from "@/components/ui/route-state";
 
 interface ErrorPageProps {
   error: Error & { digest?: string };
@@ -10,26 +10,10 @@ interface ErrorPageProps {
 
 export default function ErrorPage({ reset }: ErrorPageProps) {
   return (
-    <main className="diary-shell grid min-h-screen place-items-center px-5 py-12 sm:px-8">
-      <section className="diary-wash w-full max-w-lg rounded-[var(--radius-dialog)] border border-border p-8 text-center shadow-[var(--shadow-card)] sm:p-12">
-        <span
-          className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-brand-soft text-brand"
-          aria-hidden="true"
-        >
-          <RefreshCw size={21} strokeWidth={1.6} />
-        </span>
-        <p className="mt-6 text-sm font-semibold text-accent">Có một nhịp nhỏ bị ngắt quãng</p>
-        <h1 className="font-display mt-3 text-4xl font-semibold tracking-[-0.05em] text-brand-strong">
-          Chưa thể mở bộ sưu tập.
-        </h1>
-        <p className="mx-auto mt-4 max-w-sm text-sm leading-7 text-muted">
-          Hãy thử lại một lần nữa. Nếu vẫn chưa được, em có thể quay lại sau nhé.
-        </p>
-        <Button className="mt-8" onClick={reset}>
-          <RefreshCw size={16} aria-hidden="true" />
-          Thử lại
-        </Button>
-      </section>
-    </main>
+    <RouteErrorState
+      action={<Button onClick={reset}>Thử lại</Button>}
+      description="Không tải được bộ sưu tập từ máy chủ. Kiểm tra kết nối rồi thử lại."
+      title="Chưa mở được bộ sưu tập."
+    />
   );
 }

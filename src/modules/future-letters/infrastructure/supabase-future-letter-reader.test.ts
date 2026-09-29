@@ -1,50 +1,66 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Database } from "@/lib/supabase/database.types";
 import { SupabaseFutureLetterReader } from "./supabase-future-letter-reader";
 
+type QueryResult = { data: unknown; error: null; count?: number };
+
+function createQuery(result: QueryResult) {
+  const query = {
+    select: vi.fn(() => query),
+    eq: vi.fn(() => query),
+    gt: vi.fn(() => query),
+    lte: vi.fn(() => query),
+    in: vi.fn(() => query),
+    ilike: vi.fn(() => query),
+    order: vi.fn(() => query),
+    range: vi.fn(() => Promise.resolve(result)),
+    maybeSingle: vi.fn(() => Promise.resolve(result)),
+    then: (resolve: (value: QueryResult) => unknown) => Promise.resolve(result).then(resolve),
+  };
+  return query;
+}
+
+function createClient(query: ReturnType<typeof createQuery>) {
+  const from = vi.fn(() => query);
+  return { client: { from } as unknown as SupabaseClient<Database>, from };
+}
+
 describe("SupabaseFutureLetterReader", () => {
-  let mockSupabase: any;
-  let mockQuery: any;
-  
+  let query: ReturnType<typeof createQuery>;
+
   beforeEach(() => {
-    mockQuery = {
-      select: vi.fn(function(this: any) { return this; }),
-      eq: vi.fn(function(this: any) { return this; }),
-      lte: vi.fn(function(this: any) { return this; }),
-      order: vi.fn(function(this: any) { return this; }),
-      range: vi.fn(function(this: any) { return this; }),
-      ilike: vi.fn(function(this: any) { return this; }),
-      single: vi.fn(function(this: any) { return Promise.resolve({ data: null, error: null }); }),
-    };
-
-    // Make range also a promise so await works
-    mockQuery.range.mockImplementation(() => Promise.resolve({ data: [], error: null, count: 0 }));
-
-    mockSupabase = {
-      from: vi.fn().mockReturnValue(mockQuery),
-    };
+    query = createQuery({ data: [], error: null, count: 0 });
   });
 
-  it("listMailbox calls expected methods without query", async () => {
-    mockQuery.range.mockResolvedValueOnce({ data: [], error: null, count: 0 });
-    
-    const reader = new SupabaseFutureLetterReader(mockSupabase as any);
-    await reader.listMailbox({ page: 1, query: "" }, "serverNow");
+  it("listMailbox only asks for opened letters and never selects content", async () => {
+    const { client, from } = createClient(query);
+    await new SupabaseFutureLetterReader(client).listMailbox({ page: 1, query: "" }, "serverNow");
 
-    expect(mockSupabase.from).toHaveBeenCalledWith("future_letters");
-    expect(mockQuery.select).toHaveBeenCalled();
-    expect(mockQuery.lte).toHaveBeenCalledWith("opens_at", "serverNow");
-    expect(mockQuery.order).toHaveBeenCalledWith("opens_at", { ascending: false });
-    expect(mockQuery.range).toHaveBeenCalledWith(0, 11);
-    expect(mockQuery.ilike).not.toHaveBeenCalled();
+    expect(from).toHaveBeenCalledWith("future_letters");
+    expect(query.select).toHaveBeenCalledWith(
+      "id,author_id,title,opens_at,created_at,updated_at",
+      { count: "exact" },
+    );
+    expect(query.lte).toHaveBeenCalledWith("opens_at", "serverNow");
+    expect(query.order).toHaveBeenCalledWith("opens_at", { ascending: false });
+    expect(query.range).toHaveBeenCalledWith(0, 11);
+    expect(query.ilike).not.toHaveBeenCalled();
   });
 
-  it("listMailbox calls ilike when query is present", async () => {
-    mockQuery.range.mockResolvedValueOnce({ data: [], error: null, count: 0 });
-    
-    const reader = new SupabaseFutureLetterReader(mockSupabase as any);
-    await reader.listMailbox({ page: 2, query: "hello" }, "serverNow");
+  it("listMailbox filters by title when a query is present", async () => {
+    const { client } = createClient(query);
+    await new SupabaseFutureLetterReader(client).listMailbox({ page: 2, query: "hello" }, "serverNow");
 
-    expect(mockQuery.ilike).toHaveBeenCalledWith("title", "%hello%");
-    expect(mockQuery.range).toHaveBeenCalledWith(12, 23);
+    expect(query.ilike).toHaveBeenCalledWith("title", "%hello%");
+    expect(query.range).toHaveBeenCalledWith(12, 23);
+  });
+
+  it("listManaged only returns letters that have already opened", async () => {
+    const { client } = createClient(query);
+    await new SupabaseFutureLetterReader(client).listManaged("serverNow");
+
+    expect(query.lte).toHaveBeenCalledWith("opens_at", "serverNow");
+    expect(query.gt).not.toHaveBeenCalled();
   });
 });

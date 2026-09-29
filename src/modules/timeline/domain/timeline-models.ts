@@ -31,7 +31,7 @@ export interface TimelineEntryRecord {
 
 export type TimelineChapterPreview = Pick<
   TimelineEntryRecord,
-  "id" | "dateLabel" | "title" | "imageUrl" | "imageAltText" | "sortOrder"
+  "id" | "dateLabel" | "occurredOn" | "title" | "imageUrl" | "imageAltText" | "sortOrder"
 >;
 
 export interface TimelineEntry extends TimelineEntryRecord {

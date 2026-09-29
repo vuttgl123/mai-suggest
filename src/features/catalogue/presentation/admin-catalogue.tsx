@@ -44,7 +44,7 @@ export function AdminCatalogue({
       <AdminWorkspaceHeader
         actions={
           <Link
-            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-paper px-4 text-sm font-semibold text-brand transition hover:-translate-y-0.5 hover:border-accent"
+            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-paper px-4 text-sm font-semibold text-brand transition hover:border-accent"
             href="/"
           >
             Xem bộ sưu tập
@@ -58,7 +58,7 @@ export function AdminCatalogue({
             <span className="rounded-full bg-brand-soft px-4 py-2 text-xs font-semibold text-brand">
               {categories.length} danh mục
             </span>
-            <span className="rounded-full bg-[rgb(166_91_69_/_12%)] px-4 py-2 text-xs font-semibold text-accent">
+            <span className="rounded-full bg-brand-soft px-4 py-2 text-xs font-semibold text-accent">
               {itemPage.total} item{selectedCategory ? ` · ${selectedCategory.name}` : ""}
             </span>
           </>

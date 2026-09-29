@@ -1,5 +1,6 @@
 "use client";
 
+import { StatusBadge } from "@/components/ui/status-badge";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, Plus, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -51,16 +52,16 @@ export function AdminItemList({
   }
 
   return (
-    <section className="rounded-[var(--radius-frame)] border border-border bg-[var(--surface-elevated)] p-4 sm:p-5">
+    <section className="rounded-[var(--radius-card)] border border-border bg-[var(--surface-elevated)] p-4 sm:p-5">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-sm font-semibold text-accent">Nội dung</p>
-          <h2 className="font-display mt-1 text-2xl font-semibold tracking-[-0.045em] text-brand-strong">
+          <h2 className="font-display mt-1 text-2xl font-medium text-brand-strong">
             {itemPage.total} item
           </h2>
         </div>
         <Link
-          className="inline-flex min-h-11 items-center gap-2 rounded-full bg-brand px-4 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-brand-strong"
+          className="inline-flex min-h-11 items-center gap-2 rounded-full bg-brand px-4 text-sm font-semibold text-on-brand transition-colors hover:bg-brand-strong"
           href={selectPath(null, 1)}
         >
           <Plus size={16} aria-hidden="true" />
@@ -77,7 +78,7 @@ export function AdminItemList({
                 className={`block rounded-[var(--radius-card)] border p-3 transition ${
                   item.id === selectedItemId
                     ? "border-brand bg-brand-soft"
-                    : "border-transparent hover:border-border hover:bg-[rgb(255_249_243_/_72%)]"
+                    : "border-transparent hover:border-border hover:bg-paper"
                 }`}
                 href={selectPath(item.id)}
                 transitionTypes={["admin-select"]}
@@ -91,13 +92,11 @@ export function AdminItemList({
                       <span>{item.kind}</span>
                     </p>
                   </div>
-                  <span className={`shrink-0 rounded-full px-2 py-1 text-[10px] font-semibold ${item.isPublished ? "bg-positive/10 text-positive" : "bg-brand-soft text-brand"}`}>
-                    {item.isPublished ? "Live" : "Draft"}
-                  </span>
+                  <StatusBadge active={item.isPublished} activeLabel="Công khai" inactiveLabel="Nháp" />
                 </div>
               </Link>
               {confirmingItemId === item.id ? (
-                <div className="mt-2 rounded-xl border border-danger/30 bg-danger/5 p-3">
+                <div className="mt-2 rounded-[var(--radius-card)] border border-danger/30 bg-danger/5 p-3">
                   <p className="text-xs leading-5 text-danger">Xóa “{item.title}”? Thao tác này không thể hoàn tác.</p>
                   <div className="mt-2 flex gap-2">
                     <Button disabled={isPending} onClick={() => setConfirmingItemId(null)} size="compact" type="button" variant="quiet">

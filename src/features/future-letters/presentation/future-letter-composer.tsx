@@ -1,10 +1,11 @@
 "use client";
 
-import { Check, Clock3, MailPlus, X } from "lucide-react";
+import { X } from "lucide-react";
 import { useEffect, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
+  formatFutureLetterOpening,
   toVietnamDateTimeParts,
   toVietnamScheduledInstant,
 } from "@/modules/future-letters/domain/future-letter-time";
@@ -103,11 +104,13 @@ export function FutureLetterComposer({
     });
   }
 
+  const scheduledInstant = toVietnamScheduledInstant(draft.date, draft.time);
+
   return (
     <dialog
       onCancel={handleCancel}
       aria-labelledby="future-letter-composer-title"
-      className="future-letter-dialog fixed inset-0 m-auto h-[min(46rem,calc(100dvh_-_1.5rem))] w-[min(100%_-_1.5rem,62rem)] max-w-none overflow-hidden rounded-[var(--radius-dialog)] border border-border bg-paper p-0 text-ink"
+      className="future-letter-dialog"
       onClose={onClose}
       ref={dialogRef}
     >
@@ -119,163 +122,146 @@ export function FutureLetterComposer({
         }}
       >
         <header className="future-letter-composer-header">
-          <div>
-            <p className="text-sm font-semibold text-accent">Một điều để ngày mai mở ra</p>
-            <div className="mt-3 flex items-center gap-2 text-accent" aria-hidden="true">
-              <span className="diary-rule" />
-              <span className="h-1.5 w-1.5 rounded-full bg-current" />
-            </div>
-            <h2 id="future-letter-composer-title" className="font-display mt-3 text-3xl font-semibold tracking-[-0.045em] text-brand-strong sm:text-4xl">
-              {letter ? "Sửa lá thư đang hẹn" : "Hẹn một lá thư"}
-            </h2>
-          </div>
+          <h2 id="future-letter-composer-title" className="font-display heading-text text-brand-strong">
+            {letter ? "Sửa lá thư đang hẹn" : "Viết một lá thư"}
+          </h2>
           <Button aria-label="Đóng" disabled={isPending} onClick={handleCancel} size="icon" type="button" variant="quiet">
             <X size={18} aria-hidden="true" />
           </Button>
         </header>
 
         <div className="future-letter-composer-body">
-          <p className="future-letter-composer-note">
-            Trước giờ hẹn chỉ mình bạn nhìn thấy lá thư này. Khi đến giờ, nó sẽ mở
-            ra với tất cả thành viên đang hoạt động.
-          </p>
+          <label className="future-letter-field">
+            <span>Tiêu đề</span>
+            <input
+              autoComplete="off"
+              className={inputClassName}
+              disabled={isPending}
+              maxLength={160}
+              name="future-letter-title"
+              onChange={(event) => updateDraft({ title: event.target.value })}
+              placeholder="Ví dụ: Mở vào một chiều thật dịu"
+              required
+              value={draft.title}
+            />
+            <small className="tabular">{draft.title.length}/160</small>
+          </label>
 
-          <div className="mt-6 grid gap-5 lg:grid-cols-[minmax(0,1.22fr)_minmax(17rem,0.78fr)]">
-            <section className="future-letter-composer-writing rounded-[var(--radius-card)] border border-border p-4 sm:p-5">
-              <p className="text-sm font-semibold text-accent">Phần muốn gửi lại</p>
-              <label className="future-letter-field mt-4">
-                <span>Tiêu đề</span>
+          <label className="future-letter-field mt-5">
+            <span>Lá thư</span>
+            <textarea
+              autoComplete="off"
+              className={`${inputClassName} font-prose min-h-[18rem] py-3 text-[1.125rem] leading-[1.75]`}
+              disabled={isPending}
+              maxLength={8000}
+              name="future-letter-content"
+              onChange={(event) => updateDraft({ content: event.target.value })}
+              placeholder="Viết điều bạn muốn gửi đến ngày ấy…"
+              required
+              value={draft.content}
+            />
+            <small className="tabular">{draft.content.length}/8000</small>
+          </label>
+
+          <fieldset className="mt-7">
+            <legend className="text-[0.9375rem] font-semibold text-ink">Thời điểm mở thư</legend>
+            <div className="mt-2 grid gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] sm:items-end">
+              <label className="future-letter-field">
+                <span>Ngày</span>
+                <input
+                  className={inputClassName}
+                  disabled={isPending}
+                  name="future-letter-open-date"
+                  onChange={(event) => updateDraft({ date: event.target.value })}
+                  required
+                  type="date"
+                  value={draft.date}
+                />
+              </label>
+              <label className="future-letter-field">
+                <span>Giờ</span>
+                <input
+                  className={inputClassName}
+                  disabled={isPending}
+                  name="future-letter-open-time"
+                  onChange={(event) => updateDraft({ time: event.target.value })}
+                  required
+                  type="time"
+                  value={draft.time}
+                />
+              </label>
+              <p className="flex min-h-11 items-center text-sm font-medium text-muted">Giờ Việt Nam (GMT+7)</p>
+            </div>
+            <p aria-live="polite" className="tabular mt-3 text-[0.9375rem] text-ink">
+              {scheduledInstant
+                ? `Thư sẽ ${formatFutureLetterOpening(scheduledInstant, { withTimeZone: true }).replace("Mở", "mở")}.`
+                : "Chọn ngày và giờ để xem thời điểm thư mở."}
+            </p>
+          </fieldset>
+
+          <details className="mt-7 rounded-[var(--radius-card)] border border-border">
+            <summary className="flex min-h-12 cursor-pointer items-center px-4 text-[0.9375rem] font-semibold text-ink">
+              Ảnh và bài hát đi kèm <span className="ml-1.5 font-normal text-muted">(không bắt buộc)</span>
+            </summary>
+            <div className="grid gap-4 border-t border-border p-4">
+              <label className="future-letter-field">
+                <span>Đường dẫn ảnh</span>
+                <input
+                  autoComplete="url"
+                  className={inputClassName}
+                  disabled={isPending}
+                  inputMode="url"
+                  name="future-letter-image-url"
+                  onChange={(event) => updateDraft({ imageUrl: event.target.value })}
+                  placeholder="https://…"
+                  type="url"
+                  value={draft.imageUrl}
+                />
+              </label>
+              <label className="future-letter-field">
+                <span>Mô tả ảnh{draft.imageUrl.trim() ? " (bắt buộc khi có ảnh)" : ""}</span>
                 <input
                   autoComplete="off"
                   className={inputClassName}
                   disabled={isPending}
-                  maxLength={160}
-                  name="future-letter-title"
-                  onChange={(event) => updateDraft({ title: event.target.value })}
-                  placeholder="Ví dụ: Mở vào một chiều thật dịu"
-                  required
-                  value={draft.title}
+                  maxLength={280}
+                  name="future-letter-image-alt"
+                  onChange={(event) => updateDraft({ imageAltText: event.target.value })}
+                  placeholder="Mô tả ngắn cho người không xem được ảnh"
+                  required={Boolean(draft.imageUrl.trim())}
+                  value={draft.imageAltText}
                 />
-                <small>{draft.title.length}/160</small>
               </label>
-
-              <label className="future-letter-field mt-5">
-                <span>Lá thư</span>
-                <textarea
-                  autoComplete="off"
-                  className={`${inputClassName} min-h-52 py-3 leading-7`}
+              <label className="future-letter-field">
+                <span>Liên kết bài hát</span>
+                <input
+                  autoComplete="url"
+                  className={inputClassName}
                   disabled={isPending}
-                  maxLength={8000}
-                  name="future-letter-content"
-                  onChange={(event) => updateDraft({ content: event.target.value })}
-                  placeholder="Viết điều bạn muốn giữ lại cho một ngày mai…"
-                  required
-                  value={draft.content}
+                  inputMode="url"
+                  name="future-letter-music-url"
+                  onChange={(event) => updateDraft({ musicUrl: event.target.value })}
+                  placeholder="https://…"
+                  type="url"
+                  value={draft.musicUrl}
                 />
-                <small>{draft.content.length}/8000</small>
               </label>
-            </section>
-
-            <div className="grid content-start gap-5">
-              <fieldset className="future-letter-composer-schedule rounded-[var(--radius-card)] border border-border p-4 sm:p-5">
-                <legend className="px-1 text-sm font-semibold text-brand-strong">Thời điểm mở thư</legend>
-                <p className="mt-1 flex items-center gap-2 text-xs leading-5 text-muted">
-                  <Clock3 size={14} aria-hidden="true" />
-                  Theo giờ Việt Nam (GMT+7).
-                </p>
-                <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-                  <label className="future-letter-field">
-                    <span>Ngày mở</span>
-                    <input
-                      autoComplete="off"
-                      className={inputClassName}
-                      disabled={isPending}
-                      name="future-letter-open-date"
-                      onChange={(event) => updateDraft({ date: event.target.value })}
-                      required
-                      type="date"
-                      value={draft.date}
-                    />
-                  </label>
-                  <label className="future-letter-field">
-                    <span>Giờ mở</span>
-                    <input
-                      autoComplete="off"
-                      className={inputClassName}
-                      disabled={isPending}
-                      name="future-letter-open-time"
-                      onChange={(event) => updateDraft({ time: event.target.value })}
-                      required
-                      type="time"
-                      value={draft.time}
-                    />
-                  </label>
-                </div>
-              </fieldset>
-
-              <fieldset className="future-letter-composer-details rounded-[var(--radius-card)] border border-border p-4 sm:p-5">
-                <legend className="px-1 text-sm font-semibold text-brand-strong">
-                  Điều đi cùng lá thư <span className="font-normal text-muted">(không bắt buộc)</span>
-                </legend>
-                <div className="mt-3 grid gap-3">
-                  <label className="future-letter-field">
-                    <span>Ảnh minh họa</span>
-                    <input
-                      autoComplete="url"
-                      className={inputClassName}
-                      disabled={isPending}
-                      inputMode="url"
-                      name="future-letter-image-url"
-                      onChange={(event) => updateDraft({ imageUrl: event.target.value })}
-                      placeholder="https://…"
-                      type="url"
-                      value={draft.imageUrl}
-                    />
-                  </label>
-                  <label className="future-letter-field">
-                    <span>Mô tả ảnh</span>
-                    <input
-                      autoComplete="off"
-                      className={inputClassName}
-                      disabled={isPending}
-                      maxLength={280}
-                      name="future-letter-image-alt"
-                      onChange={(event) => updateDraft({ imageAltText: event.target.value })}
-                      placeholder="Mô tả ngắn cho ảnh"
-                      required={Boolean(draft.imageUrl.trim())}
-                      value={draft.imageAltText}
-                    />
-                  </label>
-                  <label className="future-letter-field">
-                    <span>Bài hát</span>
-                    <input
-                      autoComplete="url"
-                      className={inputClassName}
-                      disabled={isPending}
-                      inputMode="url"
-                      name="future-letter-music-url"
-                      onChange={(event) => updateDraft({ musicUrl: event.target.value })}
-                      placeholder="https://…"
-                      type="url"
-                      value={draft.musicUrl}
-                    />
-                  </label>
-                </div>
-              </fieldset>
             </div>
-          </div>
+          </details>
 
-          {feedback ? <p aria-live="polite" className="mt-4 text-sm leading-6 text-danger">{feedback}</p> : null}
+          {feedback ? <p aria-live="polite" className="mt-4 text-sm text-danger" role="alert">{feedback}</p> : null}
         </div>
 
         <footer className="future-letter-composer-footer">
+          <p className="text-sm text-muted">
+            Đến giờ hẹn, thư sẽ xuất hiện trong hòm thư chung và không thể chỉnh sửa hoặc xóa bởi người viết.
+          </p>
           <div className="flex flex-wrap items-center justify-end gap-2">
             <Button disabled={isPending} onClick={handleCancel} type="button" variant="quiet">
               Hủy
             </Button>
             <Button disabled={isPending} type="submit">
-              {letter ? <Check size={16} aria-hidden="true" /> : <MailPlus size={16} aria-hidden="true" />}
-              {isPending ? "Đang lưu…" : letter ? "Lưu thay đổi" : "Niêm phong lá thư"}
+              {isPending ? "Đang lưu…" : letter ? "Lưu thay đổi" : "Hẹn ngày mở"}
             </Button>
           </div>
         </footer>
@@ -307,4 +293,4 @@ function feedbackFor(code: string): string {
 }
 
 const inputClassName =
-  "mt-2 min-h-11 w-full rounded-xl border border-border bg-white/70 px-3 text-sm text-ink  outline-none placeholder:text-muted focus:border-focus disabled:bg-surface";
+  "mt-1.5 min-h-11 w-full rounded-[var(--radius-card)] border border-border-input bg-paper px-3.5 text-base text-ink outline-none placeholder:text-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus disabled:opacity-60";

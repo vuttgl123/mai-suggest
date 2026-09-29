@@ -4,15 +4,13 @@ interface ThemeAtmosphereProps {
   theme: SiteThemeKey;
 }
 
+/* Static light and paper grain. Nothing animates, so there is nothing to pause
+ * when the tab is hidden and nothing to disable for reduced motion. */
 export function ThemeAtmosphere({ theme }: ThemeAtmosphereProps) {
   return (
     <div aria-hidden="true" className="theme-atmosphere" data-scene={theme}>
-      <span className="theme-atmosphere__wash" />
-      <span className="theme-atmosphere__glow theme-atmosphere__glow--one" />
-      <span className="theme-atmosphere__glow theme-atmosphere__glow--two" />
-      <span className="theme-atmosphere__ornament theme-atmosphere__ornament--one" />
-      <span className="theme-atmosphere__ornament theme-atmosphere__ornament--two" />
-      <span className="theme-atmosphere__specks" />
+      <span className="theme-atmosphere__light" />
+      <span className="theme-atmosphere__grain" />
     </div>
   );
 }

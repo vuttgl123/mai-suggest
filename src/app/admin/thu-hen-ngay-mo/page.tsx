@@ -15,15 +15,12 @@ export default async function AdminFutureLettersPage() {
   return (
     <>
       <a
-        className="sr-only absolute left-5 top-4 z-50 rounded-full bg-brand-strong px-4 py-2 text-sm font-semibold text-white focus:not-sr-only"
+        className="sr-only absolute left-5 top-4 z-50 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-on-brand focus:not-sr-only"
         href="#admin-future-letters-content"
       >
         Đi tới quản trị thư hẹn
       </a>
-      <AdminFutureLetters
-        letters={lettersResult.value}
-        serverNow={new Date().toISOString()}
-      />
+      <AdminFutureLetters letters={lettersResult.value} />
     </>
   );
 }

@@ -15,5 +15,6 @@ export interface FutureLetterRepository {
     input: FutureLetterInput,
   ): Promise<Result<FutureLetterRecord>>;
   deleteOwnScheduled(letterId: string, authorId: string): Promise<Result<void>>;
-  deleteManaged(letterId: string): Promise<Result<void>>;
+  /** Owner moderation: removes an opened letter only. */
+  deleteManaged(letterId: string, serverNow: string): Promise<Result<void>>;
 }

@@ -1,4 +1,4 @@
-import { CatalogueHome } from "@/features/catalogue/presentation/catalogue-home";
+import { CatalogueHome, type HomeOverview } from "@/features/catalogue/presentation/catalogue-home";
 import { PageTransition } from "@/components/ui/page-transition";
 import {
   firstSearchParam,
@@ -6,6 +6,7 @@ import {
   parsePositivePage,
   PUBLIC_PAGE_SIZE,
 } from "@/features/catalogue/lib/catalogue-navigation";
+import { selectLivingCover, selectTodayNote } from "@/features/home/lib/home-selection";
 import { requireActivePageAccess } from "@/lib/backend/require-page-access";
 
 export const dynamic = "force-dynamic";
@@ -26,42 +27,68 @@ export default async function Home({ searchParams }: HomePageProps) {
   const categorySlug = firstSearchParam(params.category);
   const searchQuery = parseCatalogueSearchQuery(params.q);
   const requestedPage = parsePositivePage(params.page);
-
   const isOverview = !categorySlug && !searchQuery;
 
-  const [categoriesResult, itemsResult, chapterPreviewsResult] = await Promise.all([
-    backend.listVisibleCategories.execute(actor),
-    isOverview ? Promise.resolve(null) : backend.listVisibleItemPage.execute(
-      actor,
-      {
-        categorySlug: categorySlug ?? undefined,
-        page: requestedPage,
-        pageSize: PUBLIC_PAGE_SIZE,
-        query: searchQuery ?? undefined,
-      },
-    ),
-    isOverview ? backend.listVisibleChapterPreviews.execute(actor, { itemsPerChapter: 6 }) : Promise.resolve(null),
-  ]);
+  const loadItemPage = (page: number) =>
+    backend.listVisibleItemPage.execute(actor, {
+      categorySlug: categorySlug ?? undefined,
+      page,
+      pageSize: PUBLIC_PAGE_SIZE,
+      query: searchQuery ?? undefined,
+    });
 
-  if (!categoriesResult.ok || (itemsResult && !itemsResult.ok) || (chapterPreviewsResult && !chapterPreviewsResult.ok)) {
+  const [categoriesResult, firstItemPage, chapterPreviewsResult, timelineResult, mailboxResult] =
+    await Promise.all([
+      backend.listVisibleCategories.execute(actor),
+      loadItemPage(requestedPage),
+      isOverview
+        ? backend.listVisibleChapterPreviews.execute(actor, { itemsPerChapter: 1 })
+        : Promise.resolve(null),
+      isOverview ? backend.listVisibleTimelineChapters.execute(actor) : Promise.resolve(null),
+      // Opened letters only: the mailbox never returns sealed letters.
+      isOverview ? backend.listFutureMailbox.execute(actor, { page: 1, query: "" }) : Promise.resolve(null),
+    ]);
+
+  if (
+    !categoriesResult.ok ||
+    !firstItemPage.ok ||
+    (chapterPreviewsResult && !chapterPreviewsResult.ok) ||
+    (timelineResult && !timelineResult.ok) ||
+    (mailboxResult && !mailboxResult.ok)
+  ) {
     throw new Error("Unable to load catalogue.");
   }
 
-  let itemPage: import("@/core/application/result").Result<import("@/modules/catalogue/domain/catalogue-read-models").CatalogueItemPage> | null = itemsResult;
+  let itemPage = firstItemPage.value;
+  if (itemPage.pageCount > 0 && requestedPage > itemPage.pageCount) {
+    const lastPage = await loadItemPage(itemPage.pageCount);
+    if (!lastPage.ok) throw new Error("Unable to load catalogue.");
+    itemPage = lastPage.value;
+  }
 
-  if (itemsResult?.ok) {
-    if (itemsResult.value.pageCount > 0 && requestedPage > itemsResult.value.pageCount) {
-      itemPage = await backend.listVisibleItemPage.execute(actor, {
-        categorySlug: categorySlug ?? undefined,
-        page: itemsResult.value.pageCount,
-        pageSize: PUBLIC_PAGE_SIZE,
-        query: searchQuery ?? undefined,
-      });
+  let overview: HomeOverview | null = null;
+  if (isOverview && chapterPreviewsResult?.ok && timelineResult?.ok && mailboxResult?.ok) {
+    const chapters = timelineResult.value;
+    const coverItem = itemPage.items[0] ?? null;
+    const coverItemCategory = categoriesResult.value.find(
+      (category) => category.id === coverItem?.categoryId,
+    );
 
-      if (!itemPage.ok) {
-        throw new Error("Unable to load catalogue.");
-      }
-    }
+    overview = {
+      cover: selectLivingCover({
+        chapters,
+        featuredItem: coverItem,
+        featuredItemCategoryName: coverItemCategory?.name ?? null,
+      }),
+      today: selectTodayNote({
+        latestOpenedLetter: mailboxResult.value.items[0] ?? null,
+        chapters,
+        now: new Date(),
+      }),
+      chapterPreviews: chapterPreviewsResult.value,
+      chapterCount: chapters.length,
+      openedLetterCount: mailboxResult.value.totalCount,
+    };
   }
 
   return (
@@ -69,8 +96,8 @@ export default async function Home({ searchParams }: HomePageProps) {
       <CatalogueHome
         actor={actor}
         categories={categoriesResult.value}
-        chapterPreviews={chapterPreviewsResult && chapterPreviewsResult.ok ? chapterPreviewsResult.value : undefined}
-        itemPage={itemPage && itemPage.ok ? itemPage.value : undefined}
+        itemPage={itemPage}
+        overview={overview}
         searchQuery={searchQuery}
         selectedCategorySlug={categorySlug}
       />

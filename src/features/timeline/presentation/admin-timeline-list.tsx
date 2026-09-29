@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { StatusBadge } from "@/components/ui/status-badge";
 import { Plus } from "lucide-react";
 import { createAdminTimelinePath } from "@/features/timeline/lib/timeline-navigation";
 import type { ManagedTimelineEntrySummary } from "@/modules/timeline/domain/timeline-models";
@@ -13,15 +14,15 @@ export function AdminTimelineList({
   selectedEntryId,
 }: AdminTimelineListProps) {
   return (
-    <aside className="rounded-[var(--radius-frame)] border border-border bg-[color-mix(in_srgb,var(--surface-elevated)_82%,transparent)] p-4 xl:sticky xl:top-5">
+    <aside className="rounded-[var(--radius-card)] border border-border bg-[color-mix(in_srgb,var(--surface-elevated)_82%,transparent)] p-4 xl:sticky xl:top-5">
       <div className="flex items-end justify-between gap-3">
         <div>
           <p className="text-sm font-semibold text-accent">Các chương</p>
-          <h2 className="font-display mt-1 text-2xl font-semibold tracking-[-0.04em] text-brand-strong">
+          <h2 className="font-display mt-1 text-2xl font-medium text-brand-strong">
             Mốc hành trình
           </h2>
         </div>
-        <Link className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-brand px-3 text-xs font-semibold text-white transition hover:-translate-y-0.5 hover:bg-brand-strong" href={createAdminTimelinePath({ entryId: null })}>
+        <Link className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-brand px-3 text-xs font-semibold text-on-brand transition-colors hover:bg-brand-strong" href={createAdminTimelinePath({ entryId: null })}>
           <Plus size={15} aria-hidden="true" />
           Mốc mới
         </Link>
@@ -43,9 +44,7 @@ export function AdminTimelineList({
               >
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <p className="text-xs font-semibold text-accent">{entry.dateLabel}</p>
-                  <span className={`shrink-0 rounded-full px-2 py-1 text-[10px] font-semibold ${entry.isPublished ? "bg-positive/10 text-positive" : "bg-brand-soft text-brand"}`}>
-                    {entry.isPublished ? "Live" : "Draft"}
-                  </span>
+                  <StatusBadge active={entry.isPublished} activeLabel="Công khai" inactiveLabel="Nháp" />
                 </div>
                 <p className="mt-2 text-balance text-sm font-semibold leading-5 text-brand-strong">
                   {entry.title}

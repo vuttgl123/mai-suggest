@@ -126,11 +126,11 @@ export function AdminItemEditor({
   }
 
   return (
-    <section className="rounded-[var(--radius-frame)] border border-border bg-[var(--surface-elevated)] p-4  sm:p-6">
+    <section className="rounded-[var(--radius-card)] border border-border bg-[var(--surface-elevated)] p-4  sm:p-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-sm font-semibold text-accent">{isEditing ? "Item đang chọn" : "Bắt đầu một điều mới"}</p>
-          <h2 className="font-display mt-2 text-3xl font-semibold tracking-[-0.055em] text-brand-strong">
+          <h2 className="font-display mt-2 text-3xl font-medium text-brand-strong">
             {isEditing ? selectedItem.title : "Tạo item"}
           </h2>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-muted">
@@ -150,7 +150,7 @@ export function AdminItemEditor({
           >
             <div className="flex items-center gap-2">
               <PencilLine className="text-accent" size={18} aria-hidden="true" />
-              <h3 id="item-information-heading" className="font-display text-2xl font-semibold tracking-[-0.04em] text-brand-strong">
+              <h3 id="item-information-heading" className="font-display text-2xl font-medium text-brand-strong">
                 Thông tin item
               </h3>
             </div>
@@ -226,7 +226,7 @@ export function AdminItemEditor({
 
           <ItemKeepsakeEditor disabled={isPending} onChange={setKeepsakes} value={keepsakes} />
 
-          <div className="mt-6 flex flex-wrap gap-2 border-t border-border pt-4 lg:sticky lg:bottom-4 lg:z-10 lg:rounded-[var(--radius-card)] lg:border lg:bg-paper/95 lg:px-4 lg:py-3 lg: lg:backdrop-blur">
+          <div className="sticky bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-10 mt-6 flex flex-wrap gap-2 rounded-[var(--radius-card)] border border-border bg-paper px-4 py-3 shadow-floating">
             <Button disabled={isPending} type="submit">
               <Save size={16} aria-hidden="true" />
               {isPending ? "Đang lưu…" : isEditing ? "Lưu item" : "Tạo item"}
@@ -370,16 +370,16 @@ function AttachmentSection({
         <Link2 className="text-accent" size={18} aria-hidden="true" />
         <div>
           <p className="diary-kicker">Tư liệu item</p>
-          <h3 id="attachments-heading" className="font-display mt-1 text-2xl font-semibold tracking-[-0.04em] text-brand-strong">Hình và đường dẫn</h3>
+          <h3 id="attachments-heading" className="font-display mt-1 text-2xl font-medium text-brand-strong">Hình và đường dẫn</h3>
         </div>
       </div>
 
       <div className="mt-5 grid gap-4 xl:grid-cols-2">
-        <div className="rounded-[var(--radius-card)] border border-border bg-[rgb(255_249_243_/_62%)] p-3">
+        <div className="rounded-[var(--radius-card)] border border-border bg-paper p-3">
           <div className="flex items-center gap-2 text-brand-strong"><ImagePlus size={17} aria-hidden="true" /><h4 className="text-sm font-bold">Hình ảnh</h4></div>
           <div className="mt-4 space-y-3">
             {item.images.map((image) => (
-              <form className="rounded-xl border border-border bg-paper p-3" key={image.id} onSubmit={(event) => handleUpdateImage(event, image)}>
+              <form className="rounded-[var(--radius-card)] border border-border bg-paper p-3" key={image.id} onSubmit={(event) => handleUpdateImage(event, image)}>
                 <input className={inputClassName} defaultValue={image.imageUrl} name="imageUrl" required type="url" />
                 <div className="mt-3 grid gap-3 sm:grid-cols-[1fr_6rem]">
                   <input className={inputClassName} defaultValue={image.altText ?? ""} name="altText" placeholder="Mô tả ảnh" />
@@ -403,11 +403,11 @@ function AttachmentSection({
           </form>
         </div>
 
-        <div className="rounded-[var(--radius-card)] border border-border bg-[rgb(255_249_243_/_62%)] p-3">
+        <div className="rounded-[var(--radius-card)] border border-border bg-paper p-3">
           <div className="flex items-center gap-2 text-brand-strong"><Link2 size={17} aria-hidden="true" /><h4 className="text-sm font-bold">Đường dẫn</h4></div>
           <div className="mt-4 space-y-3">
             {item.links.map((link) => (
-              <form className="rounded-xl border border-border bg-paper p-3" key={link.id} onSubmit={(event) => handleUpdateLink(event, link)}>
+              <form className="rounded-[var(--radius-card)] border border-border bg-paper p-3" key={link.id} onSubmit={(event) => handleUpdateLink(event, link)}>
                 <div className="grid gap-3 sm:grid-cols-[8rem_1fr]">
                   <select className={inputClassName} defaultValue={link.type} name="type">{linkTypes.map((type) => <option key={type.value} value={type.value}>{type.label}</option>)}</select>
                   <input className={inputClassName} defaultValue={link.title} name="title" required />
@@ -495,5 +495,5 @@ function slugify(value: string): string {
 }
 
 const inputClassName =
-  "mt-2 min-h-11 w-full rounded-xl border border-border bg-paper px-3 text-sm text-ink  outline-none placeholder:text-muted focus:border-focus";
+  "mt-2 min-h-11 w-full rounded-[var(--radius-card)] border border-border-input bg-paper px-3 text-sm text-ink  outline-none placeholder:text-muted focus:border-focus";
 const labelClassName = "block text-sm font-semibold text-brand-strong";

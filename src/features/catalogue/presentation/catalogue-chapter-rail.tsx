@@ -1,7 +1,4 @@
- 
-
 import Link from "next/link";
-import { ArrowRight, BookOpen } from "lucide-react";
 import { createCataloguePath } from "@/features/catalogue/lib/catalogue-navigation";
 import type { CatalogueCategory } from "@/modules/catalogue/domain/catalogue-read-models";
 
@@ -11,68 +8,40 @@ interface CatalogueChapterRailProps {
   selectedCategorySlug: string | null;
 }
 
-
+/* Filter chips. Labels are the real category names so the filter stays clear. */
 export function CatalogueChapterRail({
   categories,
   query,
   selectedCategorySlug,
 }: CatalogueChapterRailProps) {
+  const chips = [
+    { key: "all", slug: null, name: "Tất cả" },
+    ...categories.map((category) => ({ key: category.id, slug: category.slug, name: category.name })),
+  ];
+
   return (
-    <section aria-labelledby="chapters-heading" className="w-full">
-      <div className="flex flex-col items-center justify-center space-y-6">
-        <h2 className="font-display text-2xl font-medium tracking-tight text-brand-strong sm:text-3xl" id="chapters-heading">
-          Khám phá bộ sưu tập
-        </h2>
-        
-        {/* SaaS Segmented Tabs - Centered & Scrollable */}
-        <div className="relative w-full max-w-4xl">
-          <div className="flex items-center justify-start sm:justify-center overflow-x-auto no-scrollbar py-1">
-            <div className="inline-flex flex-nowrap items-center gap-1.5 rounded-2xl bg-[var(--surface-elevated)]/60 p-1.5 shadow-[inset_0_1px_4px_rgba(0,0,0,0.02)] border border-border/40 backdrop-blur-md">
+    <nav aria-label="Lọc theo chương" className="-mx-[var(--page-edge)] overflow-x-auto px-[var(--page-edge)] [scrollbar-width:none]">
+      <ul className="flex w-max gap-2 py-1">
+        {chips.map((chip) => {
+          const isActive = chip.slug === selectedCategorySlug;
+          return (
+            <li key={chip.key}>
               <Link
-                aria-current={selectedCategorySlug === null ? "page" : undefined}
-                className={`relative shrink-0 px-5 py-2.5 text-[14px] font-medium transition-all duration-300 rounded-xl ${
-                  selectedCategorySlug === null
-                    ? "text-brand-strong bg-white  ring-1 ring-border/50"
-                    : "text-muted hover:text-brand-strong hover:bg-black/5"
+                aria-current={isActive ? "page" : undefined}
+                className={`inline-flex min-h-11 items-center rounded-full border px-4 text-[0.9375rem] font-medium transition-colors ${
+                  isActive
+                    ? "border-brand bg-brand-soft text-brand"
+                    : "border-border-strong text-muted hover:border-brand hover:text-brand"
                 }`}
-                href={createCataloguePath({ categorySlug: null, page: 1, query })}
-                scroll={false}
+                href={`${createCataloguePath({ categorySlug: chip.slug, page: 1, query })}#collection`}
                 transitionTypes={["collection-change"]}
               >
-                Tất cả
+                {chip.name}
               </Link>
-              
-              {categories.map((category) => {
-                const isActive = category.slug === selectedCategorySlug;
-                return (
-                  <Link
-                    key={category.id}
-                    aria-current={isActive ? "page" : undefined}
-                    className={`relative shrink-0 px-5 py-2.5 text-[14px] font-medium transition-all duration-300 rounded-xl ${
-                      isActive
-                        ? "text-brand-strong bg-white  ring-1 ring-border/50"
-                        : "text-muted hover:text-brand-strong hover:bg-black/5"
-                    }`}
-                    href={createCataloguePath({
-                      categorySlug: category.slug,
-                      page: 1,
-                      query,
-                    })}
-                    scroll={false}
-                    transitionTypes={["collection-change"]}
-                  >
-                    {category.name}
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-          
-          {/* Fading edges for scroll indication on mobile */}
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-8    sm:hidden" aria-hidden="true" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-8    sm:hidden" aria-hidden="true" />
-        </div>
-      </div>
-    </section>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
   );
 }

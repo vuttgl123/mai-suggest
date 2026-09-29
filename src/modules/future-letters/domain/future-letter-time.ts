@@ -71,3 +71,32 @@ export function formatFutureLetterDateTime(value: string): string {
     hourCycle: "h23",
   }).format(instant);
 }
+
+/** "Mở lúc 20:30 ngày 14/02/2027", always in Vietnam time. */
+export function formatFutureLetterOpening(
+  value: string,
+  options: { withTimeZone?: boolean } = {},
+): string {
+  const parts = toVietnamDateTimeParts(value);
+  if (!parts) return "Thời điểm mở không xác định";
+
+  const [year, month, day] = parts.date.split("-");
+  const phrase = `Mở lúc ${parts.time} ngày ${day}/${month}/${year}`;
+  return options.withTimeZone ? `${phrase}, giờ Việt Nam` : phrase;
+}
+
+const MINUTE_MS = 60_000;
+const HOUR_MS = 60 * MINUTE_MS;
+const DAY_MS = 24 * HOUR_MS;
+
+/** Remaining time before a letter opens, for the author's own list only. */
+export function formatTimeUntil(value: string, now: Date): string {
+  const remaining = new Date(value).getTime() - now.getTime();
+  if (Number.isNaN(remaining) || remaining < MINUTE_MS) return "sắp mở";
+
+  if (remaining >= DAY_MS) return `còn ${Math.floor(remaining / DAY_MS)} ngày`;
+
+  const hours = Math.floor(remaining / HOUR_MS);
+  const minutes = Math.floor((remaining % HOUR_MS) / MINUTE_MS);
+  return hours > 0 ? `còn ${hours} giờ ${minutes} phút` : `còn ${minutes} phút`;
+}

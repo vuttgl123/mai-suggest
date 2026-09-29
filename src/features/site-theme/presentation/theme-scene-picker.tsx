@@ -1,12 +1,4 @@
-import {
-  BookOpenText,
-  CalendarClock,
-  Flower2,
-  HeartHandshake,
-  Snowflake,
-  Sparkles,
-  type LucideIcon,
-} from "lucide-react";
+import { CalendarClock } from "lucide-react";
 import {
   SITE_THEME_PRESETS,
   type SiteThemeKey,
@@ -17,14 +9,6 @@ interface ThemeScenePickerProps {
   manualThemeKey: SiteThemeKey | null;
   onChange: (themeKey: SiteThemeKey | null) => void;
 }
-
-const sceneIcons: Record<SiteThemeKey, LucideIcon> = {
-  anniversary: Sparkles,
-  bordeaux: BookOpenText,
-  noel: Snowflake,
-  spring: Flower2,
-  valentine: HeartHandshake,
-};
 
 export function ThemeScenePicker({
   disabled,
@@ -56,7 +40,6 @@ export function ThemeScenePicker({
 
       <div className="grid gap-3 sm:grid-cols-2">
         {SITE_THEME_PRESETS.map((preset) => {
-          const Icon = sceneIcons[preset.key];
           const isSelected = manualThemeKey === preset.key;
 
           return (
@@ -74,9 +57,7 @@ export function ThemeScenePicker({
                 aria-hidden="true"
                 className="theme-scene-choice__preview"
                 data-theme-preview={preset.key}
-              >
-                <Icon size={20} />
-              </span>
+              />
               <span>
                 <strong>{preset.label}</strong>
                 <small>{preset.description}</small>

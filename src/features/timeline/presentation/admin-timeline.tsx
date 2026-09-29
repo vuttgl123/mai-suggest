@@ -30,7 +30,7 @@ export function AdminTimeline({ entries, selectedEntry }: AdminTimelineProps) {
       <AdminWorkspaceHeader
         actions={
           <Link
-            className="inline-flex min-h-11 items-center rounded-full border border-border bg-paper px-4 text-sm font-semibold text-brand transition hover:-translate-y-0.5 hover:border-accent"
+            className="inline-flex min-h-11 items-center rounded-full border border-border bg-paper px-4 text-sm font-semibold text-brand transition hover:border-accent"
             href="/hanh-trinh"
           >
             Xem hành trình

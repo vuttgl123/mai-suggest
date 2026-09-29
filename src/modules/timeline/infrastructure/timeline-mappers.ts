@@ -1,6 +1,7 @@
 import type { Database } from "@/lib/supabase/database.types";
 import type {
   TimelineAuthor,
+  TimelineChapterPreview,
   TimelineEntry,
   TimelineEntryRecord,
   TimelineResponse,
@@ -12,6 +13,28 @@ export type TimelineProfileRow = Pick<
   Database["public"]["Tables"]["profiles"]["Row"],
   "id" | "display_name" | "avatar_url"
 >;
+
+export type TimelineChapterPreviewRow = Pick<
+  TimelineEntryRow,
+  "id" | "date_label" | "occurred_on" | "title" | "image_url" | "image_alt_text" | "sort_order"
+>;
+
+export const TIMELINE_CHAPTER_PREVIEW_COLUMNS =
+  "id,date_label,occurred_on,title,image_url,image_alt_text,sort_order";
+
+export function toTimelineChapterPreview(
+  row: TimelineChapterPreviewRow,
+): TimelineChapterPreview {
+  return {
+    id: row.id,
+    dateLabel: row.date_label,
+    occurredOn: row.occurred_on,
+    title: row.title,
+    imageUrl: row.image_url,
+    imageAltText: row.image_alt_text,
+    sortOrder: row.sort_order,
+  };
+}
 
 export function toTimelineEntryRecord(
   row: TimelineEntryRow,

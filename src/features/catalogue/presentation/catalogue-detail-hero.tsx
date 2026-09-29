@@ -1,131 +1,122 @@
 import Link from "next/link";
-import { ViewTransition } from "react";
-import {
-  ArrowLeft,
-  ExternalLink,
-  Heart,
-  MapPin,
-  Quote,
-} from "lucide-react";
-import { CatalogueItemImage } from "@/features/catalogue/presentation/catalogue-item-image";
-import type { CatalogueItemDetail } from "@/modules/catalogue/domain/catalogue-read-models";
+import { ArrowLeft, ExternalLink, MapPin, Star } from "lucide-react";
+import { ArchiveLabel } from "@/components/ui/archive-label";
+import { CatalogueItemGallery } from "@/features/catalogue/presentation/catalogue-item-gallery";
+import type { CatalogueItemDetail, CatalogueLink } from "@/modules/catalogue/domain/catalogue-read-models";
 
 interface CatalogueDetailHeroProps {
   categoryName: string | null;
   item: CatalogueItemDetail;
+  backHref: string;
 }
 
-export function CatalogueDetailHero({
-  categoryName,
-  item,
-}: CatalogueDetailHeroProps) {
+/* Image first, then the story, then the practical details that help plan a
+ * visit. Practical links sit high on phones so they are easy to reach. */
+export function CatalogueDetailHero({ categoryName, item, backHref }: CatalogueDetailHeroProps) {
+  const images = item.images.length ? item.images : item.primaryImage ? [item.primaryImage] : [];
+  const mapHref =
+    item.mapUrl ??
+    (item.latitude !== null && item.longitude !== null
+      ? `https://www.google.com/maps/search/?api=1&query=${item.latitude},${item.longitude}`
+      : null);
+  const hasPractical = Boolean(item.address || mapHref || item.links.length || item.externalRating !== null);
+
   return (
-    <section className="mx-auto max-w-7xl px-4 pt-24 sm:px-6 lg:px-8">
-      {/* SaaS Back Button */}
-      <Link
-        className="inline-flex h-9 items-center gap-1.5 rounded-full border border-border/50 bg-[var(--surface-elevated)]/70 px-4 text-[13px] font-medium text-brand-strong  backdrop-blur-xl transition-all hover:bg-black/5 hover:text-brand"
-        href="/#collection"
-        transitionTypes={["nav-back"]}
-      >
-        <ArrowLeft size={16} strokeWidth={2} aria-hidden="true" />
-        Trở lại bộ sưu tập
+    <section className="diary-container pt-8 sm:pt-12">
+      <Link className="text-link -ml-1" href={backHref} transitionTypes={["nav-back"]}>
+        <ArrowLeft aria-hidden="true" size={16} strokeWidth={1.5} />
+        Quay lại bộ sưu tập
       </Link>
 
-      <div className="mt-8 grid gap-10 lg:mt-12 lg:grid-cols-[5fr_7fr] lg:items-start lg:gap-16">
-        {/* Sleek SaaS Image Container (Sticky on Desktop) */}
-        <div className="group relative overflow-hidden rounded-[2.5rem] border border-border/60 bg-[var(--surface-elevated)]  lg:sticky lg:top-28">
-          {item.primaryImage ? (
-            <ViewTransition
-              default="none"
-              name={`item-image-${item.id}`}
-              share="morph"
-            >
-              <div className="aspect-[4/5] w-full">
-                <CatalogueItemImage
-                  alt={item.primaryImage.altText ?? item.title}
-                  src={item.primaryImage.url}
-                />
-              </div>
-            </ViewTransition>
-          ) : (
-            <div className="relative flex aspect-[4/5] w-full items-center justify-center bg-[var(--surface-elevated)]">
-              <span className="absolute h-48 w-48 rounded-full border border-border/50" aria-hidden="true" />
-              <Heart className="relative text-brand/50" fill="currentColor" size={40} strokeWidth={1} aria-hidden="true" />
-            </div>
-          )}
-          {/* Inner gradient overlay for depth */}
-          <div className="pointer-events-none absolute inset-0 rounded-[2.5rem] ring-1 ring-inset ring-black/10" aria-hidden="true" />
+      <div className="mt-6 grid gap-10 lg:flex lg:items-start lg:gap-[clamp(3rem,6vw,8rem)]">
+        <div className="w-full lg:sticky lg:top-28 lg:w-[min(50%,calc((100svh-9rem)*0.8))] lg:shrink-0">
+          <CatalogueItemGallery images={images} title={item.title} />
         </div>
 
-        {/* Content Side */}
-        <div className="flex flex-col py-2 lg:py-6">
-          <div className="inline-flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
-            <p className="text-sm font-semibold text-accent">
-              {categoryName ?? "Một điều được lưu lại"}
-            </p>
+        <div className="flex min-w-0 flex-col gap-8 lg:max-w-[44rem] lg:flex-1">
+          <div>
+            <ArchiveLabel
+              lines={[categoryName, item.priceLabel ? `Giá tham khảo: ${item.priceLabel}` : null]}
+              title={item.title}
+              titleAs="h1"
+              titleClassName="!text-[clamp(2.125rem,3.6vw,3.25rem)] !leading-[1.1] !tracking-[-0.012em]"
+            />
+            {item.summary ? <p className="lead-text mt-5 text-ink">{item.summary}</p> : null}
           </div>
-          
-          <h1 className="font-display mt-4 text-4xl font-semibold tracking-tight text-brand-strong sm:text-5xl lg:text-6xl lg:leading-[1.1]">
-            {item.title}
-          </h1>
 
-          {item.summary ? (
-            <p className="mt-6 text-lg leading-relaxed text-muted sm:text-xl">
-              {item.summary}
-            </p>
-          ) : null}
-
-          {/* Bento-style Info Tags */}
-          {(item.priceLabel || item.address) ? (
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              {item.priceLabel ? (
-                <span className="inline-flex h-10 items-center rounded-full bg-brand-strong px-5 text-[14px] font-medium text-white ">
-                  {item.priceLabel}
-                </span>
-              ) : null}
-              
-              {item.address ? (
-                <span className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 bg-[var(--surface-elevated)] px-4 text-[14px] font-medium text-brand-strong ">
-                  <MapPin size={16} className="text-accent" aria-hidden="true" />
-                  {item.address}
-                </span>
-              ) : null}
-            </div>
+          {hasPractical ? (
+            <section aria-labelledby="practical-heading" className="border-y border-border py-5">
+              <h2 className="text-sm font-semibold text-ink" id="practical-heading">
+                Thông tin để đi
+              </h2>
+              <ul className="mt-2 grid">
+                {item.address ? (
+                  <li className="flex min-h-11 items-start gap-2.5 py-2 text-ink">
+                    <MapPin aria-hidden="true" className="mt-0.5 shrink-0 text-olive" size={18} strokeWidth={1.5} />
+                    <span>{item.address}</span>
+                  </li>
+                ) : null}
+                {mapHref ? <PracticalLink href={mapHref} label="Mở bản đồ" /> : null}
+                {item.links.map((link) => (
+                  <PracticalLink href={link.url} key={link.id} label={linkLabel(link)} />
+                ))}
+                {item.externalRating !== null ? (
+                  <li className="tabular flex min-h-11 items-center gap-2.5 py-2 text-ink">
+                    <Star aria-hidden="true" className="shrink-0 text-olive" size={18} strokeWidth={1.5} />
+                    <span>
+                      {item.externalRating.toLocaleString("vi-VN")} trên 5
+                      {item.externalReviewCount ? ` từ ${item.externalReviewCount.toLocaleString("vi-VN")} đánh giá` : ""}
+                      {item.externalRatingSource ? ` trên ${item.externalRatingSource}` : ""}
+                    </span>
+                  </li>
+                ) : null}
+              </ul>
+            </section>
           ) : null}
 
           {item.description ? (
-            <div className="mt-12 rounded-[2rem] border border-border/60 bg-[var(--color-surface)]/80 p-8  backdrop-blur-xl sm:p-10">
-              <div className="flex items-center gap-2 text-accent">
-                <Quote size={20} strokeWidth={1.5} aria-hidden="true" />
-                <h3 className="text-sm font-semibold text-accent">Câu chuyện</h3>
-              </div>
-              <div className="prose prose-brand mt-6 max-w-none text-[15px] leading-loose text-ink sm:text-base">
-                {item.description.split('\n').map((paragraph, index) => (
-                  paragraph.trim() ? <p key={index}>{paragraph}</p> : <br key={index} />
-                ))}
-              </div>
-            </div>
-          ) : null}
-
-          {item.links.length ? (
-            <div className="mt-8 flex flex-wrap gap-3">
-              {item.links.map((link) => (
-                <a
-                  className="inline-flex h-12 items-center gap-2 rounded-full border border-border/60 bg-white px-6 text-[14px] font-semibold text-brand-strong  transition hover:bg-black/5"
-                  href={link.url}
-                  key={link.id}
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  {link.title}
-                  <ExternalLink size={16} className="text-muted" aria-hidden="true" />
-                </a>
-              ))}
-            </div>
+            <section aria-labelledby="story-heading">
+              <h2 className="sr-only" id="story-heading">
+                Câu chuyện
+              </h2>
+              <div className="prose-text whitespace-pre-line text-ink">{item.description}</div>
+            </section>
           ) : null}
         </div>
       </div>
     </section>
   );
+}
+
+function PracticalLink({ href, label }: { href: string; label: string }) {
+  return (
+    <li>
+      <a
+        className="flex min-h-11 items-center gap-2.5 py-2 font-semibold text-brand underline decoration-1 underline-offset-4 hover:decoration-2"
+        href={href}
+        rel="noreferrer"
+        target="_blank"
+      >
+        <ExternalLink aria-hidden="true" className="shrink-0" size={16} strokeWidth={1.5} />
+        {label}
+        <span className="sr-only">(mở trang ngoài)</span>
+      </a>
+    </li>
+  );
+}
+
+function linkLabel(link: CatalogueLink): string {
+  if (link.title.trim()) return link.title;
+  const fallback: Record<CatalogueLink["type"], string> = {
+    website: "Trang web",
+    map: "Bản đồ",
+    menu: "Thực đơn",
+    review: "Đánh giá",
+    facebook: "Facebook",
+    instagram: "Instagram",
+    tiktok: "TikTok",
+    shopping: "Nơi mua",
+    other: "Liên kết",
+  };
+  return fallback[link.type];
 }

@@ -1,107 +1,42 @@
-"use client";
-
 import { GoogleSignInButton } from "@/features/identity/components/google-sign-in-button";
-import { Heart, Sparkles } from "lucide-react";
-import { motion } from "motion/react";
-import { MagicalBackground } from "./magical-background";
 
 interface MagicalLoginClientProps {
   nextPath: string;
   hasCallbackError: boolean;
 }
 
+/* The door into a private space: the name set large on paper, one clear way in. */
 export function MagicalLoginClient({ nextPath, hasCallbackError }: MagicalLoginClientProps) {
   return (
-    <main className="relative grid min-h-[100dvh] place-items-center overflow-hidden bg-[#110406]">
-      {/* 3D Background */}
-      <MagicalBackground />
+    <main className="diary-container grid min-h-[100dvh] content-center gap-12 py-16 md:grid-cols-12 md:items-end md:gap-x-6">
+      <div className="md:col-span-7">
+        <p aria-hidden="true" className="wax-seal grid place-items-center text-[#f3e3e0]" style={{ "--seal-size": "2.75rem" } as React.CSSProperties}>
+          <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16">
+            <path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.9 4.5c2.2 0 3.7 1.2 5.1 3 1.4-1.8 2.9-3 5.1-3 3.9 0 6 3.9 4.5 7.3C19.5 16.4 12 21 12 21z" />
+          </svg>
+        </p>
+        <h1 className="cover-text mt-8 text-brand-strong" translate="no">
+          Điều Em Yêu
+        </h1>
+        <p className="lead-text mt-6 max-w-[34ch] text-ink">
+          Một không gian riêng, chỉ dành cho những người được mời.
+        </p>
+      </div>
 
-      {/* Floating Glassmorphic Login Card */}
-      <motion.div
-        initial={{ opacity: 0, y: 30, scale: 0.95 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-10 w-full max-w-[28rem] px-4"
-      >
-        <motion.div
-          animate={{ y: [-5, 5, -5] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur-xl sm:p-12"
-        >
-          {/* Subtle glow behind the card content */}
-          <div className="absolute -left-20 -top-20 h-40 w-40 rounded-full bg-accent opacity-20 blur-3xl" />
-          <div className="absolute -bottom-20 -right-20 h-40 w-40 rounded-full bg-brand opacity-20 blur-3xl" />
-
-          <div className="relative flex flex-col items-center text-center">
-            <motion.span
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.5, type: "spring", stiffness: 200, damping: 20 }}
-              className="grid h-14 w-14 place-items-center rounded-full    text-white shadow-lg"
-            >
-              <Heart size={24} fill="currentColor" strokeWidth={1.5} aria-hidden="true" />
-            </motion.span>
-            
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7, duration: 0.8 }}
-              className="mt-6 text-sm font-semibold tracking-wide text-accent font-semibold text-xs tracking-wide"
-              translate="no"
-            >
-              Điều Em Yêu
-            </motion.p>
-            
-            <motion.h1
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.8 }}
-              className="mt-3 text-balance font-display text-3xl font-bold leading-tight text-white sm:text-4xl"
-            >
-              Bước vào thế giới của riêng em.
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1, duration: 1 }}
-              className="mt-4 text-sm leading-relaxed text-white/60"
-            >
-              Giữ lại những nơi muốn đến, những điều muốn thử và mọi lựa chọn khiến em vui.
-            </motion.p>
-
-            {hasCallbackError && (
-              <motion.p
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="mt-6 w-full rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-200"
-                role="alert"
-              >
-                Phiên đăng nhập chưa hoàn tất. Hãy thử lại nhé.
-              </motion.p>
-            )}
-
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.2, duration: 0.8 }}
-              className="mt-8 w-full"
-            >
-              <GoogleSignInButton nextPath={nextPath} />
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.5, duration: 1 }}
-              className="mt-8 flex items-center gap-2 text-xs font-medium text-white/40"
-            >
-              <Sparkles size={14} />
-              <span>Dành riêng cho em</span>
-            </motion.div>
-          </div>
-        </motion.div>
-      </motion.div>
+      <div className="md:col-span-4 md:col-start-9">
+        <div className="archive-label">
+          <p className="archive-label__title">Đăng nhập</p>
+          <p className="archive-label__line">Dùng tài khoản Google đã được mời vào không gian này.</p>
+        </div>
+        {hasCallbackError ? (
+          <p className="mt-5 rounded-[var(--radius-card)] border border-danger/40 px-4 py-3 text-sm text-danger" role="alert">
+            Đăng nhập chưa hoàn tất. Hãy thử lại.
+          </p>
+        ) : null}
+        <div className="mt-6">
+          <GoogleSignInButton nextPath={nextPath} />
+        </div>
+      </div>
     </main>
   );
 }

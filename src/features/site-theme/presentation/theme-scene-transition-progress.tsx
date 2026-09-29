@@ -35,7 +35,7 @@ export function ThemeSceneTransitionProgress({
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="diary-kicker">Đang chuyển scene · {preset.label}</p>
-          <h2 className="font-display mt-2 text-2xl font-semibold tracking-[-0.045em] text-brand-strong">
+          <h2 className="font-display mt-2 text-2xl font-medium text-brand-strong">
             Không khí mới đang thành hình.
           </h2>
         </div>

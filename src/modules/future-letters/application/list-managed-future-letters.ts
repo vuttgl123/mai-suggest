@@ -13,6 +13,6 @@ export class ListManagedFutureLetters {
     const owner = requireCatalogueOwner(actor);
     if (!owner.ok) return owner;
 
-    return this.reader.listManaged();
+    return this.reader.listManaged(new Date().toISOString());
   }
 }

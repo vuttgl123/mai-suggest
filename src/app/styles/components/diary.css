@@ -5,19 +5,8 @@
     min-height: 100dvh;
   }
 
-  .diary-shell::before {
-    position: fixed;
-    z-index: -1;
-    inset: 0.65rem;
-    border: 1px solid var(--theme-frame-border);
-    border-radius: calc(var(--radius-dialog) + 0.35rem);
-    box-shadow: var(--theme-frame-inset);
-    pointer-events: none;
-    content: "";
-  }
-
   .diary-container {
-    width: min(calc(100% - 2rem), var(--content-max));
+    width: min(calc(100% - 2 * var(--page-edge)), var(--content-max));
     margin-inline: auto;
   }
 
@@ -26,35 +15,28 @@
   }
 
   .diary-section-tint {
-    border-block: 1px solid var(--line-subtle);
-    background: color-mix(in srgb, var(--surface-paper) 58%, transparent);
+    border-block: 1px solid var(--color-border);
+    background: var(--color-paper);
   }
 
   .diary-image-frame {
     position: relative;
     overflow: hidden;
-    border: 1px solid var(--line-subtle);
-    border-radius: var(--radius-frame);
-    background: var(--surface-paper);
-    box-shadow: var(--shadow-card);
-  }
-
-  .diary-image-frame::after {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    border: 1px solid rgb(255 255 255 / 24%);
-    content: "";
+    border-radius: var(--radius-object);
+    background: var(--color-paper);
+    box-shadow: var(--elevation-resting);
+    outline: 1px solid var(--color-border);
   }
 
   .diary-rule {
     height: 1px;
-    width: 4.5rem;
-    background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+    width: 2.5rem;
+    background: var(--color-ink);
+    opacity: 0.55;
   }
 
   .diary-wash {
-    background: var(--theme-wash);
+    background: var(--color-paper);
   }
 
   .admin-category-editor-dialog {
@@ -75,7 +57,7 @@
     gap: 1rem;
     border-bottom: 1px solid var(--color-border);
     padding: 1.25rem 1.25rem 1rem;
-    background: linear-gradient(135deg, rgb(101 12 28 / 6%), transparent 58%);
+    background: var(--color-paper);
   }
 
   .admin-category-editor-body {
@@ -87,34 +69,27 @@
 
   .admin-category-editor-note {
     margin: 0;
-    border: 1px solid rgb(101 12 28 / 10%);
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-card);
     padding: 0.8rem 0.95rem;
     color: var(--color-muted);
-    background: rgb(101 12 28 / 4%);
+    background: var(--color-surface);
     font-size: 0.875rem;
     line-height: 1.65;
   }
 
   .admin-category-editor-content {
-    background: var(--theme-card-surface);
-    box-shadow: var(--shadow-soft);
+    background: var(--color-paper);
   }
 
   .admin-category-editor-appearance {
-    background: rgb(255 251 246 / 62%);
+    background: var(--color-surface);
   }
 
   .admin-category-editor-footer {
     border-top: 1px solid var(--color-border);
     padding: 1rem 1.25rem 1.25rem;
-    background: rgb(255 250 244 / 92%);
-  }
-
-  @media (max-width: 639px) {
-    .diary-shell::before {
-      inset: 0.35rem;
-    }
+    background: var(--color-paper);
   }
 
   @media (min-width: 640px) {

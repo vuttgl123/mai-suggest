@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { createBrowserSupabaseClient } from "@/lib/supabase/client";
-import { motion } from "motion/react";
 
 interface GoogleSignInButtonProps {
   nextPath: string;
@@ -33,21 +32,15 @@ export function GoogleSignInButton({
 
   return (
     <div className="space-y-3">
-      <motion.button
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
+      <button
+        aria-busy={isPending || undefined}
+        className="flex min-h-12 w-full items-center justify-center gap-3 rounded-full border border-[#747775] bg-white px-6 text-[0.9375rem] font-medium text-[#1f1f1f] transition-colors hover:bg-[#f2f2f2] disabled:cursor-wait disabled:opacity-70"
         disabled={isPending}
         onClick={signInWithGoogle}
-        className="group relative flex w-full items-center justify-center gap-3 overflow-hidden rounded-full bg-[color-mix(in_srgb,var(--color-paper)_90%,transparent)] px-6 py-4 font-semibold text-brand-strong shadow-[var(--shadow-luxury-glow)] transition-all duration-500 hover:bg-paper hover:shadow-[var(--shadow-luxury-glow-strong)] hover:scale-105 disabled:opacity-50 border border-border"
+        type="button"
       >
-        {/* Magical sweeping light effect on hover */}
-        <div className="absolute inset-0 -translate-x-full bg-[linear-gradient(90deg,transparent,color-mix(in_srgb,var(--color-brand)_15%,transparent),transparent)] transition-transform duration-700 ease-out group-hover:translate-x-full" />
-        
-        {/* Subtle inner border glow */}
-        <div className="absolute inset-0 rounded-full border border-white/40 transition-colors group-hover:border-accent/50" />
-        
         {/* Google Icon SVG */}
-        <svg className="h-5 w-5" viewBox="0 0 24 24">
+        <svg aria-hidden="true" className="h-5 w-5" viewBox="0 0 24 24">
           <path
             d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
             fill="#4285F4"
@@ -66,13 +59,11 @@ export function GoogleSignInButton({
           />
         </svg>
 
-        <span className="relative z-10 text-sm tracking-wide">
-          {isPending ? "Đang bay đến Google…" : "Bước vào bằng Google"}
-        </span>
-      </motion.button>
+        <span>{isPending ? "Đang chuyển đến Google…" : "Đăng nhập bằng Google"}</span>
+      </button>
       
       {errorMessage ? (
-        <p className="text-center text-sm text-red-400" role="alert">
+        <p className="text-center text-sm text-danger" role="alert">
           {errorMessage}
         </p>
       ) : null}

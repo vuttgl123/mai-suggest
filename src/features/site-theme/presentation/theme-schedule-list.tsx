@@ -1,5 +1,6 @@
 "use client";
 
+import { StatusBadge } from "@/components/ui/status-badge";
 import { Clock3, Pencil, Trash2 } from "lucide-react";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
@@ -45,11 +46,11 @@ export function ThemeScheduleList({
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="diary-kicker">Các khoảng đã hẹn</p>
-          <h2 className="font-display mt-2 text-2xl font-semibold tracking-[-0.045em] text-brand-strong">
+          <h2 className="font-display mt-2 text-2xl font-medium text-brand-strong">
             Lịch không khí
           </h2>
         </div>
-        <span className="rounded-full bg-brand-soft px-3 py-1.5 text-xs font-bold font-semibold text-xs tracking-wide tracking-[0.11em] text-brand">
+        <span className="rounded-full bg-brand-soft px-3 py-1.5 text-[0.8125rem] font-semibold">
           {schedules.length} lịch
         </span>
       </div>
@@ -78,12 +79,10 @@ export function ThemeScheduleList({
                     </p>
                     <div className="mt-2 flex flex-wrap items-center gap-2">
                       <span className="h-2.5 w-2.5 rounded-full bg-brand" aria-hidden="true" />
-                      <p className="font-display text-lg font-semibold tracking-[-0.035em] text-brand-strong">
+                      <p className="font-display text-lg font-medium text-brand-strong">
                         {preset.label}
                       </p>
-                      <span className={`rounded-full px-2 py-1 text-[10px] font-bold font-semibold text-xs tracking-wide tracking-[0.1em] ${schedule.isEnabled ? "bg-positive/10 text-positive" : "bg-surface text-muted"}`}>
-                        {schedule.isEnabled ? "Bật" : "Tắt"}
-                      </span>
+                      <StatusBadge active={schedule.isEnabled} activeLabel="Đang bật" inactiveLabel="Đang tắt" />
                     </div>
                     <p className="mt-1 text-xs font-semibold text-accent">
                       Ưu tiên {schedule.priority}
@@ -100,7 +99,7 @@ export function ThemeScheduleList({
                 </div>
 
                 {isConfirming ? (
-                  <div className="mt-4 rounded-xl border border-danger/30 bg-danger/10 p-3">
+                  <div className="mt-4 rounded-[var(--radius-card)] border border-danger/30 bg-danger/10 p-3">
                     <p className="text-sm leading-5 text-danger">Xóa hẳn lịch này? Các lịch khác và theme hiện tại sẽ không bị thay đổi.</p>
                     <div className="mt-3 flex flex-wrap gap-2">
                       <Button disabled={isPending} onClick={() => setConfirmingId(null)} size="compact" variant="quiet">

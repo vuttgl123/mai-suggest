@@ -12,7 +12,8 @@ export interface ListMailboxQuery {
 
 export interface FutureLetterReader {
   listOpened(serverNow: string): Promise<Result<FutureLetter[]>>;
-  listManaged(): Promise<Result<FutureLetter[]>>;
+  /** Owner moderation: opened letters only. Sealed letters stay with their author. */
+  listManaged(serverNow: string): Promise<Result<FutureLetter[]>>;
   listOwnScheduled(
     authorId: string,
     serverNow: string,

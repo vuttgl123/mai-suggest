@@ -67,7 +67,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
   return (
     <>
       <a
-        className="sr-only absolute left-5 top-4 z-50 rounded-full bg-brand-strong px-4 py-2 text-sm font-semibold text-white focus:not-sr-only"
+        className="sr-only absolute left-5 top-4 z-50 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-on-brand focus:not-sr-only"
         href="#admin-content"
       >
         Đi tới nội dung quản trị

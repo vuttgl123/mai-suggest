@@ -4,63 +4,42 @@
 @import "./styles/base.css";
 @import "./styles/components/typography.css";
 @import "./styles/components/diary.css";
+@import "./styles/components/archive.css";
 @import "./styles/components/header.css";
-@import "./styles/components/cinematic-diary.css";
-@import "./styles/components/timeline.css";
-@import "./styles/components/media-rail.css";
 @import "./styles/components/future-letters.css";
 @import "./styles/components/theme-scene.css";
+@import "./styles/components/effects.css";
 @import "./styles/motion.css";
 
 @theme {
-  --font-display: var(--font-display), serif;
-  --font-body: var(--font-body), sans-serif;
+  --font-display: var(--font-serif), Georgia, serif;
+  --font-body: var(--font-body), system-ui, sans-serif;
+  --font-prose: var(--font-serif), Georgia, serif;
 
   --color-brand: var(--color-brand);
   --color-brand-strong: var(--color-brand-strong);
   --color-brand-soft: var(--color-brand-soft);
+  --color-on-brand: var(--color-on-brand);
   --color-accent: var(--color-accent);
+  --color-rose: var(--color-rose);
+  --color-olive: var(--color-olive);
   --color-paper: var(--color-paper);
+  --color-paper-deep: var(--color-paper-deep);
   --color-surface: var(--color-surface);
   --color-ink: var(--color-ink);
   --color-muted: var(--color-muted);
   --color-border: var(--color-border);
+  --color-border-strong: var(--color-border-strong);
+  --color-border-input: var(--color-border-input);
   --color-focus: var(--color-focus);
   --color-positive: var(--color-positive);
   --color-danger: var(--color-danger);
+  --color-night: var(--color-night);
+  --color-night-soft: var(--color-night-soft);
+  --color-gold: var(--color-gold);
   --color-skeleton: var(--color-skeleton);
   --color-skeleton-highlight: var(--color-skeleton-highlight);
 
-  --shadow-luxury-glow: 0 0 24px 2px rgb(216 161 91 / 15%);
-  --shadow-luxury-glow-strong: 0 0 32px 4px rgb(216 161 91 / 25%);
-  --shadow-luxury-card: 0 12px 30px rgb(49 5 12 / 12%);
-  --shadow-luxury-card-hover: 0 20px 40px rgb(49 5 12 / 18%);
-  --shadow-glass: inset 0 1px 0 0 rgb(255 255 255 / 35%);
-
-  --animate-luxury-reveal: luxury-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  --animate-luxury-float: luxury-float 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  ---slow: pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  --animate-float-subtle: float-subtle 4s ease-in-out infinite;
-  --animate-shimmer: shimmer 2.5s linear infinite;
-
-  @keyframes luxury-reveal {
-    0% { opacity: 0; transform: translateY(20px) scale(0.98); }
-    100% { opacity: 1; transform: translateY(0) scale(1); }
-  }
-  @keyframes luxury-float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
-  }
-  @keyframes pulse-slow {
-    0%, 100% { opacity: 1; }
-    50% { opacity: .7; }
-  }
-  @keyframes float-subtle {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
-  }
-  @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-  }
+  --shadow-resting: var(--elevation-resting);
+  --shadow-floating: var(--elevation-floating);
 }

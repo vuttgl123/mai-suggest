@@ -1,0 +1,290 @@
+/*
+ * Section effects. Each one matches what the content is:
+ *   - objects are "mounted" like prints placed on paper,
+ *   - index rules draw in like a ruled ledger,
+ *   - letters slide onto the rack,
+ *   - chapter photos develop,
+ *   - headings rise from behind a mask.
+ * Scroll-linked effects use CSS scroll timelines, so they cost no JavaScript
+ * and never block reading: browsers without support simply show everything.
+ * Everything here is off when reduced motion is preferred.
+ */
+@layer components {
+  @media (prefers-reduced-motion: no-preference) {
+    /* ---- hover and press feedback (all browsers) ---- */
+    /* Hover uses the individual scale/translate properties so it composes
+     * with the scroll animations, which own `transform`. */
+    .interactive-object .matted__frame > img {
+      transition: scale 700ms var(--ease-out);
+    }
+
+    .interactive-object:hover .matted__frame > img {
+      scale: 1.04;
+    }
+
+    .index-row {
+      position: relative;
+      isolation: isolate;
+    }
+
+    .index-row::after {
+      position: absolute;
+      inset: 0 -0.75rem;
+      z-index: -1;
+      border-radius: var(--radius-card);
+      background: var(--color-brand-soft);
+      opacity: 0;
+      transform: scaleX(0.96);
+      transform-origin: left;
+      transition:
+        opacity var(--motion-component) var(--ease-out),
+        transform var(--motion-component) var(--ease-out);
+      content: "";
+    }
+
+    .index-row:hover::after,
+    .index-row:focus-visible::after {
+      opacity: 0.55;
+      transform: none;
+    }
+
+    .index-row__number {
+      transition: transform var(--motion-component) var(--ease-out);
+    }
+
+    .index-row:hover .index-row__number {
+      transform: translateX(4px);
+    }
+
+    .letter-envelope {
+      transition:
+        box-shadow var(--motion-component) var(--ease-out),
+        translate var(--motion-component) var(--ease-out);
+    }
+
+    .letter-envelope::before {
+      transform-origin: top;
+      transition: transform 420ms var(--ease-out);
+    }
+
+    .letter-envelope:hover {
+      box-shadow: var(--elevation-floating);
+      translate: 0 -2px;
+    }
+
+    .letter-envelope:hover::before {
+      transform: perspective(700px) rotateX(-18deg);
+    }
+
+    .letter-envelope .wax-seal {
+      transition: transform var(--motion-component) var(--ease-out);
+    }
+
+    .letter-envelope:hover .wax-seal {
+      transform: rotate(-10deg) scale(1.04);
+    }
+
+    .underline-grow {
+      background-image: linear-gradient(currentColor, currentColor);
+      background-position: 0 100%;
+      background-repeat: no-repeat;
+      background-size: 0 1px;
+      transition: background-size 360ms var(--ease-out);
+    }
+
+    .group:hover .underline-grow,
+    .group:focus-visible .underline-grow {
+      background-size: 100% 1px;
+    }
+
+    .press {
+      transition: transform var(--motion-micro) var(--ease-standard);
+    }
+
+    .press:active {
+      transform: scale(0.97);
+    }
+
+    .fade-swap {
+      animation: fade-swap 360ms var(--ease-out) both;
+    }
+
+    @keyframes fade-swap {
+      from {
+        opacity: 0;
+        transform: scale(1.015);
+      }
+    }
+
+    /* The memory thread draws itself down once the index appears. */
+    .memory-thread::before {
+      animation: thread-grow 800ms 150ms var(--ease-out) both;
+    }
+
+    .memory-thread__item::before {
+      animation: node-in 360ms var(--ease-out) both;
+      animation-delay: calc(200ms + var(--node-index, 0) * 90ms);
+    }
+
+    @keyframes thread-grow {
+      from {
+        transform: scaleY(0);
+      }
+    }
+
+    @keyframes node-in {
+      from {
+        opacity: 0;
+        transform: scale(0.4);
+      }
+    }
+
+    /* ---- scroll-linked reveals (progressive enhancement) ---- */
+    @supports (animation-timeline: view()) {
+      .reveal-rise,
+      .reveal-mount,
+      .reveal-slide,
+      .reveal-develop,
+      .reveal-rule::before {
+        animation-duration: 1ms; /* required by Firefox; the timeline drives progress */
+        animation-fill-mode: both;
+        animation-timing-function: linear;
+        animation-timeline: view();
+        /* Finishes by the time the element has entered, so content at the very
+         * end of a page can never be left half-revealed. */
+        animation-range: entry 0% entry 75%;
+      }
+
+      .reveal-rise {
+        animation-name: reveal-rise;
+      }
+
+      .reveal-mount {
+        animation-name: reveal-mount;
+      }
+
+      .reveal-mount .matted__frame > img {
+        animation: reveal-settle 1ms linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 100%;
+      }
+
+      .reveal-slide {
+        animation-name: reveal-slide;
+      }
+
+      .reveal-slide:nth-child(even) {
+        animation-range: entry 10% entry 85%;
+      }
+
+      .reveal-develop {
+        animation-name: reveal-develop;
+        animation-range: entry 0% entry 90%;
+      }
+
+      .reveal-rule::before {
+        animation-name: rule-draw;
+      }
+
+      /* The cover photo drifts slightly slower than the page as it leaves. */
+      .living-cover__photo .matted__frame > img {
+        transform: scale(1.08);
+        animation: cover-drift 1ms linear both;
+        animation-timeline: view();
+        animation-range: exit 0% exit 100%;
+      }
+
+      /* The header settles onto a denser surface once the page scrolls. */
+      .app-header__capsule {
+        animation: header-settle 1ms linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0 220px;
+      }
+    }
+
+    @keyframes reveal-rise {
+      from {
+        opacity: 0;
+        transform: translateY(28px);
+        clip-path: inset(0 0 30% 0);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+        /* Ends well outside the box so focus rings and descenders are never clipped. */
+        clip-path: inset(-50%);
+      }
+    }
+
+    @keyframes reveal-mount {
+      from {
+        opacity: 0;
+        transform: translateY(24px) scale(0.96) rotate(-0.6deg);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @keyframes reveal-settle {
+      from {
+        transform: scale(1.1);
+      }
+      to {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes reveal-slide {
+      from {
+        opacity: 0;
+        transform: translateX(-28px) rotate(-0.8deg);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @keyframes reveal-develop {
+      from {
+        opacity: 0.2;
+        filter: saturate(0.2) brightness(1.15) sepia(0.25);
+      }
+      to {
+        opacity: 1;
+        filter: none;
+      }
+    }
+
+    @keyframes rule-draw {
+      from {
+        transform: scaleX(0);
+      }
+      to {
+        transform: scaleX(1);
+      }
+    }
+
+    @keyframes cover-drift {
+      from {
+        transform: scale(1.08) translateY(0);
+      }
+      to {
+        transform: scale(1.08) translateY(4%);
+      }
+    }
+
+    @keyframes header-settle {
+      from {
+        background: color-mix(in srgb, var(--color-paper) 60%, transparent);
+        box-shadow: 0 0 0 transparent;
+      }
+      to {
+        background: var(--theme-header-surface);
+        box-shadow: var(--elevation-floating);
+      }
+    }
+  }
+}

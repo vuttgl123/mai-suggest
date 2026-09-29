@@ -30,27 +30,27 @@ export const SITE_THEME_PRESETS: readonly SiteThemePreset[] = [
   {
     key: "bordeaux",
     label: "Bordeaux Diary",
-    description: "Đỏ Bordeaux, giấy ngà và đồng tiết chế.",
+    description: "Giấy ngà và Bordeaux, không khí mặc định.",
   },
   {
     key: "valentine",
     label: "Lời hẹn tháng Hai",
-    description: "Ruby sâu và ánh đồng ấm.",
+    description: "Giấy ấm hơn, sắc ruby cho tháng Hai.",
   },
   {
     key: "spring",
     label: "Mùa xuân dịu dàng",
-    description: "Berry trầm và sage kín đáo.",
+    description: "Giấy ngà với ánh sage nhẹ.",
   },
   {
     key: "noel",
     label: "Đêm cuối năm",
-    description: "Bordeaux, evergreen và champagne.",
+    description: "Nền xanh đêm, ánh vàng ấm. Chủ đề tối.",
   },
   {
     key: "anniversary",
     label: "Chương kỷ niệm",
-    description: "Wine đậm và ánh vàng cổ.",
+    description: "Giấy sâu màu, rượu vang và vàng cổ.",
   },
 ];
 

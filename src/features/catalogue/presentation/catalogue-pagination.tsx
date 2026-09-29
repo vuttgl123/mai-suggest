@@ -19,75 +19,68 @@ export function CataloguePagination({
 
   const pages = visiblePages(page, pageCount);
 
-  return (
-    <div className="mt-16 flex flex-col items-center">
-      <p className="text-center text-xs font-medium tracking-wide font-semibold text-xs tracking-wide text-muted">
-        Trang {page} / {pageCount}
-      </p>
-      <nav
-        aria-label="Phân trang bộ sưu tập"
-        className="mt-4 inline-flex items-center gap-1 rounded-full border border-border/60 bg-[var(--surface-elevated)] p-1.5  backdrop-blur-xl"
-      >
-        {page > 1 ? (
-          <Link
-            className="inline-flex h-9 items-center gap-1.5 rounded-full px-4 text-[13px] font-medium text-brand-strong transition hover:bg-black/5 hover:text-brand"
-            href={createCataloguePath({ categorySlug, page: page - 1, query })}
-            scroll={false}
-            transitionTypes={["page-back"]}
-          >
-            <ChevronLeft size={16} strokeWidth={2} aria-hidden="true" />
-            Trước
-          </Link>
-        ) : (
-          <span className="inline-flex h-9 cursor-not-allowed items-center gap-1.5 rounded-full px-4 text-[13px] font-medium text-muted/50">
-            <ChevronLeft size={16} strokeWidth={2} aria-hidden="true" />
-            Trước
-          </span>
-        )}
+  const linkClassName =
+    "inline-flex min-h-11 items-center gap-1 rounded-full px-3 text-[0.9375rem] font-semibold text-brand underline decoration-1 underline-offset-[5px] hover:decoration-2";
 
-        <div className="flex items-center gap-0.5 px-2" aria-label={`Trang ${page} trên ${pageCount}`}>
-          {pages.map((value) =>
-            typeof value === "number" ? (
+  return (
+    <nav
+      aria-label="Phân trang bộ sưu tập"
+      className="flex flex-col gap-4 border-t border-border pt-5 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p className="tabular text-[0.9375rem] text-muted">
+        Trang {page} trên {pageCount}
+      </p>
+      <ul className="flex flex-wrap items-center gap-1">
+        {pages.map((value) =>
+          typeof value === "number" ? (
+            <li key={value}>
               <Link
                 aria-current={value === page ? "page" : undefined}
-                className={`grid h-8 min-w-[2rem] place-items-center rounded-full text-[13px] font-medium transition-all ${
+                aria-label={`Trang ${value}`}
+                className={`tabular grid h-11 min-w-11 place-items-center rounded-full px-2 text-[0.9375rem] transition-colors ${
                   value === page
-                    ? "bg-brand-strong text-white "
-                    : "text-muted hover:bg-black/5 hover:text-brand-strong"
+                    ? "bg-brand-soft font-semibold text-brand"
+                    : "text-muted hover:bg-brand-soft hover:text-brand"
                 }`}
                 href={createCataloguePath({ categorySlug, page: value, query })}
-                key={value}
                 scroll={false}
                 transitionTypes={[value > page ? "page-forward" : "page-back"]}
               >
                 {value}
               </Link>
-            ) : (
-              <span className="grid h-8 min-w-[1.5rem] place-items-center text-[13px] text-muted/50" key={value}>
-                …
-              </span>
-            ),
-          )}
-        </div>
-
+            </li>
+          ) : (
+            <li aria-hidden="true" className="grid h-11 min-w-8 place-items-center text-muted" key={value}>
+              …
+            </li>
+          ),
+        )}
+      </ul>
+      <div className="flex gap-2">
+        {page > 1 ? (
+          <Link
+            className={linkClassName}
+            href={createCataloguePath({ categorySlug, page: page - 1, query })}
+            scroll={false}
+            transitionTypes={["page-back"]}
+          >
+            <ChevronLeft aria-hidden="true" size={16} strokeWidth={1.5} />
+            Trang trước
+          </Link>
+        ) : null}
         {page < pageCount ? (
           <Link
-            className="inline-flex h-9 items-center gap-1.5 rounded-full px-4 text-[13px] font-medium text-brand-strong transition hover:bg-black/5 hover:text-brand"
+            className={linkClassName}
             href={createCataloguePath({ categorySlug, page: page + 1, query })}
             scroll={false}
             transitionTypes={["page-forward"]}
           >
-            Sau
-            <ChevronRight size={16} strokeWidth={2} aria-hidden="true" />
+            Trang sau
+            <ChevronRight aria-hidden="true" size={16} strokeWidth={1.5} />
           </Link>
-        ) : (
-          <span className="inline-flex h-9 cursor-not-allowed items-center gap-1.5 rounded-full px-4 text-[13px] font-medium text-muted/50">
-            Sau
-            <ChevronRight size={16} strokeWidth={2} aria-hidden="true" />
-          </span>
-        )}
-      </nav>
-    </div>
+        ) : null}
+      </div>
+    </nav>
   );
 }
 

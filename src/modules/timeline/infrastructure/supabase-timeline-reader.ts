@@ -2,12 +2,15 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { failure, success, type Result } from "@/core/application/result";
 import type { TimelineReader } from "@/modules/timeline/application/timeline-reader";
 import type {
+  TimelineChapterPreview,
   TimelineEntry,
   TimelineResponse,
 } from "@/modules/timeline/domain/timeline-models";
 import {
   authorsById,
   fallbackTimelineAuthor,
+  TIMELINE_CHAPTER_PREVIEW_COLUMNS,
+  toTimelineChapterPreview,
   toTimelineEntry,
   toTimelineResponse,
   type TimelineProfileRow,
@@ -46,25 +49,16 @@ export class SupabaseTimelineReader implements TimelineReader {
     );
   }
 
-  async listVisibleChapterPreviews(): Promise<Result<import("@/modules/timeline/domain/timeline-models").TimelineChapterPreview[]>> {
+  async listVisibleChapterPreviews(): Promise<Result<TimelineChapterPreview[]>> {
     const { data: rows, error } = await this.client
       .from("timeline_entries")
-      .select("id,date_label,title,image_url,image_alt_text,sort_order")
+      .select(TIMELINE_CHAPTER_PREVIEW_COLUMNS)
       .order("sort_order")
       .order("occurred_on");
 
     if (error) return failure("UNEXPECTED_FAILURE");
-    
-    return success(
-      (rows ?? []).map((row) => ({
-        id: row.id,
-        dateLabel: row.date_label,
-        title: row.title,
-        imageUrl: row.image_url,
-        imageAltText: row.image_alt_text,
-        sortOrder: row.sort_order,
-      })),
-    );
+
+    return success((rows ?? []).map(toTimelineChapterPreview));
   }
 
   async getVisibleChapterDetail(chapterId: string): Promise<Result<TimelineEntry | null>> {

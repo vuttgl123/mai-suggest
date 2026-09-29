@@ -119,7 +119,7 @@ export function AdminCategoryEditor({
               <span className="h-1.5 w-1.5 rounded-full bg-current" />
             </div>
             <h2
-              className="font-display mt-3 text-3xl font-semibold tracking-[-0.045em] text-brand-strong sm:text-4xl"
+              className="font-display mt-3 text-3xl font-medium text-brand-strong sm:text-4xl"
               id="admin-category-editor-title"
             >
               Sửa danh mục
@@ -304,4 +304,4 @@ function optionalText(value: string): string | null {
 }
 
 const inputClassName =
-  "mt-2 min-h-11 w-full rounded-xl border border-border bg-white/70 px-3 text-sm text-ink  outline-none placeholder:text-muted focus:border-focus disabled:bg-surface";
+  "mt-2 min-h-11 w-full rounded-[var(--radius-card)] border border-border-input bg-paper px-3 text-sm text-ink  outline-none placeholder:text-muted focus:border-focus disabled:bg-surface";
