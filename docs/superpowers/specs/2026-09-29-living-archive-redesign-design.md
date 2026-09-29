@@ -19,6 +19,17 @@ triển khai. Migration RLS của D4 đã viết nhưng **chưa chạy** lên Su
   đặc lại khi cuộn, ảnh bìa trôi chậm khi rời màn hình; hover: ảnh zoom nhẹ trong
   khung, nắp phong bì hé, nền dòng mục lục. Dùng CSS scroll timeline, không JS;
   trình duyệt không hỗ trợ hiển thị bình thường; tắt khi giảm chuyển động.
+- **Nghi thức mở thư, bản 2** (người dùng thấy bản đầu chưa ấn tượng): khoảng 2,6
+  giây thay cho 0,8–1,2 giây trong brief, bỏ qua được bất cứ lúc nào (nút, chạm,
+  Esc, Enter), không phát lại khi đọc lại, tắt khi giảm chuyển động. Nhịp: phòng
+  tối và quầng sáng vàng → phong bì nổi lên → ánh sáng lướt qua dấu sáp → dấu vỡ,
+  vụn sáp rơi, bụi vàng bay → nắp lật lộ lót Bordeaux → thư trượt ra → trang thư
+  mở gấp, chữ hiện từng dòng.
+- **Sửa lỗi mobile "mất nội dung sau khi mở thư"**, hai nguyên nhân đã tái hiện:
+  (1) tờ thư bị kéo cao đúng một màn hình, thư dài tràn chữ tối lên nền đêm;
+  (2) ở trình duyệt thiếu `showModal` (webview trong app), phòng đọc bị cắt trong
+  khung phong bì. Phòng đọc giờ render qua portal vào `body`, khóa cuộn trang nền,
+  tờ thư cao theo nội dung.
 **Tên làm việc:** Bảo tàng nhỏ của chúng mình / A Living Archive. Tên thương hiệu
 "Điều Em Yêu" giữ nguyên.
 

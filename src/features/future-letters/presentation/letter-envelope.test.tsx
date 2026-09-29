@@ -66,7 +66,7 @@ describe("LetterEnvelope", () => {
     expect(screen.queryByRole("button", { name: "Bỏ qua" })).not.toBeInTheDocument();
   });
 
-  it("finishes the ritual by itself in about a second", async () => {
+  it("finishes the ritual by itself after about 2.6 seconds", async () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
     const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
     openAction.mockResolvedValue(fullLetter);
@@ -75,7 +75,7 @@ describe("LetterEnvelope", () => {
     await user.click(screen.getByRole("button", { name: "Mở thư" }));
     await screen.findByRole("button", { name: "Bỏ qua" });
     await act(async () => {
-      vi.advanceTimersByTime(1100);
+      vi.advanceTimersByTime(2800);
     });
 
     expect(screen.getByText(fullLetter.content)).toBeVisible();
@@ -122,5 +122,38 @@ describe("LetterEnvelope", () => {
 
     expect(await screen.findByRole("alert")).toHaveTextContent("Chưa mở được thư này. Hãy thử lại.");
     expect(screen.queryByText(fullLetter.content)).not.toBeInTheDocument();
+  });
+
+  it("renders the reading room outside the envelope so it can never be clipped by it", async () => {
+    const user = userEvent.setup();
+    openAction.mockResolvedValue(fullLetter);
+    const original = HTMLDialogElement.prototype.showModal;
+    // In-app browsers without showModal fall back to a plain open dialog.
+    Object.defineProperty(HTMLDialogElement.prototype, "showModal", { configurable: true, value: undefined });
+
+    try {
+      const { container } = renderEnvelope();
+      await user.click(screen.getByRole("button", { name: "Mở thư" }));
+
+      const dialog = await screen.findByRole("dialog");
+      expect(container.contains(dialog)).toBe(false);
+      expect(dialog.parentElement).toBe(document.body);
+      expect(dialog).toHaveAttribute("open");
+    } finally {
+      Object.defineProperty(HTMLDialogElement.prototype, "showModal", { configurable: true, value: original });
+    }
+  });
+
+  it("locks page scrolling while the letter is open and restores it on close", async () => {
+    const user = userEvent.setup();
+    openAction.mockResolvedValue(fullLetter);
+    renderEnvelope();
+
+    await user.click(screen.getByRole("button", { name: "Mở thư" }));
+    await user.click(await screen.findByRole("button", { name: "Bỏ qua" }));
+    expect(document.documentElement.style.overflow).toBe("hidden");
+
+    await user.click(screen.getByRole("button", { name: "Đóng thư" }));
+    expect(document.documentElement.style.overflow).toBe("");
   });
 });

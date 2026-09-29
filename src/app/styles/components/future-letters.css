@@ -77,10 +77,12 @@
     }
   }
 
-  /* Reading room: the Blue Hour palette, fixed regardless of theme */
+  /* Reading room: the Blue Hour palette, fixed regardless of theme.
+   * Rendered into <body>, so it is never clipped by the envelope list. */
   .letter-room {
     position: fixed;
     inset: 0;
+    z-index: 100;
     width: 100%;
     max-width: none;
     height: 100%;
@@ -88,98 +90,229 @@
     margin: 0;
     border: 0;
     padding: max(1.5rem, env(safe-area-inset-top)) 1.5rem max(1.5rem, env(safe-area-inset-bottom));
+    overflow-x: hidden;
     overflow-y: auto;
     overscroll-behavior: contain;
-    background: rgb(27 33 48 / 94%);
+    background: radial-gradient(120% 90% at 50% 40%, #232b3d 0%, #1b2130 55%, #141925 100%);
     color: var(--color-ink);
-    animation: letter-room-in 200ms var(--ease-out) both;
+    animation: letter-room-in 300ms var(--ease-out) both;
   }
 
   .letter-room[open] {
     display: grid;
-    place-items: center;
+    /* safe: a letter taller than the screen starts at the top instead of
+     * overflowing upwards out of reach. */
+    place-items: safe center;
   }
 
   .letter-room::backdrop {
     background: transparent;
   }
 
-  .letter-room__envelope {
-    position: relative;
-    width: min(28rem, 86vw);
-    aspect-ratio: 16 / 10;
-    border-radius: var(--radius-object);
-    background: #fbf9f5;
-    box-shadow: 0 30px 60px -20px rgb(0 0 0 / 55%);
-    perspective: 900px;
+  .letter-room[data-staging="true"] {
+    overflow: hidden;
   }
 
-  .letter-room__flap {
-    position: absolute;
-    inset: 0 0 auto;
-    z-index: 1;
-    height: 58%;
-    background: #f1ece3;
-    clip-path: polygon(0 0, 100% 0, 50% 100%);
-    transform-origin: top;
-    transition:
-      transform 280ms var(--ease-out),
-      background-color 0s 140ms;
+  /* ---- the ritual stage ---- */
+  .ritual {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
   }
 
-  .letter-room__pocket {
+  .ritual__glow {
     position: absolute;
-    inset: auto 0 0;
-    height: 62%;
-    background:
-      linear-gradient(to top right, transparent calc(50% - 0.5px), rgb(40 37 34 / 12%) 50%, transparent calc(50% + 0.5px)) left bottom / 50% 100% no-repeat,
-      linear-gradient(to top left, transparent calc(50% - 0.5px), rgb(40 37 34 / 12%) 50%, transparent calc(50% + 0.5px)) right bottom / 50% 100% no-repeat;
-  }
-
-  .letter-room__seal {
-    position: absolute;
-    top: 58%;
+    top: 50%;
     left: 50%;
-    z-index: 2;
+    width: min(120vmin, 60rem);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgb(224 184 114 / 30%) 0%, rgb(224 184 114 / 10%) 38%, transparent 68%);
     translate: -50% -50%;
-    transition: opacity 200ms var(--ease-standard);
+    animation:
+      ritual-glow-in 700ms var(--ease-out) both,
+      ritual-glow-out 700ms 1900ms var(--ease-standard) forwards;
   }
 
-  .letter-room[data-phase="unsealing"] .letter-room__seal .wax-seal__half:first-child {
-    transform: translateX(-10px) rotate(-8deg);
+  .ritual__envelope {
+    position: relative;
+    width: min(86vw, 34rem);
+    aspect-ratio: 16 / 10;
+    animation:
+      ritual-envelope-rise 560ms var(--ease-out) both,
+      ritual-envelope-sink 500ms 1850ms cubic-bezier(0.55, 0, 0.8, 0.2) forwards;
   }
 
-  .letter-room[data-phase="unsealing"] .letter-room__seal .wax-seal__half:last-child {
-    transform: translateX(10px) rotate(8deg);
-  }
-
-  .letter-room[data-phase="flap"] .letter-room__flap,
-  .letter-room[data-phase="reveal"] .letter-room__flap {
-    background: #6d2936;
-    transform: rotateX(180deg);
-  }
-
-  .letter-room[data-phase="flap"] .letter-room__seal,
-  .letter-room[data-phase="reveal"] .letter-room__seal {
-    opacity: 0;
-  }
-
-  .letter-room[data-phase="reveal"] .letter-room__envelope {
+  .ritual__back,
+  .ritual__pocket,
+  .ritual__flap {
     position: absolute;
+    inset: 0;
+    border-radius: 3px;
+  }
+
+  .ritual__back {
+    z-index: 1;
+    background: linear-gradient(180deg, #e7dccd, #efe6da 40%);
+    box-shadow: 0 34px 70px -24px rgb(0 0 0 / 65%);
+  }
+
+  .ritual__mini-letter {
+    position: absolute;
+    inset: 8% 7% 14%;
+    z-index: 2;
+    display: grid;
+    align-content: start;
+    gap: 0.55rem;
+    border-radius: 2px;
+    padding: 9% 8%;
+    background: #fbf9f5;
+    box-shadow: 0 2px 10px rgb(0 0 0 / 12%);
+    animation:
+      ritual-letter-rise 640ms 1420ms var(--ease-out) both,
+      ritual-letter-open 380ms 2020ms var(--ease-standard) forwards;
+  }
+
+  .ritual__mini-title {
+    overflow: hidden;
+    color: #4a1d26;
+    font-family: var(--font-display);
+    font-size: clamp(0.95rem, 3.6vw, 1.2rem);
+    font-style: italic;
+    line-height: 1.25;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .ritual__mini-line {
+    height: 3px;
+    border-radius: 2px;
+    background: rgb(40 37 34 / 14%);
+  }
+
+  .ritual__mini-line--short {
+    width: 60%;
+  }
+
+  /* Side and bottom flaps: everything but the V the top flap closes. */
+  .ritual__pocket {
+    z-index: 3;
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .25 0 0 0 0 .2 0 0 0 .08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+      linear-gradient(to top right, transparent calc(50% - 0.6px), rgb(40 37 34 / 12%) 50%, transparent calc(50% + 0.6px)) left bottom / 50% 60% no-repeat,
+      linear-gradient(to top left, transparent calc(50% - 0.6px), rgb(40 37 34 / 12%) 50%, transparent calc(50% + 0.6px)) right bottom / 50% 60% no-repeat,
+      linear-gradient(160deg, #f8f4ec, #f1ebe0);
+    clip-path: polygon(0 0, 50% 58%, 100% 0, 100% 100%, 0 100%);
+    filter: drop-shadow(0 -1px 0 rgb(40 37 34 / 10%));
+  }
+
+  .ritual__flap {
+    z-index: 4;
+    background-color: #f1ebe1;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .25 0 0 0 0 .2 0 0 0 .08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    clip-path: polygon(0 0, 100% 0, 50% 62%);
+    transform-origin: top;
+    animation: ritual-flap-open 480ms 1000ms cubic-bezier(0.45, 0, 0.2, 1) both;
+  }
+
+  .ritual__seal {
+    position: absolute;
+    top: 62%;
+    left: 50%;
+    z-index: 5;
+    width: clamp(3.25rem, 13vw, 4.25rem);
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    /* drop-shadow follows the clipped halves; a box-shadow would show square corners. */
+    filter: drop-shadow(0 3px 5px rgb(0 0 0 / 35%));
+    animation: ritual-seal-press 560ms var(--ease-out) both;
+  }
+
+  /* The unbroken seal hides the crack until the moment it splits. */
+  .ritual__seal::before,
+  .ritual__seal-half {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 50% 50%, transparent 0 30%, rgb(0 0 0 / 22%) 31% 33%, transparent 34%),
+      radial-gradient(circle at 50% 85%, rgb(0 0 0 / 22%), transparent 55%),
+      radial-gradient(circle at 35% 30%, #93404f, #6d2936 55%, #45161f);
+  }
+
+  .ritual__seal::before {
+    z-index: 1;
+    animation: ritual-fade-out 1ms 940ms forwards;
+    content: "";
+  }
+
+  .ritual__seal-half--left {
+    clip-path: polygon(0 0, 53% 0, 44% 36%, 55% 64%, 47% 100%, 0 100%);
+    animation: ritual-seal-left 520ms 940ms cubic-bezier(0.5, 0, 0.75, 0.2) forwards;
+  }
+
+  .ritual__seal-half--right {
+    clip-path: polygon(53% 0, 100% 0, 100% 100%, 47% 100%, 55% 64%, 44% 36%);
+    animation: ritual-seal-right 520ms 940ms cubic-bezier(0.5, 0, 0.75, 0.2) forwards;
+  }
+
+  .ritual__seal-glint {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    overflow: hidden;
+    border-radius: 50%;
+    animation: ritual-fade-out 1ms 940ms forwards;
+  }
+
+  .ritual__seal-glint::after {
+    position: absolute;
+    inset: -20% auto -20% 0;
+    width: 40%;
+    background: linear-gradient(100deg, transparent, rgb(255 236 200 / 75%), transparent);
+    transform: translateX(-160%) skewX(-12deg);
+    animation: ritual-glint 380ms 560ms var(--ease-standard) both;
+    content: "";
+  }
+
+  .ritual__crumb {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 7px;
+    height: 5px;
+    background: #6d2936;
+    clip-path: polygon(0 20%, 100% 0, 80% 100%, 10% 90%);
     opacity: 0;
-    transition: opacity 240ms 100ms var(--ease-standard);
+    animation: ritual-crumb 560ms 940ms cubic-bezier(0.3, 0.6, 0.5, 1) both;
+  }
+
+  .ritual__mote {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--mote-size);
+    height: var(--mote-size);
+    border-radius: 50%;
+    background: #f3dca8;
+    box-shadow: 0 0 8px 2px rgb(224 184 114 / 60%);
+    opacity: 0;
+    animation: ritual-mote 1500ms calc(1000ms + var(--mote-delay)) var(--ease-out) both;
   }
 
   .letter-room__skip {
     position: fixed;
     right: max(1.5rem, env(safe-area-inset-right));
     bottom: max(1.5rem, env(safe-area-inset-bottom));
+    z-index: 2;
     min-height: 44px;
     border: 1px solid rgb(245 241 234 / 35%);
     border-radius: 999px;
     padding-inline: 1.25rem;
     color: #f5f1ea;
-    background: transparent;
+    background: rgb(27 33 48 / 40%);
     font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
@@ -191,7 +324,8 @@
     outline-offset: 3px;
   }
 
-  /* The paper keeps the site's light reading palette even in the dark theme. */
+  /* ---- the letter itself ----
+   * The paper keeps the light reading palette even in the dark theme. */
   .letter-room__paper {
     --color-paper: #fbf9f5;
     --color-paper-deep: #ece5da;
@@ -203,20 +337,39 @@
     --color-focus: #6d2936;
 
     position: relative;
+    z-index: 1;
     width: min(42.5rem, 100%);
     border-radius: var(--radius-dialog);
     padding: clamp(2rem, 6vw, 3.5rem);
     color: var(--color-ink);
     background: var(--color-paper);
     box-shadow:
-      0 0 0 1px rgb(224 184 114 / 25%),
-      0 0 80px -10px rgb(224 184 114 / 35%),
+      0 0 0 1px rgb(224 184 114 / 28%),
+      0 0 90px -10px rgb(224 184 114 / 40%),
       0 40px 80px -30px rgb(0 0 0 / 60%);
-    animation: letter-paper-in 240ms var(--ease-out) both;
   }
 
-  .letter-room__paper[hidden] {
-    display: none;
+  .letter-room[data-entrance="quick"] .letter-room__paper {
+    animation: letter-paper-quick 280ms var(--ease-out) backwards;
+  }
+
+  .letter-room[data-entrance="ritual"] .letter-room__paper {
+    /* backwards: once finished, no clip-path or transform stays on the paper,
+     * so the fixed close button on phones is never clipped while scrolling. */
+    animation: letter-paper-unfold 560ms 2020ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+  }
+
+  .letter-room[data-entrance="ritual"] .letter-room__line {
+    animation: letter-line-in 460ms var(--ease-out) backwards;
+    animation-delay: 2320ms;
+  }
+
+  .letter-room[data-entrance="ritual"] .letter-room__line:nth-of-type(2) {
+    animation-delay: 2420ms;
+  }
+
+  .letter-room[data-entrance="ritual"] .letter-room__line:nth-child(n + 4) {
+    animation-delay: 2540ms;
   }
 
   .letter-room__close {
@@ -242,23 +395,25 @@
       padding: 0;
     }
 
+    /* Block flow on phones: the paper grows with the letter. A stretched grid
+     * item stayed one screen tall and long letters spilled onto the night
+     * background, dark text on dark, which read as the content vanishing. */
     .letter-room[open] {
-      place-items: stretch;
-    }
-
-    .letter-room__envelope {
-      align-self: center;
-      justify-self: center;
+      display: block;
     }
 
     .letter-room__paper {
       min-height: 100%;
       border-radius: 0;
       padding-top: max(4.5rem, calc(env(safe-area-inset-top) + 4rem));
+      padding-bottom: max(3rem, calc(env(safe-area-inset-bottom) + 2rem));
     }
 
     .letter-room__close {
+      position: fixed;
       top: max(0.75rem, env(safe-area-inset-top));
+      z-index: 2;
+      box-shadow: 0 4px 14px rgb(0 0 0 / 12%);
     }
   }
 
@@ -268,17 +423,186 @@
     }
   }
 
-  @keyframes letter-paper-in {
+  @keyframes ritual-glow-in {
     from {
       opacity: 0;
-      transform: translateY(24px) scale(0.96);
+      scale: 0.4;
+    }
+  }
+
+  @keyframes ritual-glow-out {
+    to {
+      opacity: 0.35;
+      scale: 1.2;
+    }
+  }
+
+  @keyframes ritual-envelope-rise {
+    from {
+      opacity: 0;
+      transform: perspective(1000px) translateY(70px) rotateX(24deg) scale(0.88);
+    }
+    70% {
+      opacity: 1;
+      transform: perspective(1000px) translateY(-6px) rotateX(-3deg) scale(1.01);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes ritual-envelope-sink {
+    to {
+      opacity: 0;
+      transform: translateY(40%) scale(0.94);
+    }
+  }
+
+  @keyframes ritual-seal-press {
+    from {
+      opacity: 0;
+      scale: 1.35;
+    }
+    60% {
+      opacity: 1;
+      scale: 0.94;
+    }
+    to {
+      scale: 1;
+    }
+  }
+
+  @keyframes ritual-glint {
+    to {
+      transform: translateX(320%) skewX(-12deg);
+    }
+  }
+
+  @keyframes ritual-seal-left {
+    30% {
+      transform: translate(-4px, -2px) rotate(-6deg);
+    }
+    to {
+      opacity: 0;
+      transform: translate(-34px, 70px) rotate(-38deg);
+    }
+  }
+
+  @keyframes ritual-seal-right {
+    30% {
+      transform: translate(4px, -2px) rotate(6deg);
+    }
+    to {
+      opacity: 0;
+      transform: translate(34px, 76px) rotate(42deg);
+    }
+  }
+
+  @keyframes ritual-crumb {
+    10% {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+      transform: translate(var(--crumb-x), var(--crumb-y)) rotate(var(--crumb-r));
+    }
+  }
+
+  @keyframes ritual-fade-out {
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes ritual-flap-open {
+    0% {
+      z-index: 4;
+      background-color: #f1ebe1;
+      transform: perspective(900px) rotateX(0deg);
+    }
+    49.9% {
+      z-index: 4;
+      background-color: #d9cdbd;
+    }
+    50% {
+      z-index: 1;
+      background-color: #5a1f2b;
+    }
+    100% {
+      z-index: 1;
+      background-color: #6d2936;
+      transform: perspective(900px) rotateX(-180deg);
+    }
+  }
+
+  @keyframes ritual-letter-rise {
+    to {
+      transform: translateY(-78%);
+    }
+  }
+
+  @keyframes ritual-letter-open {
+    from {
+      transform: translateY(-78%);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-86%) scale(1.3);
+    }
+  }
+
+  @keyframes ritual-mote {
+    15% {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+      transform: translate(var(--mote-x), var(--mote-y));
+    }
+  }
+
+  @keyframes letter-paper-quick {
+    from {
+      opacity: 0;
+      transform: translateY(16px) scale(0.98);
+    }
+  }
+
+  @keyframes letter-paper-unfold {
+    from {
+      opacity: 0;
+      clip-path: inset(38% 0 38% 0 round 6px);
+      transform: translateY(-4%) scale(0.9);
+    }
+    55% {
+      opacity: 1;
+    }
+    to {
+      opacity: 1;
+      clip-path: inset(0 0 0 0 round 0);
+      transform: none;
+    }
+  }
+
+  @keyframes letter-line-in {
+    from {
+      opacity: 0;
+      filter: blur(4px);
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      filter: none;
+      transform: none;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .letter-room,
-    .letter-room__paper {
-      animation: none;
+    .letter-room__paper,
+    .letter-room__line {
+      animation: none !important;
     }
   }
 
